@@ -16,4 +16,4 @@ Since the Vamp plugins dependency requires a native C++ code, [JNA](https://gith
 
 ## Documentation
 For more details and sample analysis please refer to the [documentation](https://github.com/lacimarsik/harmony-analyser/tree/master/documentation) located in `documentation` folder.
-For any questions and comments please contact the author on GitHub or [mail](mailto: marsik@ksi.mff.cuni.cz)
+For any questions and comments please contact the author on GitHub or [mail](mailto: marsik@ksi.mff.cuni.cz).
