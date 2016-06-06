@@ -182,7 +182,7 @@ public class PluginLoader
     private long nativeHandle;
 
     static {
-    	System.loadLibrary("vamp-jni");
+	System.loadLibrary("vamp-jni");
     }
 }
 

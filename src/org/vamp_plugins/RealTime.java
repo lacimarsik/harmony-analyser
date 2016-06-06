@@ -34,11 +34,17 @@
 
 package org.vamp_plugins;
 
+/**
+ * RealTime class, corresponding to the C++ Vamp::RealTime.
+ *
+ * Although the implementation is in native code, this class does not
+ * store a native object handle and has no dispose() method -- it can
+ * be garbage collected without prior disposal like any plain Java
+ * object.
+ */
 public class RealTime
 {
     public RealTime(int s, int n) { initialise(s, n); }
-
-    public native void dispose();
 
     public native int sec();
     public native int nsec();
@@ -59,7 +65,8 @@ public class RealTime
     public native static long realTime2Frame(RealTime r, int sampleRate);
 
     private native void initialise(int s, int n);
-    private long nativeHandle;
+    private int m_s;
+    private int m_n;
 }
 
 

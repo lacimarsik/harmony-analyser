@@ -506,7 +506,7 @@ public class Application {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-				    Path startPath = Paths.get("/home/laci/work/fmfi/Rocnik2/java/ProjectDipl/resources/NS/");
+				    Path startPath = Paths.get("/mnt/work/school/mff/Experiments/Bordeaux/new");
 				    Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
 				        @Override
 				        public FileVisitResult preVisitDirectory(Path dir,
