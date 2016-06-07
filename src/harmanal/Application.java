@@ -294,32 +294,34 @@ public class Application {
 		btnLoadPlugins.setBounds(28, 59, 149, 25);
 		panelAudio.add(btnLoadPlugins);
 		
-		final JLabel lblVampPluginsNeed = new JLabel("Note: VAMP plugins need to be installed on Your computer. See the installation instructions.");
+		final JLabel lblVampPluginsNeed = new JLabel("Note: VAMP plugins need to be installed. See instructions on https://github.com/lacimarsik/harmony-analyser");
 		lblVampPluginsNeed.setFont(new Font("Dialog", Font.ITALIC, 12));
-		lblVampPluginsNeed.setBounds(28, 96, 598, 15);
+		lblVampPluginsNeed.setBounds(28, 96, 748, 15);
 		panelAudio.add(lblVampPluginsNeed);
 		
-		final JLabel lblInputFile = new JLabel("Input file");
-		lblInputFile.setBounds(18, 135, 70, 15);
+		final JLabel lblInputFile = new JLabel("Input folder");
+		lblInputFile.setBounds(18, 135, 90, 15);
 		panelAudio.add(lblInputFile);
 		
 		txtInputFile = new JTextField();
-		txtInputFile.setText("Baywatch.wav");
-		txtInputFile.setBounds(28, 161, 183, 19);
+		txtInputFile.setText("Enter folder with WAV files to analyse");
+		txtInputFile.setBounds(28, 161, 283, 19);
 		panelAudio.add(txtInputFile);
 		txtInputFile.setColumns(10);
 		
-		final JLabel lblOutputChromas = new JLabel("Output file");
-		lblOutputChromas.setBounds(18, 205, 130, 15);
+		final JLabel lblOutputChromas = new JLabel("Step 1");
+		lblOutputChromas.setBounds(18, 250, 130, 15);
 		panelAudio.add(lblOutputChromas);
-		
+
+		/*
 		txtOutputChromas = new JTextField();
 		txtOutputChromas.setText("output.txt");
-		txtOutputChromas.setBounds(28, 232, 183, 19);
+		txtOutputChromas.setBounds(28, 232, 283, 19);
 		panelAudio.add(txtOutputChromas);
 		txtOutputChromas.setColumns(10);
-		
-		final JButton btnAnalyze = new JButton("Analyze");
+		*/
+
+		final JButton btnAnalyze = new JButton("Extract Chromas");
 		btnAnalyze.setBounds(28, 274, 149, 25);
 		panelAudio.add(btnAnalyze);
 		
@@ -506,7 +508,7 @@ public class Application {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-				    Path startPath = Paths.get("/mnt/work/school/mff/Experiments/Bordeaux/new");
+				    Path startPath = Paths.get(txtInputFile.getText());
 				    Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
 				        @Override
 				        public FileVisitResult preVisitDirectory(Path dir,

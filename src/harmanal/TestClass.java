@@ -162,7 +162,7 @@ public class TestClass {
 		
 		assertEquals(Harmanal.getTransitionComplexity(Chordanal.createHarmonyFromTones("C2 E2 G2"), Chordanal.createHarmonyFromTones("F2 A2 C2 C#2")),2);
 	}
-	
+	/*
 	@Test
 	public void doExperiments() {
 		
@@ -206,6 +206,6 @@ public class TestClass {
 		
 		//Harmanal.anal("Experiments/ROCK/Queen/DontStop-chromas.txt", "Experiments/ROCK/Queen/DontStop-bars.txt", "Experiments/ROCK/Queen/DontStop-results.txt", "Experiments/ROCK/Queen/DontStop-report.txt", "Experiments/ROCK/Queen/DontStop-timestamps.txt");
 		
-	}
+	}*/
 	
 }
