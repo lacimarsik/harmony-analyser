@@ -210,7 +210,7 @@ public class HarmonyAnalyser extends JFrame {
 			@Override
 			public void focusLost(FocusEvent e) {
 				super.focusLost(e);
-				harmony2 = Chordanal.createHarmonyFromTones(textPane11.getText());
+				harmony2 = Chordanal.createHarmonyFromTones(textPane13.getText());
 				if (harmony2 != null) {
 					analyzeHarmony(harmony2,textPane11,textPane13,textPane5,textPane7,textPane9,textPane15);
 					playButton1.setEnabled(true);
