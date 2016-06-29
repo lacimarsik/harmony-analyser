@@ -2,13 +2,18 @@ package harmanal;
 
 import javax.sound.midi.*;
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.event.*;
 import java.io.*;
 import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.*;
 import java.util.List;
 
-public class HarmonyAnalyser {
+/**
+ * GUI for HarmonyAnalyser
+ */
+
+public class HarmonyAnalyser extends JFrame {
 	private JTabbedPane tabbedPane1;
 	private JButton selectButton;
 	private JTextPane textPane1;
@@ -35,11 +40,31 @@ public class HarmonyAnalyser {
 	private JTextPane textPane16;
 	private JTextPane textPane3;
 	private JTextField textField8;
+	private JPanel rootPanel;
 
 	private NNLSPlugin nnls;
 	private Harmony harmony1,harmony2 = null;
 
+	/**
+	 * Launch the application.
+	 */
+
+	public static void main(String[] args) {
+		HarmonyAnalyser harmonyAnalyser = new HarmonyAnalyser();
+	}
+
+	/**
+	 * Initialize the application.
+	 */
+
 	public HarmonyAnalyser() {
+		/* GUI - Initialization */
+
+		setContentPane(rootPanel);
+		pack();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+
 		/* Chord Transition Tool - Initialization */
 
 		// Obtain information about all the installed input MIDI devices
