@@ -498,9 +498,13 @@ public class Application {
 		
 		btnLoadPlugins.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				nnls = new NNLSPlugin();
-				
+
+				try {
+					nnls = new NNLSPlugin();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
 			}
 		});
 		
@@ -522,7 +526,11 @@ public class Application {
 				        	
 				        	if (file.toString().endsWith(".wav")) {
 					        	System.out.println("Analyzing: " + file.toString());
-					        	nnls = new NNLSPlugin();
+								try {
+									nnls = new NNLSPlugin();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
 					        	nnls.analyze(file.toString(), file.toString() + "-chromas.txt");
 				        	}
 				            return FileVisitResult.CONTINUE;

@@ -106,31 +106,24 @@ public class NNLSPlugin {
 	
 	Plugin plugin;
 
-	public NNLSPlugin() {
-		
-		try {
-			System.out.println("Plugin crash course started");
-			
-			int sampleRate = 44100;
-			int adapterFlag = 0xff;
-			
-			plugin = PluginLoader.getInstance().loadPlugin("nnls-chroma:nnls-chroma", sampleRate, adapterFlag);
-			
-			System.out.println("Plugin " + plugin.getName() + " loaded");
-			
-			plugin.setParameter("useNNLS", 1);
-			plugin.setParameter("rollon", 1);
-			plugin.setParameter("tuningMode", 0);
-			plugin.setParameter("whitening", 1);
-			plugin.setParameter("s", (float) 0.7);
-			plugin.setParameter("chromanormalize", 0);
-			
-			System.out.println("All parameters set.");
-			
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
+	public NNLSPlugin() throws PluginLoader.LoadFailedException {
+		System.out.println("Plugin crash course started");
+
+		int sampleRate = 44100;
+		int adapterFlag = 0xff;
+
+		plugin = PluginLoader.getInstance().loadPlugin("nnls-chroma:nnls-chroma", sampleRate, adapterFlag);
+
+		System.out.println("Plugin " + plugin.getName() + " loaded");
+
+		plugin.setParameter("useNNLS", 1);
+		plugin.setParameter("rollon", 1);
+		plugin.setParameter("tuningMode", 0);
+		plugin.setParameter("whitening", 1);
+		plugin.setParameter("s", (float) 0.7);
+		plugin.setParameter("chromanormalize", 0);
+
+		System.out.println("All parameters set.");
 	}
 	
 	public void analyze(String inputFile, String outputFile) {

@@ -240,19 +240,25 @@ public class HarmonyAnalyser extends JFrame {
 
 		loadPluginsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				nnls = new NNLSPlugin();
+				try {
+					nnls = new NNLSPlugin();
+					textPane3.setText("VAMP Plugins loaded");
+				} catch (Exception e) {
+					textPane3.setText(e.getStackTrace().toString());
+				}
 			}
 		});
 
 		extractChromasButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				try {
+					textPane3.setText(textPane3.getText() + "\nStep 1: Extracting chromas from audio files");
 					Path startPath = Paths.get(textField8.getText());
 					Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
 						@Override
 						public FileVisitResult preVisitDirectory(Path dir,
 								BasicFileAttributes attrs) {
-							System.out.println("Dir: " + dir.toString());
+							textPane3.setText(textPane3.getText() + "\nDir: " + dir.toString());
 							return FileVisitResult.CONTINUE;
 						}
 
@@ -260,9 +266,14 @@ public class HarmonyAnalyser extends JFrame {
 						public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
 
 							if (file.toString().endsWith(".wav")) {
-								System.out.println("Analyzing: " + file.toString());
-								nnls = new NNLSPlugin();
+								textPane3.setText(textPane3.getText() + "\nAnalyzing: " + file.toString());
+								try {
+									nnls = new NNLSPlugin();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
 								nnls.analyze(file.toString(), file.toString() + "-chromas.txt");
+								textPane3.setText(textPane3.getText() + "\nOutput saved in: " + file.toString() + "-chromas.txt");
 							}
 							return FileVisitResult.CONTINUE;
 						}
