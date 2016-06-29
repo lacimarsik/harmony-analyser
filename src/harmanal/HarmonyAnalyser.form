@@ -283,7 +283,10 @@
               </component>
               <hspacer id="5c14a">
                 <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="6" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="0" row-span="1" col-span="6" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <minimum-size width="-1" height="20"/>
+                    <preferred-size width="-1" height="20"/>
+                  </grid>
                 </constraints>
               </hspacer>
               <component id="8f891" class="javax.swing.JLabel">
@@ -304,7 +307,10 @@
               </component>
               <hspacer id="af17d">
                 <constraints>
-                  <grid row="14" column="0" row-span="1" col-span="6" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="14" column="0" row-span="1" col-span="6" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <minimum-size width="-1" height="20"/>
+                    <preferred-size width="-1" height="20"/>
+                  </grid>
                 </constraints>
               </hspacer>
               <component id="df1a3" class="javax.swing.JTextPane" binding="textPane10" default-binding="true">
