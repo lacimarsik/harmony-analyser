@@ -32,6 +32,8 @@ public class HarmonyAnalyser {
 	private JTextPane textPane14;
 	private JTextPane textPane15;
 	private JTextPane textPane16;
+	private JTextPane textPane3;
+	private JTextField textField8;
 
 	private NNLSPlugin nnls;
 	private Harmony harmony1,harmony2 = null;
@@ -219,7 +221,7 @@ public class HarmonyAnalyser {
 		extractChromasButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				try {
-					Path startPath = Paths.get(txtInputFile.getText());
+					Path startPath = Paths.get(textField8.getText());
 					Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
 						@Override
 						public FileVisitResult preVisitDirectory(Path dir,
