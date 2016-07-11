@@ -41,6 +41,8 @@ public class HarmonyAnalyser extends JFrame {
 	private JPanel rootPanel;
 	private JCheckBox captureMIDICheckBox;
 	private JCheckBox captureMIDICheckBox1;
+	private JButton browseButton;
+	private JFileChooser fileChooser;
 
 	private NNLSPlugin nnls;
 	private Harmony harmony1,harmony2 = null;
@@ -285,6 +287,18 @@ public class HarmonyAnalyser extends JFrame {
 					});
 				} catch (IOException ex) {
 					ex.printStackTrace();
+				}
+			}
+		});
+
+		browseButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent actionEvent) {
+				fileChooser = new JFileChooser();
+				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				if (fileChooser.showOpenDialog(rootPanel) == JFileChooser.APPROVE_OPTION) {
+					File file = fileChooser.getSelectedFile();
+					textPane3.setText(textPane3.getText() + "Selected directory: " + file.getAbsolutePath() + ".");
+					textField8.setText(file.getAbsolutePath());
 				}
 			}
 		});
