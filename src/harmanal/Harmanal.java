@@ -453,44 +453,44 @@ public class Harmanal {
 		}
 		return result;
 	}
-	
-	
-	// EXPERIMENTS
-	
-	public static void anal(String file, String fileBars, String outputFile, String reportFile, String timestampsFile) {
-		
-		
+
+	/**
+	 * Analyzes the song
+	 *
+	 * @param chromaFile [String] name of the file containing chroma information
+	 * @param fileBars [String] name of the file containing segmentation information
+	 * @param reportFile [String] name of the file for output report
+	 * @param timestampsFile [String] name of the file containing additional timestamps segmentation information
+	 */
+
+	public static void analyzeSong(String chromaFile, String fileBars, String outputFile, String reportFile, String timestampsFile) {
 		List<String> lines = new ArrayList<String>();
 		BufferedReader br;
 		List<String> lines2 = new ArrayList<String>();
 		BufferedReader br2;
-		
-		
+
 		try {
-			br2 = new BufferedReader(new FileReader(/*"resources/" + */fileBars));
+			br2 = new BufferedReader(new FileReader(fileBars));
 			String line2 = br2.readLine();
 			while (line2 != null)
 			{
-			    lines2.add(line2);
-			    line2 = br2.readLine();
+				lines2.add(line2);
+				line2 = br2.readLine();
 			}
 			br2.close();
-			
-			
-			
-			
-			br = new BufferedReader(new FileReader(/*"resources/" + */file));
+
+			br = new BufferedReader(new FileReader(chromaFile));
 			String line = br.readLine();
-			
+
 			while (line != null)
 			{
-			    lines.add(line);
-			    line = br.readLine();   
-			    //System.out.println(line);  
+				lines.add(line);
+				line = br.readLine();
+				// DEBUG
+				// System.out.println(line);
 			}
 			br.close();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -498,9 +498,8 @@ public class Harmanal {
 		for (String string : lines2) {
 			Scanner sc2 = new Scanner(string);
 			String temp = sc2.next();
-			// modified for csv reading
-		    temp = temp.substring(0, temp.indexOf(","));
-			//temp = temp.substring(0, temp.length()-1);
+			temp = temp.substring(0, temp.indexOf(","));
+			// DEBUG
 			//System.out.println("timestamp: " + temp);
 			bars.add(Float.parseFloat(temp));
 		}
@@ -515,7 +514,6 @@ public class Harmanal {
 		}
 		float[] chromaWork= new float[12];
 		float[] chromaWork2= new float[12];
-		float[] chromaGetchord= new float[12];
 		int[] harmony = new int[12];
 		for (int i = 0; i < harmony.length; i++) {
 			harmony[i] = 0;
@@ -528,36 +526,34 @@ public class Harmanal {
 		bar = bars.get(0);
 		float threshold = (float) 0.05;
 		for (String line : lines) {
-
+			// DEBUG
 			//System.out.println(string);
-			
-			
 			Scanner sc = new Scanner(line);
-		    timestamp = sc.next();
-		    timestamp = timestamp.substring(0, timestamp.length()-1);
-		    ts = Float.parseFloat(timestamp);
-		    
-		    // check ts
-		    
-		    if (ts > bar) {
-		    	
-		    	//System.out.println("TICK!!!!!");
-		    	timeIndex++;
-		    	if (timeIndex > bars.size()-1) {
-		    		break;
-		    	}
-		    	bar = bars.get(timeIndex);
-		    	
-		    	for (int i = 0; i < chromaSums.length; i++) {
+			timestamp = sc.next();
+			timestamp = timestamp.substring(0, timestamp.length()-1);
+			ts = Float.parseFloat(timestamp);
+
+			// check ts
+			if (ts > bar) {
+				// DEBUG
+				//System.out.println("TICK!!!!!");
+				timeIndex++;
+				if (timeIndex > bars.size()-1) {
+					break;
+				}
+				bar = bars.get(timeIndex);
+
+				for (int i = 0; i < chromaSums.length; i++) {
 					chromaWork[i] = chromaSums[i] / count;
 					chromaSums[i] = 0;
 				}
-		    	count = 0;
-		    	//for (int i = 0; i < chromaWork.length; i++) {
-			    	//System.out.print(chromaWork[i] + " ");
+				count = 0;
+				// DEBUG
+				//for (int i = 0; i < chromaWork.length; i++) {
+					//System.out.print(chromaWork[i] + " ");
 				//}
-		    	//System.out.println();
-		    	for (int i = 0; i < chromaWork2.length; i++) {
+				//System.out.println();
+				for (int i = 0; i < chromaWork2.length; i++) {
 					if (chromaWork[i] < threshold) {
 						chromaWork2[i] = 0;
 					} else {
@@ -565,106 +561,101 @@ public class Harmanal {
 						chromaWork2[i] = chromaWork[i];
 					}
 				}
-		    	//for (int i = 0; i < chromaWork2.length; i++) {
-			    	//System.out.print(chromaWork2[i] + " ");
+				// DEBUG
+				//for (int i = 0; i < chromaWork2.length; i++) {
+					//System.out.print(chromaWork2[i] + " ");
 				//}	
-		    	//System.out.println();
-		    	
-		    	// getting the chord
-		    	
-		    	float max = 0;
-		    	int id = 0;
-		    	for(int g=0;g<4;g++) {
-			    	max=0;
-			    	id=0;
-			    	for (int i = 0; i < chromaWork2.length; i++) {
-			    		if (chromaWork2[i] > max) {
-			    			id = i;
-			    			max = chromaWork2[i];
-			    		}
+				//System.out.println();
+
+				// getting the chord
+				float max = 0;
+				int id = 0;
+				for(int g=0;g<4;g++) {
+					max=0;
+					id=0;
+					for (int i = 0; i < chromaWork2.length; i++) {
+						if (chromaWork2[i] > max) {
+							id = i;
+							max = chromaWork2[i];
+						}
 					}
-			    	if (chromaWork2[id] > 0) {
-			    		harmony[id] = 1;
-			    	}
-			    	chromaWork2[id] = 0;
-		    	}
-		    	
-		    	//for (int i = 0; i < harmony.length; i++) {
-			    	//System.out.print(harmony[i] + " ");
+					if (chromaWork2[id] > 0) {
+						harmony[id] = 1;
+					}
+					chromaWork2[id] = 0;
+				}
+				// DEBUG
+				//for (int i = 0; i < harmony.length; i++) {
+					//System.out.print(harmony[i] + " ");
 				//}	
-		    	//System.out.println();
-		    	
-		    	List<Integer> harmonyList = new ArrayList<Integer>();
-		    	for (int i = 0; i < harmony.length; i++) {
+				//System.out.println();
+
+				List<Integer> harmonyList = new ArrayList<Integer>();
+				for (int i = 0; i < harmony.length; i++) {
 					harmonyList.add(harmony[i]);
 				}
-		    	
-		    	harmonies.add(harmonyList);
-		    	timestamps.add(bar);
-		    	
-		    	for (int i = 0; i < harmony.length; i++) {
+
+				harmonies.add(harmonyList);
+				timestamps.add(bar);
+
+				for (int i = 0; i < harmony.length; i++) {
 					harmony[i] = 0;
 				}
+			}
 
-		    }
-		    
-		    chromaString[0] = sc.next();
-		    chromaString[1] = sc.next();
-		    chromaString[2] = sc.next();
-		    chromaString[3] = sc.next();
-		    chromaString[4] = sc.next();
-		    chromaString[5] = sc.next();
-		    chromaString[6] = sc.next();
-		    chromaString[7] = sc.next();
-		    chromaString[8] = sc.next();
-		    chromaString[9] = sc.next();
-		    chromaString[10] = sc.next();
-		    chromaString[11] = sc.next();
-		    
-		    chroma[0] = Float.parseFloat(chromaString[0]);
-		    chroma[1] = Float.parseFloat(chromaString[1]);
-		    chroma[2] = Float.parseFloat(chromaString[2]);
-		    chroma[3] = Float.parseFloat(chromaString[3]);
-		    chroma[4] = Float.parseFloat(chromaString[4]);
-		    chroma[5] = Float.parseFloat(chromaString[5]);
-		    chroma[6] = Float.parseFloat(chromaString[6]);
-		    chroma[7] = Float.parseFloat(chromaString[7]);
-		    chroma[8] = Float.parseFloat(chromaString[8]);
-		    chroma[9] = Float.parseFloat(chromaString[9]);
-		    chroma[10] = Float.parseFloat(chromaString[10]);
-		    chroma[11] = Float.parseFloat(chromaString[11]);
-		    
-		    for (int i = 0; i < chromaSums.length; i++) {
+			chromaString[0] = sc.next();
+			chromaString[1] = sc.next();
+			chromaString[2] = sc.next();
+			chromaString[3] = sc.next();
+			chromaString[4] = sc.next();
+			chromaString[5] = sc.next();
+			chromaString[6] = sc.next();
+			chromaString[7] = sc.next();
+			chromaString[8] = sc.next();
+			chromaString[9] = sc.next();
+			chromaString[10] = sc.next();
+			chromaString[11] = sc.next();
+
+			chroma[0] = Float.parseFloat(chromaString[0]);
+			chroma[1] = Float.parseFloat(chromaString[1]);
+			chroma[2] = Float.parseFloat(chromaString[2]);
+			chroma[3] = Float.parseFloat(chromaString[3]);
+			chroma[4] = Float.parseFloat(chromaString[4]);
+			chroma[5] = Float.parseFloat(chromaString[5]);
+			chroma[6] = Float.parseFloat(chromaString[6]);
+			chroma[7] = Float.parseFloat(chromaString[7]);
+			chroma[8] = Float.parseFloat(chromaString[8]);
+			chroma[9] = Float.parseFloat(chromaString[9]);
+			chroma[10] = Float.parseFloat(chromaString[10]);
+			chroma[11] = Float.parseFloat(chromaString[11]);
+
+			for (int i = 0; i < chromaSums.length; i++) {
 				chromaSums[i] = chromaSums[i] + chroma[i];
 				count++;
 			}
-		    
-		    /*
-		    for (int i = 0; i < chromaWork.length; i++) {
+
+			// DEBUG
+			/*
+			for (int i = 0; i < chromaWork.length; i++) {
 				if (chroma[i] < 0.1) {
 					chromaWork[i] = 0;
 				} else {
-					
 					chromaWork[i] = chroma[i];
 				}
 			}*/
-
-		    //System.out.println("timestamp: " + timestamp);
-		    //for (int j = 0; j < chromaString.length; j++) {
+			//System.out.println("timestamp: " + timestamp);
+			//for (int j = 0; j < chromaString.length; j++) {
 				//System.out.print(chromaString[j]+ " ");
 			//}
-		    //System.out.println();
-		    //for (int j = 0; j < chroma.length; j++) {
+			//System.out.println();
+			//for (int j = 0; j < chroma.length; j++) {
 				//System.out.print(chroma[j]+ " ");
 			//}
-		    //System.out.println();
-		    //for (int j = 0; j < chromaWork.length; j++) {
+			//System.out.println();
+			//for (int j = 0; j < chromaWork.length; j++) {
 				//System.out.print(chromaWork[j]+ " ");
 			//}
-		    
-		    //System.out.println();
-		    
-			
+			//System.out.println();
 		}
 		
 		int[] chord = new int[12];
@@ -684,84 +675,78 @@ public class Harmanal {
 		
 		FileWriter fstream2;
 		try {
-			fstream2 = new FileWriter(/*"resources/" + */reportFile);
-			
+			fstream2 = new FileWriter(reportFile);
 			BufferedWriter out2 = new BufferedWriter(fstream2);
-		
-		for (List<Integer> harmie : harmonies) {
-			
-			for (int i = 0; i < chord.length; i++) {
-				chord[i] = harmie.get(i);
-			}
-			for (int i = 0; i < chord.length; i++) {
-				out2.write(chord[i] + " "); // VERBOSE
-			}
-			out2.write("\n"); //VERBOSE
-			
-			// number of tones
-			
-			int numberTones = 0;
-			for (int i = 0; i < chord.length; i++) {
-				if (chord[i] == 1) {
-					numberTones++;
-				}
-			}
-			sumTones += numberTones;
 
-			String chordTones = ""; 
-			for (int i = 0; i < chord.length; i++) {
+			for (List<Integer> harmie : harmonies) {
+
+				for (int i = 0; i < chord.length; i++) {
+					chord[i] = harmie.get(i);
+				}
+				for (int i = 0; i < chord.length; i++) {
+					out2.write(chord[i] + " "); // VERBOSE
+				}
+				out2.write("\n"); //VERBOSE
+
+				// number of tones
+				int numberTones = 0;
+				for (int i = 0; i < chord.length; i++) {
 					if (chord[i] == 1) {
-						chordTones += Chordanal.tonesNames.getFirstInValue(Integer.toString(i)) + " ";
+						numberTones++;
 					}
-			}
-			
-			String previousChordTones = ""; 
-			for (int i = 0; i < previousChord.length; i++) {
-				if (previousChord[i] == 1) {
-					previousChordTones += Chordanal.tonesNames.getFirstInValue(Integer.toString(i)) + " ";
 				}
-			}
-			counter++;
-			out2.write("previous: " + previousChordTones + "\n"); // VERBOSE
-			out2.write(counter + ": " + chordTones + "\n"); // VERBOSE
-			
-			Harmony harmony1 = Chordanal.createHarmonyFromRelativeTones(previousChordTones);
-			Harmony harmony2 = Chordanal.createHarmonyFromRelativeTones(chordTones);
-			
-			if ((harmony1 == null) || (harmony2 == null)) {
-				
-				out2.write("SKIP HARMONIES!\n"); // VERBOSE
-			} else {
-				
-				int compl = getTransitionComplexity(harmony1, harmony2);
-				if (compl == -1) {
-					out2.write("NO COMMON ROOTS -> MAX COMPLEXITY = 7!\n"); // VERBOSE
-					compl = 7;
-				}
-				tcs.add(compl);
-				int compl2 = getHarmonyComplexity(harmony2);
+				sumTones += numberTones;
 
-				
-				cs.add(compl2);
-				sumTS += tcs.get(tcs.size()-1);
-				sumCS += cs.get(cs.size()-1);
-				if (tcs.get(tcs.size()-1) > maxTS) {
-					maxTS = tcs.get(tcs.size()-1);
+				String chordTones = "";
+				for (int i = 0; i < chord.length; i++) {
+						if (chord[i] == 1) {
+							chordTones += Chordanal.tonesNames.getFirstInValue(Integer.toString(i)) + " ";
+						}
 				}
-				if (cs.get(cs.size()-1) > maxCS) {
-					maxCS = cs.get(cs.size()-1);
+
+				String previousChordTones = "";
+				for (int i = 0; i < previousChord.length; i++) {
+					if (previousChord[i] == 1) {
+						previousChordTones += Chordanal.tonesNames.getFirstInValue(Integer.toString(i)) + " ";
+					}
 				}
-				out2.write("ts:" + tcs.get(tcs.size()-1) + "\n"); // VERBOSE
-			
+				counter++;
+				out2.write("previous: " + previousChordTones + "\n"); // VERBOSE
+				out2.write(counter + ": " + chordTones + "\n"); // VERBOSE
+
+				Harmony harmony1 = Chordanal.createHarmonyFromRelativeTones(previousChordTones);
+				Harmony harmony2 = Chordanal.createHarmonyFromRelativeTones(chordTones);
+
+				if ((harmony1 == null) || (harmony2 == null)) {
+					out2.write("SKIP HARMONIES!\n"); // VERBOSE
+				} else {
+					int compl = getTransitionComplexity(harmony1, harmony2);
+					if (compl == -1) {
+						out2.write("NO COMMON ROOTS -> MAX COMPLEXITY = 7!\n"); // VERBOSE
+						compl = 7;
+					}
+					tcs.add(compl);
+					int compl2 = getHarmonyComplexity(harmony2);
+
+					cs.add(compl2);
+					sumTS += tcs.get(tcs.size()-1);
+					sumCS += cs.get(cs.size()-1);
+					if (tcs.get(tcs.size()-1) > maxTS) {
+						maxTS = tcs.get(tcs.size()-1);
+					}
+					if (cs.get(cs.size()-1) > maxCS) {
+						maxCS = cs.get(cs.size()-1);
+					}
+					out2.write("ts:" + tcs.get(tcs.size()-1) + "\n"); // VERBOSE
+
+				}
+
+				// set previous
+				for (int i = 0; i < chord.length; i++) {
+					previousChord[i] = chord[i];
+				}
 			}
-			
-			// set previous
-			for (int i = 0; i < chord.length; i++) {
-				previousChord[i] = chord[i];
-			}
-			
-		}
-		out2.close();
+			out2.close();
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -769,7 +754,7 @@ public class Harmanal {
 		
 		FileWriter fstream3;
 		try {
-			fstream3 = new FileWriter(/*"resources/" + */timestampsFile);
+			fstream3 = new FileWriter(timestampsFile);
 			
 			BufferedWriter out3 = new BufferedWriter(fstream3);
 			
@@ -783,29 +768,25 @@ public class Harmanal {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		float atc = (float) sumTS  / (float) tcs.size();
 		float ahc = (float) sumCS  / (float) cs.size();
 		float rtc = (float) sumTS / (float) sumTones;
-		
+
 		FileWriter fstream;
 		try {
-			fstream = new FileWriter(/*"resources/" + */outputFile);
-			
+			fstream = new FileWriter(outputFile);
 			BufferedWriter out = new BufferedWriter(fstream);
-			
-			
 		} catch (IOException e) {
-		
 			e.printStackTrace();
 		}
 		
 		FileWriter fstream1;
 		try {
-			fstream1 = new FileWriter(/*"resources/" + */outputFile);
+			fstream1 = new FileWriter(outputFile);
 			
 			BufferedWriter out = new BufferedWriter(fstream1);
+			// DEBUG
 			//out.write("ATC: " + atc + " ");
 			out.write(atc + " ");
 			if (atc>3) {
@@ -816,19 +797,15 @@ public class Harmanal {
 				
 				System.out.println("Low ATC!: " + atc);
 			}
+			// DEBUG
 			//out.write("AHC: " + ahc + " ");
 			//out.write("MTC: " + maxTS+ " ");
 			//out.write("MHC: " + maxCS+ " ");
 			//out.write("RTC: " + rtc + " ");
-			
+
 			out.close();
-			
-			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
-	
 }
