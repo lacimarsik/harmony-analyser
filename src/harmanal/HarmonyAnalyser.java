@@ -297,7 +297,7 @@ public class HarmonyAnalyser extends JFrame {
 				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				if (fileChooser.showOpenDialog(rootPanel) == JFileChooser.APPROVE_OPTION) {
 					File file = fileChooser.getSelectedFile();
-					textPane3.setText(textPane3.getText() + "Selected directory: " + file.getAbsolutePath() + ".");
+					textPane3.setText(textPane3.getText() + "\nSelected directory: " + file.getAbsolutePath() + ".");
 					textField8.setText(file.getAbsolutePath());
 				}
 			}
