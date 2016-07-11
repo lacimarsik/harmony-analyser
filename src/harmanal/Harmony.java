@@ -16,7 +16,7 @@ public class Harmony {
 	 * Creates Harmony from integer array. Can be unsorted and with duplicities.
 	 */
 	
-	Harmony(int[] numberArray) {	
+	public Harmony(int[] numberArray) {
 		Arrays.sort(numberArray);
 	    int numberArrayNoDuplicates[] = new int[numberArray.length];
 	    numberArrayNoDuplicates[0] = numberArray[0];
@@ -38,8 +38,8 @@ public class Harmony {
 	/**
 	 * Creates Harmony from integer array. Can alse be unsorted and with duplicities.
 	 */
-	
-	Harmony(List<Tone> tones) {
+
+	public Harmony(List<Tone> tones) {
 		this.tones = tones;
 	}
 	

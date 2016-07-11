@@ -10,13 +10,13 @@ public class Tone {
 	
 	private int number;
 	private int volume;
-	
-	Tone(int number, int volume) {
+
+	public Tone(int number, int volume) {
 		this.number = number;
 		this.volume = volume;
 	}
-	
-	Tone(int number) {
+
+	public Tone(int number) {
 		this(number, DEFAULT_VOLUME);
 	}
 	

@@ -188,8 +188,8 @@ public class DatabaseTable {
 	/**
 	 * Returns all the key-value pairs in String
 	 */
-	
-	List<String> getAll() {
+
+	public List<String> getAll() {
 		ArrayList<String> result = new ArrayList<String>();
 		for (List<String> l : table.keySet()) {
 			String row = "";

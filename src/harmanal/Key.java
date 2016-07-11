@@ -10,8 +10,8 @@ public class Key {
 	
 	public int root;
 	public int keyType;
-	
-	Key(int root, int keyType) {
+
+	public Key(int root, int keyType) {
 		this.root = root;
 		this.keyType = keyType;
 	}
