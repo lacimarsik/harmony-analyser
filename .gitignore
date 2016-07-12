@@ -4,3 +4,4 @@
 .classpath
 bin
 test
+!src/harmanal/test
