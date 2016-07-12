@@ -459,11 +459,12 @@ public class Harmanal {
 	 *
 	 * @param chromaFile [String] name of the file containing chroma information
 	 * @param fileBars [String] name of the file containing segmentation information
-	 * @param reportFile [String] name of the file for output report
+	 * @param resultFile [String] name of the file for result
+	 * @param reportFile [String] name of the file for report
 	 * @param timestampsFile [String] name of the file containing additional timestamps segmentation information
 	 */
 
-	public static void analyzeSong(String chromaFile, String fileBars, String outputFile, String reportFile, String timestampsFile) {
+	public static void analyzeSong(String chromaFile, String fileBars, String resultFile, String reportFile, String timestampsFile) {
 		List<String> lines = new ArrayList<String>();
 		BufferedReader br;
 		List<String> lines2 = new ArrayList<String>();
@@ -775,7 +776,7 @@ public class Harmanal {
 
 		FileWriter fstream;
 		try {
-			fstream = new FileWriter(outputFile);
+			fstream = new FileWriter(resultFile);
 			BufferedWriter out = new BufferedWriter(fstream);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -783,7 +784,7 @@ public class Harmanal {
 		
 		FileWriter fstream1;
 		try {
-			fstream1 = new FileWriter(outputFile);
+			fstream1 = new FileWriter(resultFile);
 			
 			BufferedWriter out = new BufferedWriter(fstream1);
 			// DEBUG

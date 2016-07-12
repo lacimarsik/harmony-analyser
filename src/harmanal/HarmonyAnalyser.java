@@ -43,6 +43,7 @@ public class HarmonyAnalyser extends JFrame {
 	private JCheckBox captureMIDICheckBox;
 	private JCheckBox captureMIDICheckBox1;
 	private JButton browseButton;
+	private JButton analyzeComplexityButton;
 	private JFileChooser fileChooser;
 
 	private NNLSPlugin nnls;
@@ -252,6 +253,18 @@ public class HarmonyAnalyser extends JFrame {
 			}
 		});
 
+		browseButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent actionEvent) {
+				fileChooser = new JFileChooser();
+				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				if (fileChooser.showOpenDialog(rootPanel) == JFileChooser.APPROVE_OPTION) {
+					File file = fileChooser.getSelectedFile();
+					textPane3.setText(textPane3.getText() + "\nSelected directory: " + file.getAbsolutePath());
+					textField8.setText(file.getAbsolutePath());
+				}
+			}
+		});
+
 		extractChromasButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				try {
@@ -292,14 +305,46 @@ public class HarmonyAnalyser extends JFrame {
 			}
 		});
 
-		browseButton.addActionListener(new ActionListener() {
+		analyzeComplexityButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				fileChooser = new JFileChooser();
-				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				if (fileChooser.showOpenDialog(rootPanel) == JFileChooser.APPROVE_OPTION) {
-					File file = fileChooser.getSelectedFile();
-					textPane3.setText(textPane3.getText() + "\nSelected directory: " + file.getAbsolutePath());
-					textField8.setText(file.getAbsolutePath());
+				try {
+					textPane3.setText(textPane3.getText() + "\nStep 2: Analyzing complexity for audio files");
+					Path startPath = Paths.get(textField8.getText());
+					Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
+						@Override
+						public FileVisitResult preVisitDirectory(Path dir,
+								BasicFileAttributes attrs) {
+							textPane3.setText(textPane3.getText() + "\nDir: " + dir.toString());
+							return FileVisitResult.CONTINUE;
+						}
+
+						@Override
+						public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+
+							if (file.toString().endsWith(".wav")) {
+								textPane3.setText(textPane3.getText() + "\nAnalyzing: " + file.toString());
+
+								Harmanal.analyzeSong(
+									file.toString() + "-chromas.txt",
+									file.toString().replaceFirst("[.][^.]+$", "") + "_vamp_nnls-chroma_chordino_simplechord.csv",
+									file.toString() + "-result.txt",
+									file.toString() + "-report.txt",
+									file.toString().replaceFirst("[.][^.]+$", "") + "_vamp_nnls-chroma_chordino_simplechord.csv-timestamps.txt"
+								);
+
+								textPane3.setText(textPane3.getText() + "\nReport saved in: " + file.toString() + "-report.txt");
+								textPane3.setText(textPane3.getText() + "\nResult saved in: " + file.toString() + "-result.txt");
+							}
+							return FileVisitResult.CONTINUE;
+						}
+
+						@Override
+						public FileVisitResult visitFileFailed(Path file, IOException e) {
+							return FileVisitResult.CONTINUE;
+						}
+					});
+				} catch (IOException ex) {
+					ex.printStackTrace();
 				}
 			}
 		});
