@@ -1,5 +1,6 @@
 package harmanal;
 
+import harmanal.vamp_plugins.*;
 import javax.sound.midi.*;
 import javax.swing.*;
 import javax.swing.event.*;

@@ -1,4 +1,4 @@
-package harmanal;
+package harmanal.vamp_plugins;
 
 import java.io.*;
 import java.util.*;
