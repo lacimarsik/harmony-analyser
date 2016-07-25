@@ -420,7 +420,7 @@
               </component>
             </children>
           </grid>
-          <grid id="f6178" layout-manager="GridLayoutManager" row-count="5" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="f6178" layout-manager="GridLayoutManager" row-count="6" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="15" left="15" bottom="15" right="15"/>
             <constraints>
               <tabbedpane title="Audio Analysis Tool"/>
@@ -502,18 +502,34 @@
               </component>
               <component id="d4740" class="javax.swing.JLabel">
                 <constraints>
+                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Step 3"/>
+                </properties>
+              </component>
+              <component id="2cfda" class="javax.swing.JButton" binding="analyzeComplexityButton" default-binding="true">
+                <constraints>
+                  <grid row="5" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Analyze Complexity"/>
+                </properties>
+              </component>
+              <component id="4e1ee" class="javax.swing.JLabel">
+                <constraints>
                   <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Step 2"/>
                 </properties>
               </component>
-              <component id="2cfda" class="javax.swing.JButton" binding="analyzeComplexityButton" default-binding="true">
+              <component id="d58ef" class="javax.swing.JButton" binding="segmentTrackButton">
                 <constraints>
                   <grid row="4" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Analyze Complexity"/>
+                  <text value="Segment Track"/>
                 </properties>
               </component>
             </children>

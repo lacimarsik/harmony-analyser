@@ -22,7 +22,6 @@ public class HarmonyAnalyser extends JFrame {
 	private JButton playButton1;
 	private JTextPane textPane2;
 	private JButton loadPluginsButton;
-	private JButton extractChromasButton;
 	private JList list1;
 	private JTextPane textPane4;
 	private JTextPane textPane5;
@@ -43,6 +42,8 @@ public class HarmonyAnalyser extends JFrame {
 	private JCheckBox captureMIDICheckBox;
 	private JCheckBox captureMIDICheckBox1;
 	private JButton browseButton;
+	private JButton extractChromasButton;
+	private JButton segmentTrackButton;
 	private JButton analyzeComplexityButton;
 	private JFileChooser fileChooser;
 
@@ -302,6 +303,12 @@ public class HarmonyAnalyser extends JFrame {
 				} catch (IOException ex) {
 					ex.printStackTrace();
 				}
+			}
+		});
+
+		segmentTrackButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent actionEvent) {
+
 			}
 		});
 
