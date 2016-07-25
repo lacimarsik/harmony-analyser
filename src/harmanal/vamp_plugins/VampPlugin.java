@@ -148,13 +148,16 @@ public class VampPlugin {
 
 			for (Iterator<Feature> iterator = featureList.iterator(); iterator.hasNext();) {
 				Feature feature = (Feature) iterator.next();
-				out.write(feature.timestamp + ": ");
 				if (outputType == OutputType.ARRAY) {
+					out.write(feature.timestamp + ": ");
 					for (int j = 0; j < feature.values.length; j++) {
 						out.write(feature.values[j] + " ");
 					}
 				} else if (outputType == OutputType.LABEL) {
-					out.write(feature.label + " ");
+					out.write(feature.timestamp + ",");
+					out.write("\"");
+					out.write(feature.label);
+					out.write("\"");
 				} else {
 					throw new UnsupportedValueType("Plugin " + plugin.getName() + " failed to analyse - unsupported value type.");
 				}
