@@ -371,7 +371,7 @@ public class HarmonyAnalyser extends JFrame {
 									file.toString() + "-segmentation.txt",
 									file.toString() + "-result.txt",
 									file.toString() + "-report.txt",
-									file.toString().replaceFirst("[.][^.]+$", "") + "_vamp_nnls-chroma_chordino_simplechord.csv-timestamps.txt"
+									file.toString() + "-timestamps.txt"
 								);
 
 								textPane3.setText(textPane3.getText() + "\nReport saved in: " + file.toString() + "-report.txt");
