@@ -28,12 +28,14 @@ public class ChordinoPlugin extends VampPlugin {
 
 		System.out.println("Plugin " + plugin.getName() + " loaded");
 
-		plugin.setParameter("useNNLS", 1);
-		plugin.setParameter("rollon", 1);
-		plugin.setParameter("tuningMode", 0);
-		plugin.setParameter("whitening", 1);
+		plugin.setParameter("boostn", (float) 0.1);
+		plugin.setParameter("rollon", 0);
 		plugin.setParameter("s", (float) 0.7);
-		plugin.setParameter("chromanormalize", 0);
+		plugin.setParameter("tuningmode", 0);
+		plugin.setParameter("useNNLS", 1);
+		plugin.setParameter("usehartesyntax", 0);
+		plugin.setParameter("whitening", 1);
+
 
 		System.out.println("All parameters set.");
 	}
