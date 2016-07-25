@@ -20,7 +20,7 @@ public class ChordinoPluginTest {
 	}
 
 	@Test
-	public void shouldExtractChromas() {
+	public void shouldExtractChords() {
 		chordino.analyze(testWavFile.toString(), testWavFile.toString() + "-segmentation.txt");
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(testWavFile.toString() + "-segmentation.txt"));
