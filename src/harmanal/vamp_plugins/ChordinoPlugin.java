@@ -21,8 +21,8 @@ public class ChordinoPlugin extends VampPlugin {
 	public ChordinoPlugin() throws PluginLoader.LoadFailedException {
 		System.out.println("Plugin crash course started");
 
-		int sampleRate = 44100;
-		int adapterFlag = 0xff;
+		output = 0;
+		outputType = OutputType.LABEL;
 
 		plugin = PluginLoader.getInstance().loadPlugin("nnls-chroma:chordino", sampleRate, adapterFlag);
 
@@ -35,7 +35,6 @@ public class ChordinoPlugin extends VampPlugin {
 		plugin.setParameter("useNNLS", 1);
 		plugin.setParameter("usehartesyntax", 0);
 		plugin.setParameter("whitening", 1);
-
 
 		System.out.println("All parameters set.");
 	}

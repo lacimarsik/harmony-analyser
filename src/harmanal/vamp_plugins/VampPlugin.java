@@ -80,11 +80,16 @@ import org.vamp_plugins.*;
 public class VampPlugin {
 	Plugin plugin;
 
+	int sampleRate = 44100;
+	int adapterFlag = 0xff;
+	int stepSize = 16384;
+	int blockSize = 16384;
+
+	int output;
+	OutputType outputType;
+
 	public void analyze(String inputFile, String outputFile) {
 		try {
-			// set before analyzing!
-			int sampleRate = 22050;
-
 			File fileIn = new File(inputFile);
 
 			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(fileIn);
@@ -94,9 +99,7 @@ public class VampPlugin {
 			System.out.println("Channels: " + audioInputStream.getFormat().getChannels());
 
 			int channels = audioInputStream.getFormat().getChannels();
-			int stepSize = 16384;
-			int blockSize = 16384;
-			
+
 			if (plugin.initialise(channels, stepSize, blockSize)) {
 				System.out.println("Initialized");
 			} else {
@@ -104,12 +107,11 @@ public class VampPlugin {
 			}
 
 			int bytesPerFrame = audioInputStream.getFormat().getFrameSize();
-			int numBytes = 16384 * bytesPerFrame; 
+			int numBytes = blockSize * bytesPerFrame;
 			byte[] audioBytes = new byte[numBytes];
 			int numBytesRead = 0;
 
-			int output = 3;
-			System.out.println("Output: " + plugin.getOutputDescriptors()[3].name + ".");
+			System.out.println("Output: " + plugin.getOutputDescriptors()[output].name + ".");
 			List<Feature> featureList;
 
 			FileWriter fstream = new FileWriter(outputFile);
@@ -129,7 +131,7 @@ public class VampPlugin {
 				for (int i = 0; i < numBytesRead-1; i+=2) {
 					sample = ((audioBytes[i] & 0xFF) | (audioBytes[i + 1] << 8)) / 32768.0F;
 
-					inputBuffer[actualChannel][i / 4] = sample;		    		
+					inputBuffer[actualChannel][i / 4] = sample;
 					if (actualChannel == 0) {
 						actualChannel = 1;
 					} else {
@@ -147,14 +149,22 @@ public class VampPlugin {
 			for (Iterator<Feature> iterator = featureList.iterator(); iterator.hasNext();) {
 				Feature feature = (Feature) iterator.next();
 				out.write(feature.timestamp + ": ");
-				for (int j = 0; j < feature.values.length; j++) {
-					out.write(feature.values[j] + " ");
+				if (outputType == OutputType.ARRAY) {
+					for (int j = 0; j < feature.values.length; j++) {
+						out.write(feature.values[j] + " ");
+					}
+				} else if (outputType == OutputType.LABEL) {
+					out.write(feature.label + " ");
+				} else {
+					throw new UnsupportedValueType("Plugin " + plugin.getName() + " failed to analyse - unsupported value type.");
 				}
 				out.write("\n");
 			}
 			audioInputStream.close();
 			out.close();
 			plugin.dispose();
+		} catch (UnsupportedValueType e) {
+			e.printStackTrace();
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -165,10 +175,22 @@ public class VampPlugin {
 	}
 }
 
+enum OutputType {
+	ARRAY, LABEL
+}
+
 class VampPluginUsageFailedException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	VampPluginUsageFailedException(String message) {
+		super(message);
+	}
+};
+
+class UnsupportedValueType extends Exception {
+	private static final long serialVersionUID = 1L;
+
+	UnsupportedValueType(String message) {
 		super(message);
 	}
 };

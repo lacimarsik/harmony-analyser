@@ -45,8 +45,8 @@ public class NNLSPlugin extends VampPlugin {
 	public NNLSPlugin() throws PluginLoader.LoadFailedException {
 		System.out.println("Plugin crash course started");
 
-		int sampleRate = 44100;
-		int adapterFlag = 0xff;
+		output = 3;
+		outputType = OutputType.ARRAY;
 
 		plugin = PluginLoader.getInstance().loadPlugin("nnls-chroma:nnls-chroma", sampleRate, adapterFlag);
 
