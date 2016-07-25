@@ -1,15 +1,16 @@
-package harmanal;
+package harmanal.vamp_plugins;
 
 import java.io.*;
 import java.util.*;
 import javax.sound.sampled.*;
-
 import org.vamp_plugins.*;
 
 /*
  * Notes: Vamp plugins using JVamp wrappers
+ * http://www.vamp-plugins.org/
+ * https://code.soundsoftware.ac.uk/projects/jvamp
  * 
- * - extracts made from Vamp SDK documentation
+ * - extract from Vamp SDK documentation
  * 
  * Plugin - base class for a Vamp plugin
  * PluginLoader - singleton class to obtain a concrete plugin based on:
@@ -70,171 +71,129 @@ import org.vamp_plugins.*;
  * - predefined set of parameters that work well for certain sorts of tasks
  * - getProgramNames, getCurrentProgram, selectProgram
  * 
- * NNLS Chroma Plugin
- * 
- * - spectral frame-wise input -> log-frequency spectrum
- * - first there are 3 bins per semitone, bins 2, 5, 8 correspond to semitones
- * - tuning so that out-tuned input is well-analyzed as well
- * - spectral whitening, NNLS approximate transcription - spectrum mapped to 12 bins
- * parameters
- * - use NNLS chroma transcription: on or off (for linear spectral mapping)
- * -- preferred: on
- * - spectral roll-on: removing the low-frequency noise, useful for quiet recordings
- * -- preferred: 1.0%
- * - tuning mode: global or local, how to find out the tuning - locally or globally
- * -- preferred: global
- * - spectral whitening: 0.0-1.0 defines how much is the log-frequency spectrum whitened
- * -- preferred: 1.0
- * - spectral shape: 0.5-0.9 - shape of a note (amplitude has a decreasing pattern) 
- * - preferred: 0.7
- * outputs
- * - log-frequency spectrum (3 bins per semitone)
- * - tuned log-frequency spectrum
- * - semitone spectrum
- * - bass chromagram (12-dimensional)
- * - chromagram (12-dimensional)
- * - chromagram and bass chromagram
- * - consonance estimate
- * 
  */
 
 /**
- * Wrapper for NNLS Chroma VAMP plugin
+ * Wrapper for abstract VampPlugin
  */
 
-public class NNLSPlugin {
-	
+public class VampPlugin {
 	Plugin plugin;
 
-	public NNLSPlugin() throws PluginLoader.LoadFailedException {
-		System.out.println("Plugin crash course started");
+	int sampleRate = 44100;
+	int adapterFlag = 0xff;
+	int stepSize = 16384;
+	int blockSize = 16384;
 
-		int sampleRate = 44100;
-		int adapterFlag = 0xff;
+	int output;
+	OutputType outputType;
 
-		plugin = PluginLoader.getInstance().loadPlugin("nnls-chroma:nnls-chroma", sampleRate, adapterFlag);
-
-		System.out.println("Plugin " + plugin.getName() + " loaded");
-
-		plugin.setParameter("useNNLS", 1);
-		plugin.setParameter("rollon", 1);
-		plugin.setParameter("tuningMode", 0);
-		plugin.setParameter("whitening", 1);
-		plugin.setParameter("s", (float) 0.7);
-		plugin.setParameter("chromanormalize", 0);
-
-		System.out.println("All parameters set.");
-	}
-	
 	public void analyze(String inputFile, String outputFile) {
-		
 		try {
-			// set before analyzing!
-			int sampleRate = 22050;
-			//int sampleRate = 44100;
-			
-			
-			File fileIn = new File(/*"resources/" + */inputFile);
+			File fileIn = new File(inputFile);
 
 			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(fileIn);
-			
 			System.out.println("Wav file opened.");
-			
 			System.out.println("Sample rate: " + audioInputStream.getFormat().getSampleRate());
 			System.out.println("Sample size: " + audioInputStream.getFormat().getSampleSizeInBits());
 			System.out.println("Channels: " + audioInputStream.getFormat().getChannels());
-			
+
 			int channels = audioInputStream.getFormat().getChannels();
-			
-			int stepSize = 16384;
-			int blockSize = 16384;
-			
+
 			if (plugin.initialise(channels, stepSize, blockSize)) {
 				System.out.println("Initialized");
 			} else {
 				throw new VampPluginUsageFailedException("Plugin " + plugin.getName() + " failed to initialize.");
 			}
-			
-			
+
 			int bytesPerFrame = audioInputStream.getFormat().getFrameSize();
-			int numBytes = 16384 * bytesPerFrame; 
+			int numBytes = blockSize * bytesPerFrame;
 			byte[] audioBytes = new byte[numBytes];
 			int numBytesRead = 0;
-			
-			int output = 3;
-			System.out.println("Output: " + plugin.getOutputDescriptors()[3].name + ".");
-			
+
+			System.out.println("Output: " + plugin.getOutputDescriptors()[output].name + ".");
 			List<Feature> featureList;
-			
-			FileWriter fstream = new FileWriter(/*"resources/" + */outputFile);
-			
+
+			FileWriter fstream = new FileWriter(outputFile);
 			BufferedWriter out = new BufferedWriter(fstream);
-			
+
 			float[][] inputBuffer = new float[channels][];
 			for (int i = 0; i < channels; i++) {
 				inputBuffer[i] = new float[blockSize];
 			}
-			
+
 			RealTime timeStamp;
 			int currentStep = 0;
 			int actualChannel = 0;
 			float sample = 0;
-			
-			while ((numBytesRead = audioInputStream.read(audioBytes)) != -1) {
 
+			while ((numBytesRead = audioInputStream.read(audioBytes)) != -1) {
 				for (int i = 0; i < numBytesRead-1; i+=2) {
 					sample = ((audioBytes[i] & 0xFF) | (audioBytes[i + 1] << 8)) / 32768.0F;
-					
-					inputBuffer[actualChannel][i / 4] = sample;		    		
+
+					inputBuffer[actualChannel][i / 4] = sample;
 					if (actualChannel == 0) {
 						actualChannel = 1;
 					} else {
 						actualChannel = 0;
 					}
 				}
-				
-				timeStamp = RealTime.frame2RealTime(currentStep * stepSize, sampleRate);
 
+				timeStamp = RealTime.frame2RealTime(currentStep * stepSize, sampleRate);
 				plugin.process(inputBuffer, timeStamp).get(0);
-				
+
 				currentStep++;
-			}	
+			}
 			featureList = plugin.getRemainingFeatures().get(output);
-			
+
 			for (Iterator<Feature> iterator = featureList.iterator(); iterator.hasNext();) {
 				Feature feature = (Feature) iterator.next();
-				out.write(feature.timestamp + ": ");
-				for (int j = 0; j < feature.values.length; j++) {
-					out.write(feature.values[j] + " ");
+				if (outputType == OutputType.ARRAY) {
+					out.write(feature.timestamp + ": ");
+					for (int j = 0; j < feature.values.length; j++) {
+						out.write(feature.values[j] + " ");
+					}
+				} else if (outputType == OutputType.LABEL) {
+					out.write(feature.timestamp + ",");
+					out.write("\"");
+					out.write(feature.label);
+					out.write("\"");
+				} else {
+					throw new UnsupportedValueType("Plugin " + plugin.getName() + " failed to analyse - unsupported value type.");
 				}
 				out.write("\n");
 			}
-
 			audioInputStream.close();
-
 			out.close();
-
 			plugin.dispose();
+		} catch (UnsupportedValueType e) {
+			e.printStackTrace();
 		} catch (UnsupportedAudioFileException e) {
-
 			e.printStackTrace();
 		} catch (IOException e) {
-
 			e.printStackTrace();
 		} catch (VampPluginUsageFailedException e) {
-
 			e.printStackTrace();
 		}
 	}
-	
+}
+
+enum OutputType {
+	ARRAY, LABEL
 }
 
 class VampPluginUsageFailedException extends Exception {
+	private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 1L; 
-	
 	VampPluginUsageFailedException(String message) {
 		super(message);
 	}
-	
+};
+
+class UnsupportedValueType extends Exception {
+	private static final long serialVersionUID = 1L;
+
+	UnsupportedValueType(String message) {
+		super(message);
+	}
 };

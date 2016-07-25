@@ -1,5 +1,6 @@
 package harmanal;
 
+import harmanal.vamp_plugins.*;
 import javax.sound.midi.*;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -21,7 +22,6 @@ public class HarmonyAnalyser extends JFrame {
 	private JButton playButton1;
 	private JTextPane textPane2;
 	private JButton loadPluginsButton;
-	private JButton extractChromasButton;
 	private JList list1;
 	private JTextPane textPane4;
 	private JTextPane textPane5;
@@ -42,10 +42,13 @@ public class HarmonyAnalyser extends JFrame {
 	private JCheckBox captureMIDICheckBox;
 	private JCheckBox captureMIDICheckBox1;
 	private JButton browseButton;
+	private JButton extractChromasButton;
+	private JButton segmentTrackButton;
 	private JButton analyzeComplexityButton;
 	private JFileChooser fileChooser;
 
 	private NNLSPlugin nnls;
+	private ChordinoPlugin chordino;
 	private Harmony harmony1,harmony2 = null;
 
 	/**
@@ -272,7 +275,7 @@ public class HarmonyAnalyser extends JFrame {
 					Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
 						@Override
 						public FileVisitResult preVisitDirectory(Path dir,
-								BasicFileAttributes attrs) {
+							BasicFileAttributes attrs) {
 							textPane3.setText(textPane3.getText() + "\nDir: " + dir.toString());
 							return FileVisitResult.CONTINUE;
 						}
@@ -304,10 +307,50 @@ public class HarmonyAnalyser extends JFrame {
 			}
 		});
 
+		segmentTrackButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent actionEvent) {
+				try {
+					textPane3.setText(textPane3.getText() + "\nStep 2: Segmenting audio tracks from given chroma files");
+					Path startPath = Paths.get(textField8.getText());
+					Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
+						@Override
+						public FileVisitResult preVisitDirectory(Path dir,
+							BasicFileAttributes attrs) {
+							textPane3.setText(textPane3.getText() + "\nDir: " + dir.toString());
+							return FileVisitResult.CONTINUE;
+						}
+
+						@Override
+						public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+							if (file.toString().endsWith(".wav")) {
+								textPane3.setText(textPane3.getText() + "\nSegmenting: " + file.toString());
+								try {
+									chordino = new ChordinoPlugin();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+								chordino.analyze(file.toString(), file.toString() + "-segmentation.txt");
+
+								textPane3.setText(textPane3.getText() + "\nSegmentation saved in: " + file.toString() + "-segmentation.txt");
+							}
+							return FileVisitResult.CONTINUE;
+						}
+
+						@Override
+						public FileVisitResult visitFileFailed(Path file, IOException e) {
+							return FileVisitResult.CONTINUE;
+						}
+					});
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+
 		analyzeComplexityButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				try {
-					textPane3.setText(textPane3.getText() + "\nStep 2: Analyzing complexity for audio files");
+					textPane3.setText(textPane3.getText() + "\nStep 3: Analyzing complexity for audio files");
 					Path startPath = Paths.get(textField8.getText());
 					Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
 						@Override
@@ -325,7 +368,7 @@ public class HarmonyAnalyser extends JFrame {
 
 								Harmanal.analyzeSong(
 									file.toString() + "-chromas.txt",
-									file.toString().replaceFirst("[.][^.]+$", "") + "_vamp_nnls-chroma_chordino_simplechord.csv",
+									file.toString() + "-segmentation.txt",
 									file.toString() + "-result.txt",
 									file.toString() + "-report.txt",
 									file.toString().replaceFirst("[.][^.]+$", "") + "_vamp_nnls-chroma_chordino_simplechord.csv-timestamps.txt"
