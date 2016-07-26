@@ -47,6 +47,7 @@ public class NNLSPlugin extends VampPlugin {
 
 		output = 3;
 		outputType = OutputType.ARRAY;
+		sampleRate = 44100;
 
 		plugin = PluginLoader.getInstance().loadPlugin("nnls-chroma:nnls-chroma", sampleRate, adapterFlag);
 

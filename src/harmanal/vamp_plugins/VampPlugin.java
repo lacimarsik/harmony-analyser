@@ -80,7 +80,7 @@ import org.vamp_plugins.*;
 public class VampPlugin {
 	Plugin plugin;
 
-	int sampleRate = 44100;
+	int sampleRate;
 	int adapterFlag = PluginLoader.AdapterFlags.ADAPT_ALL;
 	int stepSize = 16384;
 	int blockSize = 16384;
