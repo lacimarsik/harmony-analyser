@@ -70,6 +70,7 @@ public class HarmonyAnalyser extends JFrame {
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+		setTitle("Harmony Analyser");
 
 		/* Chord Transition Tool - Initialization */
 
