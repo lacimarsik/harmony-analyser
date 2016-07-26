@@ -81,12 +81,23 @@ public class VampPlugin {
 	Plugin plugin;
 
 	int sampleRate = 44100;
-	int adapterFlag = 0xff;
+	int adapterFlag = PluginLoader.AdapterFlags.ADAPT_ALL;
 	int stepSize = 16384;
 	int blockSize = 16384;
 
 	int output;
 	OutputType outputType;
+
+	public String getPlugins() {
+		String result = new String();
+		PluginLoader loader = PluginLoader.getInstance();
+		String[] plugins = loader.listPlugins();
+		result += "We know " + plugins.length + " plugins\n";
+		for (int i = 0; i < plugins.length; ++i) {
+			result += i + ": " + plugins[i] + "\n";
+		}
+		return result;
+	}
 
 	public void analyze(String inputFile, String outputFile) {
 		try {
