@@ -88,13 +88,68 @@ public class VampPlugin {
 	int output;
 	OutputType outputType;
 
-	public String getPlugins() {
+	public static final String[] WRAPPED_PLUGINS = new String[] {
+		"nnls-chroma:nnls-chroma",
+		"nnls-chroma:chordino"
+	};
+
+	public static String getPlugins() {
 		String result = new String();
 		PluginLoader loader = PluginLoader.getInstance();
 		String[] plugins = loader.listPlugins();
-		result += "We know " + plugins.length + " plugins\n";
+		result += "\n\n> VAMP Plugins loaded successfully\n";
+		result += "> Installed plugins (" + plugins.length + "):\n";
 		for (int i = 0; i < plugins.length; ++i) {
 			result += i + ": " + plugins[i] + "\n";
+		}
+		return result;
+	}
+
+	public static String getWrappedPlugins() {
+		String result = new String();
+		PluginLoader loader = PluginLoader.getInstance();
+		String[] plugins = loader.listPlugins();
+		List<String> wrappedPlugins = new ArrayList<String>();
+		for (int i = 0; i < plugins.length; ++i) {
+			for (String wrapped_plugin : WRAPPED_PLUGINS) {
+				if (plugins[i].equals(wrapped_plugin)) {
+					wrappedPlugins.add(i + ": " + plugins[i] + "\n");
+				}
+			}
+		}
+		result += "\n> Implemented plugins (" + wrappedPlugins.size() + "):\n";
+		for (String s : wrappedPlugins) {
+			result += s;
+		}
+		return result;
+	}
+
+	public String getParameters() {
+		String result = new String();
+		result += "\n> Parameters for " + plugin.getName() + "\n";
+		result += "identifier: " + plugin.getIdentifier() + "\n";
+		result += "description: " + plugin.getDescription() + "\n";
+		result += "version: " + plugin.getPluginVersion() + "\n";
+		Plugin.InputDomain domain = plugin.getInputDomain();
+		if (domain == Plugin.InputDomain.TIME_DOMAIN) {
+			result += "This is a time-domain plugin\n";
+		} else {
+			result += "This is a frequency-domain plugin\n";
+		}
+		ParameterDescriptor[] params = plugin.getParameterDescriptors();
+		result += "Plugin has " + params.length + " parameters(s)\n";
+		for (int i = 0; i < params.length; ++i) {
+			result += i + ": " + params[i].identifier + " (" + params[i].name + ")\n";
+		}
+		String[] progs = plugin.getPrograms();
+		result += "Plugin has " + progs.length + " program(s)\n";
+		for (int i = 0; i < progs.length; ++i) {
+			result += i + ": " + progs[i] + "\n";
+		}
+		OutputDescriptor[] outputs = plugin.getOutputDescriptors();
+		result += "Plugin has " + outputs.length + " output(s)\n";
+		for (int i = 0; i < outputs.length; ++i) {
+			result += i + ": " + outputs[i].identifier + " (sample type: " + outputs[i].sampleType + ")\n";
 		}
 		return result;
 	}
