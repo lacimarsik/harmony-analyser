@@ -25,9 +25,9 @@ public class ChordinoPluginTest {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(testWavFile.toString() + "-segmentation.txt"));
 			String line = reader.readLine();
-			assertEquals(line, " 0.185759637,\"N\"");
+			assertEquals(line, " 0.371519274,\"N\"");
 			line = reader.readLine();
-			assertEquals(line, " 0.232199546,\"B\"");
+			assertEquals(line, " 0.464399092,\"B\"");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

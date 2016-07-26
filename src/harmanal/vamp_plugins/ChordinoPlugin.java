@@ -23,6 +23,7 @@ public class ChordinoPlugin extends VampPlugin {
 
 		output = 0;
 		outputType = OutputType.LABEL;
+		sampleRate = 22050;
 
 		plugin = PluginLoader.getInstance().loadPlugin("nnls-chroma:chordino", sampleRate, adapterFlag);
 
