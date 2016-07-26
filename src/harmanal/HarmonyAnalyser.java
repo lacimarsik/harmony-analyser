@@ -248,7 +248,8 @@ public class HarmonyAnalyser extends JFrame {
 			public void actionPerformed(ActionEvent actionEvent) {
 				try {
 					nnls = new NNLSPlugin();
-					textPane3.setText("VAMP Plugins loaded");
+					textPane3.setText("VAMP Plugins loaded\n");
+					textPane3.setText(textPane3.getText() + nnls.getPlugins());
 				} catch (Exception e) {
 					textPane3.setText(e.getStackTrace().toString());
 				}
