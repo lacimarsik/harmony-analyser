@@ -260,7 +260,10 @@
                 <children>
                   <component id="c3a2e" class="javax.swing.JTextPane" binding="textPane9" default-binding="true">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <minimumSize width="-1" height="50"/>
+                      <preferredSize width="-1" height="50"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>
