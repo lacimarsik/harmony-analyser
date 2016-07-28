@@ -88,7 +88,9 @@ import org.vamp_plugins.*;
  */
 
 /**
- * Wrapper for abstract VampPlugin
+ * Wrapper for abstract VampPlugin inspired by JVamp host
+ *
+ * https://github.com/c4dm/jvamp/blob/master/host/host.java
  */
 
 public class VampPlugin {
