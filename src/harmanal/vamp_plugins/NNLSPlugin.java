@@ -54,7 +54,7 @@ public class NNLSPlugin extends VampPlugin {
 		System.out.println("Plugin " + plugin.getName() + " loaded");
 
 		plugin.setParameter("useNNLS", 1);
-		plugin.setParameter("rollon", 1);
+		plugin.setParameter("rollon", 0);
 		plugin.setParameter("tuningMode", 0);
 		plugin.setParameter("whitening", 1);
 		plugin.setParameter("s", (float) 0.7);
