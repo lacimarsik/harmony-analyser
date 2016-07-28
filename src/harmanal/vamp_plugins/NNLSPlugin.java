@@ -6,7 +6,7 @@ import org.vamp_plugins.*;
  * Implements NNLS Chroma plugin using JVamp wrappers
  * http://www.isophonics.net/nnls-chroma
  * https://code.soundsoftware.ac.uk/projects/jvamp
- * 
+ *
  * NNLS Chroma Plugin (Excerpts from http://www.isophonics.net)
  * 
  * - spectral frame-wise input -> log-frequency spectrum
@@ -29,13 +29,12 @@ import org.vamp_plugins.*;
  * -- determines the type of chroma normalisation
  *
  * outputs
- * - log-frequency spectrum (3 bins per semitone)
- * - tuned log-frequency spectrum
- * - semitone spectrum
- * - bass chromagram (12-dimensional)
- * - chromagram (12-dimensional)
- * - chromagram and bass chromagram
- * - consonance estimate
+ * 0: log-frequency spectrum (3 bins per semitone)
+ * 1: tuned log-frequency spectrum
+ * 2: semitone spectrum
+ * 3: chromagram (12-dimensional)
+ * 4: bass chromagram (12-dimensional)
+ * 5: chromagram and bass chromagram
  */
 
 /**

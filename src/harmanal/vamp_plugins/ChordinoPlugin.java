@@ -6,7 +6,7 @@ import org.vamp_plugins.*;
  * Implements Chordino plugin using JVamp wrappers
  * http://www.isophonics.net/nnls-chroma
  * https://code.soundsoftware.ac.uk/projects/jvamp
- * 
+ *
  * Chordino Plugin (Excerpts from http://www.isophonics.net)
  * 
  * - chord transcription, based on NNLS Chroma plugin
@@ -33,6 +33,11 @@ import org.vamp_plugins.*;
  * - use Harte syntax: as described on ISMIR 2005
  * -- preferred: off
  *
+ * output
+ * 0: simplechord - Chord estimate
+ * 1: chordnotes - Note representation of a chord estimate in MIDI
+ * 2: harmonicchange - Indication of the likelihood of harmonic change
+ * 3: loglikelihood - Log likelihood of harmonic change
  */
 
 /**

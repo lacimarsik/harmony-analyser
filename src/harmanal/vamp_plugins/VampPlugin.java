@@ -6,13 +6,14 @@ import javax.sound.sampled.*;
 import org.vamp_plugins.*;
 
 /*
- * Notes: Vamp plugins using JVamp wrappers
+ * Generic Vamp plugin class using JVamp wrappers
  * http://www.vamp-plugins.org/
  * https://code.soundsoftware.ac.uk/projects/jvamp
- * 
- * - extract from Vamp SDK documentation
- * 
+ *
+ * - extract from https://code.soundsoftware.ac.uk/projects/vamp-plugin-sdk
+ *
  * Plugin - base class for a Vamp plugin
+ *
  * PluginLoader - singleton class to obtain a concrete plugin based on:
  *  - key ("plugin_set:name_of_plugin")
  *  - sample rate
@@ -21,26 +22,36 @@ import org.vamp_plugins.*;
  *  -- ADAPT_CHANNEL_COUNT(0x02), plugin will adapt the # of channels if neccessary
  *  -- ADAPT_BUFFER_SIZE(0x04), plugin will adapt the buffer size itself
  *  -- ADAPT_ALL(0xff); all meaningful adaptations
+ *
  * getIdentifier() - unique identifier of the plugin
+ *
  * channel - one (or possibly more) audio channels that the plugin will analyze the data from
+ *
  * initialise(# of channels, step size, block size) - initializes the plugin
+ *
  * process(float[][] inputBuffers, RealTime timestamp)
  *  - multiple calls to process, each time passed a block size # of samples, stepping by step size # of samples
  *  -- step size is a step between the first samples of the block
  *  - inputBuffers[0][blockSize-1]] - the last sample from the block on the first channel
  *  - returns FeatureSet
  *  - last block may be partial (filled with zeros)!
+ *
  * getInputDomain() - the type of the input
  *  - time domain: classical PCM samples audio, float amplitude samples
  *  - frequency domain: already done fourier transform on each block of input, float amplitude&phase samples
  *    in the function of frequency. Usually size step smaller than block size because of the discontinuities
  *    after the FFT
+ *
  * getRemainingFeatures() - after all the process calls, gathers any remaining features
+ *
  * getPreferredBlockSize(), getPreferredStepSize() - if doesn't matter, returning 0
+ *
  * FeatureSet
  * - Map: key: id of output, value: FeatureList (List of Features)
  * - Each feature: optional timestamp and 0+ values (perhaps with labels)
+ *
  * getOutputDescriptors() - returns a vector of OutputDescriptors
+ *
  * OutputDescriptor
  * - OutputDescriptor with id i describes output with id i
  * - identifier, name, description (same as for plugin)
@@ -54,10 +65,13 @@ import org.vamp_plugins.*;
  * -- VariableSampleRate - the Features must have a timestamp
  * - sampleRate - number of Features per second
  * - isQuantized, quantizeStep - if the output values are only e.g. integers
+ *
  * Feature
  * - hasTimestamp
  * - hasDuration
+ *
  * getParameterDescriptors() - returns a vector of ParameterDescriptors
+ *
  * ParameterDescriptor
  * - identified by identifier
  * - getParameter(), setParameter()
@@ -67,10 +81,10 @@ import org.vamp_plugins.*;
  * - have to be set before the plugin is initialized, after they can not be changed!
  * - by setting parameters, some of the properties of plugin can be changed, like
  * -- sampleRate, sampleType, binCount, minValue, maxValue, preferredStepSize, preferredBlockSize
+ *
  * Programs
  * - predefined set of parameters that work well for certain sorts of tasks
  * - getProgramNames, getCurrentProgram, selectProgram
- * 
  */
 
 /**
