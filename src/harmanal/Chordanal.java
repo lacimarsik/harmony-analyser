@@ -687,7 +687,7 @@ public class Chordanal {
 		return result;
 	}
 	
-	/* Private methods */	
+	/* Private methods */
 	
 	private static boolean checkRelativeNames(String names) {
 		String[] namesArray = names.split(" ");
