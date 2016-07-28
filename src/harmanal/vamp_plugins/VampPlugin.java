@@ -137,9 +137,9 @@ public class VampPlugin {
 			result += "This is a frequency-domain plugin\n";
 		}
 		ParameterDescriptor[] params = plugin.getParameterDescriptors();
-		result += "Plugin has " + params.length + " parameters(s)\n";
+		result += "Plugin has " + params.length + " parameters\n";
 		for (int i = 0; i < params.length; ++i) {
-			result += i + ": " + params[i].identifier + " (" + params[i].name + ")\n";
+			result += i + ": " + params[i].identifier + " (" + params[i].name + ") SET TO: " + plugin.getParameter(params[i].identifier) + "\n";
 		}
 		String[] progs = plugin.getPrograms();
 		result += "Plugin has " + progs.length + " program(s)\n";
