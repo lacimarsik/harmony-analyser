@@ -4,7 +4,7 @@ Cross-platform Java application for analysing harmonies and chord progressions o
 ## Installation
 Pre-requisites:
 * Running [JRE](https://www.java.com/en/download/) 6 or higher on your machine
-* Download and install [Chordino and NNLS Chroma](http://www.isophonics.net/nnls-chroma) Vamp plugins 1.1 or higher, and [Queen Mary Vamp Plugin Set](https://code.soundsoftware.ac.uk/projects/qm-vamp-plugins/files) 1.7 or higher (Linux: compile and place `nnls-chroma.so` and `qm-vamp-plugins.so` to `usr/local/lib/vamp` folder)
+* Download and install [Chordino and NNLS Chroma](http://www.isophonics.net/nnls-chroma) Vamp plugins 1.1 or higher (Linux: compile and place `nnls-chroma.so` to `usr/local/lib/vamp` folder)
 
 To run the application:
 * Download and open `harmony-analyser-<version>.jar` (where version is the currently available version) located in `target` folder, using your Java Virtual Machine (or invoke `java -jar out/harmony_analyser-<version>.jar` in command-line)
