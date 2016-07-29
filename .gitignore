@@ -4,4 +4,6 @@
 .classpath
 bin
 test
-!src/harmanal/test
+target
+local-maven-lib/*
+!local-maven-lib/jvamp.jar
