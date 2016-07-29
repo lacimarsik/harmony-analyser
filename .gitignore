@@ -4,5 +4,6 @@
 .classpath
 bin
 test
+target
 local-maven-lib/*
 !local-maven-lib/jvamp.jar
