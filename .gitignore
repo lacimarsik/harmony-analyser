@@ -7,6 +7,4 @@ test
 !src/test
 target/*
 !target/*.jar
-local-maven-repo/*
-!local-maven-repo/jvamp.jar
 harmony-analyser.iml
