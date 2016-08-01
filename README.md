@@ -14,6 +14,7 @@ In addition to installation pre-requisites, a functional [JDK](http://www.oracle
 Project uses [Maven](https://maven.apache.org/) as the project management tool. Dependencies available in the public Maven repositories are pulled in automatically.
 Project uses a local dependency in form of JAR located in `lib`:
 * [jVamp](https://code.soundsoftware.ac.uk/projects/jvamp): Since the Vamp plugins are typically written in C++, we are using jVamp wrappers to load them in Java (jVamp uses JNI to work with native C++ code)
+
 To install the dependency properly, issue from the project root:
 `mvn install:install-file -DgroupId=org.vamp_plugins -DartifactId=jvamp -Dversion=1.3 -Dpackaging=jar -Dfile=./lib/jvamp.jar`
 
