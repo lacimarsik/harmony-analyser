@@ -12,7 +12,7 @@ To run the application:
 ## Development
 In addition to installation pre-requisites, a functional [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) needs to be installed in order to compile the source.
 Project uses [Maven](https://maven.apache.org/) as the project management tool. Dependencies available in the public Maven repositories are pulled in automatically.
-Project uses a local dependency in form of JAR located in the local Maven repository, which assures seamless integration using Maven:
+Project uses a local dependency in form of JAR located in the local Maven repository `local-maven-repo`, which assures seamless integration using Maven:
 * [jVamp](https://code.soundsoftware.ac.uk/projects/jvamp): Since the Vamp plugins are typically written in C++, we are using jVamp wrappers to load them in Java (jVamp uses JNI to work with native C++ code)
 
 ## Documentation

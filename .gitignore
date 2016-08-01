@@ -6,6 +6,6 @@ bin
 test
 target/*
 !target/*.jar
-local-maven-lib/*
-!local-maven-lib/jvamp.jar
+local-maven-repo/*
+!local-maven-repo/jvamp.jar
 harmony-analyser.iml
