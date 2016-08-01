@@ -16,7 +16,8 @@ public class NNLSPluginTest {
 	@Before
 	public void setUp() throws Exception {
 		nnls = new NNLSPlugin();
-		testWavFile = new File(getClass().getResource("test.wav").getPath().toString());
+		ClassLoader classLoader = getClass().getClassLoader();
+		testWavFile = new File(classLoader.getResource("test.wav").getPath().toString());
 	}
 
 	@Test
