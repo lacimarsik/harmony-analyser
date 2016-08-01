@@ -4,6 +4,7 @@
 .classpath
 bin
 test
+!src/test
 target/*
 !target/*.jar
 local-maven-repo/*
