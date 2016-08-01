@@ -8,3 +8,4 @@ target/*
 !target/*.jar
 local-maven-lib/*
 !local-maven-lib/jvamp.jar
+harmony-analyser.iml
