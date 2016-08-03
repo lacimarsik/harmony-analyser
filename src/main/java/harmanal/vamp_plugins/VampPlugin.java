@@ -252,6 +252,7 @@ public class VampPlugin {
 			printFeatures(timestamp, outputNumber, features, out);
 
 			stream.close();
+			out.close();
 			p.dispose();
 		} catch (UnsupportedAudioFileException e) {
 			result += e.getMessage();
