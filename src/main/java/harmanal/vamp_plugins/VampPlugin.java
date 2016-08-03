@@ -100,7 +100,7 @@ public class VampPlugin {
 	public Map<String, Float> parameters;
 	public int adapterFlag = PluginLoader.AdapterFlags.ADAPT_ALL;
 
-	public int defaultRate = 44000;
+	public int defaultRate = 44100;
 	public int blockSize = 16384;
 
 	protected Plugin p;
@@ -186,7 +186,7 @@ public class VampPlugin {
 			AudioInputStream stream = AudioSystem.getAudioInputStream(f);
 			AudioFormat format = stream.getFormat();
 
-			BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
+			PrintStream out = new PrintStream(new FileOutputStream(outputFile, true));
 
 			if (format.getSampleSizeInBits() != 16 || format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED || format.isBigEndian()) {
 				String errorMessage = "ERORR: Only 16-bit signed little-endian PCM files supported\n";
@@ -240,19 +240,15 @@ public class VampPlugin {
 					}
 
 					incomplete = (read < buffers[0].length);
-					RealTime timestamp = RealTime.frame2RealTime
-					(block * blockSize, (int)(rate + 0.5));
-					Map<Integer, List<Feature>>
-					features = p.process(buffers, timestamp);
+					RealTime timestamp = RealTime.frame2RealTime(block * blockSize, (int)(rate + 0.5));
+					Map<Integer, List<Feature>> features = p.process(buffers, timestamp);
 					printFeatures(timestamp, outputNumber, features, out);
 				}
 
 				++block;
 			}
-			Map<Integer, List<Feature>>
-			features = p.getRemainingFeatures();
-			RealTime timestamp = RealTime.frame2RealTime
-			(block * blockSize, (int)(rate + 0.5));
+			Map<Integer, List<Feature>> features = p.getRemainingFeatures();
+			RealTime timestamp = RealTime.frame2RealTime (block * blockSize, (int)(rate + 0.5));
 			printFeatures(timestamp, outputNumber, features, out);
 
 			stream.close();
@@ -295,24 +291,24 @@ public class VampPlugin {
 		return frames;
 	}
 
-	private static void printFeatures(RealTime frameTime, Integer output, Map<Integer, List<Feature>> features, BufferedWriter out) throws IOException {
+	private static void printFeatures(RealTime frameTime, Integer output, Map<Integer, List<Feature>> features, PrintStream out) throws IOException {
 		if (!features.containsKey(output)) return;
 
 		for (Feature f : features.get(output)) {
 			if (f.hasTimestamp) {
-				out.write(f.timestamp.toString());
+				out.print(f.timestamp.toString());
 			} else {
-				out.write(frameTime.toString());
+				out.print(frameTime.toString());
 			}
 			if (f.hasDuration) {
-				out.write("," + f.duration);
+				out.print("," + f.duration);
 			}
-			System.out.print(":");
+			out.print(":");
 			for (float v : f.values) {
-				out.write(" " + v);
+				out.print(" " + v);
 			}
-			out.write(" " + f.label);
-			out.write("\n");
+			out.print(" " + f.label);
+			out.println("");
 		}
 	}
 }
