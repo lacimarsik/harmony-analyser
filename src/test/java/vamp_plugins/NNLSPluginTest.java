@@ -26,7 +26,7 @@ public class NNLSPluginTest {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(testWavFile.toString() + "-chromas.txt"));
 			String line = reader.readLine();
-			assertEquals(" 0.185759637: 0.11778839 0.5713705 2.2835577 0.5476588 0.25853446 0.15571728 1.1885182 0.6510234 0.6329706 1.3712279 0.22570816 0.1900833 ", line);
+			assertEquals(" 0.371519274: 0.3387495 0.48584637 1.1177865 0.70092547 0.9088075 0.10086642 1.0208882 0.56879604 0.7536442 1.5223277 0.08982226 0.535174 ", line);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
