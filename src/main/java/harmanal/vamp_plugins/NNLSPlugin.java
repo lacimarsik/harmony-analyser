@@ -1,6 +1,7 @@
 package harmanal.vamp_plugins;
 
 import org.vamp_plugins.*;
+import java.util.*;
 
 /*
  * Implements NNLS Chroma plugin using JVamp wrappers
@@ -46,6 +47,7 @@ public class NNLSPlugin extends VampPlugin {
 		pluginKey = "nnls-chroma:nnls-chroma";
 		outputNumber = 3;
 
+		parameters = new HashMap<String, Float>();
 		parameters.put("useNNLS", (float) 1);
 		parameters.put("rollon", (float) 1.0);
 		parameters.put("tuningMode", (float) 0);

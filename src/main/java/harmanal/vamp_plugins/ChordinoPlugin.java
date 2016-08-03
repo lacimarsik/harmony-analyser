@@ -1,6 +1,7 @@
 package harmanal.vamp_plugins;
 
 import org.vamp_plugins.*;
+import java.util.*;
 
 /*
  * Implements Chordino plugin using JVamp wrappers
@@ -49,6 +50,7 @@ public class ChordinoPlugin extends VampPlugin {
 		pluginKey = "nnls-chroma:chordino";
 		outputNumber = 0;
 
+		parameters = new HashMap<String, Float>();
 		parameters.put("useNNLS", (float) 1.0);
 		parameters.put("rollon", (float) 1.0);
 		parameters.put("tuningmode", (float) 0.0);
