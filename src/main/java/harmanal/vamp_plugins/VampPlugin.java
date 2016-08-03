@@ -189,7 +189,7 @@ public class VampPlugin {
 			PrintStream out = new PrintStream(new FileOutputStream(outputFile, true));
 
 			if (format.getSampleSizeInBits() != 16 || format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED || format.isBigEndian()) {
-				String errorMessage = "ERORR: Only 16-bit signed little-endian PCM files supported\n";
+				String errorMessage = "ERROR: Only 16-bit signed little-endian PCM files supported\n";
 				result += errorMessage;
 				return result;
 			}
