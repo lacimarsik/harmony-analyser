@@ -43,23 +43,17 @@ import org.vamp_plugins.*;
 
 public class NNLSPlugin extends VampPlugin {
 	public NNLSPlugin() throws PluginLoader.LoadFailedException {
-		System.out.println("Plugin crash course started");
+		pluginKey = "nnls-chroma:nnls-chroma";
+		outputNumber = 3;
 
-		output = 3;
-		outputType = OutputType.ARRAY;
-		sampleRate = 44100;
+		parameters.put("useNNLS", (float) 1);
+		parameters.put("rollon", (float) 1.0);
+		parameters.put("tuningMode", (float) 0);
+		parameters.put("whitening", (float) 1.0);
+		parameters.put("s", (float) 0.7);
+		parameters.put("chromanormalize", (float) 0);
 
-		plugin = PluginLoader.getInstance().loadPlugin("nnls-chroma:nnls-chroma", sampleRate, adapterFlag);
-
-		System.out.println("Plugin " + plugin.getName() + " loaded");
-
-		plugin.setParameter("useNNLS", 1);
-		plugin.setParameter("rollon", (float) 1.0);
-		plugin.setParameter("tuningMode", 0);
-		plugin.setParameter("whitening", (float) 1.0);
-		plugin.setParameter("s", (float) 0.7);
-		plugin.setParameter("chromanormalize", 0);
-
-		System.out.println("All parameters set.");
+		p = loader.loadPlugin(pluginKey, defaultRate, adapterFlag);
+		setParameters();
 	}
 }

@@ -248,7 +248,7 @@ public class HarmonyAnalyser extends JFrame {
 		loadPluginsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				try {
-					textPane3.setText(textPane3.getText() + VampPlugin.getPlugins() + VampPlugin.getWrappedPlugins());
+					textPane3.setText(textPane3.getText() + VampPlugin.printPlugins() + VampPlugin.printWrappedPlugins());
 				} catch (Exception e) {
 					textPane3.setText(e.getStackTrace().toString());
 				}
@@ -259,7 +259,7 @@ public class HarmonyAnalyser extends JFrame {
 			public void actionPerformed(ActionEvent actionEvent) {
 				try {
 					NNLSPlugin nnls = new NNLSPlugin();
-					textPane3.setText(textPane3.getText() + nnls.getParameters());
+					textPane3.setText(textPane3.getText() + nnls.printParameters());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -270,7 +270,7 @@ public class HarmonyAnalyser extends JFrame {
 			public void actionPerformed(ActionEvent actionEvent) {
 				try {
 					ChordinoPlugin chordino = new ChordinoPlugin();
-					textPane3.setText(textPane3.getText() + chordino.getParameters());
+					textPane3.setText(textPane3.getText() + chordino.printParameters());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -289,10 +289,47 @@ public class HarmonyAnalyser extends JFrame {
 			}
 		});
 
-		extractChromasButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
+		extractChromasButton.addActionListener(actionEvent -> {
+		try {
+			textPane3.setText(textPane3.getText() + "\n\n> Step 1: Extracting chromas from audio files");
+			Path startPath = Paths.get(textField8.getText());
+			Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
+				@Override
+				public FileVisitResult preVisitDirectory(Path dir,
+					BasicFileAttributes attrs) {
+					textPane3.setText(textPane3.getText() + "\nDir: " + dir.toString());
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+
+					if (file.toString().endsWith(".wav")) {
+						textPane3.setText(textPane3.getText() + "\nAnalyzing: " + file.toString());
+						try {
+							String analysisResult = new NNLSPlugin().analyze(file.toString(), file.toString() + "-chromas.txt");
+							textPane3.setText(textPane3.getText() + "\n" + analysisResult);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						textPane3.setText(textPane3.getText() + "\nOutput saved in: " + file.toString() + "-chromas.txt");
+					}
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFileFailed(Path file, IOException e) {
+					return FileVisitResult.CONTINUE;
+				}
+			});
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		});
+
+		segmentTrackButton.addActionListener(actionEvent -> {
 			try {
-				textPane3.setText(textPane3.getText() + "\n\n> Step 1: Extracting chromas from audio files");
+				textPane3.setText(textPane3.getText() + "\n\n> Step 2: Segmenting audio tracks from given chroma files");
 				Path startPath = Paths.get(textField8.getText());
 				Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
 					@Override
@@ -304,15 +341,16 @@ public class HarmonyAnalyser extends JFrame {
 
 					@Override
 					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-
 						if (file.toString().endsWith(".wav")) {
-							textPane3.setText(textPane3.getText() + "\nAnalyzing: " + file.toString());
+							textPane3.setText(textPane3.getText() + "\nSegmenting: " + file.toString());
 							try {
-								new NNLSPlugin().analyze(file.toString(), file.toString() + "-chromas.txt");
+								String analysisResult = new ChordinoPlugin().analyze(file.toString(), file.toString() + "-segmentation.txt");
+								textPane3.setText(textPane3.getText() + "\n" + analysisResult);
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
-							textPane3.setText(textPane3.getText() + "\nOutput saved in: " + file.toString() + "-chromas.txt");
+
+							textPane3.setText(textPane3.getText() + "\nSegmentation saved in: " + file.toString() + "-segmentation.txt");
 						}
 						return FileVisitResult.CONTINUE;
 					}
@@ -325,89 +363,47 @@ public class HarmonyAnalyser extends JFrame {
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
-			}
 		});
 
-		segmentTrackButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				try {
-					textPane3.setText(textPane3.getText() + "\n\n> Step 2: Segmenting audio tracks from given chroma files");
-					Path startPath = Paths.get(textField8.getText());
-					Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
-						@Override
-						public FileVisitResult preVisitDirectory(Path dir,
+		analyzeComplexityButton.addActionListener(actionEvent -> {
+			try {
+				textPane3.setText(textPane3.getText() + "\n\n> Step 3: Analyzing complexity for audio files");
+				Path startPath = Paths.get(textField8.getText());
+				Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
+					@Override
+					public FileVisitResult preVisitDirectory(Path dir,
 							BasicFileAttributes attrs) {
-							textPane3.setText(textPane3.getText() + "\nDir: " + dir.toString());
-							return FileVisitResult.CONTINUE;
+						textPane3.setText(textPane3.getText() + "\nDir: " + dir.toString());
+						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+
+						if (file.toString().endsWith(".wav")) {
+							textPane3.setText(textPane3.getText() + "\nAnalyzing: " + file.toString());
+
+							Harmanal.analyzeSong(
+								file.toString() + "-chromas.txt",
+								file.toString() + "-segmentation.txt",
+								file.toString() + "-result.txt",
+								file.toString() + "-report.txt",
+								file.toString() + "-timestamps.txt"
+							);
+
+							textPane3.setText(textPane3.getText() + "\nReport saved in: " + file.toString() + "-report.txt");
+							textPane3.setText(textPane3.getText() + "\nResult saved in: " + file.toString() + "-result.txt");
 						}
+						return FileVisitResult.CONTINUE;
+					}
 
-						@Override
-						public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-							if (file.toString().endsWith(".wav")) {
-								textPane3.setText(textPane3.getText() + "\nSegmenting: " + file.toString());
-								try {
-									new ChordinoPlugin().analyze(file.toString(), file.toString() + "-segmentation.txt");
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-
-								textPane3.setText(textPane3.getText() + "\nSegmentation saved in: " + file.toString() + "-segmentation.txt");
-							}
-							return FileVisitResult.CONTINUE;
-						}
-
-						@Override
-						public FileVisitResult visitFileFailed(Path file, IOException e) {
-							return FileVisitResult.CONTINUE;
-						}
-					});
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
-
-		analyzeComplexityButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				try {
-					textPane3.setText(textPane3.getText() + "\n\n> Step 3: Analyzing complexity for audio files");
-					Path startPath = Paths.get(textField8.getText());
-					Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
-						@Override
-						public FileVisitResult preVisitDirectory(Path dir,
-								BasicFileAttributes attrs) {
-							textPane3.setText(textPane3.getText() + "\nDir: " + dir.toString());
-							return FileVisitResult.CONTINUE;
-						}
-
-						@Override
-						public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-
-							if (file.toString().endsWith(".wav")) {
-								textPane3.setText(textPane3.getText() + "\nAnalyzing: " + file.toString());
-
-								Harmanal.analyzeSong(
-									file.toString() + "-chromas.txt",
-									file.toString() + "-segmentation.txt",
-									file.toString() + "-result.txt",
-									file.toString() + "-report.txt",
-									file.toString() + "-timestamps.txt"
-								);
-
-								textPane3.setText(textPane3.getText() + "\nReport saved in: " + file.toString() + "-report.txt");
-								textPane3.setText(textPane3.getText() + "\nResult saved in: " + file.toString() + "-result.txt");
-							}
-							return FileVisitResult.CONTINUE;
-						}
-
-						@Override
-						public FileVisitResult visitFileFailed(Path file, IOException e) {
-							return FileVisitResult.CONTINUE;
-						}
-					});
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
+					@Override
+					public FileVisitResult visitFileFailed(Path file, IOException e) {
+						return FileVisitResult.CONTINUE;
+					}
+				});
+			} catch (IOException ex) {
+				ex.printStackTrace();
 			}
 		});
 	}

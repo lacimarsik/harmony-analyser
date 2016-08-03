@@ -6,7 +6,7 @@ import javax.sound.sampled.*;
 import org.vamp_plugins.*;
 
 /*
- * Generic Vamp plugin class using JVamp wrappers
+ * Generic Vamp plugin wrapper class using JVamp wrappers
  * http://www.vamp-plugins.org/
  * https://code.soundsoftware.ac.uk/projects/jvamp
  *
@@ -94,24 +94,29 @@ import org.vamp_plugins.*;
  */
 
 public class VampPlugin {
-	Plugin plugin;
+	public String pluginKey;
+	public int outputNumber;
 
-	int sampleRate;
-	int adapterFlag = PluginLoader.AdapterFlags.ADAPT_ALL;
-	int stepSize = 16384;
-	int blockSize = 16384;
+	public Map<String, Float> parameters;
+	public int adapterFlag = PluginLoader.AdapterFlags.ADAPT_ALL;
 
-	int output;
-	OutputType outputType;
+	public int defaultRate = 44000;
+	public int blockSize = 16384;
+
+	protected Plugin p;
+	protected static PluginLoader loader;
+
+	static {
+		loader = PluginLoader.getInstance();
+	}
 
 	public static final String[] WRAPPED_PLUGINS = new String[] {
 		"nnls-chroma:nnls-chroma",
 		"nnls-chroma:chordino"
 	};
 
-	public static String getPlugins() {
+	public static String printPlugins() {
 		String result = new String();
-		PluginLoader loader = PluginLoader.getInstance();
 		String[] plugins = loader.listPlugins();
 		result += "\n\n> VAMP Plugins loaded successfully\n";
 		result += "> Installed plugins (" + plugins.length + "):\n";
@@ -121,9 +126,8 @@ public class VampPlugin {
 		return result;
 	}
 
-	public static String getWrappedPlugins() {
+	public static String printWrappedPlugins() {
 		String result = new String();
-		PluginLoader loader = PluginLoader.getInstance();
 		String[] plugins = loader.listPlugins();
 		List<String> wrappedPlugins = new ArrayList<String>();
 		for (int i = 0; i < plugins.length; ++i) {
@@ -140,142 +144,175 @@ public class VampPlugin {
 		return result;
 	}
 
-	public String getParameters() {
+	public String printParameters() {
 		String result = new String();
-		result += "\n> Parameters for " + plugin.getName() + "\n";
-		result += "identifier: " + plugin.getIdentifier() + "\n";
-		result += "description: " + plugin.getDescription() + "\n";
-		result += "version: " + plugin.getPluginVersion() + "\n";
-		Plugin.InputDomain domain = plugin.getInputDomain();
+
+		result += "\n> Parameters for " + p.getName() + "\n";
+		result += "identifier: " + p.getIdentifier() + "\n";
+		result += "description: " + p.getDescription() + "\n";
+		result += "version: " + p.getPluginVersion() + "\n";
+		Plugin.InputDomain domain = p.getInputDomain();
 		if (domain == Plugin.InputDomain.TIME_DOMAIN) {
-			result += "This is a time-domain plugin\n";
+			result += "This is a time-domain p\n";
 		} else {
-			result += "This is a frequency-domain plugin\n";
+			result += "This is a frequency-domain p\n";
 		}
-		ParameterDescriptor[] params = plugin.getParameterDescriptors();
+		ParameterDescriptor[] params = p.getParameterDescriptors();
 		result += "Plugin has " + params.length + " parameters\n";
 		for (int i = 0; i < params.length; ++i) {
-			result += i + ": " + params[i].identifier + " (" + params[i].name + ") SET TO: " + plugin.getParameter(params[i].identifier) + "\n";
+			result += i + ": " + params[i].identifier + " (" + params[i].name + ") SET TO: " + p.getParameter(params[i].identifier) + "\n";
 		}
-		String[] progs = plugin.getPrograms();
+		String[] progs = p.getPrograms();
 		result += "Plugin has " + progs.length + " program(s)\n";
 		for (int i = 0; i < progs.length; ++i) {
 			result += i + ": " + progs[i] + "\n";
 		}
-		OutputDescriptor[] outputs = plugin.getOutputDescriptors();
-		result += "Plugin has " + outputs.length + " output(s)\n";
+		OutputDescriptor[] outputs = p.getOutputDescriptors();
+		result += "Plugin has " + outputs.length + " outputNumber(s)\n";
 		for (int i = 0; i < outputs.length; ++i) {
 			result += i + ": " + outputs[i].identifier + " (sample type: " + outputs[i].sampleType + ")\n";
 		}
 		return result;
 	}
 
-	public void analyze(String inputFile, String outputFile) {
+	/*
+	 * Analyze audio using Vamp plugin. Courtesy of https://code.soundsoftware.ac.uk/projects/jvamp/repository/entry/host/host.java
+	 */
+	public String analyze(String inputFile, String outputFile) {
+		String result = new String();
+
 		try {
-			File fileIn = new File(inputFile);
+			File f = new File(inputFile);
+			AudioInputStream stream = AudioSystem.getAudioInputStream(f);
+			AudioFormat format = stream.getFormat();
 
-			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(fileIn);
-			System.out.println("Wav file opened.");
-			System.out.println("Sample rate: " + audioInputStream.getFormat().getSampleRate());
-			System.out.println("Sample size: " + audioInputStream.getFormat().getSampleSizeInBits());
-			System.out.println("Channels: " + audioInputStream.getFormat().getChannels());
+			BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
 
-			int channels = audioInputStream.getFormat().getChannels();
-
-			if (plugin.initialise(channels, stepSize, blockSize)) {
-				System.out.println("Initialized");
-			} else {
-				throw new VampPluginUsageFailedException("Plugin " + plugin.getName() + " failed to initialize.");
+			if (format.getSampleSizeInBits() != 16 || format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED || format.isBigEndian()) {
+				String errorMessage = "ERORR: Only 16-bit signed little-endian PCM files supported\n";
+				result += errorMessage;
+				return result;
 			}
 
-			int bytesPerFrame = audioInputStream.getFormat().getFrameSize();
-			int numBytes = blockSize * bytesPerFrame;
-			byte[] audioBytes = new byte[numBytes];
-			int numBytesRead = 0;
+			float rate = format.getFrameRate();
+			int channels = format.getChannels();
+			int bytesPerFrame = format.getFrameSize();
 
-			System.out.println("Output: " + plugin.getOutputDescriptors()[output].name + ".");
-			List<Feature> featureList;
+			result += "Wav file: " + f.getName() + "\n";
+			result += "Sample rate: " + rate + "\n";
+			result += "Channels: " + channels + "\n";
+			result += "Bytes per frame: " + bytesPerFrame + "\n";
+			result += "Output: " + this.p.getOutputDescriptors()[outputNumber].name + "\n";
 
-			FileWriter fstream = new FileWriter(outputFile);
-			BufferedWriter out = new BufferedWriter(fstream);
+			p = loader.loadPlugin(pluginKey, rate, adapterFlag);
+			setParameters();
 
-			float[][] inputBuffer = new float[channels][];
-			for (int i = 0; i < channels; i++) {
-				inputBuffer[i] = new float[blockSize];
+			boolean b = p.initialise(channels, blockSize, blockSize);
+			if (!b) {
+				String errorMessage = "Plugin initialise failed\n";
+				result += errorMessage;
+				return result;
 			}
 
-			RealTime timeStamp;
-			int currentStep = 0;
-			int actualChannel = 0;
-			float sample = 0;
+			float[][] buffers = new float[channels][blockSize];
 
-			while ((numBytesRead = audioInputStream.read(audioBytes)) != -1) {
-				for (int i = 0; i < numBytesRead-1; i+=2) {
-					sample = ((audioBytes[i] & 0xFF) | (audioBytes[i + 1] << 8)) / 32768.0F;
+			boolean done = false;
+			boolean incomplete = false;
+			int block = 0;
 
-					inputBuffer[actualChannel][i / 4] = sample;
-					if (actualChannel == 0) {
-						actualChannel = 1;
-					} else {
-						actualChannel = 0;
+			while (!done) {
+				for (int c = 0; c < channels; ++c) {
+					for (int i = 0; i < blockSize; ++i) {
+						buffers[c][i] = 0.0f;
 					}
 				}
-
-				timeStamp = RealTime.frame2RealTime(currentStep * stepSize, sampleRate);
-				plugin.process(inputBuffer, timeStamp).get(0);
-
-				currentStep++;
-			}
-			featureList = plugin.getRemainingFeatures().get(output);
-
-			for (Iterator<Feature> iterator = featureList.iterator(); iterator.hasNext();) {
-				Feature feature = (Feature) iterator.next();
-				if (outputType == OutputType.ARRAY) {
-					out.write(feature.timestamp + ": ");
-					for (int j = 0; j < feature.values.length; j++) {
-						out.write(feature.values[j] + " ");
-					}
-				} else if (outputType == OutputType.LABEL) {
-					out.write(feature.timestamp + ",");
-					out.write("\"");
-					out.write(feature.label);
-					out.write("\"");
+				int read = readBlock(format, stream, buffers);
+				if (read < 0) {
+					done = true;
 				} else {
-					throw new UnsupportedValueType("Plugin " + plugin.getName() + " failed to analyse - unsupported value type.");
+					if (incomplete) {
+						// An incomplete block is only OK if it's the
+						// last one -- so if the previous block was
+						// incomplete, we have trouble
+						String errorMessage = "Audio file read incomplete! Short buffer detected at " + block * blockSize + "\n";
+						result += errorMessage;
+						return result;
+					}
+
+					incomplete = (read < buffers[0].length);
+					RealTime timestamp = RealTime.frame2RealTime
+					(block * blockSize, (int)(rate + 0.5));
+					Map<Integer, List<Feature>>
+					features = p.process(buffers, timestamp);
+					printFeatures(timestamp, outputNumber, features, out);
 				}
-				out.write("\n");
+
+				++block;
 			}
-			audioInputStream.close();
-			out.close();
-			plugin.dispose();
-		} catch (UnsupportedValueType e) {
-			e.printStackTrace();
+			Map<Integer, List<Feature>>
+			features = p.getRemainingFeatures();
+			RealTime timestamp = RealTime.frame2RealTime
+			(block * blockSize, (int)(rate + 0.5));
+			printFeatures(timestamp, outputNumber, features, out);
+
+			stream.close();
+			p.dispose();
 		} catch (UnsupportedAudioFileException e) {
+			result += e.getMessage();
 			e.printStackTrace();
 		} catch (IOException e) {
+			result += e.getMessage();
 			e.printStackTrace();
-		} catch (VampPluginUsageFailedException e) {
+		} catch (PluginLoader.LoadFailedException e) {
+			result += e.getMessage();
 			e.printStackTrace();
+		} finally {
+			return result;
+		}
+	}
+
+	protected void setParameters() {
+		for (Map.Entry<String, Float> entry : parameters.entrySet()) {
+			p.setParameter(entry.getKey(), entry.getValue());
+		}
+	}
+
+	private static int readBlock(AudioFormat format, AudioInputStream stream, float[][] buffers) throws java.io.IOException {
+		// 16-bit LE signed PCM only
+		int channels = format.getChannels();
+		byte[] raw = new byte[buffers[0].length * channels * 2];
+		int read = stream.read(raw);
+		if (read < 0) return read;
+		int frames = read / (channels * 2);
+		for (int i = 0; i < frames; ++i) {
+			for (int c = 0; c < channels; ++c) {
+				int ix = i * channels + c;
+				int ival = (raw[ix*2] & 0xff) | (raw[ix*2 + 1] << 8);
+				float fval = ival / 32768.0f;
+				buffers[c][i] = fval;
+			}
+		}
+		return frames;
+	}
+
+	private static void printFeatures(RealTime frameTime, Integer output, Map<Integer, List<Feature>> features, BufferedWriter out) throws IOException {
+		if (!features.containsKey(output)) return;
+
+		for (Feature f : features.get(output)) {
+			if (f.hasTimestamp) {
+				out.write(f.timestamp + "\n");
+			} else {
+				System.out.print(frameTime);
+			}
+			if (f.hasDuration) {
+				System.out.print("," + f.duration);
+			}
+			System.out.print(":");
+			for (float v : f.values) {
+				System.out.print(" " + v);
+			}
+			System.out.print(" " + f.label);
+			System.out.println("");
 		}
 	}
 }
-
-enum OutputType {
-	ARRAY, LABEL
-}
-
-class VampPluginUsageFailedException extends Exception {
-	private static final long serialVersionUID = 1L;
-
-	VampPluginUsageFailedException(String message) {
-		super(message);
-	}
-};
-
-class UnsupportedValueType extends Exception {
-	private static final long serialVersionUID = 1L;
-
-	UnsupportedValueType(String message) {
-		super(message);
-	}
-};

@@ -33,7 +33,7 @@ import org.vamp_plugins.*;
  * - use Harte syntax: as described on ISMIR 2005
  * -- preferred: off
  *
- * output
+ * outputNumber
  * 0: simplechord - Chord estimate
  * 1: chordnotes - Note representation of a chord estimate in MIDI
  * 2: harmonicchange - Indication of the likelihood of harmonic change
@@ -46,24 +46,18 @@ import org.vamp_plugins.*;
 
 public class ChordinoPlugin extends VampPlugin {
 	public ChordinoPlugin() throws PluginLoader.LoadFailedException {
-		System.out.println("Plugin crash course started");
+		pluginKey = "nnls-chroma:chordino";
+		outputNumber = 0;
 
-		output = 0;
-		outputType = OutputType.LABEL;
-		sampleRate = 22050;
+		parameters.put("useNNLS", (float) 1.0);
+		parameters.put("rollon", (float) 1.0);
+		parameters.put("tuningmode", (float) 0.0);
+		parameters.put("whitening", (float) 1.0);
+		parameters.put("s", (float) 0.7);
+		parameters.put("boostn", (float) 0.1);
+		parameters.put("usehartesyntax", (float) 0.0);
 
-		plugin = PluginLoader.getInstance().loadPlugin("nnls-chroma:chordino", sampleRate, adapterFlag);
-
-		System.out.println("Plugin " + plugin.getName() + " loaded");
-
-		plugin.setParameter("useNNLS", 1);
-		plugin.setParameter("rollon", (float) 1.0);
-		plugin.setParameter("tuningmode", 0);
-		plugin.setParameter("whitening", (float) 1.0);
-		plugin.setParameter("s", (float) 0.7);
-		plugin.setParameter("boostn", (float) 0.1);
-		plugin.setParameter("usehartesyntax", 0);
-
-		System.out.println("All parameters set.");
+		p = loader.loadPlugin(pluginKey, defaultRate, adapterFlag);
+		setParameters();
 	}
 }
