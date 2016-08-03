@@ -300,19 +300,19 @@ public class VampPlugin {
 
 		for (Feature f : features.get(output)) {
 			if (f.hasTimestamp) {
-				out.write(f.timestamp + "\n");
+				out.write(f.timestamp.toString());
 			} else {
-				System.out.print(frameTime);
+				out.write(frameTime.toString());
 			}
 			if (f.hasDuration) {
-				System.out.print("," + f.duration);
+				out.write("," + f.duration);
 			}
 			System.out.print(":");
 			for (float v : f.values) {
-				System.out.print(" " + v);
+				out.write(" " + v);
 			}
-			System.out.print(" " + f.label);
-			System.out.println("");
+			out.write(" " + f.label);
+			out.write("\n");
 		}
 	}
 }
