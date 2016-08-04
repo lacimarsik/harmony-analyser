@@ -305,14 +305,14 @@ public class HarmonyAnalyser extends JFrame {
 				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
 
 					if (file.toString().endsWith(".wav")) {
-						textPane3.setText(textPane3.getText() + "\nAnalyzing: " + file.toString());
+						textPane3.setText(textPane3.getText() + "\nAnalyzing: " + file.toString() + "\n");
 						try {
 							String analysisResult = new NNLSPlugin().analyze(file.toString(), file.toString() + "-chromas.txt");
 							textPane3.setText(textPane3.getText() + "\n" + analysisResult);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						textPane3.setText(textPane3.getText() + "\nOutput saved in: " + file.toString() + "-chromas.txt");
+						textPane3.setText(textPane3.getText() + "\nOutput saved in: " + file.toString() + "-chromas.txt\n");
 					}
 					return FileVisitResult.CONTINUE;
 				}
