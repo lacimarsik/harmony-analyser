@@ -342,7 +342,7 @@ public class HarmonyAnalyser extends JFrame {
 					@Override
 					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
 						if (file.toString().endsWith(".wav")) {
-							textPane3.setText(textPane3.getText() + "\nSegmenting: " + file.toString());
+							textPane3.setText(textPane3.getText() + "\nSegmenting: " + file.toString() + "\n");
 							try {
 								String analysisResult = new ChordinoPlugin().analyze(file.toString(), file.toString() + "-segmentation.txt");
 								textPane3.setText(textPane3.getText() + "\n" + analysisResult);
@@ -350,7 +350,7 @@ public class HarmonyAnalyser extends JFrame {
 								e.printStackTrace();
 							}
 
-							textPane3.setText(textPane3.getText() + "\nSegmentation saved in: " + file.toString() + "-segmentation.txt");
+							textPane3.setText(textPane3.getText() + "\nSegmentation saved in: " + file.toString() + "-segmentation.txt\n");
 						}
 						return FileVisitResult.CONTINUE;
 					}
@@ -381,7 +381,7 @@ public class HarmonyAnalyser extends JFrame {
 					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
 
 						if (file.toString().endsWith(".wav")) {
-							textPane3.setText(textPane3.getText() + "\nAnalyzing: " + file.toString());
+							textPane3.setText(textPane3.getText() + "\nAnalyzing: " + file.toString() + "\n");
 
 							Harmanal.analyzeSong(
 								file.toString() + "-chromas.txt",
@@ -392,7 +392,7 @@ public class HarmonyAnalyser extends JFrame {
 							);
 
 							textPane3.setText(textPane3.getText() + "\nReport saved in: " + file.toString() + "-report.txt");
-							textPane3.setText(textPane3.getText() + "\nResult saved in: " + file.toString() + "-result.txt");
+							textPane3.setText(textPane3.getText() + "\nResult saved in: " + file.toString() + "-result.txt\n");
 						}
 						return FileVisitResult.CONTINUE;
 					}
