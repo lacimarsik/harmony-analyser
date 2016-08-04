@@ -499,7 +499,7 @@ public class Harmanal {
 		for (String string : lines2) {
 			Scanner sc2 = new Scanner(string);
 			String temp = sc2.next();
-			temp = temp.substring(0, temp.indexOf(","));
+			temp = temp.substring(0, temp.indexOf(":"));
 			// DEBUG
 			//System.out.println("timestamp: " + temp);
 			bars.add(Float.parseFloat(temp));
