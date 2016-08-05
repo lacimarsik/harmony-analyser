@@ -12,8 +12,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-//TODO: Complete Harmony complexity (Complexity of a single tone and single tone + added tone)
-//TODO: Complete Transition complexity (Complexity of non-diatonic modulations)
+// TODO: Complete Harmony complexity (Complexity of a single tone and single tone + added tone)
+// TODO: Complete Transition complexity (Complexity of non-diatonic modulations)
+// TODO: Create AudioAnalyser - class for analysis of audio using Vamp plugins + Chordanal + Harmanal (Harmanal plugins)
 
 /**
  * Class to handle all functional complexity and transition complexity
