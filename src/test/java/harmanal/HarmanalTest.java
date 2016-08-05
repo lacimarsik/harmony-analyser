@@ -1,6 +1,9 @@
 package harmanal;
 
+import harmanal.vamp_plugins.*;
+import org.vamp_plugins.*;
 import org.junit.*;
+
 import java.io.*;
 
 import static org.junit.Assert.assertEquals;
@@ -81,5 +84,34 @@ public class HarmanalTest {
 	@Test
 	public void shouldGetTransitionComplexityForHarmonies() {
 		assertEquals(Harmanal.getTransitionComplexity(Chordanal.createHarmonyFromTones("C2 E2 G2"), Chordanal.createHarmonyFromTones("F2 A2 C2 C#2")),2);
+	}
+
+	@Test
+	public void shouldCreateReportAndResult() {
+		try {
+			new NNLSPlugin().analyze(testWavFile.toString(), testWavFile.toString() + "-chromas.txt");
+			new ChordinoPlugin().analyze(testWavFile.toString(), testWavFile.toString() + "-segmentation.txt");
+		} catch (PluginLoader.LoadFailedException e) {
+			e.printStackTrace();
+		}
+		Harmanal.analyzeSong(
+				testWavFile.toString() + "-chromas.txt",
+				testWavFile.toString() + "-segmentation.txt",
+				testWavFile.toString() + "-result.txt",
+				testWavFile.toString() + "-report.txt",
+				testWavFile.toString() + "-timestamps.txt"
+		);
+		try {
+			String line;
+			BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-report.txt"));
+			line= readerReport.readLine();
+			assertEquals("0 0 1 0 1 0 1 0 0 1 0 0 ", line);
+
+			BufferedReader readerResult = new BufferedReader(new FileReader(testWavFile.toString() + "-result.txt"));
+			line = readerResult.readLine();
+			assertEquals("0.33333334 ", line);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
