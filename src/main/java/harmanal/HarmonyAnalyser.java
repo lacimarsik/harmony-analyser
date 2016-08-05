@@ -383,13 +383,17 @@ public class HarmonyAnalyser extends JFrame {
 						if (file.toString().endsWith(".wav")) {
 							textPane3.setText(textPane3.getText() + "\nAnalyzing: " + file.toString() + "\n");
 
-							Harmanal.analyzeSong(
-								file.toString() + "-chromas.txt",
-								file.toString() + "-segmentation.txt",
-								file.toString() + "-result.txt",
-								file.toString() + "-report.txt",
-								file.toString() + "-timestamps.txt"
-							);
+							try {
+								Harmanal.analyzeSong(
+									file.toString() + "-chromas.txt",
+									file.toString() + "-segmentation.txt",
+									file.toString() + "-result.txt",
+									file.toString() + "-report.txt",
+									file.toString() + "-timestamps.txt"
+								);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 
 							textPane3.setText(textPane3.getText() + "\nReport saved in: " + file.toString() + "-report.txt");
 							textPane3.setText(textPane3.getText() + "\nResult saved in: " + file.toString() + "-result.txt\n");

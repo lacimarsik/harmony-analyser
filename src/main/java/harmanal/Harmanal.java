@@ -455,6 +455,22 @@ public class Harmanal {
 		return result;
 	}
 
+	/* Audio Analysis */
+	// TODO: Move to a service
+
+	public static List<String> readTextFile(String file) throws IOException {
+		List<String> result = new ArrayList<String>();
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String line = br.readLine();
+		while (line != null) {
+			result.add(line);
+			line = br.readLine();
+		}
+		br.close();
+
+		return result;
+	}
+
 	/**
 	 * Analyzes the song
 	 *
@@ -465,36 +481,9 @@ public class Harmanal {
 	 * @param timestampsFile [String] name of the file to write a by-product of additional timestamps segmentation information
 	 */
 
-	public static void analyzeSong(String chromaFile, String segmentationFile, String resultFile, String reportFile, String timestampsFile) {
-		List<String> lines = new ArrayList<String>();
-		BufferedReader br;
-		List<String> lines2 = new ArrayList<String>();
-		BufferedReader br2;
-
-		try {
-			br2 = new BufferedReader(new FileReader(segmentationFile));
-			String line2 = br2.readLine();
-			while (line2 != null)
-			{
-				lines2.add(line2);
-				line2 = br2.readLine();
-			}
-			br2.close();
-
-			br = new BufferedReader(new FileReader(chromaFile));
-			String line = br.readLine();
-
-			while (line != null)
-			{
-				lines.add(line);
-				line = br.readLine();
-				// DEBUG
-				// System.out.println(line);
-			}
-			br.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public static void analyzeSong(String chromaFile, String segmentationFile, String resultFile, String reportFile, String timestampsFile) throws IOException {
+		List<String> lines = readTextFile(chromaFile);
+		List<String> lines2 = readTextFile(segmentationFile);
 		
 		List<Float> bars = new ArrayList<Float>();
 		for (String string : lines2) {

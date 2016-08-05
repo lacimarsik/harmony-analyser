@@ -91,17 +91,13 @@ public class HarmanalTest {
 		try {
 			new NNLSPlugin().analyze(testWavFile.toString(), testWavFile.toString() + "-chromas.txt");
 			new ChordinoPlugin().analyze(testWavFile.toString(), testWavFile.toString() + "-segmentation.txt");
-		} catch (PluginLoader.LoadFailedException e) {
-			e.printStackTrace();
-		}
-		Harmanal.analyzeSong(
+			Harmanal.analyzeSong(
 				testWavFile.toString() + "-chromas.txt",
 				testWavFile.toString() + "-segmentation.txt",
 				testWavFile.toString() + "-result.txt",
 				testWavFile.toString() + "-report.txt",
 				testWavFile.toString() + "-timestamps.txt"
-		);
-		try {
+			);
 			String line;
 			BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-report.txt"));
 			line = readerReport.readLine();
@@ -117,6 +113,8 @@ public class HarmanalTest {
 			line = readerResult.readLine();
 			assertEquals("0.33333334 ", line);
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (PluginLoader.LoadFailedException e) {
 			e.printStackTrace();
 		}
 	}
