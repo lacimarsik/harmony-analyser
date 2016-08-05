@@ -458,20 +458,20 @@ public class Harmanal {
 	 * Analyzes the song
 	 *
 	 * @param chromaFile [String] name of the file containing chroma information
-	 * @param fileBars [String] name of the file containing segmentation information
+	 * @param segmentationFile [String] name of the file containing segmentation information
 	 * @param resultFile [String] name of the file to write a result
 	 * @param reportFile [String] name of the file to write a report
 	 * @param timestampsFile [String] name of the file to write a by-product of additional timestamps segmentation information
 	 */
 
-	public static void analyzeSong(String chromaFile, String fileBars, String resultFile, String reportFile, String timestampsFile) {
+	public static void analyzeSong(String chromaFile, String segmentationFile, String resultFile, String reportFile, String timestampsFile) {
 		List<String> lines = new ArrayList<String>();
 		BufferedReader br;
 		List<String> lines2 = new ArrayList<String>();
 		BufferedReader br2;
 
 		try {
-			br2 = new BufferedReader(new FileReader(fileBars));
+			br2 = new BufferedReader(new FileReader(segmentationFile));
 			String line2 = br2.readLine();
 			while (line2 != null)
 			{

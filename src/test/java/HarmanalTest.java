@@ -2,6 +2,8 @@ package harmanal.test;
 
 import harmanal.*;
 import org.junit.*;
+import java.io.*;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -10,10 +12,13 @@ import static org.junit.Assert.assertEquals;
 
 public class HarmanalTest {
 	Key key1;
+	File testWavFile;
 
 	@Before
 	public void setUp() throws Exception {
 		key1 = new Key(0, Chordanal.MAJOR);
+		ClassLoader classLoader = getClass().getClassLoader();
+		testWavFile = new File(classLoader.getResource("test.wav").getPath().toString());
 	}
 
 	@Test
