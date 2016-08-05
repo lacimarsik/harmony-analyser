@@ -467,49 +467,42 @@ public class Harmanal {
 	 */
 
 	public static void analyzeSong(String chromaFile, String segmentationFile, String resultFile, String reportFile, String timestampsFile) throws IOException {
-		List<String> chromaList = Files.readAllLines(new File(chromaFile).toPath(), Charset.defaultCharset());
-		List<String> segmenationList = Files.readAllLines(new File(segmentationFile).toPath(), Charset.defaultCharset());
-		List<Float> bars = new ArrayList<Float>();
+		List<String> chromaLinesList = Files.readAllLines(new File(chromaFile).toPath(), Charset.defaultCharset());
+		List<String> segmenationLinesList = Files.readAllLines(new File(segmentationFile).toPath(), Charset.defaultCharset());
+		List<Float> segmenatationTimestampList = new ArrayList<Float>();
 
 		// 1. Get timestamps from the segmentation file
-		for (String line : segmenationList) {
-			bars.add(getTimestampFromLine(line));
+		for (String line : segmenationLinesList) {
+			segmenatationTimestampList.add(getTimestampFromLine(line));
 		}
 
-		String timestamp;
 		String[] chromaString = new String[12];
-		float ts;
+		float chromaTimestamp;
 		float[] chroma = new float[12];
 		float[] chromaSums = new float[12];
+		Arrays.fill(chromaSums, (float) 0);
 		float[] chromaWork= new float[12];
 		float[] chromaWork2= new float[12];
 		int[] harmony = new int[12];
+		Arrays.fill(harmony, 0);
 		List<List<Integer>> harmonies = new ArrayList<List<Integer>>();
 		List<Float> timestamps = new ArrayList<Float>();
 		int count = 0;
-		int timeIndex = 0;
-		for (int i = 0; i < chromaSums.length; i++) {
-			chromaSums[i] = 0;
-		}
-		for (int i = 0; i < harmony.length; i++) {
-			harmony[i] = 0;
-		}
-		float bar;
-		bar = bars.get(0);
+		int segmentationIndex = 0;
+		float segmenatationTimestamp;
+		segmenatationTimestamp = segmenatationTimestampList.get(0);
 		float threshold = (float) 0.05;
 
-		for (String line : chromaList) {
-			ts = getTimestampFromLine(line);
+		for (String line : chromaLinesList) {
+			chromaTimestamp = getTimestampFromLine(line);
 
-			// check ts
-			if (ts > bar) {
-				// DEBUG
-				//System.out.println("TICK!!!!!");
-				timeIndex++;
-				if (timeIndex > bars.size()-1) {
+			if (chromaTimestamp > segmenatationTimestamp) {
+				// Go to next segmentation timestamp
+				segmentationIndex++;
+				if (segmentationIndex > segmenatationTimestampList.size()-1) {
 					break;
 				}
-				bar = bars.get(timeIndex);
+				segmenatationTimestamp = segmenatationTimestampList.get(segmentationIndex);
 
 				for (int i = 0; i < chromaSums.length; i++) {
 					chromaWork[i] = chromaSums[i] / count;
@@ -564,7 +557,7 @@ public class Harmanal {
 				}
 
 				harmonies.add(harmonyList);
-				timestamps.add(bar);
+				timestamps.add(segmenatationTimestamp);
 
 				for (int i = 0; i < harmony.length; i++) {
 					harmony[i] = 0;
