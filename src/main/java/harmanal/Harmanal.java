@@ -451,6 +451,11 @@ public class Harmanal {
 	/* Audio Analysis */
 	// TODO: Move to a service
 
+	private static float getTimestampFromLine(String line) {
+		String stringTimestamp = line.substring(0, line.lastIndexOf(':'));
+		return Float.parseFloat(stringTimestamp);
+	}
+
 	/**
 	 * Analyzes the song
 	 *
@@ -462,47 +467,39 @@ public class Harmanal {
 	 */
 
 	public static void analyzeSong(String chromaFile, String segmentationFile, String resultFile, String reportFile, String timestampsFile) throws IOException {
-		List<String> lines = Files.readAllLines(new File(chromaFile).toPath(), Charset.defaultCharset());
-		List<String> lines2 = Files.readAllLines(new File(segmentationFile).toPath(), Charset.defaultCharset());
-		
+		List<String> chromaList = Files.readAllLines(new File(chromaFile).toPath(), Charset.defaultCharset());
+		List<String> segmenationList = Files.readAllLines(new File(segmentationFile).toPath(), Charset.defaultCharset());
 		List<Float> bars = new ArrayList<Float>();
-		for (String string : lines2) {
-			Scanner sc2 = new Scanner(string);
-			String temp = sc2.next();
-			temp = temp.substring(0, temp.indexOf(":"));
-			// DEBUG
-			//System.out.println("timestamp: " + temp);
-			bars.add(Float.parseFloat(temp));
+
+		// 1. Get timestamps from the segmentation file
+		for (String line : segmenationList) {
+			bars.add(getTimestampFromLine(line));
 		}
-		
+
 		String timestamp;
-		float ts;
 		String[] chromaString = new String[12];
+		float ts;
 		float[] chroma = new float[12];
 		float[] chromaSums = new float[12];
-		for (int i = 0; i < chromaSums.length; i++) {
-			chromaSums[i] = 0;
-		}
 		float[] chromaWork= new float[12];
 		float[] chromaWork2= new float[12];
 		int[] harmony = new int[12];
-		for (int i = 0; i < harmony.length; i++) {
-			harmony[i] = 0;
-		}
 		List<List<Integer>> harmonies = new ArrayList<List<Integer>>();
 		List<Float> timestamps = new ArrayList<Float>();
 		int count = 0;
 		int timeIndex = 0;
+		for (int i = 0; i < chromaSums.length; i++) {
+			chromaSums[i] = 0;
+		}
+		for (int i = 0; i < harmony.length; i++) {
+			harmony[i] = 0;
+		}
 		float bar;
 		bar = bars.get(0);
 		float threshold = (float) 0.05;
-		for (String line : lines) {
-			// DEBUG
-			//System.out.println(string);
-			Scanner sc = new Scanner(line);
-			timestamp = sc.next();
-			timestamp = timestamp.substring(0, timestamp.length()-1);
-			ts = Float.parseFloat(timestamp);
+
+		for (String line : chromaList) {
+			ts = getTimestampFromLine(line);
 
 			// check ts
 			if (ts > bar) {
@@ -574,6 +571,8 @@ public class Harmanal {
 				}
 			}
 
+			Scanner sc = new Scanner(line);
+			sc.next();
 			chromaString[0] = sc.next();
 			chromaString[1] = sc.next();
 			chromaString[2] = sc.next();
