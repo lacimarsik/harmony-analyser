@@ -1,6 +1,5 @@
-package vamp_plugins;
+package harmanal.vamp_plugins;
 
-import harmanal.vamp_plugins.*;
 import org.junit.*;
 import java.io.*;
 import static org.junit.Assert.assertEquals;

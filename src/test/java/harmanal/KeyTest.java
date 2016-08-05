@@ -1,6 +1,5 @@
-package harmanal.test;
+package harmanal;
 
-import harmanal.*;
 import org.junit.*;
 import static org.junit.Assert.assertEquals;
 

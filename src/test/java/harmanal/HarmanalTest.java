@@ -1,6 +1,5 @@
-package harmanal.test;
+package harmanal;
 
-import harmanal.*;
 import org.junit.*;
 import java.io.*;
 
