@@ -451,9 +451,34 @@ public class Harmanal {
 	/* Audio Analysis */
 	// TODO: Move to a service
 
+	public static final float AUDIBLE_THRESHOLD = (float) 0.05;
+
+	// gets timestamp from the first word in the line, before ':'
 	private static float getTimestampFromLine(String line) {
 		String stringTimestamp = line.substring(0, line.lastIndexOf(':'));
 		return Float.parseFloat(stringTimestamp);
+	}
+
+	// averages multiple chromas from vector of their sum into one chroma
+	private static float[] averageChroma(float[] chromaSums, int countChromas) {
+		float[] resultChroma = new float[12];
+		for (int i = 0; i < chromaSums.length; i++) {
+			resultChroma[i] = chromaSums[i] / countChromas;
+		}
+		return resultChroma;
+	}
+
+	// filters chroma using AUDIBLE_THRESHOLD, setting values below the threshold to 0
+	private static float[] filterChroma(float[] chroma) {
+		float[] resultChroma = new float[12];
+		for (int i = 0; i < chroma.length; i++) {
+			if (chroma[i] < AUDIBLE_THRESHOLD) {
+				resultChroma[i] = 0;
+			} else {
+				resultChroma[i] = chroma[i];
+			}
+		}
+		return resultChroma;
 	}
 
 	/**
@@ -481,69 +506,48 @@ public class Harmanal {
 		float[] chroma = new float[12];
 		float[] chromaSums = new float[12];
 		Arrays.fill(chromaSums, (float) 0);
-		float[] chromaWork= new float[12];
-		float[] chromaWork2= new float[12];
+		float[] chromaVector;
 		int[] harmony = new int[12];
 		Arrays.fill(harmony, 0);
 		List<List<Integer>> harmonies = new ArrayList<List<Integer>>();
 		List<Float> timestamps = new ArrayList<Float>();
-		int count = 0;
+		int countChromasForAveraging = 0;
 		int segmentationIndex = 0;
 		float segmenatationTimestamp;
 		segmenatationTimestamp = segmenatationTimestampList.get(0);
-		float threshold = (float) 0.05;
 
+		// Iterate over chromas
 		for (String line : chromaLinesList) {
 			chromaTimestamp = getTimestampFromLine(line);
 
 			if (chromaTimestamp > segmenatationTimestamp) {
-				// Go to next segmentation timestamp
+				// Go to the next segmentation timestamp
 				segmentationIndex++;
 				if (segmentationIndex > segmenatationTimestampList.size()-1) {
 					break;
 				}
 				segmenatationTimestamp = segmenatationTimestampList.get(segmentationIndex);
 
-				for (int i = 0; i < chromaSums.length; i++) {
-					chromaWork[i] = chromaSums[i] / count;
-					chromaSums[i] = 0;
-				}
-				count = 0;
-				// DEBUG
-				//for (int i = 0; i < chromaWork.length; i++) {
-					//System.out.print(chromaWork[i] + " ");
-				//}
-				//System.out.println();
-				for (int i = 0; i < chromaWork2.length; i++) {
-					if (chromaWork[i] < threshold) {
-						chromaWork2[i] = 0;
-					} else {
-						
-						chromaWork2[i] = chromaWork[i];
-					}
-				}
-				// DEBUG
-				//for (int i = 0; i < chromaWork2.length; i++) {
-					//System.out.print(chromaWork2[i] + " ");
-				//}	
-				//System.out.println();
+				chromaVector = filterChroma(averageChroma(chromaSums, countChromasForAveraging));
+				Arrays.fill(chromaSums, (float) 0);
+				countChromasForAveraging = 0;
 
-				// getting the chord
+				// Create the chord
 				float max = 0;
 				int id = 0;
 				for(int g=0;g<4;g++) {
 					max=0;
 					id=0;
-					for (int i = 0; i < chromaWork2.length; i++) {
-						if (chromaWork2[i] > max) {
+					for (int i = 0; i < chromaVector.length; i++) {
+						if (chromaVector[i] > max) {
 							id = i;
-							max = chromaWork2[i];
+							max = chromaVector[i];
 						}
 					}
-					if (chromaWork2[id] > 0) {
+					if (chromaVector[id] > 0) {
 						harmony[id] = 1;
 					}
-					chromaWork2[id] = 0;
+					chromaVector[id] = 0;
 				}
 				// DEBUG
 				//for (int i = 0; i < harmony.length; i++) {
@@ -594,7 +598,7 @@ public class Harmanal {
 
 			for (int i = 0; i < chromaSums.length; i++) {
 				chromaSums[i] = chromaSums[i] + chroma[i];
-				count++;
+				countChromasForAveraging++;
 			}
 
 			// DEBUG
