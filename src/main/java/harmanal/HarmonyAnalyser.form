@@ -22,7 +22,9 @@
             <constraints>
               <tabbedpane title="Chord Transition Tool"/>
             </constraints>
-            <properties/>
+            <properties>
+              <minimumSize width="6" height="24"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="fe592" class="javax.swing.JLabel">
@@ -166,11 +168,7 @@
               </hspacer>
               <scrollpane id="e122d">
                 <constraints>
-                  <grid row="9" column="4" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <minimum-size width="-1" height="50"/>
-                    <preferred-size width="-1" height="50"/>
-                    <maximum-size width="-1" height="50"/>
-                  </grid>
+                  <grid row="9" column="4" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -178,8 +176,8 @@
                   <component id="6a0a1" class="javax.swing.JTextPane" binding="textPane4" default-binding="true">
                     <constraints/>
                     <properties>
-                      <minimumSize width="-1" height="50"/>
-                      <preferredSize width="-1" height="50"/>
+                      <minimumSize width="6" height="24"/>
+                      <preferredSize width="-1" height="-1"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -200,11 +198,7 @@
               </scrollpane>
               <scrollpane id="9292b">
                 <constraints>
-                  <grid row="10" column="4" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <minimum-size width="-1" height="50"/>
-                    <preferred-size width="-1" height="50"/>
-                    <maximum-size width="-1" height="50"/>
-                  </grid>
+                  <grid row="10" column="4" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -212,8 +206,8 @@
                   <component id="9b7da" class="javax.swing.JTextPane" binding="textPane6" default-binding="true">
                     <constraints/>
                     <properties>
-                      <minimumSize width="-1" height="50"/>
-                      <preferredSize width="-1" height="50"/>
+                      <minimumSize width="6" height="24"/>
+                      <preferredSize width="-1" height="-1"/>
                     </properties>
                   </component>
                 </children>
@@ -233,11 +227,7 @@
               </scrollpane>
               <scrollpane id="72674">
                 <constraints>
-                  <grid row="11" column="4" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <minimum-size width="-1" height="50"/>
-                    <preferred-size width="-1" height="50"/>
-                    <maximum-size width="-1" height="50"/>
-                  </grid>
+                  <grid row="11" column="4" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -245,8 +235,8 @@
                   <component id="a1769" class="javax.swing.JTextPane" binding="textPane8" default-binding="true">
                     <constraints/>
                     <properties>
-                      <minimumSize width="-1" height="50"/>
-                      <preferredSize width="-1" height="50"/>
+                      <minimumSize width="6" height="24"/>
+                      <preferredSize width="-1" height="-1"/>
                     </properties>
                   </component>
                 </children>
