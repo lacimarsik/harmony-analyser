@@ -1,16 +1,9 @@
 package harmanal;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.nio.charset.*;
+import java.nio.file.*;
+import java.util.*;
 
 // TODO: Complete Harmony complexity (Complexity of a single tone and single tone + added tone)
 // TODO: Complete Transition complexity (Complexity of non-diatonic modulations)
@@ -458,19 +451,6 @@ public class Harmanal {
 	/* Audio Analysis */
 	// TODO: Move to a service
 
-	public static List<String> readTextFile(String file) throws IOException {
-		List<String> result = new ArrayList<String>();
-		BufferedReader br = new BufferedReader(new FileReader(file));
-		String line = br.readLine();
-		while (line != null) {
-			result.add(line);
-			line = br.readLine();
-		}
-		br.close();
-
-		return result;
-	}
-
 	/**
 	 * Analyzes the song
 	 *
@@ -482,8 +462,8 @@ public class Harmanal {
 	 */
 
 	public static void analyzeSong(String chromaFile, String segmentationFile, String resultFile, String reportFile, String timestampsFile) throws IOException {
-		List<String> lines = readTextFile(chromaFile);
-		List<String> lines2 = readTextFile(segmentationFile);
+		List<String> lines = Files.readAllLines(new File(chromaFile).toPath(), Charset.defaultCharset());
+		List<String> lines2 = Files.readAllLines(new File(segmentationFile).toPath(), Charset.defaultCharset());
 		
 		List<Float> bars = new ArrayList<Float>();
 		for (String string : lines2) {
