@@ -689,10 +689,8 @@ public class Harmanal {
 				out.write("transition complexity: " + transitionComplexity + "\n");
 			}
 
-			// set previous
-			for (int i = 0; i < chord.length; i++) {
-				previousChord[i] = chord[i];
-			}
+			// Set previous chord
+			previousChord = chord.clone();
 		}
 
 		out.close();
