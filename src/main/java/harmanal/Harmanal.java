@@ -452,6 +452,7 @@ public class Harmanal {
 	// TODO: Move to a service
 
 	public static final float AUDIBLE_THRESHOLD = (float) 0.05;
+	public static final int MAXIMUM_NUMBER_OF_CHORD_TONES = 4;
 
 	// gets timestamp from the first word in the line, before ':'
 	private static float getTimestampFromLine(String line) {
@@ -481,6 +482,29 @@ public class Harmanal {
 		return resultChroma;
 	}
 
+	// Creates binary representation of chord, taking MAXIMUM_NUMBER_OF_CHORD_TONES tones with the maximum activation from chroma
+	private static int[] createBinaryChord(float[] chroma) {
+		int[] result = new int[12];
+		Arrays.fill(result, 0);
+		float max;
+		int id;
+		for (int g = 0; g < MAXIMUM_NUMBER_OF_CHORD_TONES; g++) {
+			max = 0;
+			id = 0;
+			for (int i = 0; i < chroma.length; i++) {
+				if (chroma[i] > max) {
+					id = i;
+					max = chroma[i];
+				}
+			}
+			if (chroma[id] > 0) {
+				result[id] = 1;
+			}
+			chroma[id] = (float) 0;
+		}
+		return result;
+	}
+
 	/**
 	 * Analyzes the song
 	 *
@@ -507,8 +531,7 @@ public class Harmanal {
 		float[] chromaSums = new float[12];
 		Arrays.fill(chromaSums, (float) 0);
 		float[] chromaVector;
-		int[] harmony = new int[12];
-		Arrays.fill(harmony, 0);
+		int[] harmony;
 		List<List<Integer>> harmonies = new ArrayList<List<Integer>>();
 		List<Float> timestamps = new ArrayList<Float>();
 		int countChromasForAveraging = 0;
@@ -528,32 +551,14 @@ public class Harmanal {
 				}
 				segmenatationTimestamp = segmenatationTimestampList.get(segmentationIndex);
 
+				// Average chromas in the previous block, use AUDIBLE_THRESHOLD to filter non-audible activations
 				chromaVector = filterChroma(averageChroma(chromaSums, countChromasForAveraging));
 				Arrays.fill(chromaSums, (float) 0);
 				countChromasForAveraging = 0;
 
-				// Create the chord
-				float max = 0;
-				int id = 0;
-				for(int g=0;g<4;g++) {
-					max=0;
-					id=0;
-					for (int i = 0; i < chromaVector.length; i++) {
-						if (chromaVector[i] > max) {
-							id = i;
-							max = chromaVector[i];
-						}
-					}
-					if (chromaVector[id] > 0) {
-						harmony[id] = 1;
-					}
-					chromaVector[id] = 0;
-				}
-				// DEBUG
-				//for (int i = 0; i < harmony.length; i++) {
-					//System.out.print(harmony[i] + " ");
-				//}	
-				//System.out.println();
+				// Create a binary chord representation from chroma
+				// XXX: Take MAXIMUM_NUMBER_OF_CHORD_TONES tones with the maximum activation
+				harmony = createBinaryChord(chromaVector);
 
 				List<Integer> harmonyList = new ArrayList<Integer>();
 				for (int i = 0; i < harmony.length; i++) {
