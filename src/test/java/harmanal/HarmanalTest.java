@@ -101,8 +101,6 @@ public class HarmanalTest {
 			String line;
 			BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-report.txt"));
 			line = readerReport.readLine();
-			assertEquals("0 0 1 0 1 0 1 0 0 1 0 0 ", line);
-			line = readerReport.readLine();
 			assertEquals("previous: D E F# A ", line);
 			line = readerReport.readLine();
 			assertEquals("1: D E F# A ", line);

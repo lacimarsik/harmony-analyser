@@ -8,6 +8,7 @@ import java.util.*;
 // TODO: Complete Harmony complexity (Complexity of a single tone and single tone + added tone)
 // TODO: Complete Transition complexity (Complexity of non-diatonic modulations)
 // TODO: Create AudioAnalyser - class for analysis of audio using Vamp plugins + Chordanal + Harmanal (Harmanal plugins)
+// TODO: Seperate Model (Chordanal + Harmanal) from Analysis (Harmony Analyser)
 
 /**
  * Class to handle all functional complexity and transition complexity
@@ -482,7 +483,7 @@ public class Harmanal {
 		return resultChroma;
 	}
 
-	// Creates binary representation of chord, taking MAXIMUM_NUMBER_OF_CHORD_TONES tones with the maximum activation from chroma
+	// Creates binary representation of a chord, taking MAXIMUM_NUMBER_OF_CHORD_TONES tones with the maximum activation from chroma
 	private static int[] createBinaryChord(float[] chroma) {
 		int[] result = new int[12];
 		Arrays.fill(result, 0);
@@ -515,6 +516,7 @@ public class Harmanal {
 		list.add(chordAsList);
 	}
 
+	// Read chroma information from the line of String
 	private static float[] getChromaFromLine(String line) throws IncorrectInput {
 		float[] result = new float[12];
 		Scanner sc = new Scanner(line);
@@ -524,6 +526,29 @@ public class Harmanal {
 				result[i] = sc.nextFloat();
 			} else {
 				throw new IncorrectInput("Chroma information is invalid.");
+			}
+		}
+		return result;
+	}
+
+	// Get number of tones from the binary representation of a chord
+	private static int getNumberOfTones(int[] chord) {
+		int result = 0;
+		for (int i = 0; i < chord.length; i++) {
+			if (chord[i] == 1) {
+				result++;
+			}
+		}
+		return result;
+	}
+
+	// Get String of tone names from binary chord representation, using Chordanal
+	// TODO: Move to Chordanal
+	private static String getStringOfTones(int[] chord) {
+		String result = "";
+		for (int i = 0; i < chord.length; i++) {
+			if (chord[i] == 1) {
+				result += Chordanal.tonesNames.getFirstInValue(Integer.toString(i)) + " ";
 			}
 		}
 		return result;
@@ -544,15 +569,13 @@ public class Harmanal {
 		List<String> segmenationLinesList = Files.readAllLines(new File(segmentationFile).toPath(), Charset.defaultCharset());
 		List<Float> segmenatationTimestampList = new ArrayList<Float>();
 
-
 		// 1. Get timestamps from the segmentation file
 		for (String line : segmenationLinesList) {
 			segmenatationTimestampList.add(getTimestampFromLine(line));
 		}
 
-		String[] chromaString = new String[12];
 		float chromaTimestamp;
-		float[] chroma = new float[12];
+		float[] chroma ;
 		float[] chromaSums = new float[12];
 		Arrays.fill(chromaSums, (float) 0);
 		float[] chromaVector;
@@ -564,7 +587,7 @@ public class Harmanal {
 		float segmenatationTimestamp;
 		segmenatationTimestamp = segmenatationTimestampList.get(0);
 
-		// Iterate over chromas
+		// 2. Iterate over chromas, transforming them into chord progression
 		for (String line : chromaLinesList) {
 			chromaTimestamp = getTimestampFromLine(line);
 
@@ -593,33 +616,11 @@ public class Harmanal {
 			// Get chroma from the current line
 			chroma = getChromaFromLine(line);
 
+			// Add values into array for averages
 			for (int i = 0; i < chromaSums.length; i++) {
 				chromaSums[i] = chromaSums[i] + chroma[i];
 				countChromasForAveraging++;
 			}
-
-			// DEBUG
-			/*
-			for (int i = 0; i < chromaWork.length; i++) {
-				if (chroma[i] < 0.1) {
-					chromaWork[i] = 0;
-				} else {
-					chromaWork[i] = chroma[i];
-				}
-			}*/
-			//System.out.println("timestamp: " + timestamp);
-			//for (int j = 0; j < chromaString.length; j++) {
-				//System.out.print(chromaString[j]+ " ");
-			//}
-			//System.out.println();
-			//for (int j = 0; j < chroma.length; j++) {
-				//System.out.print(chroma[j]+ " ");
-			//}
-			//System.out.println();
-			//for (int j = 0; j < chromaWork.length; j++) {
-				//System.out.print(chromaWork[j]+ " ");
-			//}
-			//System.out.println();
 		}
 
 		int[] chord = new int[12];
@@ -636,56 +637,35 @@ public class Harmanal {
 		int maxCS = 0;
 		int sumTones = 0;
 		int counter = 0;
+		BufferedWriter out = new BufferedWriter(new FileWriter(reportFile));
 
-		FileWriter fstream2;
-		fstream2 = new FileWriter(reportFile);
-		BufferedWriter out2 = new BufferedWriter(fstream2);
-
-		for (List<Integer> harmie : chordProgression) {
+		// 3. Iterate over chord progression, deriving transition complexities
+		for (List<Integer> chordAsList : chordProgression) {
 
 			for (int i = 0; i < chord.length; i++) {
-				chord[i] = harmie.get(i);
+				chord[i] = chordAsList.get(i);
 			}
-			for (int i = 0; i < chord.length; i++) {
-				out2.write(chord[i] + " "); // VERBOSE
-			}
-			out2.write("\n"); //VERBOSE
 
-			// number of tones
-			int numberTones = 0;
-			for (int i = 0; i < chord.length; i++) {
-				if (chord[i] == 1) {
-					numberTones++;
-				}
-			}
+			// get number of tones from the current chord
+			int numberTones = getNumberOfTones(chord);
 			sumTones += numberTones;
 
-			String chordTones = "";
-			for (int i = 0; i < chord.length; i++) {
-					if (chord[i] == 1) {
-						chordTones += Chordanal.tonesNames.getFirstInValue(Integer.toString(i)) + " ";
-					}
-			}
+			String currentChordTones = getStringOfTones(chord);
+			String previousChordTones = getStringOfTones(previousChord);
 
-			String previousChordTones = "";
-			for (int i = 0; i < previousChord.length; i++) {
-				if (previousChord[i] == 1) {
-					previousChordTones += Chordanal.tonesNames.getFirstInValue(Integer.toString(i)) + " ";
-				}
-			}
 			counter++;
-			out2.write("previous: " + previousChordTones + "\n"); // VERBOSE
-			out2.write(counter + ": " + chordTones + "\n"); // VERBOSE
+			out.write("previous: " + previousChordTones + "\n");
+			out.write(counter + ": " + currentChordTones + "\n");
 
 			Harmony harmony1 = Chordanal.createHarmonyFromRelativeTones(previousChordTones);
-			Harmony harmony2 = Chordanal.createHarmonyFromRelativeTones(chordTones);
+			Harmony harmony2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
 
 			if ((harmony1 == null) || (harmony2 == null)) {
-				out2.write("SKIP HARMONIES!\n"); // VERBOSE
+				out.write("SKIP HARMONIES!\n"); // VERBOSE
 			} else {
 				int compl = getTransitionComplexity(harmony1, harmony2);
 				if (compl == -1) {
-					out2.write("NO COMMON ROOTS -> MAX COMPLEXITY = 7!\n"); // VERBOSE
+					out.write("NO COMMON ROOTS -> MAX COMPLEXITY = 7!\n"); // VERBOSE
 					compl = 7;
 				}
 				tcs.add(compl);
@@ -700,7 +680,7 @@ public class Harmanal {
 				if (cs.get(cs.size()-1) > maxCS) {
 					maxCS = cs.get(cs.size()-1);
 				}
-				out2.write("ts:" + tcs.get(tcs.size()-1) + "\n"); // VERBOSE
+				out.write("ts:" + tcs.get(tcs.size()-1) + "\n"); // VERBOSE
 
 			}
 
@@ -709,29 +689,22 @@ public class Harmanal {
 				previousChord[i] = chord[i];
 			}
 		}
-		out2.close();
 
-		FileWriter fstream3;
-		fstream3 = new FileWriter(timestampsFile);
-
-		BufferedWriter out3 = new BufferedWriter(fstream3);
+		out.close();
+		out = new BufferedWriter(new FileWriter(timestampsFile));
 
 		int counternew = 0;
 		for (Float time:timestampList) {
 			counternew++;
-			out3.write(counternew + ": " + time + "\n");
+			out.write(counternew + ": " + time + "\n");
 		}
-
-		out3.close();
 
 		float atc = (float) sumTS  / (float) tcs.size();
 		float ahc = (float) sumCS  / (float) cs.size();
 		float rtc = (float) sumTS / (float) sumTones;
 
-		FileWriter fstream;
-
-		fstream = new FileWriter(resultFile);
-		BufferedWriter out = new BufferedWriter(fstream);
+		out.close();
+		out = new BufferedWriter(new FileWriter(resultFile));
 
 		FileWriter fstream1;
 
