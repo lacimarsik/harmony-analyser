@@ -1,11 +1,11 @@
-previous: D E F# A 
-1: D E F# A 
+previous: C# D# F# B 
+1: C# D# F# B 
 transition complexity: 0
-previous: D E F# A 
-2: D E F# A 
+previous: C# D# F# B 
+2: C# D# F# B 
 transition complexity: 0
-previous: D E F# A 
-3: D D# F# A 
+previous: C# D# F# B 
+3: C D# F# B 
 transition complexity: 1
 Average Transition Complexity (ATC): 0.33333334
 Average Harmony Complexity (ACH): 1.3333334
