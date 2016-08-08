@@ -692,21 +692,12 @@ public class Harmanal {
 			// Set previous chord
 			previousChord = chord.clone();
 		}
-
 		out.close();
-		out = new BufferedWriter(new FileWriter(timestampsFile));
-
-		int counternew = 0;
-		for (Float time:timestampList) {
-			counternew++;
-			out.write(counternew + ": " + time + "\n");
-		}
 
 		float atc = (float) sumTransitionComplexities  / (float) transitionComplexityList.size();
 		float ahc = (float) sumChordComplexities  / (float) chordComplexityList.size();
 		float rtc = (float) sumTransitionComplexities / (float) sumOfAllTones;
 
-		out.close();
 		out = new BufferedWriter(new FileWriter(resultFile));
 
 		// DEBUG
