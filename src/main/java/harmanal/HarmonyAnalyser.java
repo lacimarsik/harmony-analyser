@@ -393,6 +393,8 @@ public class HarmonyAnalyser extends JFrame {
 								);
 							} catch (IOException e) {
 								e.printStackTrace();
+							} catch (Harmanal.IncorrectInput e) {
+								e.printStackTrace();
 							}
 
 							textPane3.setText(textPane3.getText() + "\nReport saved in: " + file.toString() + "-report.txt");

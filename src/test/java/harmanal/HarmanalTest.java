@@ -116,6 +116,8 @@ public class HarmanalTest {
 			e.printStackTrace();
 		} catch (PluginLoader.LoadFailedException e) {
 			e.printStackTrace();
+		} catch (Harmanal.IncorrectInput e) {
+			e.printStackTrace();
 		}
 	}
 }
