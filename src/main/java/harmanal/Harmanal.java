@@ -505,6 +505,15 @@ public class Harmanal {
 		return result;
 	}
 
+	// Adds binary representation of chord to the list of harmonies
+	private static void addChordToList(int[] chord, List<List<Integer>> list) {
+		List<Integer> chordAsList = new ArrayList<Integer>();
+		for (int i = 0; i < chord.length; i++) {
+			chordAsList.add(chord[i]);
+		}
+		list.add(chordAsList);
+	}
+
 	/**
 	 * Analyzes the song
 	 *
@@ -532,8 +541,8 @@ public class Harmanal {
 		Arrays.fill(chromaSums, (float) 0);
 		float[] chromaVector;
 		int[] harmony;
-		List<List<Integer>> harmonies = new ArrayList<List<Integer>>();
-		List<Float> timestamps = new ArrayList<Float>();
+		List<List<Integer>> chordProgression = new ArrayList<List<Integer>>();
+		List<Float> timestampList = new ArrayList<Float>();
 		int countChromasForAveraging = 0;
 		int segmentationIndex = 0;
 		float segmenatationTimestamp;
@@ -550,6 +559,7 @@ public class Harmanal {
 					break;
 				}
 				segmenatationTimestamp = segmenatationTimestampList.get(segmentationIndex);
+				timestampList.add(segmenatationTimestamp);
 
 				// Average chromas in the previous block, use AUDIBLE_THRESHOLD to filter non-audible activations
 				chromaVector = filterChroma(averageChroma(chromaSums, countChromasForAveraging));
@@ -560,17 +570,8 @@ public class Harmanal {
 				// XXX: Take MAXIMUM_NUMBER_OF_CHORD_TONES tones with the maximum activation
 				harmony = createBinaryChord(chromaVector);
 
-				List<Integer> harmonyList = new ArrayList<Integer>();
-				for (int i = 0; i < harmony.length; i++) {
-					harmonyList.add(harmony[i]);
-				}
-
-				harmonies.add(harmonyList);
-				timestamps.add(segmenatationTimestamp);
-
-				for (int i = 0; i < harmony.length; i++) {
-					harmony[i] = 0;
-				}
+				// Add created harmony to the list of chord progressions
+				addChordToList(harmony, chordProgression);
 			}
 
 			Scanner sc = new Scanner(line);
@@ -633,7 +634,7 @@ public class Harmanal {
 		int[] chord = new int[12];
 		int[] previousChord = new int[12];
 		for (int i = 0; i < previousChord.length; i++) {
-			previousChord[i] = harmonies.get(0).get(i);
+			previousChord[i] = chordProgression.get(0).get(i);
 		}
 		
 		List<Integer> tcs = new ArrayList<Integer>();
@@ -650,7 +651,7 @@ public class Harmanal {
 			fstream2 = new FileWriter(reportFile);
 			BufferedWriter out2 = new BufferedWriter(fstream2);
 
-			for (List<Integer> harmie : harmonies) {
+			for (List<Integer> harmie : chordProgression) {
 
 				for (int i = 0; i < chord.length; i++) {
 					chord[i] = harmie.get(i);
@@ -731,7 +732,7 @@ public class Harmanal {
 			BufferedWriter out3 = new BufferedWriter(fstream3);
 			
 			int counternew = 0;
-			for (Float time:timestamps) {
+			for (Float time:timestampList) {
 				counternew++;
 				out3.write(counternew + ": " + time + "\n");
 			}
