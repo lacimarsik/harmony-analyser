@@ -507,16 +507,6 @@ public class Harmanal {
 		return result;
 	}
 
-	// Adds binary representation of chord to the list of harmonies
-	// TODO: Is the inner List necessary?
-	private static void addChordToList(int[] chord, List<List<Integer>> list) {
-		List<Integer> chordAsList = new ArrayList<Integer>();
-		for (int i = 0; i < chord.length; i++) {
-			chordAsList.add(chord[i]);
-		}
-		list.add(chordAsList);
-	}
-
 	// Read chroma information from the line of String
 	private static float[] getChromaFromLine(String line) throws IncorrectInput {
 		float[] result = new float[12];
@@ -579,7 +569,7 @@ public class Harmanal {
 		Arrays.fill(chromaSums, (float) 0);
 		float[] chromaVector;
 		int[] harmony;
-		List<List<Integer>> chordProgression = new ArrayList<List<Integer>>();
+		List<int[]> chordProgression = new ArrayList<>();
 		List<Float> timestampList = new ArrayList<Float>();
 		int countChromasForAveraging = 0;
 		int segmentationIndex = 0;
@@ -609,7 +599,7 @@ public class Harmanal {
 				harmony = createBinaryChord(chromaVector);
 
 				// Add created harmony to the list of chord progressions
-				addChordToList(harmony, chordProgression);
+				chordProgression.add(harmony);
 			}
 
 			// Get chroma from the current line
@@ -622,10 +612,9 @@ public class Harmanal {
 			}
 		}
 
-		int[] chord = new int[12];
 		int[] previousChord = new int[12];
 		for (int i = 0; i < previousChord.length; i++) {
-			previousChord[i] = chordProgression.get(0).get(i);
+			previousChord[i] = chordProgression.get(0)[i];
 		}
 
 		List<Integer> transitionComplexityList = new ArrayList<Integer>();
@@ -639,12 +628,7 @@ public class Harmanal {
 		BufferedWriter out = new BufferedWriter(new FileWriter(reportFile));
 
 		// 3. Iterate over chord progression, deriving chord and transition complexities
-		for (List<Integer> chordAsList : chordProgression) {
-
-			for (int i = 0; i < chord.length; i++) {
-				chord[i] = chordAsList.get(i);
-			}
-
+		for (int[] chord : chordProgression) {
 			// get number of tones from the current chord
 			int numberTones = getNumberOfTones(chord);
 			sumOfAllTones += numberTones;
