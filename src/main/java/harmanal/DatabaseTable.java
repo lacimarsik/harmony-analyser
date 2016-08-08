@@ -1,9 +1,6 @@
 package harmanal;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Database schema for containing the analysis facts for Chordanal and Harmanal
@@ -13,17 +10,16 @@ import java.util.Map;
 /* handling format: key1,key2,...,keyN;value1,value2,...,valueN */
 
 public class DatabaseTable {
-	
 	private Map<List<String>,List<String>> table;
-	
+
 	DatabaseTable() {
 		table = new LinkedHashMap<List<String>,List<String>>();
 	}
-	
+
 	/**
 	 * Adds a row into the table
 	 */
-	
+
 	void add(String stringValues) {
 		String[] strings = stringValues.split(";");
 		String[] strings1 = strings[0].split(",");
@@ -38,22 +34,22 @@ public class DatabaseTable {
 		}
 		table.put(key,value);
 	}
-	
+
 	/**
 	 * Adds all rows from the table
 	 */
-	
+
 	void addAll(DatabaseTable stringTable) {
 		List<String> rows = stringTable.getAll();
 		for (String row : rows) {
 			add(row);
 		}
 	}
-	
+
 	/**
 	 * Returns the first match in the value
 	 */
-	
+
 	String getFirstInValue(String key) {
 		String result = "";
 		for (List<String> l : table.keySet()) {
@@ -64,11 +60,11 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns the first match in the key
 	 */
-	
+
 	String getFirstInKey(String value) {
 		String result = "";
 		for (List<String> l : table.keySet()) {
@@ -79,11 +75,11 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns the list of values
 	 */
-	
+
 	List<String> getValues(String key) {
 		List<String> result = new ArrayList<String>();
 		for (List<String> l : table.keySet()) {
@@ -94,11 +90,11 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns the list of keys
 	 */
-	
+
 	List<String> getKeys(String value) {
 		List<String> result = new ArrayList<String>();
 		for (List<String> l : table.keySet()) {
@@ -109,11 +105,11 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns the first match in the value using first 2 keys
 	 */
-	
+
 	String getFirstInValue(String key1, String key2) {
 		String result = "";
 		for (List<String> l : table.keySet()) {
@@ -128,11 +124,11 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns the first match in the value using first 3 keys
 	 */
-	
+
 	String getFirstInValue(String key1, String key2, String key3) {
 		String result = "";
 		for (List<String> l : table.keySet()) {
@@ -146,11 +142,11 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns the list of values using first 2 keys
 	 */
-	
+
 	List<String> getValues(String key1, String key2) {
 		List<String> result = new ArrayList<String>();
 		for (List<String> l : table.keySet()) {
@@ -165,11 +161,11 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns the list of values using first 3 keys
 	 */
-	
+
 	List<String> getValues(String key1, String key2, String key3) {
 		List<String> result = new ArrayList<String>();
 		for (List<String> l : table.keySet()) {
@@ -184,7 +180,7 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns all the key-value pairs in String
 	 */
@@ -212,7 +208,7 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns all keys as lists of Strings
 	 */
@@ -224,11 +220,11 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns all keys as Strings
 	 */
-	
+
 	List<String> getAllKeyStrings() {
 		List<List<String>> keys = getAllKeys();
 		List<String> result = new ArrayList<String>();
@@ -245,7 +241,7 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns all values as lists of Strings
 	 */
@@ -257,11 +253,11 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Return all values as Strings
 	 */
-	
+
 	List<String> getAllValueStrings() {
 		List<List<String>> values = getAllValues();
 		List<String> result = new ArrayList<String>();
@@ -278,21 +274,21 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Sort by value number 1
 	 */
-	
+
 	DatabaseTable sortByValueByFirst() {
 		List<List<String>> values = getAllValues();
 		List<List<String>> keys = getAllKeys();
 		List<String> rowKey,rowValue;
 		DatabaseTable result = new DatabaseTable();
-		
+
 		if (values.size() < 2) {
 			return null;
 		}
-		
+
 		while (values.size() > 0) {
 			String s_min = values.get(0).get(0);
 			int min_index = 0;
@@ -328,11 +324,11 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Sort by value number 1 considered as numeric values
 	 */
-	
+
 	DatabaseTable sortByValueByFirstNumeric() {
 		List<List<String>> values = getAllValues();
 		List<List<String>> keys = getAllKeys();
@@ -378,18 +374,18 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Natural join of two tables by the whole key, combining the values
 	 */
-	
+
 	DatabaseTable naturalJoin(DatabaseTable otherTable) {
 		List<String> keys1 = getAllKeyStrings();
 		List<String> keys2 = otherTable.getAllKeyStrings();
 		List<String> values1 = getAllValueStrings();
 		List<String> values2 = otherTable.getAllValueStrings();
 		DatabaseTable result = new DatabaseTable();
-		
+
 		for (int i = 0; i < keys1.size(); i++) {
 			for (int j = 0; j < keys2.size(); j++) {
 				if (keys1.get(i).equals(keys2.get(j))) {
@@ -399,11 +395,11 @@ public class DatabaseTable {
 		}	
 		return result;
 	}
-	
+
 	/**
 	 * Natural join of two tables by first two columns of the key, combining the other values
 	 */
-	
+
 	DatabaseTable naturalJoinByFirstAndSecond(DatabaseTable otherTable) {
 		List<String> keys1 = getAllKeyStrings();
 		List<String> keys2 = otherTable.getAllKeyStrings();
@@ -432,11 +428,11 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Natural join of two tables by first column of the key, combining the other values
 	 */
-	
+
 	DatabaseTable naturalJoinByFirst(DatabaseTable otherTable) {
 		List<String> keys1 = getAllKeyStrings();
 		List<String> keys2 = otherTable.getAllKeyStrings();
@@ -453,7 +449,7 @@ public class DatabaseTable {
 		List<String> values1 = getAllValueStrings();
 		List<String> values2 = otherTable.getAllValueStrings();
 		DatabaseTable result = new DatabaseTable();
-		
+
 		for (int i = 0; i < keys1copy.size(); i++) {
 			for (int j = 0; j < keys2copy.size(); j++) {
 				if (keys1copy.get(i).equals(keys2copy.get(j))) {
@@ -465,13 +461,12 @@ public class DatabaseTable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Checks if the table is empty
 	 */
-	
+
 	boolean isEmpty() {
 		return table.isEmpty();
 	}
-	
 }
