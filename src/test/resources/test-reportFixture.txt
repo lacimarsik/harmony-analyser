@@ -1,0 +1,12 @@
+previous: D E F# A 
+1: D E F# A 
+transition complexity: 0
+previous: D E F# A 
+2: D E F# A 
+transition complexity: 0
+previous: D E F# A 
+3: D D# F# A 
+transition complexity: 1
+Average Transition Complexity (ATC): 0.33333334
+Average Harmony Complexity (ACH): 1.3333334
+Relative Transition Complexity (RTC): 0.083333336

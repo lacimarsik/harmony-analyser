@@ -13,14 +13,15 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class HarmanalTest {
-	Key key1;
-	File testWavFile;
+	private Key key1;
+	private File testWavFile, testReportFixture;
 
 	@Before
 	public void setUp() throws Exception {
 		key1 = new Key(0, Chordanal.MAJOR);
 		ClassLoader classLoader = getClass().getClassLoader();
-		testWavFile = new File(classLoader.getResource("test.wav").getPath().toString());
+		testWavFile = new File(classLoader.getResource("test.wav").getFile());
+		testReportFixture = new File(classLoader.getResource("test-reportFixture.txt").getFile());
 	}
 
 	@Test
@@ -96,18 +97,19 @@ public class HarmanalTest {
 				testWavFile.toString() + "-segmentation.txt",
 				testWavFile.toString() + "-report.txt"
 			);
-			String line;
 			BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-report.txt"));
-			line = readerReport.readLine();
-			assertEquals("previous: D E F# A ", line);
-			line = readerReport.readLine();
-			assertEquals("1: D E F# A ", line);
-			line = readerReport.readLine();
-			assertEquals("transition complexity: 0", line);
+			BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
+			StringBuilder reportString = new StringBuilder();
+			StringBuilder fixtureString = new StringBuilder();
+			String line;
+			while ((line = readerReport.readLine()) != null) {
+				reportString.append(line);
+			}
+			while ((line = readerFixture.readLine()) != null) {
+				fixtureString.append(line);
+			}
+			assertEquals(fixtureString.toString(), reportString.toString());
 
-			BufferedReader readerResult = new BufferedReader(new FileReader(testWavFile.toString() + "-result.txt"));
-			line = readerResult.readLine();
-			assertEquals("0.33333334 ", line);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (PluginLoader.LoadFailedException e) {
