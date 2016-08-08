@@ -560,12 +560,10 @@ public class Harmanal {
 	 *
 	 * @param chromaFile [String] name of the file containing chroma information
 	 * @param segmentationFile [String] name of the file containing segmentation information
-	 * @param resultFile [String] name of the file to write a result
 	 * @param reportFile [String] name of the file to write a report
-	 * @param timestampsFile [String] name of the file to write a by-product of additional timestamps segmentation information
 	 */
 
-	public static void analyzeSong(String chromaFile, String segmentationFile, String resultFile, String reportFile, String timestampsFile) throws IOException, IncorrectInput {
+	public static void analyzeSong(String chromaFile, String segmentationFile, String reportFile) throws IOException, IncorrectInput {
 		List<String> chromaLinesList = Files.readAllLines(new File(chromaFile).toPath(), Charset.defaultCharset());
 		List<String> segmenationLinesList = Files.readAllLines(new File(segmentationFile).toPath(), Charset.defaultCharset());
 		List<Float> segmenatationTimestampList = new ArrayList<Float>();

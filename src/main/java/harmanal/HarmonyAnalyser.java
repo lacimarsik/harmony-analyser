@@ -387,9 +387,7 @@ public class HarmonyAnalyser extends JFrame {
 								Harmanal.analyzeSong(
 									file.toString() + "-chromas.txt",
 									file.toString() + "-segmentation.txt",
-									file.toString() + "-result.txt",
-									file.toString() + "-report.txt",
-									file.toString() + "-timestamps.txt"
+									file.toString() + "-report.txt"
 								);
 							} catch (IOException e) {
 								e.printStackTrace();

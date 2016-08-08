@@ -94,9 +94,7 @@ public class HarmanalTest {
 			Harmanal.analyzeSong(
 				testWavFile.toString() + "-chromas.txt",
 				testWavFile.toString() + "-segmentation.txt",
-				testWavFile.toString() + "-result.txt",
-				testWavFile.toString() + "-report.txt",
-				testWavFile.toString() + "-timestamps.txt"
+				testWavFile.toString() + "-report.txt"
 			);
 			String line;
 			BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-report.txt"));
