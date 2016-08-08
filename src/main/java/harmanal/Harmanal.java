@@ -545,6 +545,18 @@ public class Harmanal {
 		return result;
 	}
 
+	// Shifts chroma a step semitones up
+	private static float[] shiftChroma(float[] chroma, int step) {
+		float[] result = new float[12];
+		if (step < 0) {
+			step = 12 - step;
+		}
+		for (int i = 0; i < 12; i++) {
+			result[i] = chroma[(i + step) % 12];
+		}
+		return result;
+	}
+
 	/**
 	 * Analyzes the song
 	 *
@@ -604,6 +616,10 @@ public class Harmanal {
 
 			// Get chroma from the current line
 			chroma = getChromaFromLine(line);
+
+			// Shift chroma for proper alignment for analysis
+			// XXX: chromas from NNLS Chroma Vamp plugin start from A, chroma for Chordanal are starting from C)
+			chroma = shiftChroma(chroma, 3);
 
 			// Add values into array for averages
 			for (int i = 0; i < chromaSums.length; i++) {
