@@ -105,7 +105,7 @@ public class HarmanalTest {
 			line = readerReport.readLine();
 			assertEquals("1: D E F# A ", line);
 			line = readerReport.readLine();
-			assertEquals("ts:0", line);
+			assertEquals("transition complexity: 0", line);
 
 			BufferedReader readerResult = new BufferedReader(new FileReader(testWavFile.toString() + "-result.txt"));
 			line = readerResult.readLine();

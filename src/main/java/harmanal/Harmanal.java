@@ -452,8 +452,9 @@ public class Harmanal {
 	/* Audio Analysis */
 	// TODO: Move to a service
 
-	public static final float AUDIBLE_THRESHOLD = (float) 0.05;
-	public static final int MAXIMUM_NUMBER_OF_CHORD_TONES = 4;
+	public static final float AUDIBLE_THRESHOLD = (float) 0.05; // used to filter chroma activations that we consider not audible
+	public static final int MAXIMUM_NUMBER_OF_CHORD_TONES = 4; // used to limit number of tones we work with in chord
+	public static final int MAXIMAL_COMPLEXITY = 7; // used to assign a maximal value for 2 chords that have no common root
 
 	// gets timestamp from the first word in the line, before ':'
 	private static float getTimestampFromLine(String line) {
@@ -629,17 +630,17 @@ public class Harmanal {
 			previousChord[i] = chordProgression.get(0).get(i);
 		}
 
-		List<Integer> tcs = new ArrayList<Integer>();
-		List<Integer> cs = new ArrayList<Integer>();
-		int sumTS = 0;
-		int sumCS = 0;
-		int maxTS = 0;
-		int maxCS = 0;
-		int sumTones = 0;
+		List<Integer> transitionComplexityList = new ArrayList<Integer>();
+		List<Integer> chordComplexityList = new ArrayList<Integer>();
+		int sumTransitionComplexities = 0;
+		int sumChordComplexities = 0;
+		int maximalTransitionComplexity = 0;
+		int maximalChordComplexity = 0;
+		int sumOfAllTones = 0;
 		int counter = 0;
 		BufferedWriter out = new BufferedWriter(new FileWriter(reportFile));
 
-		// 3. Iterate over chord progression, deriving transition complexities
+		// 3. Iterate over chord progression, deriving chord and transition complexities
 		for (List<Integer> chordAsList : chordProgression) {
 
 			for (int i = 0; i < chord.length; i++) {
@@ -648,7 +649,7 @@ public class Harmanal {
 
 			// get number of tones from the current chord
 			int numberTones = getNumberOfTones(chord);
-			sumTones += numberTones;
+			sumOfAllTones += numberTones;
 
 			String currentChordTones = getStringOfTones(chord);
 			String previousChordTones = getStringOfTones(previousChord);
@@ -661,27 +662,31 @@ public class Harmanal {
 			Harmony harmony2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
 
 			if ((harmony1 == null) || (harmony2 == null)) {
-				out.write("SKIP HARMONIES!\n"); // VERBOSE
+				out.write("SKIP: one of the chord was not assigned\n");
 			} else {
-				int compl = getTransitionComplexity(harmony1, harmony2);
-				if (compl == -1) {
-					out.write("NO COMMON ROOTS -> MAX COMPLEXITY = 7!\n"); // VERBOSE
-					compl = 7;
+				// Get transition complexity using Harmanal
+				int transitionComplexity = getTransitionComplexity(harmony1, harmony2);
+				if (transitionComplexity == -1) {
+					out.write("NO COMMON ROOTS: complexity = " + MAXIMAL_COMPLEXITY + " (maximal)\n");
+					transitionComplexity = MAXIMAL_COMPLEXITY;
 				}
-				tcs.add(compl);
-				int compl2 = getHarmonyComplexity(harmony2);
+				transitionComplexityList.add(transitionComplexity);
+				// Get chord complexity using Harmanal
+				int chordComplexity = getHarmonyComplexity(harmony2);
+				chordComplexityList.add(chordComplexity);
 
-				cs.add(compl2);
-				sumTS += tcs.get(tcs.size()-1);
-				sumCS += cs.get(cs.size()-1);
-				if (tcs.get(tcs.size()-1) > maxTS) {
-					maxTS = tcs.get(tcs.size()-1);
-				}
-				if (cs.get(cs.size()-1) > maxCS) {
-					maxCS = cs.get(cs.size()-1);
-				}
-				out.write("ts:" + tcs.get(tcs.size()-1) + "\n"); // VERBOSE
+				// Sum up complexities for averages
+				sumTransitionComplexities += transitionComplexity;
+				sumChordComplexities += chordComplexity;
 
+				// Assign maximums
+				if (transitionComplexity > maximalTransitionComplexity) {
+					maximalTransitionComplexity = transitionComplexity;
+				}
+				if (chordComplexity > maximalChordComplexity) {
+					maximalChordComplexity = chordComplexity;
+				}
+				out.write("transition complexity: " + transitionComplexity + "\n");
 			}
 
 			// set previous
@@ -699,18 +704,13 @@ public class Harmanal {
 			out.write(counternew + ": " + time + "\n");
 		}
 
-		float atc = (float) sumTS  / (float) tcs.size();
-		float ahc = (float) sumCS  / (float) cs.size();
-		float rtc = (float) sumTS / (float) sumTones;
+		float atc = (float) sumTransitionComplexities  / (float) transitionComplexityList.size();
+		float ahc = (float) sumChordComplexities  / (float) chordComplexityList.size();
+		float rtc = (float) sumTransitionComplexities / (float) sumOfAllTones;
 
 		out.close();
 		out = new BufferedWriter(new FileWriter(resultFile));
 
-		FileWriter fstream1;
-
-		fstream1 = new FileWriter(resultFile);
-
-		out = new BufferedWriter(fstream1);
 		// DEBUG
 		//out.write("ATC: " + atc + " ");
 		out.write(atc + " ");
