@@ -692,31 +692,14 @@ public class Harmanal {
 			// Set previous chord
 			previousChord = chord.clone();
 		}
-		out.close();
 
 		float atc = (float) sumTransitionComplexities  / (float) transitionComplexityList.size();
 		float ahc = (float) sumChordComplexities  / (float) chordComplexityList.size();
 		float rtc = (float) sumTransitionComplexities / (float) sumOfAllTones;
 
-		out = new BufferedWriter(new FileWriter(resultFile));
-
-		// DEBUG
-		//out.write("ATC: " + atc + " ");
-		out.write(atc + " ");
-		if (atc>3) {
-
-			System.out.println("High ATC!: " + atc);
-		}
-		if (atc<1.5) {
-
-			System.out.println("Low ATC!: " + atc);
-		}
-		// DEBUG
-		//out.write("AHC: " + ahc + " ");
-		//out.write("MTC: " + maxTS+ " ");
-		//out.write("MHC: " + maxCS+ " ");
-		//out.write("RTC: " + rtc + " ");
-
+		out.write("Average Transition Complexity (ATC): " + atc + "\n");
+		out.write("Average Harmony Complexity (ACH): " + ahc + "\n");
+		out.write("Relative Transition Complexity (RTC): " + rtc + "\n");
 		out.close();
 	}
 
