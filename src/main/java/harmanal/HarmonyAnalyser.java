@@ -379,7 +379,6 @@ public class HarmonyAnalyser extends JFrame {
 
 					@Override
 					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-
 						if (file.toString().endsWith(".wav")) {
 							textPane3.setText(textPane3.getText() + "\nAnalyzing: " + file.toString() + "\n");
 
