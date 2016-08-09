@@ -412,19 +412,33 @@ class Chordanal {
 		}
 	}
 
-	public static String getHarmonyAbbreviation(Harmony harmony) {
-		boolean interval = false,unisone = false,intervalAbbreviation = false,unknownStructure = false;
+	private static boolean isInterval(Harmony harmony) {
+		return harmony.getIntervals().length == 1;
+	}
+
+	private static boolean isUnisone(Harmony harmony) {
+		if (harmony.getIntervals().length != 1) {
+			return false;
+		}
+		return getHarmonyAbbreviationRelative(harmony).equals("P1");
+	}
+
+	private static boolean isIntervalAbbreviation(Harmony harmony) {
 		if (harmony.getIntervals().length == 1) {
-			interval = true;
-			if (getHarmonyAbbreviationRelative(harmony).equals("P1")) {
-				unisone = true;
-			}
-		} else if (getHarmonyAbbreviationRelative(harmony).contains(",")) {
-			intervalAbbreviation = true;
+			return false;
 		}
-		if (getHarmonyAbbreviationRelative(harmony).equals("")) {
-			unknownStructure = true;
-		}
+		return getHarmonyAbbreviationRelative(harmony).contains(",");
+	}
+
+	private static boolean isStructureUnknown(Harmony harmony) {
+		return getHarmonyAbbreviationRelative(harmony).equals("");
+	}
+
+	public static String getHarmonyAbbreviation(Harmony harmony) {
+		boolean interval = isInterval(harmony);
+		boolean unisone = isUnisone(harmony);
+		boolean intervalAbbreviation = isIntervalAbbreviation(harmony);
+		boolean unknownStructure = isStructureUnknown(harmony);
 
 		if (unknownStructure) {
 			return "";
@@ -557,18 +571,10 @@ class Chordanal {
 	}
 
 	public static String getHarmonyName(Harmony harmony) {
-		boolean interval = false,unisone = false,intervalAbbreviation = false,unknownStructure = false;
-		if (harmony.getIntervals().length == 1) {
-			interval = true;
-			if (getHarmonyAbbreviationRelative(harmony).equals("P1")) {
-				unisone = true;
-			}
-		} else if (getHarmonyAbbreviationRelative(harmony).contains(",")) {
-			intervalAbbreviation = true;
-		}
-		if (getHarmonyAbbreviationRelative(harmony).equals("")) {
-			unknownStructure = true;
-		}
+		boolean interval = isInterval(harmony);
+		boolean unisone = isUnisone(harmony);
+		boolean intervalAbbreviation = isIntervalAbbreviation(harmony);
+		boolean unknownStructure = isStructureUnknown(harmony);
 
 		if (unknownStructure) {
 			return "";
