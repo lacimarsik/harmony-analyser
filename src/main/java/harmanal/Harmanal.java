@@ -628,6 +628,7 @@ public class Harmanal {
 
 			// get timestamp of this transition
 			timestamp = timestampList.get(chordProgression.indexOf(chord));
+			out.write(timestamp + ":\n");
 
 			// create chords using Chordanal
 			String currentChordTones = getStringOfTones(chord);
@@ -636,13 +637,12 @@ public class Harmanal {
 			Harmony harmony2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
 
 			if ((harmony1 == null) || (harmony2 == null)) {
-				out.write(timestamp + ": SKIP (one of the chords was not assigned)\n\n");
+				out.write("SKIP (one of the chords was not assigned)\n\n");
 			} else {
 				// Print chord names to output
 				String harmonyName1 = Chordanal.getHarmonyName(harmony1);
 				String harmonyName2 = Chordanal.getHarmonyName(harmony2);
 
-				out.write(timestamp + ":\n");
 				out.write(previousChordTones + "-> " + currentChordTones + "\n");
 				out.write(harmonyName1 + "-> " + harmonyName2 + "\n");
 
