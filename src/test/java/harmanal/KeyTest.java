@@ -13,13 +13,13 @@ public class KeyTest {
 	@Before
 	public void setUp() throws Exception {
 		key1 = new Key(0, Chordanal.MAJOR);
-		key2 = new Key(0,Chordanal.MINOR);
+		key2 = new Key(0, Chordanal.MINOR);
 	}
 
 	@Test
 	public void shouldGetHarmonicFunctions() {
-		assertEquals(key1.getTonic().getToneNamesMapped(),"C E G ");
-		assertEquals(key1.getSubdominant().getToneNamesMapped(),"C F A ");
-		assertEquals(key1.getDominant().getToneNamesMapped(),"D G B ");
+		assertEquals(key1.getTonic().getToneNamesMapped(), "C E G ");
+		assertEquals(key1.getSubdominant().getToneNamesMapped(), "C F A ");
+		assertEquals(key2.getDominant().getToneNamesMapped(), "D G A# ");
 	}
 }
