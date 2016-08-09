@@ -11,7 +11,7 @@ public class ToneTest {
 	private Tone tone;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		tone = new Tone(70, 100);
 	}
 

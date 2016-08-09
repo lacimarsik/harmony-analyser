@@ -11,7 +11,7 @@ public class KeyTest {
 	private Key key1, key2;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		key1 = new Key(0, Chordanal.MAJOR);
 		key2 = new Key(0, Chordanal.MINOR);
 	}
