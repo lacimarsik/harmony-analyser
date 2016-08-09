@@ -1,13 +1,13 @@
-0.4643991:
+0.37151927:
 SKIP (one or both chords were not assigned)
 
-1.7647165:
+0.4643991:
 D# F# B -> C# D# F# B 
 B major sixth chord-> C#->major second,perfect fourth,minor seventh
 transition: E major: Dominant->Dominant steps: 1
 transition complexity: 1
 
-3.4365532:
+1.7647165:
 C# D# F# B -> F# B 
 C#->major second,perfect fourth,minor seventh-> F#->perfect fourth
 transition: E major: Dominant->Dominant steps: 1
@@ -16,4 +16,3 @@ transition complexity: 1
 Average Transition Complexity (ATC): 1.0
 Average Harmony Complexity (ACH): 0.5
 Relative Transition Complexity (RTC): 0.22222222
-
