@@ -394,7 +394,7 @@ public class HarmonyAnalyser extends JFrame {
 								e.printStackTrace();
 							}
 
-							textPane3.setText(textPane3.getText() + "\nReport saved in: " + file.toString() + "-report.txt");
+							textPane3.setText(textPane3.getText() + "\nReport saved in: " + file.toString() + "-report.txt\n");
 						}
 						return FileVisitResult.CONTINUE;
 					}
