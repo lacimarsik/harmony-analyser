@@ -621,7 +621,6 @@ public class Harmanal {
 
 		// 3. Iterate over chord progression, deriving chord and transition complexities
 		for (int[] chord : chordProgression) {
-
 			// sum number of all tones for final averages
 			int numberTones = getNumberOfTones(chord);
 			sumOfAllTones += numberTones;
