@@ -9,11 +9,11 @@ import java.util.*;
 /* internal format: Map <KEY(List<String>) <-> VALUE(List<String>)> */
 /* handling format: key1,key2,...,keyN;value1,value2,...,valueN */
 
-public class DatabaseTable {
+class DatabaseTable {
 	private Map<List<String>,List<String>> table;
 
 	DatabaseTable() {
-		table = new LinkedHashMap<List<String>,List<String>>();
+		table = new LinkedHashMap<>();
 	}
 
 	/**
@@ -24,14 +24,9 @@ public class DatabaseTable {
 		String[] strings = stringValues.split(";");
 		String[] strings1 = strings[0].split(",");
 		String[] strings2 = strings[1].split(",");
-		List<String> key = new ArrayList<String>();
-		for (int i = 0; i < strings1.length; i++) {
-			key.add(strings1[i]);
-		}
-		List<String> value = new ArrayList<String>();
-		for (int i = 0; i < strings2.length; i++) {
-			value.add(strings2[i]);
-		}
+		List<String> key = Arrays.asList(strings1);
+		List<String> value = Arrays.asList(strings2);
+
 		table.put(key,value);
 	}
 
@@ -225,7 +220,7 @@ public class DatabaseTable {
 	 * Returns all keys as Strings
 	 */
 
-	List<String> getAllKeyStrings() {
+	private List<String> getAllKeyStrings() {
 		List<List<String>> keys = getAllKeys();
 		List<String> result = new ArrayList<String>();
 		for (List<String> listKeys : keys) {
@@ -258,7 +253,7 @@ public class DatabaseTable {
 	 * Return all values as Strings
 	 */
 
-	List<String> getAllValueStrings() {
+	private List<String> getAllValueStrings() {
 		List<List<String>> values = getAllValues();
 		List<String> result = new ArrayList<String>();
 		for (List<String> listValues : values) {

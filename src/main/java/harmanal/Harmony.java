@@ -7,7 +7,7 @@ import java.util.*;
  */
 
 public class Harmony {
-	public List<Tone> tones;
+	List<Tone> tones;
 
 	/**
 	 * Creates Harmony from integer array. Can be unsorted and with duplicities.
@@ -26,9 +26,9 @@ public class Harmony {
 		}
 		int[] numberArrayCorrectedLength = Arrays.copyOf(numberArrayNoDuplicates, k);
 
-		tones = new ArrayList<Tone>();
-		for (int i = 0; i < numberArrayCorrectedLength.length; i++) {
-			tones.add(new Tone(numberArrayCorrectedLength[i]));
+		tones = new ArrayList<>();
+		for (int number : numberArrayCorrectedLength) {
+			tones.add(new Tone(number));
 		}
 	}
 
@@ -36,11 +36,11 @@ public class Harmony {
 	 * Creates Harmony from integer array. Can alse be unsorted and with duplicities.
 	 */
 
-	public Harmony(List<Tone> tones) {
+	private Harmony(List<Tone> tones) {
 		this.tones = tones;
 	}
 
-	public String[] getIntervals() {
+	String[] getIntervals() {
 		String[] result;
 
 		if (tones.size() == 1) {
@@ -56,16 +56,16 @@ public class Harmony {
 		return result;
 	}
 
-	public String getToneNames() {
+	String getToneNames() {
 		return Chordanal.getHarmonyToneNames(this);
 	}
 
-	public String getToneNamesMapped() {
+	String getToneNamesMapped() {
 		return Chordanal.getHarmonyToneNamesMapped(this);
 	}
 
-	public Harmony inversionUp() {
-		ArrayList<Tone> newTones = new ArrayList<Tone>();
+	Harmony inversionUp() {
+		ArrayList<Tone> newTones = new ArrayList<>();
 
 		newTones.addAll(tones);
 		newTones.remove(0);
@@ -76,9 +76,9 @@ public class Harmony {
 
 		return new Harmony(newTones);
 	}
-	
-	public Harmony inversionDown() {
-		ArrayList<Tone> newTones = new ArrayList<Tone>();
+
+	Harmony inversionDown() {
+		ArrayList<Tone> newTones = new ArrayList<>();
 
 		if ((tones.get(tones.size()-1).getNumber()-12) < 0) {
 			return null;
@@ -89,17 +89,17 @@ public class Harmony {
 
 		return new Harmony(newTones);
 	}
-	
+
 	public Harmony getSubHarmony(int[] toneIndexes) {
-		ArrayList<Tone> newTones = new ArrayList<Tone>();
-		for (int i = 0; i < toneIndexes.length; i++) {
-			newTones.add(tones.get(toneIndexes[i]));
+		ArrayList<Tone> newTones = new ArrayList<>();
+		for (int index : toneIndexes) {
+			newTones.add(tones.get(toneIndexes[index]));
 		}
 		return new Harmony(newTones);
 	}
-	
-	public Harmony getCommonTones(Harmony otherHarmony) {
-		ArrayList<Tone> found = new ArrayList<Tone>();
+
+	Harmony getCommonTones(Harmony otherHarmony) {
+		ArrayList<Tone> found = new ArrayList<>();
 		for (Tone tone1 : tones) {
 			for (Tone tone2 : otherHarmony.tones) {
 				if (tone1.getNameMapped().equals(tone2.getNameMapped())) {
@@ -125,8 +125,8 @@ public class Harmony {
 		return new Harmony(found);
 	}
 
-	public List<Tone> subtractTones(Harmony otherHarmony) {
-		List<Tone> added = new ArrayList<Tone>();
+	List<Tone> subtractTones(Harmony otherHarmony) {
+		List<Tone> added = new ArrayList<>();
 
 		for (Tone tone : tones) {
 			if (!otherHarmony.containsMapped(tone)) {
@@ -143,8 +143,8 @@ public class Harmony {
 		}
 		return added;
 	}
-	
-	public boolean containsMapped(Tone tone) {
+
+	boolean containsMapped(Tone tone) {
 		for (Tone harmonyTone : tones) {
 			if (harmonyTone.getNumberMapped() == tone.getNumberMapped()) {
 				return true;
@@ -153,7 +153,7 @@ public class Harmony {
 		return false;
 	}
 
-	public boolean containsMapped(Harmony harmony) {
+	boolean containsMapped(Harmony harmony) {
 		for (Tone tone : harmony.tones) {
 			if (!containsMapped(tone)) {
 				return false;

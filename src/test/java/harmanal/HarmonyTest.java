@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class HarmonyTest {
-	Harmony harmony1, harmony2, harmony3, harmony4, harmony5, harmony6;
+	private Harmony harmony1, harmony2, harmony3, harmony4, harmony5, harmony6;
 
 	@Before
 	public void setUp() throws Exception {

@@ -8,8 +8,8 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class KeyTest {
-	Key key1, key2;
-	
+	private Key key1, key2;
+
 	@Before
 	public void setUp() throws Exception {
 		key1 = new Key(0, Chordanal.MAJOR);

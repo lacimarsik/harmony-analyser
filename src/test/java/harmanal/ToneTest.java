@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class ToneTest {
-	Tone tone;
+	private Tone tone;
 
 	@Before
 	public void setUp() throws Exception {

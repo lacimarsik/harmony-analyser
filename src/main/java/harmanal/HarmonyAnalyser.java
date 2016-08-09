@@ -14,7 +14,7 @@ import java.util.List;
  * GUI for HarmonyAnalyser
  */
 
-public class HarmonyAnalyser extends JFrame {
+class HarmonyAnalyser extends JFrame {
 	private JTabbedPane tabbedPane1;
 	private JButton selectButton;
 	private JTextPane textPane1;

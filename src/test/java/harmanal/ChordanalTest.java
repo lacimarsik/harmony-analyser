@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class ChordanalTest {
-	Key key1, key2;
+	private Key key1, key2;
 
 	@Before
 	public void setUp() throws Exception {

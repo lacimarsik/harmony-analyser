@@ -9,8 +9,8 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class ChordinoPluginTest {
-	ChordinoPlugin chordino;
-	File testWavFile;
+	private ChordinoPlugin chordino;
+	private File testWavFile;
 
 	@Before
 	public void setUp() throws Exception {

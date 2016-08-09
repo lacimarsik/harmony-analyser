@@ -16,6 +16,8 @@ import java.util.*;
  * version 1.0
  */
 
+@SuppressWarnings("SameParameterValue")
+
 class Harmanal {
 
 	/* Roots finding */

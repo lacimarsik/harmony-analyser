@@ -9,8 +9,8 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class NNLSPluginTest {
-	NNLSPlugin nnls;
-	File testWavFile;
+	private NNLSPlugin nnls;
+	private File testWavFile;
 
 	@Before
 	public void setUp() throws Exception {

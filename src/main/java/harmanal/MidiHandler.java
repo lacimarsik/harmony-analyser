@@ -8,6 +8,8 @@ import javax.sound.midi.*;
  * Class to handle all the MIDI related events
  */
 
+@SuppressWarnings("SameParameterValue")
+
 class MidiHandler {
 	private Sequencer sequencer;
 	private Synthesizer synthesizer;

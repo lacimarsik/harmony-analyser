@@ -12,35 +12,35 @@ import java.util.*;
  * version 1.2
  */
 
-public class Chordanal {
+class Chordanal {
 	/* static data arrays */
 
-	final public static int MAJOR = 0;
-	final public static int MINOR = 1;
+	final static int MAJOR = 0;
+	final static int MINOR = 1;
 
-	final public static int TONIC = 0;
-	final public static int SUBDOMINANT = 1;
-	final public static int DOMINANT = 2;
+	final static int TONIC = 0;
+	final static int SUBDOMINANT = 1;
+	final static int DOMINANT = 2;
 
-	final public static DatabaseTable tonesNames;
+	final static DatabaseTable tonesNames;
 
-	final public static DatabaseTable functionTable; // function id | function abbreviation
-	final public static DatabaseTable functionNameTable; // function abbreviation | function name
+	final static DatabaseTable functionTable; // function id | function abbreviation
+	final static DatabaseTable functionNameTable; // function abbreviation | function name
 
-	final public static DatabaseTable scaleTable; // distances in the scale | scale id
-	final public static DatabaseTable scaleNameTable; // scale id | scale type name
+	final static DatabaseTable scaleTable; // distances in the scale | scale id
+	final private static DatabaseTable scaleNameTable; // scale id | scale type name
 
-	final public static DatabaseTable intervalTable; // distance | list of abbreviations
-	final public static DatabaseTable intervalCharacter; // distance | character
-	final public static DatabaseTable intervalNameTable; // list of abbreviations | list of names
+	final private static DatabaseTable intervalTable; // distance | list of abbreviations
+	final private static DatabaseTable intervalCharacter; // distance | character
+	final private static DatabaseTable intervalNameTable; // list of abbreviations | list of names
 
-	final public static DatabaseTable triadTable; // tuple of distances | list of abbreviations
-	final public static DatabaseTable triadCharacter; // tuple of distances | character
-	final public static DatabaseTable triadNameTable; // list of abbreviations | list of names
+	final private static DatabaseTable triadTable; // tuple of distances | list of abbreviations
+	final private static DatabaseTable triadCharacter; // tuple of distances | character
+	final private static DatabaseTable triadNameTable; // list of abbreviations | list of names
 
-	final public static DatabaseTable tetraTable; // triad of distances | list of abbreviations
-	final public static DatabaseTable tetraCharacter; // triad of distances | character
-	final public static DatabaseTable tetraNameTable; // list of abbreviations | list of names
+	final private static DatabaseTable tetraTable; // triad of distances | list of abbreviations
+	final private static DatabaseTable tetraCharacter; // triad of distances | character
+	final private static DatabaseTable tetraNameTable; // list of abbreviations | list of names
 
 	static {
 		/* Initialization */
