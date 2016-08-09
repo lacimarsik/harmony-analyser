@@ -8,21 +8,21 @@ import javax.sound.midi.*;
  * Class to handle all the MIDI related events
  */
 
-public class MidiHandler {
-	public Sequencer sequencer;
-	public Synthesizer synthesizer;
-	public MidiDevice inputDevice;
-	public MidiDevice outputDevice;
-	public MidiDecoder decoder;
+class MidiHandler {
+	private Sequencer sequencer;
+	private Synthesizer synthesizer;
+	MidiDevice inputDevice;
+	private MidiDevice outputDevice;
+	MidiDecoder decoder;
 
-	public MidiChannel[] channels; 
-	public Instrument[] instruments;
+	private MidiChannel[] channels;
+	private Instrument[] instruments;
 	private int instrument = 0;
 	private int channel = 0;
 	private int volume = 100;
 
-	public static final int LONG = 0;
-	public static final int SHORT = 1;
+	private static final int LONG = 0;
+	private static final int SHORT = 1;
 
 	private int length = 0;
 
@@ -75,16 +75,16 @@ public class MidiHandler {
 	 * Get list of MIDI input devices
 	 */
 
-	public String[] getInputDeviceList() {
+	String[] getInputDeviceList() {
 		MidiDevice device;
 		MidiDevice.Info[] infoMidiDevices = MidiSystem.getMidiDeviceInfo();
-		Vector<MidiDevice.Info> inputDeviceInfos = new Vector<MidiDevice.Info>();
+		Vector<MidiDevice.Info> inputDeviceInfos = new Vector<>();
 
-		for (int i = 0; i < infoMidiDevices.length; i++) {
+		for (MidiDevice.Info info : infoMidiDevices) {
 			try {
-				device = MidiSystem.getMidiDevice(infoMidiDevices[i]);
+				device = MidiSystem.getMidiDevice(info);
 				if (device.getClass().getSimpleName().endsWith("InDevice")) {
-					inputDeviceInfos.add(infoMidiDevices[i]);
+					inputDeviceInfos.add(info);
 				}
 			} catch (MidiUnavailableException e) {
 				e.printStackTrace();
@@ -103,13 +103,13 @@ public class MidiHandler {
 	 * Get a MIDI device based on its name 
 	 */
 
-	public MidiDevice getMidiDevice(String name) {
+	MidiDevice getMidiDevice(String name) {
 		MidiDevice.Info[] infoMidiDevices = MidiSystem.getMidiDeviceInfo();
 
-		for (int i = 0; i < infoMidiDevices.length; i++) {
+		for (MidiDevice.Info info : infoMidiDevices) {
 			try {
-				if (infoMidiDevices[i].getName().equals(name) && isInputDevice(MidiSystem.getMidiDevice(infoMidiDevices[i]))) {
-					return MidiSystem.getMidiDevice(infoMidiDevices[i]);
+				if (info.getName().equals(name) && isInputDevice(MidiSystem.getMidiDevice(info))) {
+					return MidiSystem.getMidiDevice(info);
 				}
 			} catch (MidiUnavailableException e) {
 
@@ -123,7 +123,7 @@ public class MidiHandler {
 	 * Finds out if a MIDI device is Input device
 	 */
 
-	public boolean isInputDevice(MidiDevice device) {
+	private boolean isInputDevice(MidiDevice device) {
 		return device.getClass().getSimpleName().endsWith("InDevice");
 	}
 
@@ -227,7 +227,7 @@ public class MidiHandler {
 		}
 	}
 
-	public void play(Tone tone) {
+	private void play(Tone tone) {
 		synthesizer.loadInstrument(instruments[instrument]);
 		channels[channel].noteOn(tone.getNumber(),tone.getVolume());
 
@@ -236,7 +236,7 @@ public class MidiHandler {
 		}
 	}
 
-	public void play(Harmony harmony) {
+	void play(Harmony harmony) {
 		synthesizer.loadInstrument(instruments[instrument]);
 
 		for (Tone tone : harmony.tones) {
@@ -255,7 +255,7 @@ public class MidiHandler {
 		}
 	}
 
-	public Harmony getBufferHarmony() {
+	Harmony getBufferHarmony() {
 		String buffer = decoder.getBuffer();
 		if (buffer.equals("")) {
 			return null;
@@ -271,21 +271,17 @@ public class MidiHandler {
 }
 
 class MidiDecoder implements Receiver {
-	String buffer = "";
+	private String buffer = "";
 
 	public void close() {
 		buffer = "";
 	}
 
-	public boolean isOpen() {
-		if (buffer.length() != 0) {
-			return true;
-		} else {
-			return false;
-		}
+	boolean isOpen() {
+		return (buffer.length() != 0);
 	}
 
-	public String getBuffer() {
+	String getBuffer() {
 		return buffer;
 	}
 
