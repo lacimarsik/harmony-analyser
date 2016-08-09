@@ -428,7 +428,7 @@ public class Harmanal {
 	/* Audio Analysis */
 	// TODO: Move to a service
 
-	public static final float AUDIBLE_THRESHOLD = (float) 0.05; // used to filter chroma activations that we consider not audible
+	public static final float AUDIBLE_THRESHOLD = (float) 0.08; // used to filter chroma activations that we consider not audible
 	public static final int MAXIMUM_NUMBER_OF_CHORD_TONES = 4; // used to limit number of tones we work with in chord
 	public static final int MAXIMAL_COMPLEXITY = 7; // used to assign a maximal value for 2 chords that have no common root
 
