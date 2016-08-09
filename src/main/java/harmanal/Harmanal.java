@@ -605,10 +605,6 @@ public class Harmanal {
 		}
 
 		int[] previousChord = new int[12];
-		for (int i = 0; i < previousChord.length; i++) {
-			previousChord[i] = chordProgression.get(0)[i];
-		}
-
 		List<Integer> transitionComplexityList = new ArrayList<Integer>();
 		List<Integer> chordComplexityList = new ArrayList<Integer>();
 		int sumTransitionComplexities = 0;
@@ -636,7 +632,7 @@ public class Harmanal {
 			Harmony harmony2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
 
 			if ((harmony1 == null) || (harmony2 == null)) {
-				out.write("SKIP (one of the chords was not assigned)\n\n");
+				out.write("SKIP (one or both chords were not assigned)\n\n");
 			} else {
 				// Print chord names to output
 				String harmonyName1 = Chordanal.getHarmonyName(harmony1);
