@@ -16,7 +16,7 @@ import java.util.*;
  * version 1.0
  */
 
-public class Harmanal {
+class Harmanal {
 
 	/* Roots finding */
 
@@ -24,7 +24,7 @@ public class Harmanal {
 	 * Gets function roots table for a harmony
 	 */
 
-	public static DatabaseTable getRoots(Harmony harmony) {
+	static DatabaseTable getRoots(Harmony harmony) {
 		Key key;
 		DatabaseTable result = new DatabaseTable();
 
@@ -46,7 +46,7 @@ public class Harmanal {
 	 * Gets function roots table for a harmony for specific key
 	 */
 
-	public static DatabaseTable getRoots(Harmony harmony, Key key) {
+	private static DatabaseTable getRoots(Harmony harmony, Key key) {
 		DatabaseTable result = new DatabaseTable();
 		DatabaseTable rows;
 
@@ -66,7 +66,7 @@ public class Harmanal {
 	 * Gets function roots table for a harmony for specific key and function
 	 */
 
-	public static DatabaseTable getRoots(Harmony harmony, Harmony function, int functionSign, Key key) {
+	private static DatabaseTable getRoots(Harmony harmony, Harmony function, int functionSign, Key key) {
 		DatabaseTable result = new DatabaseTable();
 		Harmony common;
 
@@ -75,7 +75,11 @@ public class Harmanal {
 		if (common.tones.size() == 3) {
 			result.add(Chordanal.getKeyName(key) + "," + Chordanal.functionNameTable.getFirstInValue(Chordanal.functionTable.getFirstInValue(Integer.toString(functionSign))) + "," + common.getToneNamesMapped() + ";" + getHarmonyComplexity(harmony, Chordanal.createHarmonyFromRelativeTones(common.getToneNamesMapped()),key));
 		} else if (common.tones.size() == 2) {
-			if ((common.tones.get(0).getNumberMapped() == Chordanal.getRootTone(function).getNumberMapped()) || (common.tones.get(1).getNumberMapped() == Chordanal.getRootTone(function).getNumberMapped())) {
+			Tone rootTone = Chordanal.getRootTone(function);
+			if (rootTone == null) {
+				return null;
+			}
+			if ((common.tones.get(0).getNumberMapped() == rootTone.getNumberMapped()) || (common.tones.get(1).getNumberMapped() == rootTone.getNumberMapped())) {
 				result.add(Chordanal.getKeyName(key) + "," + Chordanal.functionNameTable.getFirstInValue(Chordanal.functionTable.getFirstInValue(Integer.toString(functionSign))) + "," + common.getToneNamesMapped() + ";" + getHarmonyComplexity(harmony, Chordanal.createHarmonyFromRelativeTones(common.getToneNamesMapped()),key));
 			}
 		}
@@ -86,8 +90,8 @@ public class Harmanal {
 	 * Gets function roots table for a harmony, sorted by distance and formatted
 	 */
 
-	public static List<String> getRootsFormatted(Harmony harmony) {
-		List<String> result = new ArrayList<String>();
+	static List<String> getRootsFormatted(Harmony harmony) {
+		List<String> result = new ArrayList<>();
 		DatabaseTable roots = getRoots(harmony).sortByValueByFirstNumeric();
 
 		if (!roots.isEmpty()) {
@@ -106,7 +110,7 @@ public class Harmanal {
 	 * Gets the derivation from the root to the harmony in a given key
 	 */
 
-	public static List<String> getHarmonyDerivation(Harmony harmony, Harmony root, Key key) {
+	static List<String> getHarmonyDerivation(Harmony harmony, Harmony root, Key key) {
 		
 		return getHarmonyDerivation(harmony, root, harmony.subtractTones(root), key);
 	}
@@ -115,21 +119,24 @@ public class Harmanal {
 	 * Gets the derivation from the root to the harmony in a given key, specifying the order of adding tones
 	 */
 
-	public static List<String> getHarmonyDerivation(Harmony harmony, Harmony root, List<Tone> added, Key key) {
-
-		List<String> result = new ArrayList<String>();
+	private static List<String> getHarmonyDerivation(Harmony harmony, Harmony root, List<Tone> added, Key key) {
+		List<String> result = new ArrayList<>();
 		Harmony phraseForm = Chordanal.createHarmonyFromRelativeTones(root.getToneNamesMapped());
+		if (phraseForm == null) {
+			return null;
+		}
 
 		result.add(root.getToneNamesMapped());
 
-		boolean special = false;
+		boolean special;
+		Tone rootCompletionTone;
 		for (Tone tone : added) {
 			if (key.getScaleHarmony().containsMapped(tone)) {
 				// ADD operator step
 
 				special = false;
-				if (getRootCompletionTone(root, key) != null) {
-					if ((root.tones.size() == 2) && (tone.getNumberMapped() == getRootCompletionTone(root, key).getNumberMapped())) {
+				if ((rootCompletionTone = getRootCompletionTone(root, key)) != null) {
+					if ((root.tones.size() == 2) && (tone.getNumberMapped() == rootCompletionTone.getNumberMapped())) {
 						special = true;
 					}
 				}
@@ -152,8 +159,8 @@ public class Harmanal {
 						special = true;
 					}
 				}
-				if (getRootCompletionTone(root, key) != null) {
-					if (diatonicTone.getNumberMapped() == getRootCompletionTone(root, key).getNumberMapped()) {
+				if ((rootCompletionTone = getRootCompletionTone(root, key)) != null) {
+					if (diatonicTone.getNumberMapped() == rootCompletionTone.getNumberMapped()) {
 						special = true;
 					}
 				}
@@ -184,11 +191,11 @@ public class Harmanal {
 	 * Gets list of all possible derivations from the root to the harmony in a given key
 	 */
 
-	public static List<List<String>> getHarmonyDerivations(Harmony harmony, Harmony root, Key key) {
-		List<List<String>> result = new ArrayList<List<String>>();
-		List<Tone> blank = new ArrayList<Tone>();
+	private static List<List<String>> getHarmonyDerivations(Harmony harmony, Harmony root, Key key) {
+		List<List<String>> result = new ArrayList<>();
+		List<Tone> blank = new ArrayList<>();
 		List<Tone> added = harmony.subtractTones(root);
-		List<List<Tone>> permutations = new ArrayList<List<Tone>>();
+		List<List<Tone>> permutations = new ArrayList<>();
 
 		permutateListOfTones(blank, added, permutations);
 
@@ -202,7 +209,7 @@ public class Harmanal {
 	 * Gets the harmony complexity of the harmony from the root in a given key
 	 */
 
-	public static int getHarmonyComplexity(Harmony harmony, Harmony root, Key key) {
+	static int getHarmonyComplexity(Harmony harmony, Harmony root, Key key) {
 		return getHarmonyDerivation(harmony,root,key).size()-1;
 	}
 
@@ -210,7 +217,7 @@ public class Harmanal {
 	 * Gets the harmony complexity for the harmony or -1 if no roots were found
 	 */
 
-	public static int getHarmonyComplexity(Harmony harmony) {
+	static int getHarmonyComplexity(Harmony harmony) {
 		DatabaseTable roots = getRoots(harmony).sortByValueByFirstNumeric();
 		if (roots.isEmpty()) {
 			return -1;
@@ -225,7 +232,7 @@ public class Harmanal {
 	 * Gets the common roots table for two harmonies
 	 */
 
-	public static DatabaseTable getCommonRoots(Harmony harmony1, Harmony harmony2) {
+	static DatabaseTable getCommonRoots(Harmony harmony1, Harmony harmony2) {
 		DatabaseTable roots1 = getRoots(harmony1).sortByValueByFirstNumeric();
 		DatabaseTable roots2 = getRoots(harmony2).sortByValueByFirstNumeric();
 
@@ -239,6 +246,9 @@ public class Harmanal {
 			String[] value = keyValue[1].split(",");
 			Harmony firstOption = Chordanal.createHarmonyFromRelativeTones(key[2]);
 			Harmony secondOption = Chordanal.createHarmonyFromRelativeTones(key[3]);
+			if (firstOption == null || secondOption == null) {
+				return null;
+			}
 			if (firstOption.containsMapped(secondOption)) {
 				result.add(key[0] + "," + key[1] + "," + key[3] + ";" + value[0] + "," + value[1]);
 			} else if (secondOption.containsMapped(firstOption)) {
@@ -253,22 +263,26 @@ public class Harmanal {
 	 * Gets the common roots table for two harmonies grouped by the key 
 	 */
 
-	public static DatabaseTable getCommonRootsByKey(Harmony harmony1, Harmony harmony2) {
+	static DatabaseTable getCommonRootsByKey(Harmony harmony1, Harmony harmony2) {
 		DatabaseTable roots1 = getRoots(harmony1).sortByValueByFirstNumeric();
 		DatabaseTable roots2 = getRoots(harmony2).sortByValueByFirstNumeric();
 
-		DatabaseTable result = roots1.naturalJoinByFirst(roots2);
-
-		return result;
+		return roots1.naturalJoinByFirst(roots2);
 	}
 
 	/**
 	 * Gets the common ancestors table for two harmonies
 	 */
 
-	public static DatabaseTable getCommonAncestors(Harmony harmony1, Harmony harmony2) {
+	static DatabaseTable getCommonAncestors(Harmony harmony1, Harmony harmony2) {
 		DatabaseTable commonRoots = getCommonRoots(harmony1, harmony2);
+		if (commonRoots == null) {
+			return null;
+		}
 		List<String> commonRootsRows = commonRoots.getAll();
+		if (commonRootsRows == null) {
+			return null;
+		}
 
 		DatabaseTable result = new DatabaseTable();
 
@@ -303,6 +317,9 @@ public class Harmanal {
 					}
 				}
 			}
+			if (rightDerivation1 == null) {
+				return null;
+			}
 			result.add(key[0] + "," + key[1] + "," + rightDerivation1.get(closestAncestor) + ";" + (rightDerivation1.size() - closestAncestor -1) + "," + (rightDerivation2.size() - closestAncestor -1));
 		}
 		return result;
@@ -312,7 +329,7 @@ public class Harmanal {
 	 * Gets the transitions table for two harmonies
 	 */
 
-	public static DatabaseTable getTransitions(Harmony harmony1, Harmony harmony2) {
+	static DatabaseTable getTransitions(Harmony harmony1, Harmony harmony2) {
 		DatabaseTable result = new DatabaseTable();
 
 		// Transition between T/S/D
@@ -325,6 +342,9 @@ public class Harmanal {
 
 		// Transition amongst T/S/D
 		DatabaseTable commonAncestors = getCommonAncestors(harmony1, harmony2);
+		if (commonAncestors == null) {
+			return null;
+		}
 		List<List<String>> keys2 = commonAncestors.getAllKeys();
 		List<List<String>> values2 = commonAncestors.getAllValues();
 		for (int i = 0; i < keys2.size(); i++) {
@@ -338,10 +358,14 @@ public class Harmanal {
 	 * Gets the transitions table for two harmonies, sorted by distance and formatted
 	 */
 
-	public static List<String> getTransitionsFormatted(Harmony harmony1, Harmony harmony2) {
-		List<String> result = new ArrayList<String>();
+	static List<String> getTransitionsFormatted(Harmony harmony1, Harmony harmony2) {
+		List<String> result = new ArrayList<>();
 
-		DatabaseTable transitions = getTransitions(harmony1,harmony2).sortByValueByFirstNumeric();
+		DatabaseTable unsortedTransitions = getTransitions(harmony1,harmony2);
+		if (unsortedTransitions == null) {
+			return null;
+		}
+		DatabaseTable transitions = unsortedTransitions.sortByValueByFirstNumeric();
 		List<List<String>> keys = transitions.getAllKeys();
 		List<List<String>> values = transitions.getAllValues();
 
@@ -355,8 +379,12 @@ public class Harmanal {
 	 * Gets the transition complexity for two harmonies or -1 if no common keys were found
 	 */
 
-	public static int getTransitionComplexity(Harmony harmony1, Harmony harmony2) {
-		DatabaseTable transitions = getTransitions(harmony1,harmony2).sortByValueByFirstNumeric();
+	static int getTransitionComplexity(Harmony harmony1, Harmony harmony2) {
+		DatabaseTable unsortedTransitions = getTransitions(harmony1,harmony2);
+		if (unsortedTransitions == null) {
+			return -1;
+		}
+		DatabaseTable transitions = unsortedTransitions.sortByValueByFirstNumeric();
 
 		if (transitions.isEmpty()) {
 			return -1;
@@ -373,17 +401,17 @@ public class Harmanal {
 
 	private static void permutateListOfTones(List<Tone> startList, List<Tone> endList, List<List<Tone>> result) {
 		if (endList.size() <= 1) {
-			List<Tone> permResult = new ArrayList<Tone>();
+			List<Tone> permResult = new ArrayList<>();
 			permResult.addAll(startList);
 			permResult.addAll(endList);
 			result.add(permResult);
 		} else {
 			for (int i = 0; i < endList.size(); i++) {
-				List<Tone> newEndList = new ArrayList<Tone>();
+				List<Tone> newEndList = new ArrayList<>();
 				for ( int j = 0; j < i; j++ ) newEndList.add(endList.get(j));
 				for ( int j = i+1; j < endList.size(); j++ ) newEndList.add(endList.get(j));
 
-				List<Tone> newStartList = new ArrayList<Tone>();
+				List<Tone> newStartList = new ArrayList<>();
 				newStartList.addAll(startList);
 				newStartList.add(endList.get(i));
 
@@ -428,9 +456,9 @@ public class Harmanal {
 	/* Audio Analysis */
 	// TODO: Move to a service
 
-	public static final float AUDIBLE_THRESHOLD = (float) 0.07; // used to filter chroma activations that we consider not audible
-	public static final int MAXIMUM_NUMBER_OF_CHORD_TONES = 4; // used to limit number of tones we work with in chord
-	public static final int MAXIMAL_COMPLEXITY = 7; // used to assign a maximal value for 2 chords that have no common root
+	private static final float AUDIBLE_THRESHOLD = (float) 0.07; // used to filter chroma activations that we consider not audible
+	private static final int MAXIMUM_NUMBER_OF_CHORD_TONES = 4; // used to limit number of tones we work with in chord
+	private static final int MAXIMAL_COMPLEXITY = 7; // used to assign a maximal value for 2 chords that have no common root
 
 	// gets timestamp from the first word in the line, before ':'
 	private static float getTimestampFromLine(String line) {
@@ -501,8 +529,8 @@ public class Harmanal {
 	// Get number of tones from the binary representation of a chord
 	private static int getNumberOfTones(int[] chord) {
 		int result = 0;
-		for (int i = 0; i < chord.length; i++) {
-			if (chord[i] == 1) {
+		for (int tonePresence : chord) {
+			if (tonePresence == 1) {
 				result++;
 			}
 		}
@@ -541,10 +569,10 @@ public class Harmanal {
 	 * @param reportFile [String] name of the file to write a report
 	 */
 
-	public static void analyzeSong(String chromaFile, String segmentationFile, String reportFile) throws IOException, IncorrectInput {
+	static void analyzeSong(String chromaFile, String segmentationFile, String reportFile) throws IOException, IncorrectInput {
 		List<String> chromaLinesList = Files.readAllLines(new File(chromaFile).toPath(), Charset.defaultCharset());
 		List<String> segmentationLinesList = Files.readAllLines(new File(segmentationFile).toPath(), Charset.defaultCharset());
-		List<Float> segmentationTimestampList = new ArrayList<Float>();
+		List<Float> segmentationTimestampList = new ArrayList<>();
 
 		// 1. Get timestamps from the segmentation file
 		for (String line : segmentationLinesList) {
@@ -558,7 +586,7 @@ public class Harmanal {
 		float[] chromaVector;
 		int[] harmony;
 		List<int[]> chordProgression = new ArrayList<>();
-		List<Float> timestampList = new ArrayList<Float>();
+		List<Float> timestampList = new ArrayList<>();
 		int countChromasForAveraging = 0;
 		int segmentationIndex = 0;
 		float segmentationTimestamp;
@@ -605,8 +633,8 @@ public class Harmanal {
 		}
 
 		int[] previousChord = new int[12];
-		List<Integer> transitionComplexityList = new ArrayList<Integer>();
-		List<Integer> chordComplexityList = new ArrayList<Integer>();
+		List<Integer> transitionComplexityList = new ArrayList<>();
+		List<Integer> chordComplexityList = new ArrayList<>();
 		int sumTransitionComplexities = 0;
 		int sumChordComplexities = 0;
 		int maximalTransitionComplexity = 0;
@@ -647,8 +675,14 @@ public class Harmanal {
 					out.write("transition: NO COMMON ROOTS (maximal complexity: " + MAXIMAL_COMPLEXITY + ")\n");
 					transitionComplexity = MAXIMAL_COMPLEXITY;
 				} else {
-					List<String> transitionsFromatted = getTransitionsFormatted(harmony1, harmony2);
-					out.write("transition: " + transitionsFromatted.get(0) + "\n");
+					List<String> transitionsFormatted = getTransitionsFormatted(harmony1, harmony2);
+					String transitionFormatted;
+					if (transitionsFormatted == null) {
+						transitionFormatted = "(not found)";
+					} else {
+						transitionFormatted = transitionsFormatted.get(0);
+					}
+					out.write("transition: " + transitionFormatted + "\n");
 				}
 				transitionComplexityList.add(transitionComplexity);
 
@@ -684,8 +718,8 @@ public class Harmanal {
 		out.close();
 	}
 
-	public static class IncorrectInput extends Exception {
-		public IncorrectInput(String message) {
+	static class IncorrectInput extends Exception {
+		IncorrectInput(String message) {
 			super(message);
 		}
 	}
