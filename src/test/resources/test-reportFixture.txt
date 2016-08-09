@@ -1,12 +1,21 @@
-previous: C# D# F# B 
-1: C# D# F# B 
+0.4643991:
+C# D# F# B -> C# D# F# B 
+C#->major second,perfect fourth,minor seventh-> C#->major second,perfect fourth,minor seventh
+transition: E major: Dominant->Dominant steps: 0
 transition complexity: 0
-previous: C# D# F# B 
-2: C# D# F# B 
+
+1.7647165:
+C# D# F# B -> C# D# F# B 
+C#->major second,perfect fourth,minor seventh-> C#->major second,perfect fourth,minor seventh
+transition: E major: Dominant->Dominant steps: 0
 transition complexity: 0
-previous: C# D# F# B 
-3: C D# F# B 
+
+3.4365532:
+C# D# F# B -> C D# F# B 
+C#->major second,perfect fourth,minor seventh-> C->minor third,augmented fourth,major seventh
+transition: E major: Dominant->Dominant steps: 1
 transition complexity: 1
+
 Average Transition Complexity (ATC): 0.33333334
 Average Harmony Complexity (ACH): 1.3333334
 Relative Transition Complexity (RTC): 0.083333336
