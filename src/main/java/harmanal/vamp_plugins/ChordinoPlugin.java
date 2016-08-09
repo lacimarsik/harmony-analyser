@@ -49,8 +49,9 @@ public class ChordinoPlugin extends VampPlugin {
 	public ChordinoPlugin() throws PluginLoader.LoadFailedException {
 		pluginKey = "nnls-chroma:chordino";
 		outputNumber = 0;
+		blockSize = 16384;
 
-		parameters = new HashMap<String, Float>();
+		parameters = new HashMap<>();
 		parameters.put("useNNLS", (float) 1.0);
 		parameters.put("rollon", (float) 1.0);
 		parameters.put("tuningmode", (float) 0.0);

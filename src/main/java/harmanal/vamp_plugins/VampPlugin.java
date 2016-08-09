@@ -101,7 +101,7 @@ public class VampPlugin {
 	int adapterFlag = PluginLoader.AdapterFlags.ADAPT_ALL;
 
 	int defaultRate = 44100;
-	private int blockSize = 16384;
+	int blockSize;
 
 	Plugin p;
 	static PluginLoader loader;

@@ -46,8 +46,9 @@ public class NNLSPlugin extends VampPlugin {
 	public NNLSPlugin() throws PluginLoader.LoadFailedException {
 		pluginKey = "nnls-chroma:nnls-chroma";
 		outputNumber = 3;
+		blockSize = 16384;
 
-		parameters = new HashMap<String, Float>();
+		parameters = new HashMap<>();
 		parameters.put("useNNLS", (float) 1);
 		parameters.put("rollon", (float) 1.0);
 		parameters.put("tuningMode", (float) 0);
