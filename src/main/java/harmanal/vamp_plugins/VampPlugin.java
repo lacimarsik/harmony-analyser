@@ -98,13 +98,13 @@ public class VampPlugin {
 	int outputNumber;
 
 	Map<String, Float> parameters;
-	int adapterFlag = PluginLoader.AdapterFlags.ADAPT_ALL;
+	final int adapterFlag = PluginLoader.AdapterFlags.ADAPT_ALL;
 
-	int defaultRate = 44100;
+	final int defaultRate = 44100;
 	int blockSize;
 
 	Plugin p;
-	static PluginLoader loader;
+	final static PluginLoader loader;
 
 	static {
 		loader = PluginLoader.getInstance();
@@ -285,7 +285,7 @@ public class VampPlugin {
 		return frames;
 	}
 
-	private static void printFeatures(RealTime frameTime, Integer output, Map<Integer, List<Feature>> features, PrintStream out) throws IOException {
+	private static void printFeatures(RealTime frameTime, Integer output, Map<Integer, List<Feature>> features, PrintStream out) {
 		if (!features.containsKey(output)) return;
 
 		for (Feature f : features.get(output)) {

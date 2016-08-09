@@ -6,6 +6,8 @@ import java.util.*;
  * Class to encapsulate all harmonies
  */
 
+@SuppressWarnings("CanBeFinal")
+
 public class Harmony {
 	List<Tone> tones;
 

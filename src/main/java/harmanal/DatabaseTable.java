@@ -10,7 +10,7 @@ import java.util.*;
 /* handling format: key1,key2,...,keyN;value1,value2,...,valueN */
 
 class DatabaseTable {
-	private Map<List<String>,List<String>> table;
+	final private Map<List<String>,List<String>> table;
 
 	DatabaseTable() {
 		table = new LinkedHashMap<>();
@@ -76,7 +76,7 @@ class DatabaseTable {
 	 */
 
 	List<String> getValues(String key) {
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 		for (List<String> l : table.keySet()) {
 			if (l.contains(key)) {
 				result = table.get(l);
@@ -91,7 +91,7 @@ class DatabaseTable {
 	 */
 
 	List<String> getKeys(String value) {
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 		for (List<String> l : table.keySet()) {
 			if (table.get(l).contains(value)) {
 				result = l;
@@ -143,7 +143,7 @@ class DatabaseTable {
 	 */
 
 	List<String> getValues(String key1, String key2) {
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 		for (List<String> l : table.keySet()) {
 			try {
 				if ((l.get(0).equals(key1)) && (l.get(1).equals(key2))) {
@@ -162,7 +162,7 @@ class DatabaseTable {
 	 */
 
 	List<String> getValues(String key1, String key2, String key3) {
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 		for (List<String> l : table.keySet()) {
 			try {
 				if ((l.get(0).equals(key1)) && (l.get(1).equals(key2)) && (l.get(2).equals(key3))) {
@@ -181,7 +181,7 @@ class DatabaseTable {
 	 */
 
 	public List<String> getAll() {
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<>();
 		for (List<String> l : table.keySet()) {
 			String row = "";
 			for (int i = 0; i < l.size(); i++) {
@@ -209,7 +209,7 @@ class DatabaseTable {
 	 */
 
 	List<List<String>> getAllKeys() {
-		ArrayList<List<String>> result = new ArrayList<List<String>>();
+		ArrayList<List<String>> result = new ArrayList<>();
 		for (List<String> l : table.keySet()) {
 			result.add(l);
 		}
@@ -222,7 +222,7 @@ class DatabaseTable {
 
 	private List<String> getAllKeyStrings() {
 		List<List<String>> keys = getAllKeys();
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 		for (List<String> listKeys : keys) {
 			String key = "";
 			for (int i = 0; i < listKeys.size(); i++) {
@@ -242,7 +242,7 @@ class DatabaseTable {
 	 */
 
 	List<List<String>> getAllValues() {
-		ArrayList<List<String>> result = new ArrayList<List<String>>();
+		ArrayList<List<String>> result = new ArrayList<>();
 		for (List<String> l : table.keySet()) {
 			result.add(table.get(l));
 		}
@@ -255,7 +255,7 @@ class DatabaseTable {
 
 	private List<String> getAllValueStrings() {
 		List<List<String>> values = getAllValues();
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 		for (List<String> listValues : values) {
 			String value = "";
 			for (int i = 0; i < listValues.size(); i++) {
@@ -287,7 +287,7 @@ class DatabaseTable {
 		while (values.size() > 0) {
 			String s_min = values.get(0).get(0);
 			int min_index = 0;
-			String s = "";
+			String s;
 			for (int i = 1; i < values.size(); i++) {
 				s = values.get(i).get(0);
 				if (s.compareTo(s_min) < 0) {
@@ -329,15 +329,15 @@ class DatabaseTable {
 		List<List<String>> keys = getAllKeys();
 		List<String> rowKey,rowValue;
 		DatabaseTable result = new DatabaseTable();
-		
+
 		if (values.size() < 2) {
 			return this;
 		}
-		
+
 		while (values.size() > 0) {
 			int s_min = Integer.parseInt(values.get(0).get(0));
 			int min_index = 0;
-			int s = 0;
+			int s;
 			for (int i = 1; i < values.size(); i++) {
 				s = Integer.parseInt(values.get(i).get(0));
 				if (s < s_min) {
