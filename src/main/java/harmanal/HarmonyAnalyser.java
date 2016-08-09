@@ -22,7 +22,7 @@ public class HarmonyAnalyser extends JFrame {
 	private JButton playButton1;
 	private JTextPane textPane2;
 	private JButton loadPluginsButton;
-	private JList list1;
+	private JList<String> list1;
 	private JTextPane textPane4;
 	private JTextPane textPane5;
 	private JTextPane textPane6;
@@ -63,7 +63,7 @@ public class HarmonyAnalyser extends JFrame {
 	 * Initialize the application.
 	 */
 
-	public HarmonyAnalyser() {
+	private HarmonyAnalyser() {
 		/* GUI - Initialization */
 
 		setContentPane(rootPanel);
@@ -79,83 +79,73 @@ public class HarmonyAnalyser extends JFrame {
 		String[] inputDevices = midiHandler.getInputDeviceList();
 		list1.setListData(inputDevices);
 
-		list1.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent listSelectionEvent) {
-				selectButton.setEnabled(true);
-			}
+		list1.addListSelectionListener(listSelectionEvent -> selectButton.setEnabled(true));
+
+		selectButton.addActionListener(actionEvent -> {
+			MidiDevice selectedDevice = midiHandler.getMidiDevice(list1.getSelectedValue());
+			textPane1.setText("device: " + selectedDevice.getDeviceInfo().getName() +
+				"\nvendor: " + selectedDevice.getDeviceInfo().getVendor().substring(0, selectedDevice.getDeviceInfo().getVendor().indexOf(" "))+
+				"\ndescription: " + selectedDevice.getDeviceInfo().getDescription().substring(0, selectedDevice.getDeviceInfo().getDescription().indexOf(",")));
+
+			midiHandler.close();
+			midiHandler.initialize(null, null, selectedDevice, null, null);
+			midiHandler.connectInputSynthesizer();
+
+			captureMIDICheckBox.setEnabled(true);
+			captureMIDICheckBox1.setEnabled(true);
+			captureMIDICheckBox.setSelected(false);
+			captureMIDICheckBox1.setSelected(false);
+			playButton.setEnabled(false);
+			playButton1.setEnabled(false);
 		});
 
-		selectButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				MidiDevice selectedDevice = midiHandler.getMidiDevice(list1.getSelectedValue().toString());
-				textPane1.setText("device: " + selectedDevice.getDeviceInfo().getName() +
-					"\nvendor: " + selectedDevice.getDeviceInfo().getVendor().substring(0, selectedDevice.getDeviceInfo().getVendor().indexOf(" "))+
-					"\ndescription: " + selectedDevice.getDeviceInfo().getDescription().substring(0, selectedDevice.getDeviceInfo().getDescription().indexOf(",")));
-
-				midiHandler.close();
-				midiHandler.initialize(null, null, selectedDevice, null, null);
-				midiHandler.connectInputSynthesizer();
-
-				captureMIDICheckBox.setEnabled(true);
-				captureMIDICheckBox1.setEnabled(true);
-				captureMIDICheckBox.setSelected(false);
-				captureMIDICheckBox1.setSelected(false);
-				playButton.setEnabled(false);
-				playButton1.setEnabled(false);
-			}
-		});
-
-		captureMIDICheckBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				try {
-					if (captureMIDICheckBox.isSelected()) {
-						midiHandler.connectInputDecoder();
-						captureMIDICheckBox1.setEnabled(false);
-					} else {
-						midiHandler.inputDevice.close();
-						harmony1 = midiHandler.getBufferHarmony();
-						if (harmony1 != null) {
-							analyzeHarmony(harmony1,textPane10,textPane12,textPane4,textPane6,textPane8,textPane14);
-							playButton.setEnabled(true);
-							if (harmony2 != null) {
-								analyzeTransition(harmony1,harmony2,textPane2,textPane16);
-							}
-						}
-						midiHandler.decoder.close();
-						midiHandler.inputDevice.open();
-						midiHandler.connectInputSynthesizer();
-						captureMIDICheckBox1.setEnabled(true);
-					}
-				} catch (MidiUnavailableException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-
-		captureMIDICheckBox1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				try {
-					if (captureMIDICheckBox1.isSelected()) {
-						midiHandler.connectInputDecoder();
-						captureMIDICheckBox.setEnabled(false);
-					} else {
-						midiHandler.inputDevice.close();
-						harmony2 = midiHandler.getBufferHarmony();
+		captureMIDICheckBox.addActionListener(actionEvent -> {
+			try {
+				if (captureMIDICheckBox.isSelected()) {
+					midiHandler.connectInputDecoder();
+					captureMIDICheckBox1.setEnabled(false);
+				} else {
+					midiHandler.inputDevice.close();
+					harmony1 = midiHandler.getBufferHarmony();
+					if (harmony1 != null) {
+						analyzeHarmony(harmony1,textPane10,textPane12,textPane4,textPane6,textPane8,textPane14);
+						playButton.setEnabled(true);
 						if (harmony2 != null) {
-							analyzeHarmony(harmony2,textPane11,textPane13,textPane5,textPane7,textPane9,textPane15);
-							playButton1.setEnabled(true);
-							if (harmony1 != null) {
-								analyzeTransition(harmony1,harmony2,textPane2,textPane16);
-							}
+							analyzeTransition(harmony1,harmony2,textPane2,textPane16);
 						}
-						midiHandler.decoder.close();
-						midiHandler.inputDevice.open();
-						midiHandler.connectInputSynthesizer();
-						captureMIDICheckBox.setEnabled(true);
 					}
-				} catch (MidiUnavailableException e) {
-					e.printStackTrace();
+					midiHandler.decoder.close();
+					midiHandler.inputDevice.open();
+					midiHandler.connectInputSynthesizer();
+					captureMIDICheckBox1.setEnabled(true);
 				}
+			} catch (MidiUnavailableException e) {
+				e.printStackTrace();
+			}
+		});
+
+		captureMIDICheckBox1.addActionListener(actionEvent -> {
+			try {
+				if (captureMIDICheckBox1.isSelected()) {
+					midiHandler.connectInputDecoder();
+					captureMIDICheckBox.setEnabled(false);
+				} else {
+					midiHandler.inputDevice.close();
+					harmony2 = midiHandler.getBufferHarmony();
+					if (harmony2 != null) {
+						analyzeHarmony(harmony2,textPane11,textPane13,textPane5,textPane7,textPane9,textPane15);
+						playButton1.setEnabled(true);
+						if (harmony1 != null) {
+							analyzeTransition(harmony1,harmony2,textPane2,textPane16);
+						}
+					}
+					midiHandler.decoder.close();
+					midiHandler.inputDevice.open();
+					midiHandler.connectInputSynthesizer();
+					captureMIDICheckBox.setEnabled(true);
+				}
+			} catch (MidiUnavailableException e) {
+				e.printStackTrace();
 			}
 		});
 
@@ -231,61 +221,45 @@ public class HarmonyAnalyser extends JFrame {
 			}
 		});
 
-		playButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				midiHandler.play(harmony1);
-			}
-		});
+		playButton.addActionListener(actionEvent -> midiHandler.play(harmony1));
 
-		playButton1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				midiHandler.play(harmony2);
-			}
-		});
+		playButton1.addActionListener(actionEvent -> midiHandler.play(harmony2));
 
 		/* Audio Analysis Tool - Initialization */
 
-		loadPluginsButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				try {
-					textPane3.setText(textPane3.getText() + VampPlugin.printPlugins() + VampPlugin.printWrappedPlugins());
-				} catch (Exception e) {
-					textPane3.setText(e.getStackTrace().toString());
-				}
+		loadPluginsButton.addActionListener(actionEvent -> {
+			try {
+				textPane3.setText(textPane3.getText() + VampPlugin.printPlugins() + VampPlugin.printWrappedPlugins());
+			} catch (Exception e) {
+				textPane3.setText(e.getMessage());
 			}
 		});
 
-		buttonNNLS.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				try {
-					NNLSPlugin nnls = new NNLSPlugin();
-					textPane3.setText(textPane3.getText() + nnls.printParameters());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		buttonNNLS.addActionListener(actionEvent -> {
+			try {
+				NNLSPlugin nnls = new NNLSPlugin();
+				textPane3.setText(textPane3.getText() + nnls.printParameters());
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		});
 
-		buttonChordino.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				try {
-					ChordinoPlugin chordino = new ChordinoPlugin();
-					textPane3.setText(textPane3.getText() + chordino.printParameters());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		buttonChordino.addActionListener(actionEvent -> {
+			try {
+				ChordinoPlugin chordino = new ChordinoPlugin();
+				textPane3.setText(textPane3.getText() + chordino.printParameters());
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		});
 
-		browseButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				fileChooser = new JFileChooser();
-				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				if (fileChooser.showOpenDialog(rootPanel) == JFileChooser.APPROVE_OPTION) {
-					File file = fileChooser.getSelectedFile();
-					textPane3.setText(textPane3.getText() + "\n\n> Selected directory: " + file.getAbsolutePath());
-					textField8.setText(file.getAbsolutePath());
-				}
+		browseButton.addActionListener(actionEvent -> {
+			fileChooser = new JFileChooser();
+			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			if (fileChooser.showOpenDialog(rootPanel) == JFileChooser.APPROVE_OPTION) {
+				File file = fileChooser.getSelectedFile();
+				textPane3.setText(textPane3.getText() + "\n\n> Selected directory: " + file.getAbsolutePath());
+				textField8.setText(file.getAbsolutePath());
 			}
 		});
 
@@ -388,9 +362,7 @@ public class HarmonyAnalyser extends JFrame {
 									file.toString() + "-segmentation.txt",
 									file.toString() + "-report.txt"
 								);
-							} catch (IOException e) {
-								e.printStackTrace();
-							} catch (Harmanal.IncorrectInput e) {
+							} catch (IOException | Harmanal.IncorrectInput e) {
 								e.printStackTrace();
 							}
 
