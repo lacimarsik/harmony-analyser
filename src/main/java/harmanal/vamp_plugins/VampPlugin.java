@@ -94,29 +94,29 @@ import org.vamp_plugins.*;
  */
 
 public class VampPlugin {
-	public String pluginKey;
-	public int outputNumber;
+	String pluginKey;
+	int outputNumber;
 
-	public Map<String, Float> parameters;
-	public int adapterFlag = PluginLoader.AdapterFlags.ADAPT_ALL;
+	Map<String, Float> parameters;
+	int adapterFlag = PluginLoader.AdapterFlags.ADAPT_ALL;
 
-	public int defaultRate = 44100;
-	public int blockSize = 16384;
+	int defaultRate = 44100;
+	private int blockSize = 16384;
 
-	protected Plugin p;
-	protected static PluginLoader loader;
+	Plugin p;
+	static PluginLoader loader;
 
 	static {
 		loader = PluginLoader.getInstance();
 	}
 
-	public static final String[] WRAPPED_PLUGINS = new String[] {
+	private static final String[] WRAPPED_PLUGINS = new String[] {
 		"nnls-chroma:nnls-chroma",
 		"nnls-chroma:chordino"
 	};
 
 	public static String printPlugins() {
-		String result = new String();
+		String result = "";
 		String[] plugins = loader.listPlugins();
 		result += "\n\n> VAMP Plugins loaded successfully\n";
 		result += "> Installed plugins (" + plugins.length + "):\n";
@@ -127,9 +127,9 @@ public class VampPlugin {
 	}
 
 	public static String printWrappedPlugins() {
-		String result = new String();
+		String result = "";
 		String[] plugins = loader.listPlugins();
-		List<String> wrappedPlugins = new ArrayList<String>();
+		List<String> wrappedPlugins = new ArrayList<>();
 		for (int i = 0; i < plugins.length; ++i) {
 			for (String wrapped_plugin : WRAPPED_PLUGINS) {
 				if (plugins[i].equals(wrapped_plugin)) {
@@ -145,7 +145,7 @@ public class VampPlugin {
 	}
 
 	public String printParameters() {
-		String result = new String();
+		String result = "";
 
 		result += "\n> Parameters for " + p.getName() + "\n";
 		result += "identifier: " + p.getIdentifier() + "\n";
@@ -179,7 +179,7 @@ public class VampPlugin {
 	 * Analyze audio using Vamp plugin. Courtesy of https://code.soundsoftware.ac.uk/projects/jvamp/repository/entry/host/host.java
 	 */
 	public String analyze(String inputFile, String outputFile) {
-		String result = new String();
+		String result = "";
 
 		try {
 			File f = new File(inputFile);
@@ -254,21 +254,14 @@ public class VampPlugin {
 			stream.close();
 			out.close();
 			p.dispose();
-		} catch (UnsupportedAudioFileException e) {
+		} catch (UnsupportedAudioFileException | IOException | PluginLoader.LoadFailedException e) {
 			result += e.getMessage();
 			e.printStackTrace();
-		} catch (IOException e) {
-			result += e.getMessage();
-			e.printStackTrace();
-		} catch (PluginLoader.LoadFailedException e) {
-			result += e.getMessage();
-			e.printStackTrace();
-		} finally {
-			return result;
 		}
+		return result;
 	}
 
-	protected void setParameters() {
+	void setParameters() {
 		for (Map.Entry<String, Float> entry : parameters.entrySet()) {
 			p.setParameter(entry.getKey(), entry.getValue());
 		}
