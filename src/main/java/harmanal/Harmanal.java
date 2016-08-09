@@ -543,12 +543,12 @@ public class Harmanal {
 
 	public static void analyzeSong(String chromaFile, String segmentationFile, String reportFile) throws IOException, IncorrectInput {
 		List<String> chromaLinesList = Files.readAllLines(new File(chromaFile).toPath(), Charset.defaultCharset());
-		List<String> segmenationLinesList = Files.readAllLines(new File(segmentationFile).toPath(), Charset.defaultCharset());
-		List<Float> segmenatationTimestampList = new ArrayList<Float>();
+		List<String> segmentationLinesList = Files.readAllLines(new File(segmentationFile).toPath(), Charset.defaultCharset());
+		List<Float> segmentationTimestampList = new ArrayList<Float>();
 
 		// 1. Get timestamps from the segmentation file
-		for (String line : segmenationLinesList) {
-			segmenatationTimestampList.add(getTimestampFromLine(line));
+		for (String line : segmentationLinesList) {
+			segmentationTimestampList.add(getTimestampFromLine(line));
 		}
 
 		float chromaTimestamp;
@@ -561,21 +561,21 @@ public class Harmanal {
 		List<Float> timestampList = new ArrayList<Float>();
 		int countChromasForAveraging = 0;
 		int segmentationIndex = 0;
-		float segmenatationTimestamp;
-		segmenatationTimestamp = segmenatationTimestampList.get(0);
+		float segmentationTimestamp;
+		segmentationTimestamp = segmentationTimestampList.get(0);
 
 		// 2. Iterate over chromas, transforming them into chord progression
 		for (String line : chromaLinesList) {
 			chromaTimestamp = getTimestampFromLine(line);
 
-			if (chromaTimestamp > segmenatationTimestamp) {
+			if (chromaTimestamp > segmentationTimestamp) {
 				// Go to the next segmentation timestamp
 				segmentationIndex++;
-				if (segmentationIndex > segmenatationTimestampList.size()-1) {
+				if (segmentationIndex > segmentationTimestampList.size()-1) {
 					break;
 				}
-				segmenatationTimestamp = segmenatationTimestampList.get(segmentationIndex);
-				timestampList.add(segmenatationTimestamp);
+				segmentationTimestamp = segmentationTimestampList.get(segmentationIndex);
+				timestampList.add(segmentationTimestamp);
 
 				// Average chromas in the previous block, use AUDIBLE_THRESHOLD to filter non-audible activations
 				chromaVector = filterChroma(averageChroma(chromaSums, countChromasForAveraging));
@@ -630,6 +630,8 @@ public class Harmanal {
 			String previousChordTones = getStringOfTones(previousChord);
 			Harmony harmony1 = Chordanal.createHarmonyFromRelativeTones(previousChordTones);
 			Harmony harmony2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
+
+			System.out.println("at timestamp " + timestamp + " i have chord " + currentChordTones);
 
 			if ((harmony1 == null) || (harmony2 == null)) {
 				out.write("SKIP (one or both chords were not assigned)\n\n");
