@@ -1,17 +1,17 @@
 0.4643991:
-D# F# B -> D# F# B
+D# F# B -> D# F# B 
 B major sixth chord-> B major sixth chord
 transition: E major: Dominant->Dominant steps: 0
 transition complexity: 0
 
 1.7647165:
-D# F# B -> C# D# F# B
+D# F# B -> C# D# F# B 
 B major sixth chord-> C#->major second,perfect fourth,minor seventh
 transition: E major: Dominant->Dominant steps: 1
 transition complexity: 1
 
 3.4365532:
-C# D# F# B -> F# B
+C# D# F# B -> F# B 
 C#->major second,perfect fourth,minor seventh-> F#->perfect fourth
 transition: E major: Dominant->Dominant steps: 1
 transition complexity: 1
