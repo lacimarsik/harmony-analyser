@@ -574,8 +574,8 @@ public class Harmanal {
 				if (segmentationIndex > segmentationTimestampList.size()-1) {
 					break;
 				}
-				segmentationTimestamp = segmentationTimestampList.get(segmentationIndex);
 				timestampList.add(segmentationTimestamp);
+				segmentationTimestamp = segmentationTimestampList.get(segmentationIndex);
 
 				// Average chromas in the previous block, use AUDIBLE_THRESHOLD to filter non-audible activations
 				chromaVector = filterChroma(averageChroma(chromaSums, countChromasForAveraging));
@@ -630,8 +630,6 @@ public class Harmanal {
 			String previousChordTones = getStringOfTones(previousChord);
 			Harmony harmony1 = Chordanal.createHarmonyFromRelativeTones(previousChordTones);
 			Harmony harmony2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
-
-			System.out.println("at timestamp " + timestamp + " i have chord " + currentChordTones);
 
 			if ((harmony1 == null) || (harmony2 == null)) {
 				out.write("SKIP (one or both chords were not assigned)\n\n");
