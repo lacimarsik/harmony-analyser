@@ -387,7 +387,7 @@ class DatabaseTable {
 					result.add(keys1.get(i) + ";" + values1.get(i) + "," + values2.get(j));
 				}
 			}
-		}	
+		}
 		return result;
 	}
 

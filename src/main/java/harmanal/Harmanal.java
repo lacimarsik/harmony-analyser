@@ -113,15 +113,14 @@ class Harmanal {
 	 */
 
 	static List<String> getHarmonyDerivation(Harmony harmony, Harmony root, Key key) {
-		
-		return getHarmonyDerivation(harmony, root, harmony.subtractTones(root), key);
+		return getHarmonyDerivation(root, harmony.subtractTones(root), key);
 	}
 
 	/**
 	 * Gets the derivation from the root to the harmony in a given key, specifying the order of adding tones
 	 */
 
-	private static List<String> getHarmonyDerivation(Harmony harmony, Harmony root, List<Tone> added, Key key) {
+	private static List<String> getHarmonyDerivation(Harmony root, List<Tone> added, Key key) {
 		List<String> result = new ArrayList<>();
 		Harmony phraseForm = Chordanal.createHarmonyFromRelativeTones(root.getToneNamesMapped());
 		if (phraseForm == null) {
@@ -202,7 +201,7 @@ class Harmanal {
 		permutateListOfTones(blank, added, permutations);
 
 		for (List<Tone> list : permutations) {
-			result.add(getHarmonyDerivation(harmony, root, list, key));
+			result.add(getHarmonyDerivation(root, list, key));
 		}
 		return result;
 	}

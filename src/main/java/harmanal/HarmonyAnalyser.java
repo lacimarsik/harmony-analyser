@@ -3,7 +3,6 @@ package harmanal;
 import harmanal.vamp_plugins.*;
 import javax.sound.midi.*;
 import javax.swing.*;
-import javax.swing.event.*;
 import java.awt.event.*;
 import java.io.*;
 import java.nio.file.*;
@@ -56,7 +55,7 @@ class HarmonyAnalyser extends JFrame {
 	 */
 
 	public static void main(String[] args) {
-		HarmonyAnalyser harmonyAnalyser = new HarmonyAnalyser();
+		new HarmonyAnalyser();
 	}
 
 	/**
