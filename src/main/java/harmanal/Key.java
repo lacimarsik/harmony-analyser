@@ -7,7 +7,6 @@ import java.util.List;
  */
 
 public class Key {
-	
 	public int root;
 	public int keyType;
 
@@ -15,7 +14,7 @@ public class Key {
 		this.root = root;
 		this.keyType = keyType;
 	}
-	
+
 	public int[] getScale() {
 		int[] result = new int[7];
 		List<String> scaleIntervals = Chordanal.scaleTable.getKeys(Integer.toString(keyType));
@@ -29,7 +28,7 @@ public class Key {
 		}
 		return result;
 	}
-	
+
 	public Harmony getScaleHarmony() {
 		int[] tones = getScale();
 		for (int i = 0; i < tones.length; i++) {
@@ -37,7 +36,7 @@ public class Key {
 		}
 		return new Harmony(tones);
 	}
-	
+
 	public Harmony getTonic() {
 		int[] tonic = new int[3];
 		tonic[0] = getScale()[0];
@@ -45,7 +44,7 @@ public class Key {
 		tonic[2] = getScale()[4];
 		return new Harmony(tonic);
 	}
-	
+
 	public Harmony getSubdominant() {
 		int[] subdominant = new int[3];
 		subdominant[0] = getScale()[0];
@@ -53,7 +52,7 @@ public class Key {
 		subdominant[2] = getScale()[5];
 		return new Harmony(subdominant);
 	}
-	
+
 	public Harmony getDominant() {
 		int[] dominant = new int[3];
 		dominant[0] = getScale()[1];
@@ -61,7 +60,4 @@ public class Key {
 		dominant[2] = getScale()[6];
 		return new Harmony(dominant);
 	}
-	
-	
-	
 }
