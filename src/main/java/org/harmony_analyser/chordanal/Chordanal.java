@@ -19,7 +19,7 @@ public class Chordanal {
 	final static int SUBDOMINANT = 1;
 	final static int DOMINANT = 2;
 
-	final static DatabaseTable tonesNames; // tone number | enharmonic tone names
+	final private static DatabaseTable tonesNames; // tone number | enharmonic tone names
 
 	final private static DatabaseTable functionTable; // function id | function abbreviation
 	final private static DatabaseTable functionNameTable; // function abbreviation | function name
@@ -321,6 +321,17 @@ public class Chordanal {
 		}
 		int note = tone.getNumber() % 12;
 		return tonesNames.getFirstInValue(Integer.toString(note));
+	}
+
+	// Get String of tone names from binary chord representation
+	static String getStringOfTones(int[] chord) {
+		String result = "";
+		for (int i = 0; i < chord.length; i++) {
+			if (chord[i] == 1) {
+				result += tonesNames.getFirstInValue(Integer.toString(i)) + " ";
+			}
+		}
+		return result;
 	}
 
 	/* Analyzing and naming Harmonies */

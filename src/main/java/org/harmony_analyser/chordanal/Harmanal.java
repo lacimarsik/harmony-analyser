@@ -531,17 +531,6 @@ public class Harmanal {
 		return result;
 	}
 
-	// Get String of tone names from binary chord representation, using Chordanal
-	private static String getStringOfTones(int[] chord) {
-		String result = "";
-		for (int i = 0; i < chord.length; i++) {
-			if (chord[i] == 1) {
-				result += Chordanal.tonesNames.getFirstInValue(Integer.toString(i)) + " ";
-			}
-		}
-		return result;
-	}
-
 	// Shifts chroma a step semitones up
 	private static float[] shiftChroma(float[] chroma, int step) {
 		float[] result = new float[12];
@@ -645,8 +634,8 @@ public class Harmanal {
 			out.write(timestamp + ":\n");
 
 			// create chords using Chordanal
-			String currentChordTones = getStringOfTones(chord);
-			String previousChordTones = getStringOfTones(previousChord);
+			String currentChordTones = Chordanal.getStringOfTones(chord);
+			String previousChordTones = Chordanal.getStringOfTones(previousChord);
 			Harmony harmony1 = Chordanal.createHarmonyFromRelativeTones(previousChordTones);
 			Harmony harmony2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
 
