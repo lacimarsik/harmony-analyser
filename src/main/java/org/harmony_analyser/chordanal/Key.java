@@ -17,7 +17,7 @@ public class Key {
 		this.keyType = keyType;
 	}
 
-	int[] getScale() {
+	public int[] getScale() {
 		int[] result = new int[7];
 		List<String> scaleIntervals = Chordanal.scaleTable.getKeys(Integer.toString(keyType));
 		

@@ -17,7 +17,7 @@ public class Tone {
 		this.volume = volume;
 	}
 
-	Tone(int number) {
+	public Tone(int number) {
 		this(number, DEFAULT_VOLUME);
 	}
 
