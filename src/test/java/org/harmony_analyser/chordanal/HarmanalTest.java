@@ -1,15 +1,10 @@
 package org.harmony_analyser.chordanal;
 
-import org.harmony_analyser.chordanal.Chordanal;
-import org.harmony_analyser.chordanal.Harmanal;
-import org.harmony_analyser.chordanal.Key;
-import org.harmony_analyser.vamp_plugins.ChordinoPlugin;
-import org.harmony_analyser.vamp_plugins.NNLSPlugin;
+import org.harmony_analyser.vamp_plugins.*;
 import org.vamp_plugins.*;
+
 import org.junit.*;
-
 import java.io.*;
-
 import static org.junit.Assert.assertEquals;
 
 /**

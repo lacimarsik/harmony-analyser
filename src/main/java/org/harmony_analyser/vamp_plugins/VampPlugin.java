@@ -1,9 +1,10 @@
 package org.harmony_analyser.vamp_plugins;
 
+import org.vamp_plugins.*;
+
 import java.io.*;
 import java.util.*;
 import javax.sound.sampled.*;
-import org.vamp_plugins.*;
 
 /*
  * Generic Vamp plugin wrapper class using JVamp wrappers

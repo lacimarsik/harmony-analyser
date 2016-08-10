@@ -1,6 +1,7 @@
 package org.harmony_analyser.application;
 
 import org.harmony_analyser.chordanal.*;
+
 import java.io.File;
 import java.util.Vector;
 import javax.sound.midi.*;

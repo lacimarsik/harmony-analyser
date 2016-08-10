@@ -1,11 +1,7 @@
 package org.harmony_analyser.application;
 
-import org.harmony_analyser.chordanal.Chordanal;
-import org.harmony_analyser.chordanal.Harmanal;
-import org.harmony_analyser.chordanal.Harmony;
-import org.harmony_analyser.vamp_plugins.ChordinoPlugin;
-import org.harmony_analyser.vamp_plugins.NNLSPlugin;
-import org.harmony_analyser.vamp_plugins.VampPlugin;
+import org.harmony_analyser.chordanal.*;
+import org.harmony_analyser.vamp_plugins.*;
 
 import javax.sound.midi.*;
 import javax.swing.*;
