@@ -6,10 +6,6 @@ import org.harmony_analyser.chordanal.Harmony;
 import org.harmony_analyser.vamp_plugins.ChordinoPlugin;
 import org.harmony_analyser.vamp_plugins.NNLSPlugin;
 import org.harmony_analyser.vamp_plugins.VampPlugin;
-import harmanal.vamp_plugins.*;
-import harmanal.vamp_plugins.ChordinoPlugin;
-import harmanal.vamp_plugins.NNLSPlugin;
-import harmanal.vamp_plugins.VampPlugin;
 
 import javax.sound.midi.*;
 import javax.swing.*;

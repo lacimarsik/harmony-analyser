@@ -1,4 +1,4 @@
-package harmanal;
+package org.harmony_analyser.chordanal;
 
 import org.harmony_analyser.chordanal.Chordanal;
 import org.harmony_analyser.chordanal.Harmanal;

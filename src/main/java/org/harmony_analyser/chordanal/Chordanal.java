@@ -254,7 +254,7 @@ public class Chordanal {
 		}
 	}
 
-	static Harmony createHarmonyFromTones(String absoluteNames) {
+	public static Harmony createHarmonyFromTones(String absoluteNames) {
 		if (!checkAbsoluteNames(absoluteNames)) {
 			
 			return null;
@@ -273,7 +273,7 @@ public class Chordanal {
 		return new Harmony(numberArray);
 	}
 
-	static Harmony createHarmonyFromRelativeTones(String relativeNames) {
+	public static Harmony createHarmonyFromRelativeTones(String relativeNames) {
 		if (!checkRelativeNames(relativeNames)) {
 			return null;
 		}
@@ -422,7 +422,7 @@ public class Chordanal {
 		return getHarmonyAbbreviationRelative(harmony).equals("");
 	}
 
-	static String getHarmonyAbbreviation(Harmony harmony) {
+	public static String getHarmonyAbbreviation(Harmony harmony) {
 		boolean interval = isInterval(harmony);
 		boolean unisone = isUnisone(harmony);
 		boolean intervalAbbreviation = isIntervalAbbreviation(harmony);
@@ -448,7 +448,7 @@ public class Chordanal {
 		}
 	}
 
-	static List<String> getHarmonyNamesRelative(Harmony harmony) {
+	public static List<String> getHarmonyNamesRelative(Harmony harmony) {
 		List<String> result, abbreviations;
 		String type,harmonyStructure,typeName,harmonyStructureName;
 

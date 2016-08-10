@@ -1,6 +1,5 @@
-package harmanal.vamp_plugins;
+package org.harmony_analyser.vamp_plugins;
 
-import org.harmony_analyser.vamp_plugins.ChordinoPlugin;
 import org.junit.*;
 import java.io.*;
 import static org.junit.Assert.assertEquals;

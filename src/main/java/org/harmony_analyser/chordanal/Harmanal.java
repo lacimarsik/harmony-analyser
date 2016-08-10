@@ -88,7 +88,7 @@ public class Harmanal {
 	 * Gets function roots table for a harmony, sorted by distance and formatted
 	 */
 
-	static List<String> getRootsFormatted(Harmony harmony) {
+	public static List<String> getRootsFormatted(Harmony harmony) {
 		List<String> result = new ArrayList<>();
 		DatabaseTable roots = getRoots(harmony).sortByValueByFirstNumeric();
 
@@ -212,7 +212,7 @@ public class Harmanal {
 	 * Gets the harmony complexity for the harmony or -1 if no roots were found
 	 */
 
-	static int getHarmonyComplexity(Harmony harmony) {
+	public static int getHarmonyComplexity(Harmony harmony) {
 		DatabaseTable roots = getRoots(harmony).sortByValueByFirstNumeric();
 		if (roots.isEmpty()) {
 			return -1;
@@ -353,7 +353,7 @@ public class Harmanal {
 	 * Gets the transitions table for two harmonies, sorted by distance and formatted
 	 */
 
-	static List<String> getTransitionsFormatted(Harmony harmony1, Harmony harmony2) {
+	public static List<String> getTransitionsFormatted(Harmony harmony1, Harmony harmony2) {
 		List<String> result = new ArrayList<>();
 
 		DatabaseTable unsortedTransitions = getTransitions(harmony1,harmony2);
@@ -374,7 +374,7 @@ public class Harmanal {
 	 * Gets the transition complexity for two harmonies or -1 if no common keys were found
 	 */
 
-	static int getTransitionComplexity(Harmony harmony1, Harmony harmony2) {
+	public static int getTransitionComplexity(Harmony harmony1, Harmony harmony2) {
 		DatabaseTable unsortedTransitions = getTransitions(harmony1,harmony2);
 		if (unsortedTransitions == null) {
 			return -1;
@@ -562,7 +562,7 @@ public class Harmanal {
 	 * @param reportFile [String] name of the file to write a report
 	 */
 
-	static void analyzeSong(String chromaFile, String segmentationFile, String reportFile) throws IOException, IncorrectInput {
+	public static void analyzeSong(String chromaFile, String segmentationFile, String reportFile) throws IOException, IncorrectInput {
 		List<String> chromaLinesList = Files.readAllLines(new File(chromaFile).toPath(), Charset.defaultCharset());
 		List<String> segmentationLinesList = Files.readAllLines(new File(segmentationFile).toPath(), Charset.defaultCharset());
 		List<Float> segmentationTimestampList = new ArrayList<>();
@@ -709,7 +709,7 @@ public class Harmanal {
 		out.close();
 	}
 
-	static class IncorrectInput extends Exception {
+	public static class IncorrectInput extends Exception {
 		IncorrectInput(String message) {
 			super(message);
 		}
