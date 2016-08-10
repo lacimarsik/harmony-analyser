@@ -21,8 +21,8 @@ public class Chordanal {
 
 	final static DatabaseTable tonesNames; // tone number | enharmonic tone names
 
-	final static DatabaseTable functionTable; // function id | function abbreviation
-	final static DatabaseTable functionNameTable; // function abbreviation | function name
+	final private static DatabaseTable functionTable; // function id | function abbreviation
+	final private static DatabaseTable functionNameTable; // function abbreviation | function name
 
 	final private static DatabaseTable scaleTable; // distances in the scale | scale id
 	final private static DatabaseTable scaleNameTable; // scale id | scale type name
@@ -195,8 +195,8 @@ public class Chordanal {
 		int octave;
 		if (absoluteToneName.length() == 2) {
 			if (Character.isDigit(absoluteToneName.charAt(1))) {
-				note = absoluteToneName.substring(0,1);
-				octave = Integer.parseInt(absoluteToneName.substring(1,2));
+				note = absoluteToneName.substring(0, 1);
+				octave = Integer.parseInt(absoluteToneName.substring(1, 2));
 			} else {
 				return null;
 			}
@@ -204,19 +204,19 @@ public class Chordanal {
 			if (absoluteToneName.length() == 3) {
 				if (Character.isDigit(absoluteToneName.charAt(2))) {
 					if ((absoluteToneName.charAt(1) == '-') && (absoluteToneName.charAt(2) == '1')) {
-						note = absoluteToneName.substring(0,1);
-						octave = Integer.parseInt(absoluteToneName.substring(1,3));
+						note = absoluteToneName.substring(0, 1);
+						octave = Integer.parseInt(absoluteToneName.substring(1, 3));
 					} else {
-						note = absoluteToneName.substring(0,2);
-						octave = Integer.parseInt(absoluteToneName.substring(2,3));
+						note = absoluteToneName.substring(0, 2);
+						octave = Integer.parseInt(absoluteToneName.substring(2, 3));
 					}
 				} else {
 					return null;
 				}
 			} else if (absoluteToneName.length() == 4) {
 				if ((absoluteToneName.charAt(2) == '-') && (absoluteToneName.charAt(3) == '1')) {
-					note = absoluteToneName.substring(0,2);
-					octave = Integer.parseInt(absoluteToneName.substring(2,4));
+					note = absoluteToneName.substring(0, 2);
+					octave = Integer.parseInt(absoluteToneName.substring(2, 4));
 				} else {
 					return null;
 				}
@@ -227,21 +227,21 @@ public class Chordanal {
 
 		boolean isValid = false;
 		int relativePitch = 0;
-		for (int i = 0; i < 12; i++) {	
+		for (int i = 0; i < 12; i++) {
 			if (tonesNames.getValues(Integer.toString(i)).contains(note)) {
 				isValid = true;
-				relativePitch = i; 
+				relativePitch = i;
 				break;
 			}
 		}
 		if (!isValid) {
 			return null;
 		}
-		int number = (octave +1) * 12 + relativePitch;
+		int number = (octave + 1) * 12 + relativePitch;
 		if ((number > 127) || (number < 0)) {
 			return null;
 		} else {
-			return new Tone(number,Tone.DEFAULT_VOLUME);
+			return new Tone(number, Tone.DEFAULT_VOLUME);
 		}
 	}
 
@@ -256,7 +256,7 @@ public class Chordanal {
 
 	public static Harmony createHarmonyFromTones(String absoluteNames) {
 		if (!checkAbsoluteNames(absoluteNames)) {
-			
+
 			return null;
 		}
 
@@ -299,7 +299,7 @@ public class Chordanal {
 	static Key createKeyFromName(String name) {
 		String[] keyParts = name.split(" ");
 
-		return new Key(Integer.parseInt(tonesNames.getFirstInKey(keyParts[0])),Integer.parseInt(scaleNameTable.getFirstInKey(keyParts[1])));
+		return new Key(Integer.parseInt(tonesNames.getFirstInKey(keyParts[0])), Integer.parseInt(scaleNameTable.getFirstInKey(keyParts[1])));
 	}
 
 	/* PUBLIC / PACKAGE METHODS */
@@ -310,8 +310,8 @@ public class Chordanal {
 		if ((tone.getNumber() > 127) || (tone.getNumber() < 0)) {
 			return "";
 		}
-		int	note = tone.getNumber() % 12;
-		int	octave = tone.getNumber() / 12;
+		int note = tone.getNumber() % 12;
+		int octave = tone.getNumber() / 12;
 		return tonesNames.getFirstInValue(Integer.toString(note)) + (octave - 1);
 	}
 
@@ -319,7 +319,7 @@ public class Chordanal {
 		if ((tone.getNumber() > 127) || (tone.getNumber() < 0)) {
 			return "";
 		}
-		int	note = tone.getNumber() % 12;
+		int note = tone.getNumber() % 12;
 		return tonesNames.getFirstInValue(Integer.toString(note));
 	}
 
@@ -383,7 +383,7 @@ public class Chordanal {
 	static String getHarmonyAbbreviationIntervals(Harmony harmony) {
 		String result = "";
 		for (int i = 0; i < harmony.getIntervals().length; i++) {
-			if (i < harmony.getIntervals().length-1) {
+			if (i < harmony.getIntervals().length - 1) {
 				if (!intervalTable.getFirstInValue(harmony.getIntervals()[i]).equals("")) {
 					result += intervalTable.getFirstInValue(harmony.getIntervals()[i]) + ",";
 				} else {
@@ -436,7 +436,7 @@ public class Chordanal {
 
 	public static List<String> getHarmonyNamesRelative(Harmony harmony) {
 		List<String> result, abbreviations;
-		String type,harmonyStructure,typeName,harmonyStructureName;
+		String type, harmonyStructure, typeName, harmonyStructureName;
 
 		result = new ArrayList<>();
 		abbreviations = getHarmonyAbbreviationsRelative(harmony);
@@ -451,11 +451,11 @@ public class Chordanal {
 				if (abbreviation.equals("")) {
 					return new ArrayList<>();
 				}
-				type = abbreviation.substring(0,abbreviation.length()-1);
-				harmonyStructure = abbreviation.substring(abbreviation.length()-1);
+				type = abbreviation.substring(0, abbreviation.length() - 1);
+				harmonyStructure = abbreviation.substring(abbreviation.length() - 1);
 
 				typeName = intervalNameTable.getFirstInValue(type);
-				harmonyStructureName = intervalNameTable.getFirstInValue(harmonyStructure);		
+				harmonyStructureName = intervalNameTable.getFirstInValue(harmonyStructure);
 				if ((typeName.equals("")) || (harmonyStructureName.equals(""))) {
 					return new ArrayList<>();
 				} else {
@@ -468,7 +468,7 @@ public class Chordanal {
 
 			boolean intervalAbbreviation = false;
 			for (String abbreviation : abbreviations) {
-				
+
 				if (abbreviation.equals("")) {
 					return new ArrayList<>();
 				}
@@ -483,7 +483,7 @@ public class Chordanal {
 						i++;
 					}
 
-					type = abbreviation.substring(0,i);
+					type = abbreviation.substring(0, i);
 					harmonyStructure = abbreviation.substring(i);
 					if (harmony.tones.size() == 3) {
 						typeName = triadNameTable.getFirstInValue(type);
@@ -510,32 +510,32 @@ public class Chordanal {
 	}
 
 	static String getHarmonyNameIntervals(Harmony harmony) {
-		String type,harmonyStructure,typeName,harmonyStructureName;
-		
+		String type, harmonyStructure, typeName, harmonyStructureName;
+
 		String abbreviation = getHarmonyAbbreviationIntervals(harmony);
 		if (abbreviation.equals("")) {
 			return "";
 		}
 		String result = "";
 		for (int i = 0; i < harmony.getIntervals().length; i++) {
-			if (i == harmony.getIntervals().length-1) {
-				type = abbreviation.substring(0,abbreviation.length()-1);
-				harmonyStructure = abbreviation.substring(abbreviation.length()-1);
+			if (i == harmony.getIntervals().length - 1) {
+				type = abbreviation.substring(0, abbreviation.length() - 1);
+				harmonyStructure = abbreviation.substring(abbreviation.length() - 1);
 			} else {
-				type = abbreviation.substring(0,abbreviation.indexOf(",")-1);
-				harmonyStructure = abbreviation.substring(abbreviation.indexOf(",")-1,abbreviation.indexOf(","));
+				type = abbreviation.substring(0, abbreviation.indexOf(",") - 1);
+				harmonyStructure = abbreviation.substring(abbreviation.indexOf(",") - 1, abbreviation.indexOf(","));
 			}
 			typeName = intervalNameTable.getFirstInValue(type);
-			harmonyStructureName = intervalNameTable.getFirstInValue(harmonyStructure);		
+			harmonyStructureName = intervalNameTable.getFirstInValue(harmonyStructure);
 			if ((harmonyStructureName.equals("")) || (typeName.equals(""))) {
 				return "";
 			}
-			if (i < harmony.getIntervals().length-1) {
+			if (i < harmony.getIntervals().length - 1) {
 				result += typeName + " " + harmonyStructureName + ",";
 			} else {
 				result += typeName + " " + harmonyStructureName;
 			}
-			abbreviation = abbreviation.substring(abbreviation.indexOf(",")+1);
+			abbreviation = abbreviation.substring(abbreviation.indexOf(",") + 1);
 		}
 		return result;
 	}
@@ -581,12 +581,12 @@ public class Chordanal {
 			return intervalCharacter.getFirstInValue(harmony.getIntervals()[0]);
 		} else if (harmony.tones.size() == 3) {
 			// triad
-			
-			return triadCharacter.getFirstInValue(harmony.getIntervals()[0],harmony.getIntervals()[1]);
+
+			return triadCharacter.getFirstInValue(harmony.getIntervals()[0], harmony.getIntervals()[1]);
 		} else if (harmony.tones.size() == 4) {
 			// tetrachord
 
-			return tetraCharacter.getFirstInValue(harmony.getIntervals()[0],harmony.getIntervals()[1],harmony.getIntervals()[2]);
+			return tetraCharacter.getFirstInValue(harmony.getIntervals()[0], harmony.getIntervals()[1], harmony.getIntervals()[2]);
 		} else {
 			// 5+ tones
 
@@ -652,6 +652,12 @@ public class Chordanal {
 		} else {
 			return harmony.tones.get(0);
 		}
+	}
+
+	/* Analyzing and naming functions */
+
+	static String getFunctionName(int functionSign) {
+		return Chordanal.functionNameTable.getFirstInValue(Chordanal.functionTable.getFirstInValue(Integer.toString(functionSign)));
 	}
 
 	/* Analyzing and naming keys and scales */

@@ -71,14 +71,14 @@ public class Harmanal {
 		common = harmony.getCommonTones(function);
 
 		if (common.tones.size() == 3) {
-			result.add(Chordanal.getKeyName(key) + "," + Chordanal.functionNameTable.getFirstInValue(Chordanal.functionTable.getFirstInValue(Integer.toString(functionSign))) + "," + common.getToneNamesMapped() + ";" + getHarmonyComplexity(harmony, Chordanal.createHarmonyFromRelativeTones(common.getToneNamesMapped()),key));
+			result.add(Chordanal.getKeyName(key) + "," + Chordanal.getFunctionName(functionSign) + "," + common.getToneNamesMapped() + ";" + getHarmonyComplexity(harmony, Chordanal.createHarmonyFromRelativeTones(common.getToneNamesMapped()),key));
 		} else if (common.tones.size() == 2) {
 			Tone rootTone = Chordanal.getRootTone(function);
 			if (rootTone == null) {
 				return null;
 			}
 			if ((common.tones.get(0).getNumberMapped() == rootTone.getNumberMapped()) || (common.tones.get(1).getNumberMapped() == rootTone.getNumberMapped())) {
-				result.add(Chordanal.getKeyName(key) + "," + Chordanal.functionNameTable.getFirstInValue(Chordanal.functionTable.getFirstInValue(Integer.toString(functionSign))) + "," + common.getToneNamesMapped() + ";" + getHarmonyComplexity(harmony, Chordanal.createHarmonyFromRelativeTones(common.getToneNamesMapped()),key));
+				result.add(Chordanal.getKeyName(key) + "," + Chordanal.getFunctionName(functionSign) + "," + common.getToneNamesMapped() + ";" + getHarmonyComplexity(harmony, Chordanal.createHarmonyFromRelativeTones(common.getToneNamesMapped()),key));
 			}
 		}
 		return result;
