@@ -1,3 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: harmanal.HarmonyAnalyser
-
+Main-Class: org.harmony_analyser.application.HarmonyAnalyser
