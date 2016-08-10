@@ -19,7 +19,7 @@ public class Chordanal {
 	final static int SUBDOMINANT = 1;
 	final static int DOMINANT = 2;
 
-	final static DatabaseTable tonesNames;
+	final static DatabaseTable tonesNames; // tone number | enharmonic tone names
 
 	final static DatabaseTable functionTable; // function id | function abbreviation
 	final static DatabaseTable functionNameTable; // function abbreviation | function name

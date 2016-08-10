@@ -20,7 +20,7 @@ public class Key {
 	public int[] getScale() {
 		int[] result = new int[7];
 		List<String> scaleIntervals = Chordanal.scaleTable.getKeys(Integer.toString(keyType));
-		
+
 		int tone = 0;
 		result[tone] = root;
 		tone++;
