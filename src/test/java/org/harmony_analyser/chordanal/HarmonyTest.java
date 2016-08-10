@@ -1,4 +1,4 @@
-package harmanal;
+package org.harmony_analyser.chordanal;
 
 import org.junit.*;
 import static org.junit.Assert.assertEquals;

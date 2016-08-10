@@ -1,4 +1,4 @@
-package harmanal;
+package org.harmony_analyser.chordanal;
 
 /**
  * Class to encapsulate all tones
@@ -6,7 +6,7 @@ package harmanal;
 
 @SuppressWarnings("CanBeFinal")
 
-class Tone {
+public class Tone {
 	final static int DEFAULT_VOLUME = 100;
 
 	private int number;
@@ -17,11 +17,11 @@ class Tone {
 		this.volume = volume;
 	}
 
-	Tone(int number) {
+	public Tone(int number) {
 		this(number, DEFAULT_VOLUME);
 	}
 
-	int getNumber() {
+	public int getNumber() {
 		return this.number;
 	}
 
@@ -29,7 +29,7 @@ class Tone {
 		return this.number % 12;
 	}
 
-	int getVolume() {
+	public int getVolume() {
 		return this.volume;
 	}
 

@@ -1,4 +1,4 @@
-package harmanal;
+package org.harmony_analyser.chordanal;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
  * version 1.2
  */
 
-class Chordanal {
+public class Chordanal {
 	/* static data arrays */
 
 	final static int MAJOR = 0;
@@ -254,7 +254,7 @@ class Chordanal {
 		}
 	}
 
-	static Harmony createHarmonyFromTones(String absoluteNames) {
+	public static Harmony createHarmonyFromTones(String absoluteNames) {
 		if (!checkAbsoluteNames(absoluteNames)) {
 			
 			return null;
@@ -273,7 +273,7 @@ class Chordanal {
 		return new Harmony(numberArray);
 	}
 
-	static Harmony createHarmonyFromRelativeTones(String relativeNames) {
+	public static Harmony createHarmonyFromRelativeTones(String relativeNames) {
 		if (!checkRelativeNames(relativeNames)) {
 			return null;
 		}
@@ -422,7 +422,7 @@ class Chordanal {
 		return getHarmonyAbbreviationRelative(harmony).equals("");
 	}
 
-	static String getHarmonyAbbreviation(Harmony harmony) {
+	public static String getHarmonyAbbreviation(Harmony harmony) {
 		boolean interval = isInterval(harmony);
 		boolean unisone = isUnisone(harmony);
 		boolean intervalAbbreviation = isIntervalAbbreviation(harmony);
@@ -448,7 +448,7 @@ class Chordanal {
 		}
 	}
 
-	static List<String> getHarmonyNamesRelative(Harmony harmony) {
+	public static List<String> getHarmonyNamesRelative(Harmony harmony) {
 		List<String> result, abbreviations;
 		String type,harmonyStructure,typeName,harmonyStructureName;
 

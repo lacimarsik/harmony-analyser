@@ -1,11 +1,10 @@
-package harmanal;
+package org.harmony_analyser.chordanal;
 
-import harmanal.vamp_plugins.*;
+import org.harmony_analyser.vamp_plugins.*;
 import org.vamp_plugins.*;
+
 import org.junit.*;
-
 import java.io.*;
-
 import static org.junit.Assert.assertEquals;
 
 /**

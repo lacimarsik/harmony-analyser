@@ -1,6 +1,8 @@
-package harmanal;
+package org.harmony_analyser.application;
 
-import harmanal.vamp_plugins.*;
+import org.harmony_analyser.chordanal.*;
+import org.harmony_analyser.vamp_plugins.*;
+
 import javax.sound.midi.*;
 import javax.swing.*;
 import java.awt.event.*;

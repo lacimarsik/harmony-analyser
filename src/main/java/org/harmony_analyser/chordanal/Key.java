@@ -1,4 +1,4 @@
-package harmanal;
+package org.harmony_analyser.chordanal;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 @SuppressWarnings("CanBeFinal")
 
-class Key {
+public class Key {
 	int root;
 	int keyType;
 
@@ -17,7 +17,7 @@ class Key {
 		this.keyType = keyType;
 	}
 
-	int[] getScale() {
+	public int[] getScale() {
 		int[] result = new int[7];
 		List<String> scaleIntervals = Chordanal.scaleTable.getKeys(Integer.toString(keyType));
 		

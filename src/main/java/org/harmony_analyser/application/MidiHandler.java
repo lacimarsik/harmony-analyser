@@ -1,4 +1,6 @@
-package harmanal;
+package org.harmony_analyser.application;
+
+import org.harmony_analyser.chordanal.*;
 
 import java.io.File;
 import java.util.Vector;
@@ -231,7 +233,7 @@ class MidiHandler {
 
 	private void play(Tone tone) {
 		synthesizer.loadInstrument(instruments[instrument]);
-		channels[channel].noteOn(tone.getNumber(),tone.getVolume());
+		channels[channel].noteOn(tone.getNumber(), tone.getVolume());
 
 		if (length == SHORT) {
 			channels[channel].noteOff(tone.getNumber());
@@ -242,7 +244,14 @@ class MidiHandler {
 		synthesizer.loadInstrument(instruments[instrument]);
 		harmony.tones.forEach(this::play);
 	}
-	
+
+	void play(Key key) {
+		synthesizer.loadInstrument(instruments[instrument]);
+		for (int i : key.getScale()) {
+			play(new Tone(i));
+		}
+	}
+
 	public void playMidi(String inputFile) {
 		try {
 			File file = new File("resources/" + inputFile);
