@@ -336,89 +336,6 @@ public class Chordanal {
 
 	/* Analyzing and naming Harmonies */
 
-	static String getHarmonyToneNames(Harmony harmony) {
-		String result = "";
-		for (Tone tone : harmony.tones) {
-			result += getToneName(tone) + " ";
-		}
-		return result;
-	}
-
-	static String getHarmonyToneNamesMapped(Harmony harmony) {
-		ArrayList<String> mappedNamesWithDuplicates = harmony.tones.stream().map(Tone::getNameMapped).collect(Collectors.toCollection(ArrayList::new));
-
-		String result = "";
-		for (int i = 0; i < 12; i++) {
-			for (String mappedName : mappedNamesWithDuplicates) {
-				if (tonesNames.getFirstInValue(Integer.toString(i)).equals(mappedName)) {
-					result += tonesNames.getFirstInValue(Integer.toString(i)) + " ";
-					break;
-				}
-			}
-		}
-
-		return result;
-	}
-
-	static List<String> getHarmonyAbbreviationsRelative(Harmony harmony) {
-		List<String> result = new ArrayList<>();
-
-		if (harmony.tones.size() <= 2) {
-			// interval or unisone
-
-			return intervalTable.getValues(harmony.getIntervals()[0]);
-		} else if ((harmony.tones.size() == 3) || (harmony.tones.size() == 4)) {
-			// triad or tetrachord
-
-			if (harmony.tones.size() == 3) {
-				if (!triadTable.getValues(harmony.getIntervals()[0], harmony.getIntervals()[1]).isEmpty()) {
-					result.addAll(triadTable.getValues(harmony.getIntervals()[0], harmony.getIntervals()[1]));
-				}
-			} else {
-				if (!tetraTable.getValues(harmony.getIntervals()[0], harmony.getIntervals()[1], harmony.getIntervals()[2]).isEmpty()) {
-					result.addAll(tetraTable.getValues(harmony.getIntervals()[0], harmony.getIntervals()[1], harmony.getIntervals()[2]));
-				}
-			}
-			result.add(getHarmonyAbbreviationIntervals(harmony));
-
-			return result;
-		} else {
-			// 5+ tones
-
-			result.add(getHarmonyAbbreviationIntervals(harmony));
-
-			return result;
-		}
-	}
-
-	static String getHarmonyAbbreviationIntervals(Harmony harmony) {
-		String result = "";
-		for (int i = 0; i < harmony.getIntervals().length; i++) {
-			if (i < harmony.getIntervals().length - 1) {
-				if (!intervalTable.getFirstInValue(harmony.getIntervals()[i]).equals("")) {
-					result += intervalTable.getFirstInValue(harmony.getIntervals()[i]) + ",";
-				} else {
-					return "";
-				}
-			} else {
-				if (!intervalTable.getFirstInValue(harmony.getIntervals()[i]).equals("")) {
-					result += intervalTable.getFirstInValue(harmony.getIntervals()[i]);
-				} else {
-					return "";
-				}
-			}
-		}
-		return result;
-	}
-
-	static String getHarmonyAbbreviationRelative(Harmony harmony) {
-		if (!getHarmonyAbbreviationsRelative(harmony).isEmpty()) {
-			return getHarmonyAbbreviationsRelative(harmony).get(0);
-		} else {
-			return "";
-		}
-	}
-
 	public static String getHarmonyAbbreviation(Harmony harmony) {
 		boolean interval = isInterval(harmony);
 		boolean unisone = isUnisone(harmony);
@@ -517,6 +434,89 @@ public class Chordanal {
 
 			result.add(getHarmonyNameIntervals(harmony));
 			return result;
+		}
+	}
+
+	static String getHarmonyToneNames(Harmony harmony) {
+		String result = "";
+		for (Tone tone : harmony.tones) {
+			result += getToneName(tone) + " ";
+		}
+		return result;
+	}
+
+	static String getHarmonyToneNamesMapped(Harmony harmony) {
+		ArrayList<String> mappedNamesWithDuplicates = harmony.tones.stream().map(Tone::getNameMapped).collect(Collectors.toCollection(ArrayList::new));
+
+		String result = "";
+		for (int i = 0; i < 12; i++) {
+			for (String mappedName : mappedNamesWithDuplicates) {
+				if (tonesNames.getFirstInValue(Integer.toString(i)).equals(mappedName)) {
+					result += tonesNames.getFirstInValue(Integer.toString(i)) + " ";
+					break;
+				}
+			}
+		}
+
+		return result;
+	}
+
+	static List<String> getHarmonyAbbreviationsRelative(Harmony harmony) {
+		List<String> result = new ArrayList<>();
+
+		if (harmony.tones.size() <= 2) {
+			// interval or unisone
+
+			return intervalTable.getValues(harmony.getIntervals()[0]);
+		} else if ((harmony.tones.size() == 3) || (harmony.tones.size() == 4)) {
+			// triad or tetrachord
+
+			if (harmony.tones.size() == 3) {
+				if (!triadTable.getValues(harmony.getIntervals()[0], harmony.getIntervals()[1]).isEmpty()) {
+					result.addAll(triadTable.getValues(harmony.getIntervals()[0], harmony.getIntervals()[1]));
+				}
+			} else {
+				if (!tetraTable.getValues(harmony.getIntervals()[0], harmony.getIntervals()[1], harmony.getIntervals()[2]).isEmpty()) {
+					result.addAll(tetraTable.getValues(harmony.getIntervals()[0], harmony.getIntervals()[1], harmony.getIntervals()[2]));
+				}
+			}
+			result.add(getHarmonyAbbreviationIntervals(harmony));
+
+			return result;
+		} else {
+			// 5+ tones
+
+			result.add(getHarmonyAbbreviationIntervals(harmony));
+
+			return result;
+		}
+	}
+
+	static String getHarmonyAbbreviationIntervals(Harmony harmony) {
+		String result = "";
+		for (int i = 0; i < harmony.getIntervals().length; i++) {
+			if (i < harmony.getIntervals().length - 1) {
+				if (!intervalTable.getFirstInValue(harmony.getIntervals()[i]).equals("")) {
+					result += intervalTable.getFirstInValue(harmony.getIntervals()[i]) + ",";
+				} else {
+					return "";
+				}
+			} else {
+				if (!intervalTable.getFirstInValue(harmony.getIntervals()[i]).equals("")) {
+					result += intervalTable.getFirstInValue(harmony.getIntervals()[i]);
+				} else {
+					return "";
+				}
+			}
+		}
+		return result;
+	}
+
+	static String getHarmonyAbbreviationRelative(Harmony harmony) {
+		if (!getHarmonyAbbreviationsRelative(harmony).isEmpty()) {
+			return getHarmonyAbbreviationsRelative(harmony).get(0);
+		} else {
+			return "";
 		}
 	}
 
