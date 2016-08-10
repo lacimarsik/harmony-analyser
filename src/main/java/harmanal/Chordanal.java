@@ -331,7 +331,7 @@ class Chordanal {
 	}
 
 	public static String getHarmonyToneNamesMapped(Harmony harmony) {
-		ArrayList<String> mappedNamesWithDuplicates = new ArrayList<String>();
+		ArrayList<String> mappedNamesWithDuplicates = new ArrayList<>();
 		for (Tone tone : harmony.tones) {
 			mappedNamesWithDuplicates.add(tone.getNameMapped());
 		}
@@ -350,7 +350,7 @@ class Chordanal {
 	}
 
 	public static List<String> getHarmonyAbbreviationsRelative(Harmony harmony) {
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 
 		if (harmony.tones.size() <= 2) {
 			// interval or unisone
@@ -417,17 +417,11 @@ class Chordanal {
 	}
 
 	private static boolean isUnisone(Harmony harmony) {
-		if (harmony.getIntervals().length != 1) {
-			return false;
-		}
-		return getHarmonyAbbreviationRelative(harmony).equals("P1");
+		return harmony.getIntervals().length == 1 && getHarmonyAbbreviationRelative(harmony).equals("P1");
 	}
 
 	private static boolean isIntervalAbbreviation(Harmony harmony) {
-		if (harmony.getIntervals().length == 1) {
-			return false;
-		}
-		return getHarmonyAbbreviationRelative(harmony).contains(",");
+		return harmony.getIntervals().length != 1 && getHarmonyAbbreviationRelative(harmony).contains(",");
 	}
 
 	private static boolean isStructureUnknown(Harmony harmony) {
@@ -460,10 +454,10 @@ class Chordanal {
 		List<String> result, abbreviations;
 		String type,harmonyStructure,typeName,harmonyStructureName;
 
-		result = new ArrayList<String>();
+		result = new ArrayList<>();
 		abbreviations = getHarmonyAbbreviationsRelative(harmony);
 		if (abbreviations.isEmpty()) {
-			return new ArrayList<String>();
+			return new ArrayList<>();
 		}
 
 		if (harmony.tones.size() <= 2) {
@@ -471,7 +465,7 @@ class Chordanal {
 
 			for (String abbreviation : abbreviations) {
 				if (abbreviation.equals("")) {
-					return new ArrayList<String>();
+					return new ArrayList<>();
 				}
 				type = abbreviation.substring(0,abbreviation.length()-1);
 				harmonyStructure = abbreviation.substring(abbreviation.length()-1);
@@ -479,7 +473,7 @@ class Chordanal {
 				typeName = intervalNameTable.getFirstInValue(type);
 				harmonyStructureName = intervalNameTable.getFirstInValue(harmonyStructure);		
 				if ((typeName.equals("")) || (harmonyStructureName.equals(""))) {
-					return new ArrayList<String>();
+					return new ArrayList<>();
 				} else {
 					result.add(typeName + " " + harmonyStructureName);
 				}
@@ -492,7 +486,7 @@ class Chordanal {
 			for (String abbreviation : abbreviations) {
 				
 				if (abbreviation.equals("")) {
-					return new ArrayList<String>();
+					return new ArrayList<>();
 				}
 				if (abbreviation.contains(",")) {
 					intervalAbbreviation = true;
@@ -515,7 +509,7 @@ class Chordanal {
 						harmonyStructureName = tetraNameTable.getFirstInValue(harmonyStructure);
 					}
 					if ((typeName.equals("")) || (harmonyStructureName.equals(""))) {
-						return new ArrayList<String>();
+						return new ArrayList<>();
 					} else {
 						result.add(typeName + " " + harmonyStructureName);
 					}

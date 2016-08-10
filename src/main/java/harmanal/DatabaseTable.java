@@ -216,25 +216,28 @@ class DatabaseTable {
 		return result;
 	}
 
-	/**
-	 * Returns all keys as Strings
-	 */
-
-	private List<String> getAllKeyStrings() {
-		List<List<String>> keys = getAllKeys();
+	private List<String> breakDownDoubleList(List<List<String>> doubleList) {
 		List<String> result = new ArrayList<>();
-		for (List<String> listKeys : keys) {
+		for (List<String> list : doubleList) {
 			String key = "";
-			for (int i = 0; i < listKeys.size(); i++) {
-				if (i < listKeys.size() -1) {
-					key += listKeys.get(i) + ",";
+			for (int i = 0; i < list.size(); i++) {
+				if (i < list.size() -1) {
+					key += list.get(i) + ",";
 				} else {
-					key += listKeys.get(i);
+					key += list.get(i);
 				}
 			}
 			result.add(key);
 		}
 		return result;
+	}
+
+	/**
+	 * Returns all keys as Strings
+	 */
+
+	private List<String> getAllKeyStrings() {
+		return breakDownDoubleList(getAllKeys());
 	}
 
 	/**
@@ -254,20 +257,7 @@ class DatabaseTable {
 	 */
 
 	private List<String> getAllValueStrings() {
-		List<List<String>> values = getAllValues();
-		List<String> result = new ArrayList<>();
-		for (List<String> listValues : values) {
-			String value = "";
-			for (int i = 0; i < listValues.size(); i++) {
-				if (i < listValues.size() -1) {
-					value += listValues.get(i) + ",";
-				} else {
-					value += listValues.get(i);
-				}
-			}
-			result.add(value);
-		}
-		return result;
+		return breakDownDoubleList(getAllValues());
 	}
 
 	/**
