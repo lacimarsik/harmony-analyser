@@ -188,51 +188,6 @@ public class Chordanal {
 		tetraNameTable.add("2;second chord");
 	}
 
-	/* Private methods */
-
-	private static boolean checkRelativeNames(String names) {
-		String[] namesArray = names.split(" ");
-		boolean validNoteName;
-		for (String name : namesArray) {
-			validNoteName = false;
-			for (int j = 0; j < 12; j++) {
-				if (name.equals(tonesNames.getFirstInValue(Integer.toString(j)))) {
-					validNoteName = true;
-				}
-			}
-			if (!validNoteName) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	private static boolean checkAbsoluteNames(String names) {
-		String[] namesArray = names.split(" ");
-		for (String name : namesArray) {
-			if (Chordanal.createToneFromName(name) == null) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	private static boolean isInterval(Harmony harmony) {
-		return harmony.getIntervals().length == 1;
-	}
-
-	private static boolean isUnisone(Harmony harmony) {
-		return harmony.getIntervals().length == 1 && getHarmonyAbbreviationRelative(harmony).equals("P1");
-	}
-
-	private static boolean isIntervalAbbreviation(Harmony harmony) {
-		return harmony.getIntervals().length != 1 && getHarmonyAbbreviationRelative(harmony).contains(",");
-	}
-
-	private static boolean isStructureUnknown(Harmony harmony) {
-		return getHarmonyAbbreviationRelative(harmony).equals("");
-	}
-
 	/* Factory methods */
 
 	static Tone createToneFromName(String absoluteToneName) {
@@ -720,5 +675,50 @@ public class Chordanal {
 
 	static List<String> getScaleIntervals(int mode) {
 		return scaleTable.getKeys(Integer.toString(mode));
+	}
+
+	/* Private methods */
+
+	private static boolean checkRelativeNames(String names) {
+		String[] namesArray = names.split(" ");
+		boolean validNoteName;
+		for (String name : namesArray) {
+			validNoteName = false;
+			for (int j = 0; j < 12; j++) {
+				if (name.equals(tonesNames.getFirstInValue(Integer.toString(j)))) {
+					validNoteName = true;
+				}
+			}
+			if (!validNoteName) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static boolean checkAbsoluteNames(String names) {
+		String[] namesArray = names.split(" ");
+		for (String name : namesArray) {
+			if (Chordanal.createToneFromName(name) == null) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static boolean isInterval(Harmony harmony) {
+		return harmony.getIntervals().length == 1;
+	}
+
+	private static boolean isUnisone(Harmony harmony) {
+		return harmony.getIntervals().length == 1 && getHarmonyAbbreviationRelative(harmony).equals("P1");
+	}
+
+	private static boolean isIntervalAbbreviation(Harmony harmony) {
+		return harmony.getIntervals().length != 1 && getHarmonyAbbreviationRelative(harmony).contains(",");
+	}
+
+	private static boolean isStructureUnknown(Harmony harmony) {
+		return getHarmonyAbbreviationRelative(harmony).equals("");
 	}
 }
