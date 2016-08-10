@@ -8,6 +8,8 @@ import static org.junit.Assert.assertEquals;
  * Unit tests for NNLSPlugin class
  */
 
+@SuppressWarnings("ConstantConditions")
+
 public class NNLSPluginTest {
 	private NNLSPlugin nnls;
 	private File testWavFile;
@@ -16,7 +18,7 @@ public class NNLSPluginTest {
 	public void setUp() throws Exception {
 		nnls = new NNLSPlugin();
 		ClassLoader classLoader = getClass().getClassLoader();
-		testWavFile = new File(classLoader.getResource("test.wav").getPath().toString());
+		testWavFile = new File(classLoader.getResource("test.wav").getPath());
 	}
 
 	@Test

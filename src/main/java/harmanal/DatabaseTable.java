@@ -242,8 +242,7 @@ class DatabaseTable {
 	 */
 
 	List<List<String>> getAllValues() {
-		ArrayList<List<String>> result = table.keySet().stream().map(table::get).collect(Collectors.toCollection(ArrayList::new));
-		return result;
+		return table.keySet().stream().map(table::get).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	/**

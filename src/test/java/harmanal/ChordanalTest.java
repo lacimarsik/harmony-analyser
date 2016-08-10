@@ -7,6 +7,8 @@ import static org.junit.Assert.assertEquals;
  * Unit tests for Chordanal class
  */
 
+@SuppressWarnings("ConstantConditions")
+
 public class ChordanalTest {
 	private Key key1, key2;
 

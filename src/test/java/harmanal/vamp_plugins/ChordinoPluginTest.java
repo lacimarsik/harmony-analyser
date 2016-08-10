@@ -8,6 +8,8 @@ import static org.junit.Assert.assertEquals;
  * Unit tests for ChordinoPlugin class
  */
 
+@SuppressWarnings("ConstantConditions")
+
 public class ChordinoPluginTest {
 	private ChordinoPlugin chordino;
 	private File testWavFile;
@@ -16,7 +18,7 @@ public class ChordinoPluginTest {
 	public void setUp() throws Exception {
 		chordino = new ChordinoPlugin();
 		ClassLoader classLoader = getClass().getClassLoader();
-		testWavFile = new File(classLoader.getResource("test.wav").getPath().toString());
+		testWavFile = new File(classLoader.getResource("test.wav").getPath());
 	}
 
 	@Test

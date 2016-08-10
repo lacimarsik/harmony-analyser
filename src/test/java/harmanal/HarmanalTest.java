@@ -12,6 +12,8 @@ import static org.junit.Assert.assertEquals;
  * Unit tests for Harmanal class
  */
 
+@SuppressWarnings("ConstantConditions")
+
 public class HarmanalTest {
 	private Key key1;
 	private File testWavFile, testReportFixture;

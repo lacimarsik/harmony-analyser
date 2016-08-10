@@ -195,9 +195,9 @@ class Chordanal {
 	/* Factory methods */
 
 	public static Tone createToneFromName(String absoluteToneName) {
-		String note = "";
-		int octave = 0;
-		if (absoluteToneName.length() == 2) {		
+		String note;
+		int octave;
+		if (absoluteToneName.length() == 2) {
 			if (Character.isDigit(absoluteToneName.charAt(1))) {
 				note = absoluteToneName.substring(0,1);
 				octave = Integer.parseInt(absoluteToneName.substring(1,2));
@@ -286,7 +286,11 @@ class Chordanal {
 		String[] namesArray = relativeNames.split(" ");
 
 		for (String name : namesArray) {
-			absoluteNames += createToneFromRelativeName(name).getName() + " ";
+			Tone tone = createToneFromRelativeName(name);
+			if (tone == null) {
+				return null;
+			}
+			absoluteNames += tone.getName() + " ";
 		}
 		Harmony harmony = createHarmonyFromTones(absoluteNames);
 		if (harmony == null) {
@@ -431,16 +435,20 @@ class Chordanal {
 		if (unknownStructure) {
 			return "";
 		}
+		Tone rootTone = getRootTone(harmony);
+		if (rootTone == null) {
+			return "";
+		}
 		if (interval) {
 			if (unisone) {
-				return getRootTone(harmony).getNameMapped() + " (" + getHarmonyAbbreviationRelative(harmony) + ")";
+				return rootTone.getNameMapped() + " (" + getHarmonyAbbreviationRelative(harmony) + ")";
 			} else {
-				return getRootTone(harmony).getNameMapped() + "->" + getHarmonyAbbreviationRelative(harmony);
+				return rootTone.getNameMapped() + "->" + getHarmonyAbbreviationRelative(harmony);
 			}
 		} else if (intervalAbbreviation) {
-			return getRootTone(harmony).getNameMapped() + "->" + getHarmonyAbbreviationRelative(harmony);
+			return rootTone.getNameMapped() + "->" + getHarmonyAbbreviationRelative(harmony);
 		} else {
-			return getRootTone(harmony).getNameMapped() + getHarmonyAbbreviationRelative(harmony);
+			return rootTone.getNameMapped() + getHarmonyAbbreviationRelative(harmony);
 		}
 	}
 
@@ -567,16 +575,20 @@ class Chordanal {
 		if (unknownStructure) {
 			return "";
 		}
+		Tone rootTone = getRootTone(harmony);
+		if (rootTone == null) {
+			return "";
+		}
 		if (interval) {
 			if (unisone) {
-				return getRootTone(harmony).getNameMapped() + " (" + getHarmonyNameRelative(harmony) + ")";
+				return rootTone.getNameMapped() + " (" + getHarmonyNameRelative(harmony) + ")";
 			} else {
-				return getRootTone(harmony).getNameMapped() + "->" + getHarmonyNameRelative(harmony);
+				return rootTone.getNameMapped() + "->" + getHarmonyNameRelative(harmony);
 			}
 		} else if (intervalAbbreviation) {
-			return getRootTone(harmony).getNameMapped() + "->" + getHarmonyNameRelative(harmony);
+			return rootTone.getNameMapped() + "->" + getHarmonyNameRelative(harmony);
 		} else {
-			return getRootTone(harmony).getNameMapped() + " " + getHarmonyNameRelative(harmony);
+			return rootTone.getNameMapped() + " " + getHarmonyNameRelative(harmony);
 		}
 	}
 
