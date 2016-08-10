@@ -5,7 +5,10 @@
     <constraints>
       <xy x="20" y="20" width="941" height="772"/>
     </constraints>
-    <properties/>
+    <properties>
+      <minimumSize width="800" height="600"/>
+      <preferredSize width="800" height="800"/>
+    </properties>
     <border type="none"/>
     <children>
       <tabbedpane id="e0f15" binding="tabbedPane">
