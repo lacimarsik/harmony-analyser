@@ -1,4 +1,4 @@
-package harmanal.vamp_plugins;
+package org.harmony_analyser.vamp_plugins;
 
 import org.vamp_plugins.*;
 import java.util.*;

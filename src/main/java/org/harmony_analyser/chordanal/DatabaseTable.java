@@ -1,4 +1,4 @@
-package harmanal;
+package org.harmony_analyser.chordanal;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -1,4 +1,4 @@
-package harmanal;
+package org.harmony_analyser.chordanal;
 
 import java.util.*;
 
@@ -9,7 +9,7 @@ import java.util.*;
 @SuppressWarnings("CanBeFinal")
 
 public class Harmony {
-	List<Tone> tones;
+	public List<Tone> tones;
 
 	/**
 	 * Creates Harmony from integer array. Can be unsorted and with duplicities.
@@ -58,11 +58,11 @@ public class Harmony {
 		return result;
 	}
 
-	String getToneNames() {
+	public String getToneNames() {
 		return Chordanal.getHarmonyToneNames(this);
 	}
 
-	String getToneNamesMapped() {
+	public String getToneNamesMapped() {
 		return Chordanal.getHarmonyToneNamesMapped(this);
 	}
 

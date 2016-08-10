@@ -1,4 +1,4 @@
-package harmanal;
+package org.harmony_analyser.chordanal;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
  * version 1.2
  */
 
-class Chordanal {
+public class Chordanal {
 	/* static data arrays */
 
 	final static int MAJOR = 0;

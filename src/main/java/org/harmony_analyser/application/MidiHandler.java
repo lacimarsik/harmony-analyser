@@ -1,4 +1,7 @@
-package harmanal;
+package org.harmony_analyser.application;
+
+import org.harmony_analyser.chordanal.Harmony;
+import org.harmony_analyser.chordanal.Tone;
 
 import java.io.File;
 import java.util.Vector;

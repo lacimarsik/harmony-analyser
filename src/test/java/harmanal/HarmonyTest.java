@@ -1,5 +1,7 @@
 package harmanal;
 
+import org.harmony_analyser.chordanal.Harmony;
+import org.harmony_analyser.chordanal.Tone;
 import org.junit.*;
 import static org.junit.Assert.assertEquals;
 

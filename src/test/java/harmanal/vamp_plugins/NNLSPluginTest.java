@@ -1,5 +1,6 @@
 package harmanal.vamp_plugins;
 
+import org.harmony_analyser.vamp_plugins.NNLSPlugin;
 import org.junit.*;
 import java.io.*;
 import static org.junit.Assert.assertEquals;

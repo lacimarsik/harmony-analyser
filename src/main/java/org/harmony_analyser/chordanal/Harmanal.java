@@ -1,4 +1,4 @@
-package harmanal;
+package org.harmony_analyser.chordanal;
 
 import java.io.*;
 import java.nio.charset.*;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("SameParameterValue")
 
-class Harmanal {
+public class Harmanal {
 
 	/* Roots finding */
 

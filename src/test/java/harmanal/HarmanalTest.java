@@ -1,6 +1,10 @@
 package harmanal;
 
-import harmanal.vamp_plugins.*;
+import org.harmony_analyser.chordanal.Chordanal;
+import org.harmony_analyser.chordanal.Harmanal;
+import org.harmony_analyser.chordanal.Key;
+import org.harmony_analyser.vamp_plugins.ChordinoPlugin;
+import org.harmony_analyser.vamp_plugins.NNLSPlugin;
 import org.vamp_plugins.*;
 import org.junit.*;
 
