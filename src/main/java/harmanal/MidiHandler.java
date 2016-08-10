@@ -246,8 +246,8 @@ class MidiHandler {
 	public void playMidi(String inputFile) {
 		try {
 			File file = new File("resources/" + inputFile);
-			Sequence sekvencia = MidiSystem.getSequence(file);
-			sequencer.setSequence(sekvencia); 
+			Sequence sequence = MidiSystem.getSequence(file);
+			sequencer.setSequence(sequence);
 			sequencer.start();
 		} catch (Exception e) {
 			e.printStackTrace();

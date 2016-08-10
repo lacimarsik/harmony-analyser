@@ -18,8 +18,8 @@ import org.vamp_plugins.*;
  *  - key ("plugin_set:name_of_plugin")
  *  - sample rate
  *  - adapter flag, one or more of
- *  -- ADAPT_INPUT_DOMAIN(0x01), plugin will adapt the sample rate if neccessary
- *  -- ADAPT_CHANNEL_COUNT(0x02), plugin will adapt the # of channels if neccessary
+ *  -- ADAPT_INPUT_DOMAIN(0x01), plugin will adapt the sample rate if necessary
+ *  -- ADAPT_CHANNEL_COUNT(0x02), plugin will adapt the # of channels if necessary
  *  -- ADAPT_BUFFER_SIZE(0x04), plugin will adapt the buffer size itself
  *  -- ADAPT_ALL(0xff); all meaningful adaptations
  *
@@ -162,10 +162,10 @@ public class VampPlugin {
 		for (int i = 0; i < params.length; ++i) {
 			result += i + ": " + params[i].identifier + " (" + params[i].name + ") SET TO: " + p.getParameter(params[i].identifier) + "\n";
 		}
-		String[] progs = p.getPrograms();
-		result += "Plugin has " + progs.length + " program(s)\n";
-		for (int i = 0; i < progs.length; ++i) {
-			result += i + ": " + progs[i] + "\n";
+		String[] programs = p.getPrograms();
+		result += "Plugin has " + programs.length + " program(s)\n";
+		for (int i = 0; i < programs.length; ++i) {
+			result += i + ": " + programs[i] + "\n";
 		}
 		OutputDescriptor[] outputs = p.getOutputDescriptors();
 		result += "Plugin has " + outputs.length + " outputNumber(s)\n";

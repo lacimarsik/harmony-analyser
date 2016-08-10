@@ -396,7 +396,7 @@ class Harmanal {
 	/* Private methods */
 
 	/**
-	 * Fills all permuation from startList (empty list) to endList (list of Tones) into result
+	 * Fills all permutation from startList (empty list) to endList (list of Tones) into result
 	 */
 
 	private static void permutateListOfTones(List<Tone> startList, List<Tone> endList, List<List<Tone>> result) {

@@ -35,7 +35,7 @@ public class Harmony {
 	}
 
 	/**
-	 * Creates Harmony from integer array. Can alse be unsorted and with duplicities.
+	 * Creates Harmony from integer array. Can also be unsorted and with duplicities.
 	 */
 
 	private Harmony(List<Tone> tones) {
