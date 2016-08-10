@@ -10,14 +10,14 @@ import java.util.stream.Collectors;
  */
 
 public class Chordanal {
-	/* static data arrays */
-
 	final static int MAJOR = 0;
 	final static int MINOR = 1;
 
 	final static int TONIC = 0;
 	final static int SUBDOMINANT = 1;
 	final static int DOMINANT = 2;
+
+	/* static data arrays */
 
 	final private static DatabaseTable tonesNames; // tone number, enharmonic tone names
 
