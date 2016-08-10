@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Class to handle all functional complexity and transition complexity
+ * Class to handle functional complexity and transition complexity
  * 
  * version 1.0
  */
