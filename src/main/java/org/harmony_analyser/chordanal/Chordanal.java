@@ -24,7 +24,7 @@ public class Chordanal {
 	final static DatabaseTable functionTable; // function id | function abbreviation
 	final static DatabaseTable functionNameTable; // function abbreviation | function name
 
-	final static DatabaseTable scaleTable; // distances in the scale | scale id
+	final private static DatabaseTable scaleTable; // distances in the scale | scale id
 	final private static DatabaseTable scaleNameTable; // scale id | scale type name
 
 	final private static DatabaseTable intervalTable; // distance | list of abbreviations
@@ -188,6 +188,51 @@ public class Chordanal {
 		tetraNameTable.add("2;second chord");
 	}
 
+	/* Private methods */
+
+	private static boolean checkRelativeNames(String names) {
+		String[] namesArray = names.split(" ");
+		boolean validNoteName;
+		for (String name : namesArray) {
+			validNoteName = false;
+			for (int j = 0; j < 12; j++) {
+				if (name.equals(tonesNames.getFirstInValue(Integer.toString(j)))) {
+					validNoteName = true;
+				}
+			}
+			if (!validNoteName) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static boolean checkAbsoluteNames(String names) {
+		String[] namesArray = names.split(" ");
+		for (String name : namesArray) {
+			if (Chordanal.createToneFromName(name) == null) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static boolean isInterval(Harmony harmony) {
+		return harmony.getIntervals().length == 1;
+	}
+
+	private static boolean isUnisone(Harmony harmony) {
+		return harmony.getIntervals().length == 1 && getHarmonyAbbreviationRelative(harmony).equals("P1");
+	}
+
+	private static boolean isIntervalAbbreviation(Harmony harmony) {
+		return harmony.getIntervals().length != 1 && getHarmonyAbbreviationRelative(harmony).contains(",");
+	}
+
+	private static boolean isStructureUnknown(Harmony harmony) {
+		return getHarmonyAbbreviationRelative(harmony).equals("");
+	}
+
 	/* Factory methods */
 
 	static Tone createToneFromName(String absoluteToneName) {
@@ -302,6 +347,8 @@ public class Chordanal {
 		return new Key(Integer.parseInt(tonesNames.getFirstInKey(keyParts[0])),Integer.parseInt(scaleNameTable.getFirstInKey(keyParts[1])));
 	}
 
+	/* PUBLIC / PACKAGE METHODS */
+
 	/* Analyzing and naming Tones */
 
 	static String getToneName(Tone tone) {
@@ -404,22 +451,6 @@ public class Chordanal {
 		} else {
 			return "";
 		}
-	}
-
-	private static boolean isInterval(Harmony harmony) {
-		return harmony.getIntervals().length == 1;
-	}
-
-	private static boolean isUnisone(Harmony harmony) {
-		return harmony.getIntervals().length == 1 && getHarmonyAbbreviationRelative(harmony).equals("P1");
-	}
-
-	private static boolean isIntervalAbbreviation(Harmony harmony) {
-		return harmony.getIntervals().length != 1 && getHarmonyAbbreviationRelative(harmony).contains(",");
-	}
-
-	private static boolean isStructureUnknown(Harmony harmony) {
-		return getHarmonyAbbreviationRelative(harmony).equals("");
 	}
 
 	public static String getHarmonyAbbreviation(Harmony harmony) {
@@ -668,7 +699,7 @@ public class Chordanal {
 		}
 	}
 
-	/* Analyzing and naming keys */
+	/* Analyzing and naming keys and scales */
 
 	static String getKeyAbbreviation(Key key) {
 		return tonesNames.getFirstInValue(Integer.toString(key.root)) + scaleNameTable.getFirstInValue(Integer.toString(key.keyType));
@@ -687,32 +718,7 @@ public class Chordanal {
 		return result;
 	}
 
-	/* Private methods */
-
-	private static boolean checkRelativeNames(String names) {
-		String[] namesArray = names.split(" ");
-		boolean validNoteName;
-		for (String name : namesArray) {
-			validNoteName = false;
-			for (int j = 0; j < 12; j++) {
-				if (name.equals(tonesNames.getFirstInValue(Integer.toString(j)))) {
-					validNoteName = true;
-				}
-			}
-			if (!validNoteName) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	private static boolean checkAbsoluteNames(String names) {
-		String[] namesArray = names.split(" ");
-		for (String name : namesArray) {
-			if (Chordanal.createToneFromName(name) == null) {
-				return false;
-			}
-		}
-		return true;
+	static List<String> getScaleIntervals(int mode) {
+		return scaleTable.getKeys(Integer.toString(mode));
 	}
 }
