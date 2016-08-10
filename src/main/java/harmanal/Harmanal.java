@@ -6,11 +6,6 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-// TODO: Complete Harmony complexity (Complexity of a single tone and single tone + added tone)
-// TODO: Complete Transition complexity (Complexity of non-diatonic modulations)
-// TODO: Create AudioAnalyser - class for analysis of audio using Vamp plugins + Chordanal + Harmanal (Harmanal plugins)
-// TODO: Seperate Model (Chordanal + Harmanal) from Analysis (Harmony Analyser)
-
 /**
  * Class to handle all functional complexity and transition complexity
  * 
@@ -454,7 +449,6 @@ class Harmanal {
 	}
 
 	/* Audio Analysis */
-	// TODO: Move to a service
 
 	private static final float AUDIBLE_THRESHOLD = (float) 0.07; // used to filter chroma activations that we consider not audible
 	private static final int MAXIMUM_NUMBER_OF_CHORD_TONES = 4; // used to limit number of tones we work with in chord
@@ -538,7 +532,6 @@ class Harmanal {
 	}
 
 	// Get String of tone names from binary chord representation, using Chordanal
-	// TODO: Move to Chordanal
 	private static String getStringOfTones(int[] chord) {
 		String result = "";
 		for (int i = 0; i < chord.length; i++) {

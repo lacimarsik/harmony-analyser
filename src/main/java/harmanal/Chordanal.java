@@ -3,10 +3,6 @@ package harmanal;
 import java.util.*;
 import java.util.stream.Collectors;
 
-//TODO: Make the structure more flexible: Intervals, Triads, TriadType, ...
-//TODO: Diminished support (Db instead of C#)
-//TODO: Use of the database instead of DatabaseTable
-
 /**
  * Class to handle all static naming and structure analysis
  * 
@@ -194,7 +190,7 @@ class Chordanal {
 
 	/* Factory methods */
 
-	public static Tone createToneFromName(String absoluteToneName) {
+	static Tone createToneFromName(String absoluteToneName) {
 		String note;
 		int octave;
 		if (absoluteToneName.length() == 2) {
@@ -249,7 +245,7 @@ class Chordanal {
 		}
 	}
 
-	public static Tone createToneFromRelativeName(String relativeName) {
+	static Tone createToneFromRelativeName(String relativeName) {
 		Tone tone = createToneFromName(relativeName + "3");
 		if (tone == null) {
 			return null;
@@ -258,7 +254,7 @@ class Chordanal {
 		}
 	}
 
-	public static Harmony createHarmonyFromTones(String absoluteNames) {
+	static Harmony createHarmonyFromTones(String absoluteNames) {
 		if (!checkAbsoluteNames(absoluteNames)) {
 			
 			return null;
@@ -276,8 +272,8 @@ class Chordanal {
 		}
 		return new Harmony(numberArray);
 	}
-	
-	public static Harmony createHarmonyFromRelativeTones(String relativeNames) {
+
+	static Harmony createHarmonyFromRelativeTones(String relativeNames) {
 		if (!checkRelativeNames(relativeNames)) {
 			return null;
 		}
@@ -300,7 +296,7 @@ class Chordanal {
 		}
 	}
 
-	public static Key createKeyFromName(String name) {
+	static Key createKeyFromName(String name) {
 		String[] keyParts = name.split(" ");
 
 		return new Key(Integer.parseInt(tonesNames.getFirstInKey(keyParts[0])),Integer.parseInt(scaleNameTable.getFirstInKey(keyParts[1])));
@@ -308,7 +304,7 @@ class Chordanal {
 
 	/* Analyzing and naming Tones */
 
-	public static String getToneName(Tone tone) {
+	static String getToneName(Tone tone) {
 		if ((tone.getNumber() > 127) || (tone.getNumber() < 0)) {
 			return "";
 		}
@@ -317,7 +313,7 @@ class Chordanal {
 		return tonesNames.getFirstInValue(Integer.toString(note)) + (octave - 1);
 	}
 
-	public static String getToneNameMapped(Tone tone) {
+	static String getToneNameMapped(Tone tone) {
 		if ((tone.getNumber() > 127) || (tone.getNumber() < 0)) {
 			return "";
 		}
@@ -327,7 +323,7 @@ class Chordanal {
 
 	/* Analyzing and naming Harmonies */
 
-	public static String getHarmonyToneNames(Harmony harmony) {
+	static String getHarmonyToneNames(Harmony harmony) {
 		String result = "";
 		for (Tone tone : harmony.tones) {
 			result += getToneName(tone) + " ";
@@ -335,7 +331,7 @@ class Chordanal {
 		return result;
 	}
 
-	public static String getHarmonyToneNamesMapped(Harmony harmony) {
+	static String getHarmonyToneNamesMapped(Harmony harmony) {
 		ArrayList<String> mappedNamesWithDuplicates = harmony.tones.stream().map(Tone::getNameMapped).collect(Collectors.toCollection(ArrayList::new));
 
 		String result = "";
@@ -351,7 +347,7 @@ class Chordanal {
 		return result;
 	}
 
-	public static List<String> getHarmonyAbbreviationsRelative(Harmony harmony) {
+	static List<String> getHarmonyAbbreviationsRelative(Harmony harmony) {
 		List<String> result = new ArrayList<>();
 
 		if (harmony.tones.size() <= 2) {
@@ -382,7 +378,7 @@ class Chordanal {
 		}
 	}
 
-	public static String getHarmonyAbbreviationIntervals(Harmony harmony) {
+	static String getHarmonyAbbreviationIntervals(Harmony harmony) {
 		String result = "";
 		for (int i = 0; i < harmony.getIntervals().length; i++) {
 			if (i < harmony.getIntervals().length-1) {
@@ -401,8 +397,8 @@ class Chordanal {
 		}
 		return result;
 	}
-	
-	public static String getHarmonyAbbreviationRelative(Harmony harmony) {
+
+	static String getHarmonyAbbreviationRelative(Harmony harmony) {
 		if (!getHarmonyAbbreviationsRelative(harmony).isEmpty()) {
 			return getHarmonyAbbreviationsRelative(harmony).get(0);
 		} else {
@@ -426,7 +422,7 @@ class Chordanal {
 		return getHarmonyAbbreviationRelative(harmony).equals("");
 	}
 
-	public static String getHarmonyAbbreviation(Harmony harmony) {
+	static String getHarmonyAbbreviation(Harmony harmony) {
 		boolean interval = isInterval(harmony);
 		boolean unisone = isUnisone(harmony);
 		boolean intervalAbbreviation = isIntervalAbbreviation(harmony);
@@ -452,7 +448,7 @@ class Chordanal {
 		}
 	}
 
-	public static List<String> getHarmonyNamesRelative(Harmony harmony) {
+	static List<String> getHarmonyNamesRelative(Harmony harmony) {
 		List<String> result, abbreviations;
 		String type,harmonyStructure,typeName,harmonyStructureName;
 
@@ -527,7 +523,7 @@ class Chordanal {
 		}
 	}
 
-	public static String getHarmonyNameIntervals(Harmony harmony) {
+	static String getHarmonyNameIntervals(Harmony harmony) {
 		String type,harmonyStructure,typeName,harmonyStructureName;
 		
 		String abbreviation = getHarmonyAbbreviationIntervals(harmony);
@@ -558,7 +554,7 @@ class Chordanal {
 		return result;
 	}
 
-	public static String getHarmonyNameRelative(Harmony harmony) {
+	static String getHarmonyNameRelative(Harmony harmony) {
 		if (!getHarmonyNamesRelative(harmony).isEmpty()) {
 			return getHarmonyNamesRelative(harmony).get(0);
 		} else {
@@ -566,7 +562,7 @@ class Chordanal {
 		}
 	}
 
-	public static String getHarmonyName(Harmony harmony) {
+	static String getHarmonyName(Harmony harmony) {
 		boolean interval = isInterval(harmony);
 		boolean unisone = isUnisone(harmony);
 		boolean intervalAbbreviation = isIntervalAbbreviation(harmony);
@@ -592,7 +588,7 @@ class Chordanal {
 		}
 	}
 
-	public static String getHarmonyCharacter(Harmony harmony) {
+	static String getHarmonyCharacter(Harmony harmony) {
 		if (harmony.tones.size() <= 2) {
 			// interval or unisone
 
@@ -612,7 +608,7 @@ class Chordanal {
 		}
 	}
 
-	public static Tone getRootTone(Harmony harmony) {
+	static Tone getRootTone(Harmony harmony) {
 		String harmonyStructure;
 		if (harmony.tones.size() <= 2) {
 			// interval or unisone
@@ -674,15 +670,15 @@ class Chordanal {
 
 	/* Analyzing and naming keys */
 
-	public static String getKeyAbbreviation(Key key) {
+	static String getKeyAbbreviation(Key key) {
 		return tonesNames.getFirstInValue(Integer.toString(key.root)) + scaleNameTable.getFirstInValue(Integer.toString(key.keyType));
 	}
 
-	public static String getKeyName(Key key) {
+	static String getKeyName(Key key) {
 		return tonesNames.getFirstInValue(Integer.toString(key.root)) + " " + scaleNameTable.getFirstInValue(Integer.toString(key.keyType));
 	}
 
-	public static String getKeyScale(Key key) {
+	static String getKeyScale(Key key) {
 		int[] scale = key.getScale();
 		String result = "";
 		for (int tone : scale) {
