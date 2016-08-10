@@ -1,6 +1,7 @@
 package harmanal;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Database schema for containing the analysis facts for Chordanal and Harmanal
@@ -36,9 +37,7 @@ class DatabaseTable {
 
 	void addAll(DatabaseTable stringTable) {
 		List<String> rows = stringTable.getAll();
-		for (String row : rows) {
-			add(row);
-		}
+		rows.forEach(this::add);
 	}
 
 	/**
@@ -210,9 +209,7 @@ class DatabaseTable {
 
 	List<List<String>> getAllKeys() {
 		ArrayList<List<String>> result = new ArrayList<>();
-		for (List<String> l : table.keySet()) {
-			result.add(l);
-		}
+		result.addAll(table.keySet());
 		return result;
 	}
 
@@ -245,10 +242,7 @@ class DatabaseTable {
 	 */
 
 	List<List<String>> getAllValues() {
-		ArrayList<List<String>> result = new ArrayList<>();
-		for (List<String> l : table.keySet()) {
-			result.add(table.get(l));
-		}
+		ArrayList<List<String>> result = table.keySet().stream().map(table::get).collect(Collectors.toCollection(ArrayList::new));
 		return result;
 	}
 

@@ -1,6 +1,7 @@
 package harmanal;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 //TODO: Make the structure more flexible: Intervals, Triads, TriadType, ...
 //TODO: Diminished support (Db instead of C#)
@@ -284,8 +285,8 @@ class Chordanal {
 		String absoluteNames = "";
 		String[] namesArray = relativeNames.split(" ");
 
-		for (int i = 0; i < namesArray.length; i++) {
-			absoluteNames += createToneFromRelativeName(namesArray[i]).getName() + " ";
+		for (String name : namesArray) {
+			absoluteNames += createToneFromRelativeName(name).getName() + " ";
 		}
 		Harmony harmony = createHarmonyFromTones(absoluteNames);
 		if (harmony == null) {
@@ -331,10 +332,7 @@ class Chordanal {
 	}
 
 	public static String getHarmonyToneNamesMapped(Harmony harmony) {
-		ArrayList<String> mappedNamesWithDuplicates = new ArrayList<>();
-		for (Tone tone : harmony.tones) {
-			mappedNamesWithDuplicates.add(tone.getNameMapped());
-		}
+		ArrayList<String> mappedNamesWithDuplicates = harmony.tones.stream().map(Tone::getNameMapped).collect(Collectors.toCollection(ArrayList::new));
 
 		String result = "";
 		for (int i = 0; i < 12; i++) {
@@ -360,16 +358,12 @@ class Chordanal {
 			// triad or tetrachord
 
 			if (harmony.tones.size() == 3) {
-				if (!triadTable.getValues(harmony.getIntervals()[0],harmony.getIntervals()[1]).isEmpty()) {
-					for (String abbreviation : triadTable.getValues(harmony.getIntervals()[0],harmony.getIntervals()[1])) {
-						result.add(abbreviation);
-					}
+				if (!triadTable.getValues(harmony.getIntervals()[0], harmony.getIntervals()[1]).isEmpty()) {
+					result.addAll(triadTable.getValues(harmony.getIntervals()[0], harmony.getIntervals()[1]));
 				}
 			} else {
-				if (!tetraTable.getValues(harmony.getIntervals()[0],harmony.getIntervals()[1],harmony.getIntervals()[2]).isEmpty()) {
-					for (String abbreviation : tetraTable.getValues(harmony.getIntervals()[0],harmony.getIntervals()[1],harmony.getIntervals()[2])) {
-						result.add(abbreviation);
-					}
+				if (!tetraTable.getValues(harmony.getIntervals()[0], harmony.getIntervals()[1], harmony.getIntervals()[2]).isEmpty()) {
+					result.addAll(tetraTable.getValues(harmony.getIntervals()[0], harmony.getIntervals()[1], harmony.getIntervals()[2]));
 				}
 			}
 			result.add(getHarmonyAbbreviationIntervals(harmony));
@@ -639,22 +633,24 @@ class Chordanal {
 			harmonyStructure = harmonyStructure.substring(i);
 
 			if (harmony.tones.size() == 3) {
-				if (harmonyStructure.equals("5")) {
-					return harmony.tones.get(0);
-				} else if (harmonyStructure.equals("6")) {
-					return harmony.tones.get(2);
-				} else if (harmonyStructure.equals("6-4")) {
-					return harmony.tones.get(1);
+				switch (harmonyStructure) {
+					case "5":
+						return harmony.tones.get(0);
+					case "6":
+						return harmony.tones.get(2);
+					case "6-4":
+						return harmony.tones.get(1);
 				}
 			} else {
-				if (harmonyStructure.equals("7")) {
-					return harmony.tones.get(0);
-				} else if (harmonyStructure.equals("6-5")) {
-					return harmony.tones.get(3);
-				} else if (harmonyStructure.equals("4-3")) {
-					return harmony.tones.get(2);
-				} else if (harmonyStructure.equals("2")) {
-					return harmony.tones.get(1);
+				switch (harmonyStructure) {
+					case "7":
+						return harmony.tones.get(0);
+					case "6-5":
+						return harmony.tones.get(3);
+					case "4-3":
+						return harmony.tones.get(2);
+					case "2":
+						return harmony.tones.get(1);
 				}
 			}
 			return null;
@@ -677,8 +673,8 @@ class Chordanal {
 	public static String getKeyScale(Key key) {
 		int[] scale = key.getScale();
 		String result = "";
-		for (int i = 0; i < scale.length; i++) {
-			result += tonesNames.getFirstInValue(Integer.toString(scale[i])) + " ";
+		for (int tone : scale) {
+			result += tonesNames.getFirstInValue(Integer.toString(tone)) + " ";
 		}
 		return result;
 	}
@@ -688,10 +684,10 @@ class Chordanal {
 	private static boolean checkRelativeNames(String names) {
 		String[] namesArray = names.split(" ");
 		boolean validNoteName;
-		for (int i = 0; i < namesArray.length; i++) {
+		for (String name : namesArray) {
 			validNoteName = false;
 			for (int j = 0; j < 12; j++) {
-				if (namesArray[i].equals(tonesNames.getFirstInValue(Integer.toString(j)))) {
+				if (name.equals(tonesNames.getFirstInValue(Integer.toString(j)))) {
 					validNoteName = true;
 				}
 			}
@@ -704,8 +700,8 @@ class Chordanal {
 
 	private static boolean checkAbsoluteNames(String names) {
 		String[] namesArray = names.split(" ");
-		for (int i = 0; i < namesArray.length; i++) {
-			if (Chordanal.createToneFromName(namesArray[i]) == null) {
+		for (String name : namesArray) {
+			if (Chordanal.createToneFromName(name) == null) {
 				return false;
 			}
 		}

@@ -109,12 +109,7 @@ public class HarmanalTest {
 				fixtureString.append(line);
 			}
 			assertEquals(fixtureString.toString(), reportString.toString());
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (PluginLoader.LoadFailedException e) {
-			e.printStackTrace();
-		} catch (Harmanal.IncorrectInput e) {
+		} catch (IOException | Harmanal.IncorrectInput | PluginLoader.LoadFailedException e) {
 			e.printStackTrace();
 		}
 	}

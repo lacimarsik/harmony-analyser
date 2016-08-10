@@ -240,10 +240,7 @@ class MidiHandler {
 
 	void play(Harmony harmony) {
 		synthesizer.loadInstrument(instruments[instrument]);
-
-		for (Tone tone : harmony.tones) {
-			play(tone);
-		}
+		harmony.tones.forEach(this::play);
 	}
 	
 	public void playMidi(String inputFile) {

@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.charset.*;
 import java.nio.file.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 // TODO: Complete Harmony complexity (Complexity of a single tone and single tone + added tone)
 // TODO: Complete Transition complexity (Complexity of non-diatonic modulations)
@@ -98,9 +99,9 @@ class Harmanal {
 
 		if (!roots.isEmpty()) {
 			for (List<String> key : roots.getAllKeys()) {
-				for (String value : roots.getValues(key.get(0), key.get(1))) {
-					result.add(key.get(0) + " (" + key.get(1) + ")\nroot: " + key.get(2) + " steps: " + value);
-				}
+				result.addAll(roots.getValues(key.get(0), key.get(1)).stream()
+					.map(value -> key.get(0) + " (" + key.get(1) + ")\nroot: " + key.get(2) + " steps: " + value)
+					.collect(Collectors.toList()));
 			}
 		}
 		return result;
@@ -200,9 +201,7 @@ class Harmanal {
 
 		permutateListOfTones(blank, added, permutations);
 
-		for (List<Tone> list : permutations) {
-			result.add(getHarmonyDerivation(root, list, key));
-		}
+		result.addAll(permutations.stream().map(list -> getHarmonyDerivation(root, list, key)).collect(Collectors.toList()));
 		return result;
 	}
 
@@ -576,9 +575,7 @@ class Harmanal {
 		List<Float> segmentationTimestampList = new ArrayList<>();
 
 		// 1. Get timestamps from the segmentation file
-		for (String line : segmentationLinesList) {
-			segmentationTimestampList.add(getTimestampFromLine(line));
-		}
+		segmentationTimestampList.addAll(segmentationLinesList.stream().map(Harmanal::getTimestampFromLine).collect(Collectors.toList()));
 
 		float chromaTimestamp;
 		float[] chroma ;
