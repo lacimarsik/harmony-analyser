@@ -1,5 +1,6 @@
 package org.harmony_analyser.application;
 
+import org.harmony_analyser.application.services.*;
 import org.harmony_analyser.chordanal.*;
 import org.harmony_analyser.vamp_plugins.*;
 
@@ -149,7 +150,7 @@ class HarmonyAnalyser extends JFrame {
 					midiHandler.connectInputDecoder();
 					captureMIDICheckBoxTwo.setEnabled(false);
 				} else {
-					midiHandler.inputDevice.close();
+					midiHandler.closeInputDevice();
 					harmony1 = midiHandler.getBufferHarmony();
 					if (harmony1 != null) {
 						analyzeHarmony(harmony1, relativeInputPaneOne, absoluteInputPaneOne, nameOnePane, structureOnePane, functionOnePane, chordComplexityPaneOne);
@@ -158,8 +159,8 @@ class HarmonyAnalyser extends JFrame {
 							analyzeTransition(harmony1,harmony2, transitionPane, transitionComplexityPane);
 						}
 					}
-					midiHandler.decoder.close();
-					midiHandler.inputDevice.open();
+					midiHandler.closeDecoder();
+					midiHandler.openInputDevice();
 					midiHandler.connectInputSynthesizer();
 					captureMIDICheckBoxTwo.setEnabled(true);
 				}
@@ -174,7 +175,7 @@ class HarmonyAnalyser extends JFrame {
 					midiHandler.connectInputDecoder();
 					captureMIDICheckBoxOne.setEnabled(false);
 				} else {
-					midiHandler.inputDevice.close();
+					midiHandler.closeInputDevice();
 					harmony2 = midiHandler.getBufferHarmony();
 					if (harmony2 != null) {
 						analyzeHarmony(harmony2, relativeInputPaneTwo, absoluteInputPaneTwo, nameTwoPane, structureTwoPane, functionTwoPane, chordComplexityPaneTwo);
@@ -183,8 +184,8 @@ class HarmonyAnalyser extends JFrame {
 							analyzeTransition(harmony1,harmony2, transitionPane, transitionComplexityPane);
 						}
 					}
-					midiHandler.decoder.close();
-					midiHandler.inputDevice.open();
+					midiHandler.closeDecoder();
+					midiHandler.openInputDevice();
 					midiHandler.connectInputSynthesizer();
 					captureMIDICheckBoxOne.setEnabled(true);
 				}
