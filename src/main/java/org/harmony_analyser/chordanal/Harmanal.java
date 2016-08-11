@@ -9,8 +9,6 @@ import java.util.stream.Collectors;
  * version 1.0
  */
 
-@SuppressWarnings("SameParameterValue")
-
 public class Harmanal {
 	/* Public / Package methods */
 

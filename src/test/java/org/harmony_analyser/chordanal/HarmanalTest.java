@@ -1,7 +1,6 @@
 package org.harmony_analyser.chordanal;
 
 import org.junit.*;
-import java.io.*;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -12,14 +11,10 @@ import static org.junit.Assert.assertEquals;
 
 public class HarmanalTest {
 	private Key key1;
-	private File testWavFile, testReportFixture;
 
 	@Before
 	public void setUp() {
 		key1 = new Key(0, Chordanal.MAJOR);
-		ClassLoader classLoader = getClass().getClassLoader();
-		testWavFile = new File(classLoader.getResource("test.wav").getFile());
-		testReportFixture = new File(classLoader.getResource("test-reportFixture.txt").getFile());
 	}
 
 	@Test

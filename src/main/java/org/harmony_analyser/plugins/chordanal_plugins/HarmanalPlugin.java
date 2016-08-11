@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
  * Plugin for high-level audio analysis using chroma / chord transcription input, based on Chordanal model
  */
 
+@SuppressWarnings("SameParameterValue")
+
 public class HarmanalPlugin extends AnalysisPlugin {
 	private static final float AUDIBLE_THRESHOLD = (float) 0.07; // used to filter chroma activations that we consider not audible
 	private static final int MAXIMUM_NUMBER_OF_CHORD_TONES = 4; // used to limit number of tones we work with in chord
