@@ -4,6 +4,10 @@ import org.vamp_plugins.*;
 
 import java.util.*;
 
+/**
+ * Wrapper for NNLS Chroma Vamp plugin http://www.isophonics.net/nnls-chroma
+ */
+
 /*
  * Implements NNLS Chroma plugin using JVamp wrappers
  * http://www.isophonics.net/nnls-chroma

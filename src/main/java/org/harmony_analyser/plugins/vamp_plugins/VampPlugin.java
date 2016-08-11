@@ -100,14 +100,12 @@ public class VampPlugin extends AnalysisPlugin {
 	final int adapterFlag = PluginLoader.AdapterFlags.ADAPT_ALL;
 	final int defaultRate = 44100;
 	Plugin p;
-	String pluginKey;
-	Map<String, Float> parameters;
 	int outputNumber;
 	int blockSize;
 
 	private static final String[] WRAPPED_PLUGINS = new String[] {
-			"nnls-chroma:nnls-chroma",
-			"nnls-chroma:chordino"
+		"nnls-chroma:nnls-chroma",
+		"nnls-chroma:chordino"
 	};
 
 	static {
@@ -273,7 +271,7 @@ public class VampPlugin extends AnalysisPlugin {
 		return result;
 	}
 
-	void setParameters() {
+	protected void setParameters() {
 		for (Map.Entry<String, Float> entry : parameters.entrySet()) {
 			p.setParameter(entry.getKey(), entry.getValue());
 		}

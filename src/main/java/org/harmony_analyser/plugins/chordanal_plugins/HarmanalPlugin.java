@@ -13,17 +13,51 @@ import java.util.stream.Collectors;
  * Plugin for high-level audio analysis using chroma / chord transcription input, based on Chordanal model
  */
 
+/*
+ * HarmanalPlugin
+ *
+ * - requires: chroma, segmentation
+ * - Averages chroma in each segment
+ * - Selects the tones with the biggest activation, based on audibleThreshold
+ * - Names the chord using Chordanal
+ * - derives transition complexities for each tuple of subsequent chords
+ * - calculates average transition complexity, average chord complexity, and relative transition complexity
+ *
+ * parameters
+ * - threshold for audible tones (< 0.05 yields 4+ tones in each chord, > 0.1 yields to 2 and less tones in each chord)
+ * -- preferred: 0.07
+ * - maximum number of chord tones - used to simplify computation which is exponential to the number of chord tones
+ * -- preferred: 4.0
+ * - maximal complexity - is assigned when transition complexity cannot be found, as a penalization constant
+ * -- preferred: 7.0
+ */
+
 @SuppressWarnings("SameParameterValue")
 
 public class HarmanalPlugin extends AnalysisPlugin {
-	private static final float AUDIBLE_THRESHOLD = (float) 0.07; // used to filter chroma activations that we consider not audible
-	private static final int MAXIMUM_NUMBER_OF_CHORD_TONES = 4; // used to limit number of tones we work with in chord
-	private static final int MAXIMAL_COMPLEXITY = 7; // used to assign a maximal value for 2 chords that have no common root
+	private static float audibleThreshold = (float) 0.07; // used to filter chroma activations that we consider not audible
+	private static int maximumNumberOfChordTones = 4; // used to limit number of tones we work with in chord
+	private static int maximalComplexity = 7; // used to assign a maximal value for 2 chords that have no common root
 
 	static {
 		inputFileExtensions = new ArrayList<>();
 		inputFileExtensions.add("-chromas.txt");
 		inputFileExtensions.add("-segmentation.txt");
+	}
+
+	public HarmanalPlugin() {
+		pluginKey = "harmanal:complexity";
+
+		parameters = new HashMap<>();
+		parameters.put("audibleThreshold", (float) 0.07);
+		parameters.put("maximumNumberOfChordTones", (float) 4.0);
+		parameters.put("maximalComplexity", (float) 7.0);
+
+		setParameters();
+	}
+
+	public String printParameters() {
+		return null;
 	}
 
 	/**
@@ -146,8 +180,8 @@ public class HarmanalPlugin extends AnalysisPlugin {
 				// Get transition complexity using Harmanal
 				int transitionComplexity = Harmanal.getTransitionComplexity(harmony1, harmony2);
 				if (transitionComplexity == -1) {
-					out.write("transition: NO COMMON ROOTS (maximal complexity: " + MAXIMAL_COMPLEXITY + ")\n");
-					transitionComplexity = MAXIMAL_COMPLEXITY;
+					out.write("transition: NO COMMON ROOTS (maximal complexity: " + maximalComplexity + ")\n");
+					transitionComplexity = maximalComplexity;
 				} else {
 					List<String> transitionsFormatted = Harmanal.getTransitionsFormatted(harmony1, harmony2);
 					String transitionFormatted;
@@ -197,6 +231,12 @@ public class HarmanalPlugin extends AnalysisPlugin {
 		return result;
 	}
 
+	protected void setParameters() {
+		audibleThreshold = parameters.get("audibleThreshold");
+		maximumNumberOfChordTones = Math.round(parameters.get("maximumNumberOfChordTones"));
+		maximalComplexity = Math.round(parameters.get("maximalComplexity"));
+	}
+
 	/* Private methods */
 
 	// gets timestamp from the first word in the line, before ':'
@@ -218,7 +258,7 @@ public class HarmanalPlugin extends AnalysisPlugin {
 	private float[] filterChroma(float[] chroma) {
 		float[] resultChroma = new float[12];
 		for (int i = 0; i < chroma.length; i++) {
-			if (chroma[i] < AUDIBLE_THRESHOLD) {
+			if (chroma[i] < audibleThreshold) {
 				resultChroma[i] = 0;
 			} else {
 				resultChroma[i] = chroma[i];
@@ -233,7 +273,7 @@ public class HarmanalPlugin extends AnalysisPlugin {
 		Arrays.fill(result, 0);
 		float max;
 		int id;
-		for (int g = 0; g < MAXIMUM_NUMBER_OF_CHORD_TONES; g++) {
+		for (int g = 0; g < maximumNumberOfChordTones; g++) {
 			max = 0;
 			id = 0;
 			for (int i = 0; i < chroma.length; i++) {

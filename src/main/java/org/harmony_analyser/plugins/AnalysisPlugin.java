@@ -9,6 +9,8 @@ import java.util.*;
 
 public abstract class AnalysisPlugin {
 	protected static List<String> inputFileExtensions;
+	protected String pluginKey;
+	protected Map<String, Float> parameters;
 
 	public class IncorrectInput extends Exception {
 		public IncorrectInput(String message) {
@@ -37,6 +39,10 @@ public abstract class AnalysisPlugin {
 			}
 		}
 	}
+
+	protected abstract void setParameters();
+
+	public abstract String printParameters();
 
 	public abstract String analyse(List<String> inputFiles, String outputFile) throws IOException, IncorrectInput;
 }

@@ -4,6 +4,10 @@ import org.vamp_plugins.*;
 
 import java.util.*;
 
+/**
+ * Wrapper for Chordino Vamp plugin http://www.isophonics.net/nnls-chroma
+ */
+
 /*
  * Implements Chordino plugin using JVamp wrappers
  * http://www.isophonics.net/nnls-chroma
