@@ -290,6 +290,10 @@ public class MidiHandler {
 	}
 }
 
+/**
+ * Subclass to receive and decode MIDI events from device
+ */
+
 class MidiDecoder implements Receiver {
 	private String buffer = "";
 
