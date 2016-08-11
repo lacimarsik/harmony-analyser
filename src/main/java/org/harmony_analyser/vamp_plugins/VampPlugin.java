@@ -95,26 +95,25 @@ import javax.sound.sampled.*;
  */
 
 public class VampPlugin {
-	String pluginKey;
-	int outputNumber;
-
-	Map<String, Float> parameters;
+	final static PluginLoader loader;
 	final int adapterFlag = PluginLoader.AdapterFlags.ADAPT_ALL;
-
 	final int defaultRate = 44100;
+	Plugin p;
+	String pluginKey;
+	Map<String, Float> parameters;
+	int outputNumber;
 	int blockSize;
 
-	Plugin p;
-	final static PluginLoader loader;
+	private static final String[] WRAPPED_PLUGINS = new String[] {
+			"nnls-chroma:nnls-chroma",
+			"nnls-chroma:chordino"
+	};
 
 	static {
 		loader = PluginLoader.getInstance();
 	}
 
-	private static final String[] WRAPPED_PLUGINS = new String[] {
-		"nnls-chroma:nnls-chroma",
-		"nnls-chroma:chordino"
-	};
+	/* Public / Package methods */
 
 	public static String printPlugins() {
 		String result = "";
@@ -176,9 +175,10 @@ public class VampPlugin {
 		return result;
 	}
 
-	/*
+	/**
 	 * Analyze audio using Vamp plugin. Courtesy of https://code.soundsoftware.ac.uk/projects/jvamp/repository/entry/host/host.java
 	 */
+
 	public String analyze(String inputFile, String outputFile) {
 		String result = "";
 
@@ -267,6 +267,8 @@ public class VampPlugin {
 			p.setParameter(entry.getKey(), entry.getValue());
 		}
 	}
+
+	/* Private methods */
 
 	private static int readBlock(AudioFormat format, AudioInputStream stream, float[][] buffers) throws java.io.IOException {
 		// 16-bit LE signed PCM only

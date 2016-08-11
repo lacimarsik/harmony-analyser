@@ -17,6 +17,8 @@ class DatabaseTable {
 		table = new LinkedHashMap<>();
 	}
 
+	/* Package methods */
+
 	/**
 	 * Adds a row into the table
 	 */
@@ -179,7 +181,7 @@ class DatabaseTable {
 	 * Returns all the key-value pairs in String
 	 */
 
-	public List<String> getAll() {
+	List<String> getAll() {
 		ArrayList<String> result = new ArrayList<>();
 		for (List<String> l : table.keySet()) {
 			String row = "";
@@ -211,46 +213,6 @@ class DatabaseTable {
 		ArrayList<List<String>> result = new ArrayList<>();
 		result.addAll(table.keySet());
 		return result;
-	}
-
-	private List<String> breakDownDoubleList(List<List<String>> doubleList) {
-		List<String> result = new ArrayList<>();
-		for (List<String> list : doubleList) {
-			String key = "";
-			for (int i = 0; i < list.size(); i++) {
-				if (i < list.size() -1) {
-					key += list.get(i) + ",";
-				} else {
-					key += list.get(i);
-				}
-			}
-			result.add(key);
-		}
-		return result;
-	}
-
-	/**
-	 * Returns all keys as Strings
-	 */
-
-	private List<String> getAllKeyStrings() {
-		return breakDownDoubleList(getAllKeys());
-	}
-
-	/**
-	 * Returns all values as lists of Strings
-	 */
-
-	List<List<String>> getAllValues() {
-		return table.keySet().stream().map(table::get).collect(Collectors.toCollection(ArrayList::new));
-	}
-
-	/**
-	 * Return all values as Strings
-	 */
-
-	private List<String> getAllValueStrings() {
-		return breakDownDoubleList(getAllValues());
 	}
 
 	/**
@@ -446,5 +408,47 @@ class DatabaseTable {
 
 	boolean isEmpty() {
 		return table.isEmpty();
+	}
+
+	/* Private methods */
+
+	private List<String> breakDownDoubleList(List<List<String>> doubleList) {
+		List<String> result = new ArrayList<>();
+		for (List<String> list : doubleList) {
+			String key = "";
+			for (int i = 0; i < list.size(); i++) {
+				if (i < list.size() -1) {
+					key += list.get(i) + ",";
+				} else {
+					key += list.get(i);
+				}
+			}
+			result.add(key);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns all keys as Strings
+	 */
+
+	private List<String> getAllKeyStrings() {
+		return breakDownDoubleList(getAllKeys());
+	}
+
+	/**
+	 * Returns all values as lists of Strings
+	 */
+
+	List<List<String>> getAllValues() {
+		return table.keySet().stream().map(table::get).collect(Collectors.toCollection(ArrayList::new));
+	}
+
+	/**
+	 * Return all values as Strings
+	 */
+
+	private List<String> getAllValueStrings() {
+		return breakDownDoubleList(getAllValues());
 	}
 }

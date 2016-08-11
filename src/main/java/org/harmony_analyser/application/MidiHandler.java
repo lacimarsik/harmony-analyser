@@ -13,27 +13,26 @@ import javax.sound.midi.*;
 @SuppressWarnings("SameParameterValue")
 
 class MidiHandler {
-	private Sequencer sequencer;
-	private Synthesizer synthesizer;
-	MidiDevice inputDevice;
-	private MidiDevice outputDevice;
-	MidiDecoder decoder;
-
-	private MidiChannel[] channels;
-	private Instrument[] instruments;
-	private int instrument = 0;
-	private int channel = 0;
-	private int volume = 100;
-
-	private static final int LONG = 0;
-	private static final int SHORT = 1;
-
-	private int length = 0;
-
 	public static final int TOGETHER = 0;
 	public static final int SEPARATE = 1;
 
+	MidiDevice inputDevice;
+	MidiDecoder decoder;
+
+	private static final int LONG = 0;
+	private static final int SHORT = 1;
+	private Sequencer sequencer;
+	private Synthesizer synthesizer;
+	private MidiDevice outputDevice;
+	private MidiChannel[] channels;
+	private Instrument[] instruments;
 	private int playMode = 0;
+	private int instrument = 0;
+	private int channel = 0;
+	private int volume = 100;
+	private int length = 0;
+
+	/* Public / Package methods */
 
 	public int getInstrument() {
 		return instrument;
@@ -73,6 +72,17 @@ class MidiHandler {
 
 	public void setPlayMode(int playMode) {
 		this.playMode = playMode;
+	}
+
+	public void playMidi(String inputFile) {
+		try {
+			File file = new File("resources/" + inputFile);
+			Sequence sequence = MidiSystem.getSequence(file);
+			sequencer.setSequence(sequence);
+			sequencer.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -121,14 +131,6 @@ class MidiHandler {
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * Finds out if a MIDI device is Input device
-	 */
-
-	private boolean isInputDevice(MidiDevice device) {
-		return device.getClass().getSimpleName().endsWith("InDevice");
 	}
 
 	/**
@@ -231,13 +233,18 @@ class MidiHandler {
 		}
 	}
 
-	private void play(Tone tone) {
-		synthesizer.loadInstrument(instruments[instrument]);
-		channels[channel].noteOn(tone.getNumber(), tone.getVolume());
-
-		if (length == SHORT) {
-			channels[channel].noteOff(tone.getNumber());
+	Harmony getBufferHarmony() {
+		String buffer = decoder.getBuffer();
+		if (buffer.equals("")) {
+			return null;
 		}
+		String[] stringArray = buffer.split(" ");
+		int[] intArray = new int[stringArray.length];
+		for (int i = 0; i < stringArray.length; i++) {
+			intArray[i] = Integer.parseInt(stringArray[i]);
+		}
+
+		return new Harmony(intArray);
 	}
 
 	void play(Harmony harmony) {
@@ -252,45 +259,33 @@ class MidiHandler {
 		}
 	}
 
-	public void playMidi(String inputFile) {
-		try {
-			File file = new File("resources/" + inputFile);
-			Sequence sequence = MidiSystem.getSequence(file);
-			sequencer.setSequence(sequence);
-			sequencer.start();
-		} catch (Exception e) {
-			e.printStackTrace();
+	/* Private methods */
+
+	private void play(Tone tone) {
+		synthesizer.loadInstrument(instruments[instrument]);
+		channels[channel].noteOn(tone.getNumber(), tone.getVolume());
+
+		if (length == SHORT) {
+			channels[channel].noteOff(tone.getNumber());
 		}
 	}
 
-	Harmony getBufferHarmony() {
-		String buffer = decoder.getBuffer();
-		if (buffer.equals("")) {
-			return null;
-		}
-		String[] stringArray = buffer.split(" ");
-		int[] intArray = new int[stringArray.length];
-		for (int i = 0; i < stringArray.length; i++) {
-			intArray[i] = Integer.parseInt(stringArray[i]);
-		}
+	/**
+	 * Finds out if a MIDI device is Input device
+	 */
 
-		return new Harmony(intArray);
+	private boolean isInputDevice(MidiDevice device) {
+		return device.getClass().getSimpleName().endsWith("InDevice");
 	}
 }
 
 class MidiDecoder implements Receiver {
 	private String buffer = "";
 
+	/* Public / Package methods */
+
 	public void close() {
 		buffer = "";
-	}
-
-	boolean isOpen() {
-		return (buffer.length() != 0);
-	}
-
-	String getBuffer() {
-		return buffer;
 	}
 
 	public void send(MidiMessage message, long lTimeStamp) {
@@ -299,5 +294,13 @@ class MidiDecoder implements Receiver {
 				buffer += (((ShortMessage)message).getData1() + " ");
 			}
 		}
+	}
+
+	boolean isOpen() {
+		return (buffer.length() != 0);
+	}
+
+	String getBuffer() {
+		return buffer;
 	}
 }

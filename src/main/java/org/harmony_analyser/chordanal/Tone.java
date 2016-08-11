@@ -17,6 +17,8 @@ public class Tone {
 		this.volume = volume;
 	}
 
+	/* Public / Package methods */
+
 	public Tone(int number) {
 		this(number, DEFAULT_VOLUME);
 	}
@@ -25,12 +27,12 @@ public class Tone {
 		return this.number;
 	}
 
-	int getNumberMapped() {
-		return this.number % 12;
-	}
-
 	public int getVolume() {
 		return this.volume;
+	}
+
+	int getNumberMapped() {
+		return this.number % 12;
 	}
 
 	void chromatizeUp() {

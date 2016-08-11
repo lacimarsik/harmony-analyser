@@ -42,6 +42,16 @@ public class Harmony {
 		this.tones = tones;
 	}
 
+	/* Public / Package methods */
+
+	public String getToneNames() {
+		return Chordanal.getHarmonyToneNames(this);
+	}
+
+	public String getToneNamesMapped() {
+		return Chordanal.getHarmonyToneNamesMapped(this);
+	}
+
 	String[] getIntervals() {
 		String[] result;
 
@@ -56,14 +66,6 @@ public class Harmony {
 			result[i-1] = Integer.toString(tones.get(i).getNumber() - tones.get(0).getNumber());
 		}
 		return result;
-	}
-
-	public String getToneNames() {
-		return Chordanal.getHarmonyToneNames(this);
-	}
-
-	public String getToneNamesMapped() {
-		return Chordanal.getHarmonyToneNamesMapped(this);
 	}
 
 	Harmony inversionUp() {
@@ -92,7 +94,7 @@ public class Harmony {
 		return new Harmony(newTones);
 	}
 
-	public Harmony getSubHarmony(int[] toneIndexes) {
+	Harmony getSubHarmony(int[] toneIndexes) {
 		ArrayList<Tone> newTones = new ArrayList<>();
 		for (int index : toneIndexes) {
 			newTones.add(tones.get(toneIndexes[index]));

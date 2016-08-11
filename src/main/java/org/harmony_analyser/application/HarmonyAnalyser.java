@@ -91,6 +91,8 @@ class HarmonyAnalyser extends JFrame {
 
 	private Harmony harmony1,harmony2 = null;
 
+	/* Public / Package methods */
+
 	/**
 	 * Launch the application.
 	 */
@@ -98,6 +100,8 @@ class HarmonyAnalyser extends JFrame {
 	public static void main(String[] args) {
 		new HarmonyAnalyser();
 	}
+
+	/* Private methods */
 
 	/**
 	 * Initialize the application.
