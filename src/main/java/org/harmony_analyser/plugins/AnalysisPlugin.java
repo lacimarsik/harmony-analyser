@@ -10,6 +10,7 @@ import java.util.*;
 public abstract class AnalysisPlugin {
 	protected static List<String> inputFileExtensions;
 	protected String pluginKey;
+	protected String pluginName;
 	protected Map<String, Float> parameters;
 
 	public class IncorrectInput extends Exception {
@@ -40,9 +41,27 @@ public abstract class AnalysisPlugin {
 		}
 	}
 
-	protected abstract void setParameters();
+	public String printParameters() {
+		String result = "";
 
-	public abstract String printParameters();
+		result += "\n> Parameters for " + pluginName + "\n";
+		result += "identifier: " + pluginKey + "\n\n";
+		result += "number of inputs: " + inputFileExtensions.size();
+		result += "expected extensions:\n";
+		for (String suffix : inputFileExtensions) {
+			result += "  " + suffix + "\n";
+		}
+		result += "\n";
+
+		result += "Plugin has " + parameters.size() + " parameters\n";
+		for (Map.Entry<String, Float> entry : parameters.entrySet()) {
+			result += entry.getKey() + " SET TO: " + entry.getValue() + "\n";
+		}
+
+		return result;
+	}
+
+	protected abstract void setParameters();
 
 	public abstract String analyse(List<String> inputFiles, String outputFile) throws IOException, IncorrectInput;
 }

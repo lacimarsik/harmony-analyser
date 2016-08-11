@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  */
 
 /*
- * HarmanalPlugin
+ * TransitionComplexityPlugin
  *
  * - requires: chroma, segmentation
  * - Averages chroma in each segment
@@ -34,19 +34,18 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("SameParameterValue")
 
-public class HarmanalPlugin extends AnalysisPlugin {
+public class TransitionComplexityPlugin extends AnalysisPlugin {
 	private static float audibleThreshold = (float) 0.07; // used to filter chroma activations that we consider not audible
 	private static int maximumNumberOfChordTones = 4; // used to limit number of tones we work with in chord
 	private static int maximalComplexity = 7; // used to assign a maximal value for 2 chords that have no common root
 
-	static {
+	public TransitionComplexityPlugin() {
+		pluginKey = "harmanal:transition_complexity";
+		pluginName = "Transition Complexity";
+
 		inputFileExtensions = new ArrayList<>();
 		inputFileExtensions.add("-chromas.txt");
 		inputFileExtensions.add("-segmentation.txt");
-	}
-
-	public HarmanalPlugin() {
-		pluginKey = "harmanal:complexity";
 
 		parameters = new HashMap<>();
 		parameters.put("audibleThreshold", (float) 0.07);

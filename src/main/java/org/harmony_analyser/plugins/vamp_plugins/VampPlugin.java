@@ -110,9 +110,6 @@ public class VampPlugin extends AnalysisPlugin {
 
 	static {
 		loader = PluginLoader.getInstance();
-
-		inputFileExtensions = new ArrayList<>();
-		inputFileExtensions.add(".wav");
 	}
 
 	/* Public / Package methods */
@@ -147,10 +144,9 @@ public class VampPlugin extends AnalysisPlugin {
 	}
 
 	public String printParameters() {
-		String result = "";
+		String result = super.printParameters();
 
-		result += "\n> Parameters for " + p.getName() + "\n";
-		result += "identifier: " + p.getIdentifier() + "\n";
+		result += "\n> VAMP - specific parameters for " + p.getName() + "\n";
 		result += "description: " + p.getDescription() + "\n";
 		result += "version: " + p.getPluginVersion() + "\n";
 		Plugin.InputDomain domain = p.getInputDomain();

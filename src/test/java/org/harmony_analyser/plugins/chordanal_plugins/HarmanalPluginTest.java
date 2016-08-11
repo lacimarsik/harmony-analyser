@@ -36,7 +36,7 @@ public class HarmanalPluginTest {
 		try {
 			new NNLSPlugin().analyse(inputFilesVamp, testWavFile.toString() + "-chromas.txt");
 			new ChordinoPlugin().analyse(inputFilesVamp, testWavFile.toString() + "-segmentation.txt");
-			new HarmanalPlugin().analyse(inputFilesHarmanal, testWavFile.toString() + "-report.txt");
+			new TransitionComplexityPlugin().analyse(inputFilesHarmanal, testWavFile.toString() + "-report.txt");
 			BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-report.txt"));
 			BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
 			StringBuilder reportString = new StringBuilder();
@@ -49,7 +49,7 @@ public class HarmanalPluginTest {
 				fixtureString.append(line);
 			}
 			assertEquals(fixtureString.toString(), reportString.toString());
-		} catch (IOException | HarmanalPlugin.IncorrectInput | PluginLoader.LoadFailedException e) {
+		} catch (IOException | TransitionComplexityPlugin.IncorrectInput | PluginLoader.LoadFailedException e) {
 			e.printStackTrace();
 		}
 	}

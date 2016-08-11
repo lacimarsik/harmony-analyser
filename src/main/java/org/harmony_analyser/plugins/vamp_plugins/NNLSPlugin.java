@@ -50,8 +50,12 @@ import java.util.*;
 public class NNLSPlugin extends VampPlugin {
 	public NNLSPlugin() throws PluginLoader.LoadFailedException {
 		pluginKey = "nnls-chroma:nnls-chroma";
+		pluginName = "NNLS Chroma";
 		outputNumber = 3;
 		blockSize = 16384;
+
+		inputFileExtensions = new ArrayList<>();
+		inputFileExtensions.add(".wav");
 
 		parameters = new HashMap<>();
 		parameters.put("useNNLS", (float) 1);

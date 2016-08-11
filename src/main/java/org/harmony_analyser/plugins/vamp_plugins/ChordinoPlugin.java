@@ -53,8 +53,12 @@ import java.util.*;
 public class ChordinoPlugin extends VampPlugin {
 	public ChordinoPlugin() throws PluginLoader.LoadFailedException {
 		pluginKey = "nnls-chroma:chordino";
+		pluginName = "Chordino";
 		outputNumber = 0;
 		blockSize = 16384;
+
+		inputFileExtensions = new ArrayList<>();
+		inputFileExtensions.add(".wav");
 
 		parameters = new HashMap<>();
 		parameters.put("useNNLS", (float) 1.0);

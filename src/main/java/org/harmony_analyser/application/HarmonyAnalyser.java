@@ -410,8 +410,8 @@ class HarmonyAnalyser extends JFrame {
 							inputFiles.add(file.toString() + "-chromas.txt");
 							inputFiles.add(file.toString() + "-segmentation.txt");
 							try {
-								new HarmanalPlugin().analyse(inputFiles, file.toString() + "-report.txt");
-							} catch (IOException | HarmanalPlugin.IncorrectInput e) {
+								new TransitionComplexityPlugin().analyse(inputFiles, file.toString() + "-report.txt");
+							} catch (IOException | TransitionComplexityPlugin.IncorrectInput e) {
 								e.printStackTrace();
 							}
 
