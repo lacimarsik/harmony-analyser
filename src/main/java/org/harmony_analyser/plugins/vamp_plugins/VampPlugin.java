@@ -114,20 +114,14 @@ public class VampPlugin extends AnalysisPlugin {
 
 	/* Public / Package methods */
 
-	public static String printPlugins() {
+	public static String printInstalledVampPlugins() {
 		String result = "";
 		String[] plugins = loader.listPlugins();
-		result += "\n\n> VAMP Plugins loaded successfully\n";
-		result += "> Installed plugins (" + plugins.length + "):\n";
+		result += "\n\n> Locally installed VAMP plugins (" + plugins.length + "):\n";
 		for (int i = 0; i < plugins.length; ++i) {
 			result += i + ": " + plugins[i] + "\n";
 		}
-		return result;
-	}
 
-	public static String printWrappedPlugins() {
-		String result = "";
-		String[] plugins = loader.listPlugins();
 		List<String> wrappedPlugins = new ArrayList<>();
 		for (int i = 0; i < plugins.length; ++i) {
 			for (String wrapped_plugin : WRAPPED_PLUGINS) {
@@ -136,7 +130,7 @@ public class VampPlugin extends AnalysisPlugin {
 				}
 			}
 		}
-		result += "\n> Implemented plugins (" + wrappedPlugins.size() + "):\n";
+		result += "\n\n> Implemented VAMP plugins (" + wrappedPlugins.size() + "):\n";
 		for (String s : wrappedPlugins) {
 			result += s;
 		}
@@ -151,9 +145,9 @@ public class VampPlugin extends AnalysisPlugin {
 		result += "version: " + p.getPluginVersion() + "\n";
 		Plugin.InputDomain domain = p.getInputDomain();
 		if (domain == Plugin.InputDomain.TIME_DOMAIN) {
-			result += "This is a time-domain p\n";
+			result += "This is a time-domain plugin\n";
 		} else {
-			result += "This is a frequency-domain p\n";
+			result += "This is a frequency-domain plugin\n";
 		}
 		ParameterDescriptor[] params = p.getParameterDescriptors();
 		result += "Plugin has " + params.length + " parameters\n";

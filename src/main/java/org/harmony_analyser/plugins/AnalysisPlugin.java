@@ -46,7 +46,7 @@ public abstract class AnalysisPlugin {
 
 		result += "\n> Parameters for " + pluginName + "\n";
 		result += "identifier: " + pluginKey + "\n\n";
-		result += "number of inputs: " + inputFileExtensions.size();
+		result += "number of inputs: " + inputFileExtensions.size() + "\n";
 		result += "expected extensions:\n";
 		for (String suffix : inputFileExtensions) {
 			result += "  " + suffix + "\n";

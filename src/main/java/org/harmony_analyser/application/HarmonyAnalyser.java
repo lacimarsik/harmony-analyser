@@ -3,8 +3,6 @@ package org.harmony_analyser.application;
 import org.harmony_analyser.application.services.*;
 import org.harmony_analyser.chordanal.*;
 import org.harmony_analyser.plugins.AnalysisPlugin;
-import org.harmony_analyser.plugins.vamp_plugins.*;
-import org.harmony_analyser.plugins.chordanal_plugins.*;
 
 import javax.sound.midi.*;
 import javax.swing.*;
@@ -90,6 +88,7 @@ class HarmonyAnalyser extends JFrame {
 	private JLabel consoleOutputLabel;
 	private JScrollPane consoleScrollPane;
 	private JLabel batchProcessingLabel;
+	private JButton buttonComplexity;
 	private JFileChooser fileChooser;
 
 	private Harmony harmony1,harmony2 = null;
@@ -276,7 +275,7 @@ class HarmonyAnalyser extends JFrame {
 
 		loadPluginsButton.addActionListener(actionEvent -> {
 			try {
-				consolePane.setText(consolePane.getText() + VampPlugin.printPlugins() + VampPlugin.printWrappedPlugins());
+				consolePane.setText(consolePane.getText() + AudioAnalyser.printPlugins());
 			} catch (Exception e) {
 				consolePane.setText(e.getMessage());
 			}
@@ -284,18 +283,24 @@ class HarmonyAnalyser extends JFrame {
 
 		buttonNNLS.addActionListener(actionEvent -> {
 			try {
-				NNLSPlugin nnls = new NNLSPlugin();
-				consolePane.setText(consolePane.getText() + nnls.printParameters());
-			} catch (Exception e) {
+				consolePane.setText(consolePane.getText() + AudioAnalyser.printParameters("nnls-chroma:nnls-chroma"));
+			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
 		});
 
 		buttonChordino.addActionListener(actionEvent -> {
 			try {
-				ChordinoPlugin chordino = new ChordinoPlugin();
-				consolePane.setText(consolePane.getText() + chordino.printParameters());
-			} catch (Exception e) {
+				consolePane.setText(consolePane.getText() + AudioAnalyser.printParameters("nnls-chroma:chordino"));
+			} catch (AudioAnalyser.LoadFailedException e) {
+				e.printStackTrace();
+			}
+		});
+
+		buttonComplexity.addActionListener(actionEvent -> {
+			try {
+				consolePane.setText(consolePane.getText() + AudioAnalyser.printParameters("harmanal:transition_complexity"));
+			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
 		});

@@ -13,7 +13,7 @@ import java.util.*;
  */
 
 public class AudioAnalyser {
-	public class LoadFailedException extends Exception {
+	public static class LoadFailedException extends Exception {
 		LoadFailedException(String message) {
 			super(message);
 		}
@@ -27,6 +27,23 @@ public class AudioAnalyser {
 
 	/* Public / Package methods */
 
+	public static String printPlugins() {
+		String result = "";
+		result += "\n> Available plugins (" + AVAILABLE_PLUGINS.length + "):\n";
+
+		for (String availablePluginKey : AVAILABLE_PLUGINS) {
+			result += "\n  " + availablePluginKey + "\n";
+		}
+
+		result += VampPlugin.printInstalledVampPlugins();
+
+		return result;
+	}
+
+	public static String printParameters(String pluginKey) throws LoadFailedException {
+		return getPlugin(pluginKey).printParameters();
+	}
+
 	public String runAnalysis(List<String> inputFiles, String outputFile, String pluginKey) throws LoadFailedException, AnalysisPlugin.IncorrectInputException, IOException {
 		AnalysisPlugin plugin = getPlugin(pluginKey);
 
@@ -35,7 +52,7 @@ public class AudioAnalyser {
 
 	/* Private methods */
 
-	private AnalysisPlugin getPlugin(String pluginKey) throws LoadFailedException {
+	private static AnalysisPlugin getPlugin(String pluginKey) throws LoadFailedException {
 		AnalysisPlugin plugin;
 		if (!Arrays.asList(AVAILABLE_PLUGINS).contains(pluginKey)) {
 			throw new LoadFailedException("Plugin with key " + pluginKey + " is not available");

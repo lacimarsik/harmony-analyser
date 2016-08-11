@@ -55,10 +55,6 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		setParameters();
 	}
 
-	public String printParameters() {
-		return null;
-	}
-
 	/**
 	 * Analyzes the song: converts chroma + segmentation information to harmony complexity descriptors
 	 *
