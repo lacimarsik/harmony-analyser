@@ -337,10 +337,11 @@ class HarmonyAnalyser extends JFrame {
 							inputFiles.add(file.toString());
 							String analysisResult = new AudioAnalyser().runAnalysis(inputFiles, file.toString() + "-chromas.txt", "nnls-chroma:nnls-chroma");
 							consolePane.setText(consolePane.getText() + "\n" + analysisResult);
+						} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
+							consolePane.setText(consolePane.getText() + "ERROR: " + e.getMessage());
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						consolePane.setText(consolePane.getText() + "\nOutput saved in: " + file.toString() + "-chromas.txt\n");
 					}
 					return FileVisitResult.CONTINUE;
 				}
@@ -376,6 +377,8 @@ class HarmonyAnalyser extends JFrame {
 								inputFiles.add(file.toString());
 								String analysisResult = new AudioAnalyser().runAnalysis(inputFiles, file.toString() + "-segmentation.txt", "nnls-chroma:chordino");
 								consolePane.setText(consolePane.getText() + "\n" + analysisResult);
+							} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
+								consolePane.setText(consolePane.getText() + "ERROR: " + e.getMessage());
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -418,7 +421,9 @@ class HarmonyAnalyser extends JFrame {
 							try {
 								String analysisResult = new AudioAnalyser().runAnalysis(inputFiles, file.toString() + "-report.txt", "harmanal:transition_complexity");
 								consolePane.setText(consolePane.getText() + "\n" + analysisResult);
-							} catch (IOException | AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
+							} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
+								consolePane.setText(consolePane.getText() + "ERROR: " + e.getMessage());
+							} catch (Exception e) {
 								e.printStackTrace();
 							}
 

@@ -32,7 +32,7 @@ public class AudioAnalyser {
 		result += "\n> Available plugins (" + AVAILABLE_PLUGINS.length + "):\n";
 
 		for (String availablePluginKey : AVAILABLE_PLUGINS) {
-			result += "\n  " + availablePluginKey + "\n";
+			result += availablePluginKey + "\n";
 		}
 
 		result += VampPlugin.printInstalledVampPlugins();

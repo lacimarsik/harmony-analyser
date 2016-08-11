@@ -130,7 +130,7 @@ public class VampPlugin extends AnalysisPlugin {
 				}
 			}
 		}
-		result += "\n\n> Implemented VAMP plugins (" + wrappedPlugins.size() + "):\n";
+		result += "\n> Implemented VAMP plugins (" + wrappedPlugins.size() + "):\n";
 		for (String s : wrappedPlugins) {
 			result += s;
 		}
