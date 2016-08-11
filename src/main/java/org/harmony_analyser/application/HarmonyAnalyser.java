@@ -3,6 +3,7 @@ package org.harmony_analyser.application;
 import org.harmony_analyser.application.services.*;
 import org.harmony_analyser.chordanal.*;
 import org.harmony_analyser.vamp_plugins.*;
+import org.harmony_analyser.chordanal_plugins.*;
 
 import javax.sound.midi.*;
 import javax.swing.*;
@@ -402,12 +403,12 @@ class HarmonyAnalyser extends JFrame {
 							consolePane.setText(consolePane.getText() + "\nAnalyzing: " + file.toString() + "\n");
 
 							try {
-								Harmanal.analyzeSong(
+								new HarmanalPlugin().analyzeSong(
 									file.toString() + "-chromas.txt",
 									file.toString() + "-segmentation.txt",
 									file.toString() + "-report.txt"
 								);
-							} catch (IOException | Harmanal.IncorrectInput e) {
+							} catch (IOException | HarmanalPlugin.IncorrectInput e) {
 								e.printStackTrace();
 							}
 

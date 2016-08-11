@@ -296,6 +296,17 @@ public class Chordanal {
 		}
 	}
 
+	// Get String of tone names from binary chord representation
+	public static String getStringOfTones(int[] chord) {
+		String result = "";
+		for (int i = 0; i < chord.length; i++) {
+			if (chord[i] == 1) {
+				result += tonesNames.getFirstInValue(Integer.toString(i)) + " ";
+			}
+		}
+		return result;
+	}
+
 	static Key createKeyFromName(String name) {
 		String[] keyParts = name.split(" ");
 
@@ -323,18 +334,33 @@ public class Chordanal {
 		return tonesNames.getFirstInValue(Integer.toString(note));
 	}
 
-	// Get String of tone names from binary chord representation
-	static String getStringOfTones(int[] chord) {
-		String result = "";
-		for (int i = 0; i < chord.length; i++) {
-			if (chord[i] == 1) {
-				result += tonesNames.getFirstInValue(Integer.toString(i)) + " ";
-			}
-		}
-		return result;
-	}
-
 	/* Analyzing and naming Harmonies */
+
+	public static String getHarmonyName(Harmony harmony) {
+		boolean interval = isInterval(harmony);
+		boolean unisone = isUnisone(harmony);
+		boolean intervalAbbreviation = isIntervalAbbreviation(harmony);
+		boolean unknownStructure = isStructureUnknown(harmony);
+
+		if (unknownStructure) {
+			return "";
+		}
+		Tone rootTone = getRootTone(harmony);
+		if (rootTone == null) {
+			return "";
+		}
+		if (interval) {
+			if (unisone) {
+				return rootTone.getNameMapped() + " (" + getHarmonyNameRelative(harmony) + ")";
+			} else {
+				return rootTone.getNameMapped() + "->" + getHarmonyNameRelative(harmony);
+			}
+		} else if (intervalAbbreviation) {
+			return rootTone.getNameMapped() + "->" + getHarmonyNameRelative(harmony);
+		} else {
+			return rootTone.getNameMapped() + " " + getHarmonyNameRelative(harmony);
+		}
+	}
 
 	public static String getHarmonyAbbreviation(Harmony harmony) {
 		boolean interval = isInterval(harmony);
@@ -556,32 +582,6 @@ public class Chordanal {
 			return getHarmonyNamesRelative(harmony).get(0);
 		} else {
 			return "";
-		}
-	}
-
-	static String getHarmonyName(Harmony harmony) {
-		boolean interval = isInterval(harmony);
-		boolean unisone = isUnisone(harmony);
-		boolean intervalAbbreviation = isIntervalAbbreviation(harmony);
-		boolean unknownStructure = isStructureUnknown(harmony);
-
-		if (unknownStructure) {
-			return "";
-		}
-		Tone rootTone = getRootTone(harmony);
-		if (rootTone == null) {
-			return "";
-		}
-		if (interval) {
-			if (unisone) {
-				return rootTone.getNameMapped() + " (" + getHarmonyNameRelative(harmony) + ")";
-			} else {
-				return rootTone.getNameMapped() + "->" + getHarmonyNameRelative(harmony);
-			}
-		} else if (intervalAbbreviation) {
-			return rootTone.getNameMapped() + "->" + getHarmonyNameRelative(harmony);
-		} else {
-			return rootTone.getNameMapped() + " " + getHarmonyNameRelative(harmony);
 		}
 	}
 
