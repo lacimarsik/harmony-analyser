@@ -2,6 +2,7 @@ package org.harmony_analyser.application;
 
 import org.harmony_analyser.application.services.*;
 import org.harmony_analyser.chordanal.*;
+import org.harmony_analyser.plugins.AnalysisPlugin;
 import org.harmony_analyser.plugins.vamp_plugins.*;
 import org.harmony_analyser.plugins.chordanal_plugins.*;
 
@@ -329,7 +330,7 @@ class HarmonyAnalyser extends JFrame {
 						try {
 							List<String> inputFiles = new ArrayList<>();
 							inputFiles.add(file.toString());
-							String analysisResult = new NNLSPlugin().analyse(inputFiles, file.toString() + "-chromas.txt");
+							String analysisResult = new AudioAnalyser().runAnalysis(inputFiles, file.toString() + "-chromas.txt", "nnls-chroma:nnls-chroma");
 							consolePane.setText(consolePane.getText() + "\n" + analysisResult);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -368,7 +369,7 @@ class HarmonyAnalyser extends JFrame {
 							try {
 								List<String> inputFiles = new ArrayList<>();
 								inputFiles.add(file.toString());
-								String analysisResult = new ChordinoPlugin().analyse(inputFiles, file.toString() + "-segmentation.txt");
+								String analysisResult = new AudioAnalyser().runAnalysis(inputFiles, file.toString() + "-segmentation.txt", "nnls-chroma:chordino");
 								consolePane.setText(consolePane.getText() + "\n" + analysisResult);
 							} catch (Exception e) {
 								e.printStackTrace();
@@ -410,8 +411,9 @@ class HarmonyAnalyser extends JFrame {
 							inputFiles.add(file.toString() + "-chromas.txt");
 							inputFiles.add(file.toString() + "-segmentation.txt");
 							try {
-								new TransitionComplexityPlugin().analyse(inputFiles, file.toString() + "-report.txt");
-							} catch (IOException | TransitionComplexityPlugin.IncorrectInput e) {
+								String analysisResult = new AudioAnalyser().runAnalysis(inputFiles, file.toString() + "-report.txt", "harmanal:transition_complexity");
+								consolePane.setText(consolePane.getText() + "\n" + analysisResult);
+							} catch (IOException | AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
 								e.printStackTrace();
 							}
 

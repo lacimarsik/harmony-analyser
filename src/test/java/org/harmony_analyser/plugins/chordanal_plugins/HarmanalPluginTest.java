@@ -1,5 +1,6 @@
 package org.harmony_analyser.plugins.chordanal_plugins;
 
+import org.harmony_analyser.plugins.AnalysisPlugin;
 import org.harmony_analyser.plugins.vamp_plugins.*;
 import org.vamp_plugins.*;
 
@@ -49,7 +50,7 @@ public class HarmanalPluginTest {
 				fixtureString.append(line);
 			}
 			assertEquals(fixtureString.toString(), reportString.toString());
-		} catch (IOException | TransitionComplexityPlugin.IncorrectInput | PluginLoader.LoadFailedException e) {
+		} catch (IOException | AnalysisPlugin.IncorrectInputException | PluginLoader.LoadFailedException e) {
 			e.printStackTrace();
 		}
 	}

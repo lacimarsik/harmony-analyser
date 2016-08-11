@@ -181,7 +181,7 @@ public class VampPlugin extends AnalysisPlugin {
 	 * @param outputFile [String] name of the file to write a report (recommended suffix: -chromas.txt)
 	 */
 
-	public String analyse(List<String> inputFiles, String outputFile) throws IOException, IncorrectInput {
+	public String analyse(List<String> inputFiles, String outputFile) throws IOException, IncorrectInputException {
 		String result = "";
 
 		checkInputFiles(inputFiles);

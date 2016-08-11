@@ -68,7 +68,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 	 * @param outputFile [String] name of the file to write a report (recommended suffix: -report.txt)
 	 */
 
-	public String analyse(List<String> inputFiles, String outputFile) throws IOException, IncorrectInput {
+	public String analyse(List<String> inputFiles, String outputFile) throws IOException, IncorrectInputException {
 		String result = "";
 
 		checkInputFiles(inputFiles);
@@ -290,7 +290,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 	}
 
 	// Read chroma information from the line of String
-	private float[] getChromaFromLine(String line) throws IncorrectInput {
+	private float[] getChromaFromLine(String line) throws IncorrectInputException {
 		float[] result = new float[12];
 		Scanner sc = new Scanner(line);
 		sc.next(); // skip timestamp
@@ -298,7 +298,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 			if (sc.hasNextFloat()) {
 				result[i] = sc.nextFloat();
 			} else {
-				throw new IncorrectInput("Chroma information is invalid.");
+				throw new IncorrectInputException("Chroma information is invalid.");
 			}
 		}
 		return result;

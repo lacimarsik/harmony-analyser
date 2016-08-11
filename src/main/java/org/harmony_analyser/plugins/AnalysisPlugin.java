@@ -13,8 +13,8 @@ public abstract class AnalysisPlugin {
 	protected String pluginName;
 	protected Map<String, Float> parameters;
 
-	public class IncorrectInput extends Exception {
-		public IncorrectInput(String message) {
+	public class IncorrectInputException extends Exception {
+		public IncorrectInputException(String message) {
 			super(message);
 		}
 	}
@@ -23,9 +23,9 @@ public abstract class AnalysisPlugin {
 		return inputFileExtensions;
 	}
 
-	protected void checkInputFiles(List<String> inputFiles) throws IncorrectInput {
+	protected void checkInputFiles(List<String> inputFiles) throws IncorrectInputException {
 		if (inputFiles.size() != inputFileExtensions.size()) {
-			throw new IncorrectInput("Wrong number of input files, expected " + inputFileExtensions.size());
+			throw new IncorrectInputException("Wrong number of input files, expected " + inputFileExtensions.size());
 		}
 		boolean correctInput;
 		for (String inputFile : inputFiles) {
@@ -36,7 +36,7 @@ public abstract class AnalysisPlugin {
 				}
 			}
 			if (!correctInput) {
-				throw new IncorrectInput("Input file " + inputFile + " does not have the required extension");
+				throw new IncorrectInputException("Input file " + inputFile + " does not have the required extension");
 			}
 		}
 	}
@@ -63,5 +63,5 @@ public abstract class AnalysisPlugin {
 
 	protected abstract void setParameters();
 
-	public abstract String analyse(List<String> inputFiles, String outputFile) throws IOException, IncorrectInput;
+	public abstract String analyse(List<String> inputFiles, String outputFile) throws IOException, IncorrectInputException;
 }

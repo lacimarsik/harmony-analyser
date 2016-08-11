@@ -36,7 +36,7 @@ public class ChordinoPluginTest {
 			assertEquals(" 0.371519274: N", line);
 			line = reader.readLine();
 			assertEquals(" 0.464399092: B", line);
-		} catch (IOException | AnalysisPlugin.IncorrectInput e) {
+		} catch (IOException | AnalysisPlugin.IncorrectInputException e) {
 			e.printStackTrace();
 		}
 	}
