@@ -16,9 +16,9 @@ import static org.junit.Assert.assertEquals;
 
 @SuppressWarnings("ConstantConditions")
 
-public class HarmanalPluginTest {
+public class TransitionComplexityPluginTest {
 	private File testWavFile, testReportFixture;
-	private List<String> inputFilesVamp, inputFilesHarmanal;
+	private List<String> inputFilesVamp, inputFilesComplexity;
 
 	@Before
 	public void setUp() {
@@ -26,18 +26,18 @@ public class HarmanalPluginTest {
 		testWavFile = new File(classLoader.getResource("test.wav").getFile());
 		inputFilesVamp = new ArrayList<>();
 		inputFilesVamp.add(testWavFile.toString());
-		inputFilesHarmanal = new ArrayList<>();
-		inputFilesHarmanal.add(testWavFile.toString() + "-chromas.txt");
-		inputFilesHarmanal.add(testWavFile.toString() + "-segmentation.txt");
+		inputFilesComplexity = new ArrayList<>();
+		inputFilesComplexity.add(testWavFile.toString() + "-chromas.txt");
+		inputFilesComplexity.add(testWavFile.toString() + "-segmentation.txt");
 		testReportFixture = new File(classLoader.getResource("test-reportFixture.txt").getFile());
 	}
 
 	@Test
-	public void shouldCreateReportAndResult() {
+	public void shouldCreateReport() {
 		try {
 			new NNLSPlugin().analyse(inputFilesVamp, testWavFile.toString() + "-chromas.txt");
 			new ChordinoPlugin().analyse(inputFilesVamp, testWavFile.toString() + "-segmentation.txt");
-			new TransitionComplexityPlugin().analyse(inputFilesHarmanal, testWavFile.toString() + "-report.txt");
+			new TransitionComplexityPlugin().analyse(inputFilesComplexity, testWavFile.toString() + "-report.txt");
 			BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-report.txt"));
 			BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
 			StringBuilder reportString = new StringBuilder();

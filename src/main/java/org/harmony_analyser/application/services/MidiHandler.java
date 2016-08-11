@@ -169,7 +169,6 @@ public class MidiHandler {
 					return MidiSystem.getMidiDevice(info);
 				}
 			} catch (MidiUnavailableException e) {
-
 				e.printStackTrace();
 			}
 		}
