@@ -23,7 +23,7 @@ public class NNLSPluginTest {
 
 	@Test
 	public void shouldExtractChromas() {
-		nnls.analyze(testWavFile.toString(), testWavFile.toString() + "-chromas.txt");
+		nnls.analyse(testWavFile.toString(), testWavFile.toString() + "-chromas.txt");
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(testWavFile.toString() + "-chromas.txt"));
 			String line = reader.readLine();

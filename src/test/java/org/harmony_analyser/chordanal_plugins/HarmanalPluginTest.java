@@ -26,9 +26,9 @@ public class HarmanalPluginTest {
 	@Test
 	public void shouldCreateReportAndResult() {
 		try {
-			new NNLSPlugin().analyze(testWavFile.toString(), testWavFile.toString() + "-chromas.txt");
-			new ChordinoPlugin().analyze(testWavFile.toString(), testWavFile.toString() + "-segmentation.txt");
-			new HarmanalPlugin().analyze(
+			new NNLSPlugin().analyse(testWavFile.toString(), testWavFile.toString() + "-chromas.txt");
+			new ChordinoPlugin().analyse(testWavFile.toString(), testWavFile.toString() + "-segmentation.txt");
+			new HarmanalPlugin().analyse(
 				testWavFile.toString() + "-chromas.txt",
 				testWavFile.toString() + "-segmentation.txt",
 				testWavFile.toString() + "-report.txt"

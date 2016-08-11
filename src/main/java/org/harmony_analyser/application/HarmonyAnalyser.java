@@ -327,7 +327,7 @@ class HarmonyAnalyser extends JFrame {
 					if (file.toString().endsWith(".wav")) {
 						consolePane.setText(consolePane.getText() + "\nAnalyzing: " + file.toString() + "\n");
 						try {
-							String analysisResult = new NNLSPlugin().analyze(file.toString(), file.toString() + "-chromas.txt");
+							String analysisResult = new NNLSPlugin().analyse(file.toString(), file.toString() + "-chromas.txt");
 							consolePane.setText(consolePane.getText() + "\n" + analysisResult);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -364,7 +364,7 @@ class HarmonyAnalyser extends JFrame {
 						if (file.toString().endsWith(".wav")) {
 							consolePane.setText(consolePane.getText() + "\nSegmenting: " + file.toString() + "\n");
 							try {
-								String analysisResult = new ChordinoPlugin().analyze(file.toString(), file.toString() + "-segmentation.txt");
+								String analysisResult = new ChordinoPlugin().analyse(file.toString(), file.toString() + "-segmentation.txt");
 								consolePane.setText(consolePane.getText() + "\n" + analysisResult);
 							} catch (Exception e) {
 								e.printStackTrace();
@@ -403,7 +403,7 @@ class HarmonyAnalyser extends JFrame {
 							consolePane.setText(consolePane.getText() + "\nAnalyzing: " + file.toString() + "\n");
 
 							try {
-								new HarmanalPlugin().analyze(
+								new HarmanalPlugin().analyse(
 									file.toString() + "-chromas.txt",
 									file.toString() + "-segmentation.txt",
 									file.toString() + "-report.txt"

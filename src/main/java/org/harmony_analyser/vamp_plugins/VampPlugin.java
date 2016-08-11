@@ -26,7 +26,7 @@ import javax.sound.sampled.*;
  *
  * getIdentifier() - unique identifier of the plugin
  *
- * channel - one (or possibly more) audio channels that the plugin will analyze the data from
+ * channel - one (or possibly more) audio channels that the plugin will analyse the data from
  *
  * initialise(# of channels, step size, block size) - initializes the plugin
  *
@@ -179,7 +179,7 @@ public class VampPlugin {
 	 * Analyze audio using Vamp plugin. Courtesy of https://code.soundsoftware.ac.uk/projects/jvamp/repository/entry/host/host.java
 	 */
 
-	public String analyze(String inputFile, String outputFile) {
+	public String analyse(String inputFile, String outputFile) {
 		String result = "";
 
 		try {

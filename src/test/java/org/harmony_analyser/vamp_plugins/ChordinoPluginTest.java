@@ -23,7 +23,7 @@ public class ChordinoPluginTest {
 
 	@Test
 	public void shouldExtractChords() {
-		chordino.analyze(testWavFile.toString(), testWavFile.toString() + "-segmentation.txt");
+		chordino.analyse(testWavFile.toString(), testWavFile.toString() + "-segmentation.txt");
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(testWavFile.toString() + "-segmentation.txt"));
 			String line = reader.readLine();
