@@ -6,7 +6,7 @@
 
     <groupId>harmony-analyser</groupId>
     <artifactId>harmony-analyser</artifactId>
-    <version>0.9</version>
+    <version>1.0</version>
 
     <dependencies>
         <dependency>
