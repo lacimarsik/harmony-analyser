@@ -1,8 +1,5 @@
 package org.harmony_analyser.chordanal;
 
-import org.harmony_analyser.vamp_plugins.*;
-import org.vamp_plugins.*;
-
 import org.junit.*;
 import java.io.*;
 import static org.junit.Assert.assertEquals;
@@ -86,32 +83,5 @@ public class HarmanalTest {
 	@Test
 	public void shouldGetTransitionComplexityForHarmonies() {
 		assertEquals(Harmanal.getTransitionComplexity(Chordanal.createHarmonyFromTones("C2 E2 G2"), Chordanal.createHarmonyFromTones("F2 A2 C2 C#2")), 2);
-	}
-
-	@Test
-	public void shouldCreateReportAndResult() {
-		try {
-			new NNLSPlugin().analyze(testWavFile.toString(), testWavFile.toString() + "-chromas.txt");
-			new ChordinoPlugin().analyze(testWavFile.toString(), testWavFile.toString() + "-segmentation.txt");
-			Harmanal.analyzeSong(
-				testWavFile.toString() + "-chromas.txt",
-				testWavFile.toString() + "-segmentation.txt",
-				testWavFile.toString() + "-report.txt"
-			);
-			BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-report.txt"));
-			BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
-			StringBuilder reportString = new StringBuilder();
-			StringBuilder fixtureString = new StringBuilder();
-			String line;
-			while ((line = readerReport.readLine()) != null) {
-				reportString.append(line);
-			}
-			while ((line = readerFixture.readLine()) != null) {
-				fixtureString.append(line);
-			}
-			assertEquals(fixtureString.toString(), reportString.toString());
-		} catch (IOException | Harmanal.IncorrectInput | PluginLoader.LoadFailedException e) {
-			e.printStackTrace();
-		}
 	}
 }
