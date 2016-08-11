@@ -403,7 +403,7 @@ class HarmonyAnalyser extends JFrame {
 							consolePane.setText(consolePane.getText() + "\nAnalyzing: " + file.toString() + "\n");
 
 							try {
-								new HarmanalPlugin().analyzeSong(
+								new HarmanalPlugin().analyze(
 									file.toString() + "-chromas.txt",
 									file.toString() + "-segmentation.txt",
 									file.toString() + "-report.txt"

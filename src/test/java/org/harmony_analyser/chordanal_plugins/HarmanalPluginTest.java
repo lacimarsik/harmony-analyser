@@ -28,7 +28,7 @@ public class HarmanalPluginTest {
 		try {
 			new NNLSPlugin().analyze(testWavFile.toString(), testWavFile.toString() + "-chromas.txt");
 			new ChordinoPlugin().analyze(testWavFile.toString(), testWavFile.toString() + "-segmentation.txt");
-			new HarmanalPlugin().analyzeSong(
+			new HarmanalPlugin().analyze(
 				testWavFile.toString() + "-chromas.txt",
 				testWavFile.toString() + "-segmentation.txt",
 				testWavFile.toString() + "-report.txt"

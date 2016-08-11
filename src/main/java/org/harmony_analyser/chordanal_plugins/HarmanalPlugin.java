@@ -31,7 +31,7 @@ public class HarmanalPlugin {
 	 * @param reportFile [String] name of the file to write a report
 	 */
 
-	public void analyzeSong(String chromaFile, String segmentationFile, String reportFile) throws IOException, IncorrectInput {
+	public void analyze(String chromaFile, String segmentationFile, String reportFile) throws IOException, IncorrectInput {
 		List<String> chromaLinesList = Files.readAllLines(new File(chromaFile).toPath(), Charset.defaultCharset());
 		List<String> segmentationLinesList = Files.readAllLines(new File(segmentationFile).toPath(), Charset.defaultCharset());
 		List<Float> segmentationTimestampList = new ArrayList<>();
