@@ -1,5 +1,6 @@
-package org.harmony_analyser.vamp_plugins;
+package org.harmony_analyser.plugins.vamp_plugins;
 
+import org.harmony_analyser.plugins.*;
 import org.vamp_plugins.*;
 
 import java.io.*;
@@ -94,7 +95,7 @@ import javax.sound.sampled.*;
  * https://github.com/c4dm/jvamp/blob/master/host/host.java
  */
 
-public class VampPlugin {
+public class VampPlugin extends AnalysisPlugin {
 	final static PluginLoader loader;
 	final int adapterFlag = PluginLoader.AdapterFlags.ADAPT_ALL;
 	final int defaultRate = 44100;
@@ -111,6 +112,9 @@ public class VampPlugin {
 
 	static {
 		loader = PluginLoader.getInstance();
+
+		inputFileExtensions = new ArrayList<>();
+		inputFileExtensions.add(".wav");
 	}
 
 	/* Public / Package methods */
@@ -177,13 +181,20 @@ public class VampPlugin {
 
 	/**
 	 * Analyze audio using Vamp plugin. Courtesy of https://code.soundsoftware.ac.uk/projects/jvamp/repository/entry/host/host.java
+	 *
+	 * @param inputFiles [List<String>]
+	 *    wavFile: name of the WAV audio file (suffix: .wav)
+	 * @param outputFile [String] name of the file to write a report (recommended suffix: -chromas.txt)
 	 */
 
-	public String analyse(String inputFile, String outputFile) {
+	public String analyse(List<String> inputFiles, String outputFile) throws IOException, IncorrectInput {
 		String result = "";
 
+		checkInputFiles(inputFiles);
+		String wavFile = inputFiles.get(0);
+
 		try {
-			File f = new File(inputFile);
+			File f = new File(wavFile);
 			AudioInputStream stream = AudioSystem.getAudioInputStream(f);
 			AudioFormat format = stream.getFormat();
 

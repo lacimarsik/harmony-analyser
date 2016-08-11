@@ -2,8 +2,8 @@ package org.harmony_analyser.application;
 
 import org.harmony_analyser.application.services.*;
 import org.harmony_analyser.chordanal.*;
-import org.harmony_analyser.vamp_plugins.*;
-import org.harmony_analyser.chordanal_plugins.*;
+import org.harmony_analyser.plugins.vamp_plugins.*;
+import org.harmony_analyser.plugins.chordanal_plugins.*;
 
 import javax.sound.midi.*;
 import javax.swing.*;
@@ -11,7 +11,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.nio.file.*;
 import java.nio.file.attribute.*;
-import java.util.List;
+import java.util.*;
 
 /**
  * GUI for HarmonyAnalyser
@@ -327,7 +327,9 @@ class HarmonyAnalyser extends JFrame {
 					if (file.toString().endsWith(".wav")) {
 						consolePane.setText(consolePane.getText() + "\nAnalyzing: " + file.toString() + "\n");
 						try {
-							String analysisResult = new NNLSPlugin().analyse(file.toString(), file.toString() + "-chromas.txt");
+							List<String> inputFiles = new ArrayList<>();
+							inputFiles.add(file.toString());
+							String analysisResult = new NNLSPlugin().analyse(inputFiles, file.toString() + "-chromas.txt");
 							consolePane.setText(consolePane.getText() + "\n" + analysisResult);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -364,7 +366,9 @@ class HarmonyAnalyser extends JFrame {
 						if (file.toString().endsWith(".wav")) {
 							consolePane.setText(consolePane.getText() + "\nSegmenting: " + file.toString() + "\n");
 							try {
-								String analysisResult = new ChordinoPlugin().analyse(file.toString(), file.toString() + "-segmentation.txt");
+								List<String> inputFiles = new ArrayList<>();
+								inputFiles.add(file.toString());
+								String analysisResult = new ChordinoPlugin().analyse(inputFiles, file.toString() + "-segmentation.txt");
 								consolePane.setText(consolePane.getText() + "\n" + analysisResult);
 							} catch (Exception e) {
 								e.printStackTrace();
@@ -402,12 +406,11 @@ class HarmonyAnalyser extends JFrame {
 						if (file.toString().endsWith(".wav")) {
 							consolePane.setText(consolePane.getText() + "\nAnalyzing: " + file.toString() + "\n");
 
+							List<String> inputFiles = new ArrayList<>();
+							inputFiles.add(file.toString() + "-chromas.txt");
+							inputFiles.add(file.toString() + "-segmentation.txt");
 							try {
-								new HarmanalPlugin().analyse(
-									file.toString() + "-chromas.txt",
-									file.toString() + "-segmentation.txt",
-									file.toString() + "-report.txt"
-								);
+								new HarmanalPlugin().analyse(inputFiles, file.toString() + "-report.txt");
 							} catch (IOException | HarmanalPlugin.IncorrectInput e) {
 								e.printStackTrace();
 							}

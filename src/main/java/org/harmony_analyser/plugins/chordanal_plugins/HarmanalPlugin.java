@@ -1,5 +1,6 @@
-package org.harmony_analyser.chordanal_plugins;
+package org.harmony_analyser.plugins.chordanal_plugins;
 
+import org.harmony_analyser.plugins.*;
 import org.harmony_analyser.chordanal.*;
 
 import java.io.*;
@@ -12,26 +13,37 @@ import java.util.stream.Collectors;
  * Plugin for high-level audio analysis using chroma / chord transcription input, based on Chordanal model
  */
 
-public class HarmanalPlugin {
+public class HarmanalPlugin extends AnalysisPlugin {
 	private static final float AUDIBLE_THRESHOLD = (float) 0.07; // used to filter chroma activations that we consider not audible
 	private static final int MAXIMUM_NUMBER_OF_CHORD_TONES = 4; // used to limit number of tones we work with in chord
 	private static final int MAXIMAL_COMPLEXITY = 7; // used to assign a maximal value for 2 chords that have no common root
 
-	public class IncorrectInput extends Exception {
-		IncorrectInput(String message) {
-			super(message);
-		}
+	static {
+		inputFileExtensions = new ArrayList<>();
+		inputFileExtensions.add("-chromas.txt");
+		inputFileExtensions.add("-segmentation.txt");
 	}
 
 	/**
-	 * Analyzes the song
+	 * Analyzes the song: converts chroma + segmentation information to harmony complexity descriptors
 	 *
-	 * @param chromaFile [String] name of the file containing chroma information
-	 * @param segmentationFile [String] name of the file containing segmentation information
-	 * @param reportFile [String] name of the file to write a report
+	 * @param inputFiles [List<String>]
+	 *    chromaFile: name of the file containing chroma information (suffix: -chromas.txt)
+	 *    segmentationFile: name of the file containing segmentation information (suffix: -segmentation.txt)
+	 * @param outputFile [String] name of the file to write a report (recommended suffix: -report.txt)
 	 */
 
-	public void analyse(String chromaFile, String segmentationFile, String reportFile) throws IOException, IncorrectInput {
+	public String analyse(List<String> inputFiles, String outputFile) throws IOException, IncorrectInput {
+		String result = "";
+
+		checkInputFiles(inputFiles);
+		String chromaFile = inputFiles.get(0);
+		String segmentationFile = inputFiles.get(1);
+
+		result += "Chroma file: " + chromaFile + "\n";
+		result += "Segmentation file: " + segmentationFile + "\n";
+		result += "Output: " + outputFile + "\n";
+
 		List<String> chromaLinesList = Files.readAllLines(new File(chromaFile).toPath(), Charset.defaultCharset());
 		List<String> segmentationLinesList = Files.readAllLines(new File(segmentationFile).toPath(), Charset.defaultCharset());
 		List<Float> segmentationTimestampList = new ArrayList<>();
@@ -101,7 +113,7 @@ public class HarmanalPlugin {
 		int maximalChordComplexity = 0;
 		int sumOfAllTones = 0;
 		float timestamp;
-		BufferedWriter out = new BufferedWriter(new FileWriter(reportFile));
+		BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
 
 		// 3. Iterate over chord progression, deriving chord and transition complexities
 		for (int[] chord : chordProgression) {
@@ -172,10 +184,15 @@ public class HarmanalPlugin {
 		float ahc = (float) sumChordComplexities  / (float) chordComplexityList.size();
 		float rtc = (float) sumTransitionComplexities / (float) sumOfAllTones;
 
-		out.write("Average Transition Complexity (ATC): " + atc + "\n");
-		out.write("Average Harmony Complexity (ACH): " + ahc + "\n");
-		out.write("Relative Transition Complexity (RTC): " + rtc + "\n");
+		String results = "Average Transition Complexity (ATC): " + atc + "\n" +
+		"Average Harmony Complexity (ACH): " + ahc + "\n" +
+		"Relative Transition Complexity (RTC): " + rtc + "\n";
+
+		out.write(results);
+		result += results;
 		out.close();
+
+		return result;
 	}
 
 	/* Private methods */

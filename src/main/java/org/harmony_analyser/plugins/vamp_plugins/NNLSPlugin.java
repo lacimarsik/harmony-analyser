@@ -1,4 +1,4 @@
-package org.harmony_analyser.vamp_plugins;
+package org.harmony_analyser.plugins.vamp_plugins;
 
 import org.vamp_plugins.*;
 

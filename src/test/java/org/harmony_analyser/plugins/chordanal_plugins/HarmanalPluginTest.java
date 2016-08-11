@@ -1,10 +1,12 @@
-package org.harmony_analyser.chordanal_plugins;
+package org.harmony_analyser.plugins.chordanal_plugins;
 
-import org.harmony_analyser.vamp_plugins.*;
+import org.harmony_analyser.plugins.vamp_plugins.*;
 import org.vamp_plugins.*;
 
 import org.junit.*;
 import java.io.*;
+import java.util.*;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -15,24 +17,26 @@ import static org.junit.Assert.assertEquals;
 
 public class HarmanalPluginTest {
 	private File testWavFile, testReportFixture;
+	private List<String> inputFilesVamp, inputFilesHarmanal;
 
 	@Before
 	public void setUp() {
 		ClassLoader classLoader = getClass().getClassLoader();
 		testWavFile = new File(classLoader.getResource("test.wav").getFile());
+		inputFilesVamp = new ArrayList<>();
+		inputFilesVamp.add(testWavFile.toString());
+		inputFilesHarmanal = new ArrayList<>();
+		inputFilesHarmanal.add(testWavFile.toString() + "-chromas.txt");
+		inputFilesHarmanal.add(testWavFile.toString() + "-segmentation.txt");
 		testReportFixture = new File(classLoader.getResource("test-reportFixture.txt").getFile());
 	}
 
 	@Test
 	public void shouldCreateReportAndResult() {
 		try {
-			new NNLSPlugin().analyse(testWavFile.toString(), testWavFile.toString() + "-chromas.txt");
-			new ChordinoPlugin().analyse(testWavFile.toString(), testWavFile.toString() + "-segmentation.txt");
-			new HarmanalPlugin().analyse(
-				testWavFile.toString() + "-chromas.txt",
-				testWavFile.toString() + "-segmentation.txt",
-				testWavFile.toString() + "-report.txt"
-			);
+			new NNLSPlugin().analyse(inputFilesVamp, testWavFile.toString() + "-chromas.txt");
+			new ChordinoPlugin().analyse(inputFilesVamp, testWavFile.toString() + "-segmentation.txt");
+			new HarmanalPlugin().analyse(inputFilesHarmanal, testWavFile.toString() + "-report.txt");
 			BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-report.txt"));
 			BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
 			StringBuilder reportString = new StringBuilder();
