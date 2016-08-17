@@ -1,6 +1,6 @@
 package org.harmony_analyser.plugins;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -37,6 +37,11 @@ public abstract class AnalysisPlugin {
 			}
 			if (!correctInput) {
 				throw new IncorrectInputException("Input file " + inputFile + " does not have the required extension");
+			} else {
+				File file = new File(inputFile);
+				if (!file.exists() || file.isDirectory()) {
+					throw new IncorrectInputException("Input file " + inputFile + " does not exist");
+				}
 			}
 		}
 	}

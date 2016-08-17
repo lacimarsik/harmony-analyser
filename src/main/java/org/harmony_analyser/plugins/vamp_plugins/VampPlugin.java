@@ -117,7 +117,7 @@ public class VampPlugin extends AnalysisPlugin {
 	public static String printInstalledVampPlugins() {
 		String result = "";
 		String[] plugins = loader.listPlugins();
-		result += "\n\n> Locally installed VAMP plugins (" + plugins.length + "):\n";
+		result += "\n> Locally installed VAMP plugins (" + plugins.length + "):\n";
 		for (int i = 0; i < plugins.length; ++i) {
 			result += i + ": " + plugins[i] + "\n";
 		}

@@ -82,13 +82,13 @@ class HarmonyAnalyser extends JFrame {
 	private JScrollPane transitionComplexityScrollPane;
 	private JPanel audioAnalysisPanel;
 	private JLabel inputFolderLabel;
-	private JLabel stepOneLabel;
-	private JLabel stepThreeLabel;
-	private JLabel stepTwoButton;
+	private JLabel lowLevelAnalysisLabel;
+	private JLabel highLevelAnalysisLabel;
 	private JLabel consoleOutputLabel;
 	private JScrollPane consoleScrollPane;
 	private JLabel batchProcessingLabel;
 	private JButton buttonComplexity;
+	private JLabel pluginSettingsLabel;
 	private JFileChooser fileChooser;
 
 	private Harmony harmony1,harmony2 = null;
@@ -273,6 +273,8 @@ class HarmonyAnalyser extends JFrame {
 
 		/* Audio Analysis Tool - Initialization */
 
+		consolePane.setText(consolePane.getText() + "\n");
+
 		loadPluginsButton.addActionListener(actionEvent -> {
 			try {
 				consolePane.setText(consolePane.getText() + AudioAnalyser.printPlugins());
@@ -316,130 +318,25 @@ class HarmonyAnalyser extends JFrame {
 		});
 
 		extractChromasButton.addActionListener(actionEvent -> {
-		try {
-			consolePane.setText(consolePane.getText() + "\n\n> Step 1: Extracting chromas from audio files");
-			Path startPath = Paths.get(inputFolderTextField.getText());
-			Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
-				@Override
-				public FileVisitResult preVisitDirectory(Path dir,
-					BasicFileAttributes attrs) {
-					consolePane.setText(consolePane.getText() + "\nDir: " + dir.toString());
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-
-					if (file.toString().endsWith(".wav")) {
-						consolePane.setText(consolePane.getText() + "\nAnalyzing: " + file.toString() + "\n");
-						try {
-							List<String> inputFiles = new ArrayList<>();
-							inputFiles.add(file.toString());
-							String analysisResult = new AudioAnalyser().runAnalysis(inputFiles, file.toString() + "-chromas.txt", "nnls-chroma:nnls-chroma");
-							consolePane.setText(consolePane.getText() + "\n" + analysisResult);
-						} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
-							consolePane.setText(consolePane.getText() + "ERROR: " + e.getMessage());
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult visitFileFailed(Path file, IOException e) {
-					return FileVisitResult.CONTINUE;
-				}
-			});
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
+			List<String> inputFilesExtensions = new ArrayList<>();
+			inputFilesExtensions.add("");
+			String outputFileExtension = "-chromas.txt";
+			analyzeFolder(consolePane, inputFolderTextField, "nnls-chroma:nnls-chroma", inputFilesExtensions, outputFileExtension);
 		});
 
 		segmentTrackButton.addActionListener(actionEvent -> {
-			try {
-				consolePane.setText(consolePane.getText() + "\n\n> Step 2: Segmenting audio tracks from given chroma files");
-				Path startPath = Paths.get(inputFolderTextField.getText());
-				Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
-					@Override
-					public FileVisitResult preVisitDirectory(Path dir,
-						BasicFileAttributes attrs) {
-						consolePane.setText(consolePane.getText() + "\nDir: " + dir.toString());
-						return FileVisitResult.CONTINUE;
-					}
-
-					@Override
-					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-						if (file.toString().endsWith(".wav")) {
-							consolePane.setText(consolePane.getText() + "\nSegmenting: " + file.toString() + "\n");
-							try {
-								List<String> inputFiles = new ArrayList<>();
-								inputFiles.add(file.toString());
-								String analysisResult = new AudioAnalyser().runAnalysis(inputFiles, file.toString() + "-segmentation.txt", "nnls-chroma:chordino");
-								consolePane.setText(consolePane.getText() + "\n" + analysisResult);
-							} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
-								consolePane.setText(consolePane.getText() + "ERROR: " + e.getMessage());
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-
-							consolePane.setText(consolePane.getText() + "\nSegmentation saved in: " + file.toString() + "-segmentation.txt\n");
-						}
-						return FileVisitResult.CONTINUE;
-					}
-
-					@Override
-					public FileVisitResult visitFileFailed(Path file, IOException e) {
-						return FileVisitResult.CONTINUE;
-					}
-				});
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			List<String> inputFilesExtensions = new ArrayList<>();
+			inputFilesExtensions.add("");
+			String outputFileExtension = "-segmentation.txt";
+			analyzeFolder(consolePane, inputFolderTextField, "nnls-chroma:chordino", inputFilesExtensions, outputFileExtension);
 		});
 
 		analyzeComplexityButton.addActionListener(actionEvent -> {
-			try {
-				consolePane.setText(consolePane.getText() + "\n\n> Step 3: Analyzing complexity for audio files");
-				Path startPath = Paths.get(inputFolderTextField.getText());
-				Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
-					@Override
-					public FileVisitResult preVisitDirectory(Path dir,
-							BasicFileAttributes attrs) {
-						consolePane.setText(consolePane.getText() + "\nDir: " + dir.toString());
-						return FileVisitResult.CONTINUE;
-					}
-
-					@Override
-					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-						if (file.toString().endsWith(".wav")) {
-							consolePane.setText(consolePane.getText() + "\nAnalyzing: " + file.toString() + "\n");
-
-							List<String> inputFiles = new ArrayList<>();
-							inputFiles.add(file.toString() + "-chromas.txt");
-							inputFiles.add(file.toString() + "-segmentation.txt");
-							try {
-								String analysisResult = new AudioAnalyser().runAnalysis(inputFiles, file.toString() + "-report.txt", "harmanal:transition_complexity");
-								consolePane.setText(consolePane.getText() + "\n" + analysisResult);
-							} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
-								consolePane.setText(consolePane.getText() + "ERROR: " + e.getMessage());
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-
-							consolePane.setText(consolePane.getText() + "\nReport saved in: " + file.toString() + "-report.txt\n");
-						}
-						return FileVisitResult.CONTINUE;
-					}
-
-					@Override
-					public FileVisitResult visitFileFailed(Path file, IOException e) {
-						return FileVisitResult.CONTINUE;
-					}
-				});
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			List<String> inputFilesExtensions = new ArrayList<>();
+			inputFilesExtensions.add("-chromas.txt");
+			inputFilesExtensions.add("-segmentation.txt");
+			String outputFileExtension = "-report.txt";
+			analyzeFolder(consolePane, inputFolderTextField, "harmanal:transition_complexity", inputFilesExtensions, outputFileExtension);
 		});
 	}
 
@@ -464,6 +361,56 @@ class HarmonyAnalyser extends JFrame {
 		txtTransition.setText(listToString(Harmanal.getTransitionsFormatted(harmony1,harmony2)));
 		txtTransition.setCaretPosition(0);
 		txtTransitionComplexity.setText(Integer.toString(Harmanal.getTransitionComplexity(harmony1, harmony2)));
+	}
+
+	/* Chord Transition Tool - Handling methods */
+
+	private void analyzeFolder(JTextPane consolePane, JTextField inputFolderTextField, String pluginKey, List<String> inputFilesExtensions, String outputFileExtension) {
+		try {
+			consolePane.setText(consolePane.getText() + "\n\n> Analyzing input folder using plugin: " + pluginKey);
+			if (inputFolderTextField.getText().equals("")) {
+				consolePane.setText(consolePane.getText() + "\nERROR: Input folder not specifed!");
+				return;
+			}
+			Path startPath = Paths.get(inputFolderTextField.getText());
+			Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
+				@Override
+				public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
+					consolePane.setText(consolePane.getText() + "\nDir: " + dir.toString());
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+					if (file.toString().endsWith(".wav")) {
+						consolePane.setText(consolePane.getText() + "\nProcessing: " + file.toString() + "\n");
+
+						try {
+							List<String> inputFiles = new ArrayList<>();
+							for (String inputFileExtension : inputFilesExtensions) {
+								inputFiles.add(file.toString() + inputFileExtension);
+							}
+							String outputFile = file.toString() + outputFileExtension;
+							String analysisResult = new AudioAnalyser().runAnalysis(inputFiles, outputFile, pluginKey);
+							consolePane.setText(consolePane.getText() + "\n" + analysisResult);
+							consolePane.setText(consolePane.getText() + "\nOutput saved in: " + outputFile + "\n");
+						} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
+							consolePane.setText(consolePane.getText() + "\nERROR: " + e.getMessage());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFileFailed(Path file, IOException e) {
+					return FileVisitResult.CONTINUE;
+				}
+			});
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	/* Helpers */
