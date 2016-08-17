@@ -11,6 +11,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.nio.file.attribute.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * GUI for HarmonyAnalyser
@@ -89,6 +90,26 @@ class HarmonyAnalyser extends JFrame {
 	private JLabel batchProcessingLabel;
 	private JButton buttonComplexity;
 	private JLabel pluginSettingsLabel;
+	private JPanel visualizationPanel;
+	private JLabel nnlsChromaVampLabel;
+	private JLabel chordinoVampLabel;
+	private JLabel transitionComplexityAudioLabel;
+	private JLabel selectFileLabel;
+	private JTextField selectFileTextField;
+	private JButton browseButtonVisualization;
+	private JComboBox comboBoxOne;
+	private JLabel selectPluginOneLabel;
+	private JEditorPane editorPaneOne;
+	private JEditorPane editorPaneTwo;
+	private JComboBox comboBoxThree;
+	private JEditorPane editorPaneThree;
+	private JLabel selectPluginTwoLabel;
+	private JLabel selectPluginThreeLabel;
+	private JButton runAnalysisButton;
+	private JComboBox comboBoxTwo;
+	private JScrollPane editorPaneTwoScrollPane;
+	private JScrollPane editorPaneThreeScrollPane;
+	private JScrollPane editorPaneOneScrollPane;
 	private JFileChooser fileChooser;
 
 	private Harmony harmony1,harmony2 = null;
@@ -386,10 +407,7 @@ class HarmonyAnalyser extends JFrame {
 						consolePane.setText(consolePane.getText() + "\nProcessing: " + file.toString() + "\n");
 
 						try {
-							List<String> inputFiles = new ArrayList<>();
-							for (String inputFileExtension : inputFilesExtensions) {
-								inputFiles.add(file.toString() + inputFileExtension);
-							}
+							List<String> inputFiles = inputFilesExtensions.stream().map(inputFileExtension -> file.toString() + inputFileExtension).collect(Collectors.toList());
 							String outputFile = file.toString() + outputFileExtension;
 							String analysisResult = new AudioAnalyser().runAnalysis(inputFiles, outputFile, pluginKey);
 							consolePane.setText(consolePane.getText() + "\n" + analysisResult);
