@@ -756,49 +756,33 @@
                 </constraints>
                 <properties/>
               </component>
-              <scrollpane id="18264" binding="editorPaneOneScrollPane">
+              <grid id="e4ff6" binding="canvasOnePanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
-                <children>
-                  <component id="ec77b" class="javax.swing.JEditorPane" binding="editorPaneOne">
-                    <constraints/>
-                    <properties/>
-                  </component>
-                </children>
-              </scrollpane>
-              <scrollpane id="feb9f" binding="editorPaneTwoScrollPane">
+                <children/>
+              </grid>
+              <grid id="cc7a3" binding="canvasTwoPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
-                <children>
-                  <component id="72923" class="javax.swing.JEditorPane" binding="editorPaneTwo">
-                    <constraints/>
-                    <properties>
-                      <text value=""/>
-                    </properties>
-                  </component>
-                </children>
-              </scrollpane>
-              <scrollpane id="913a4" binding="editorPaneThreeScrollPane">
+                <children/>
+              </grid>
+              <grid id="5c8c2" binding="canvasThreePanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <grid row="7" column="1" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
-                <children>
-                  <component id="d0567" class="javax.swing.JEditorPane" binding="editorPaneThree">
-                    <constraints/>
-                    <properties>
-                      <text value=""/>
-                    </properties>
-                  </component>
-                </children>
-              </scrollpane>
+                <children/>
+              </grid>
             </children>
           </grid>
         </children>
