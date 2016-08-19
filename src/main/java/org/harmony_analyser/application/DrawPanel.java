@@ -24,7 +24,7 @@ class DrawPanel extends JPanel {
 }
 
 class SegmentationDrawPanel extends DrawPanel {
-	public SegmentationDrawPanel() {
+	SegmentationDrawPanel() {
 		super();
 	}
 
@@ -45,6 +45,7 @@ class SegmentationDrawPanel extends DrawPanel {
 		drawSegment(g, 0.2, Color.YELLOW);
 		drawSegment(g, 0.2, Color.BLUE);
 		drawSegment(g, 0.2, Color.BLACK);
+		cursor.setLocation(0, 0);
 	}
 
 	/* Analysis components */
@@ -57,6 +58,7 @@ class SegmentationDrawPanel extends DrawPanel {
 	 */
 	private void drawSegment(Graphics g, double length, Color color) {
 		int widthInPixels = (int) ((double) this.getWidth() * length);
+		System.out.println(widthInPixels);
 
 		g.setColor(color);
 		g.fillRect((int) cursor.getX(), (int) cursor.getY(), widthInPixels, this.getHeight());
@@ -65,7 +67,7 @@ class SegmentationDrawPanel extends DrawPanel {
 }
 
 class ComplexityChartDrawPanel extends DrawPanel {
-	public ComplexityChartDrawPanel() {
+	ComplexityChartDrawPanel() {
 		super();
 	}
 
