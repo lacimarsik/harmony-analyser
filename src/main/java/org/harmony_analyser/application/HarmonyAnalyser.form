@@ -483,14 +483,6 @@
                   <text value=""/>
                 </properties>
               </component>
-              <component id="d58ef" class="javax.swing.JButton" binding="segmentTrackButton">
-                <constraints>
-                  <grid row="15" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Extract Chords from WAV"/>
-                </properties>
-              </component>
               <component id="683a8" class="javax.swing.JLabel" binding="consoleOutputLabel">
                 <constraints>
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -616,7 +608,7 @@
               </component>
               <component id="d4740" class="javax.swing.JLabel" binding="highLevelAnalysisLabel">
                 <constraints>
-                  <grid row="17" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="16" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="High-level analysis"/>
@@ -638,17 +630,9 @@
                   <text value="NNLS Chroma (VAMP)"/>
                 </properties>
               </component>
-              <component id="4728f" class="javax.swing.JLabel" binding="chordinoVampLabel">
-                <constraints>
-                  <grid row="15" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Chordino (VAMP)"/>
-                </properties>
-              </component>
               <hspacer id="873fd">
                 <constraints>
-                  <grid row="16" column="1" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="15" column="1" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </hspacer>
               <hspacer id="c02ed">
@@ -662,6 +646,22 @@
                 </constraints>
                 <properties>
                   <text value="Transition Complexity"/>
+                </properties>
+              </component>
+              <component id="4728f" class="javax.swing.JLabel" binding="chordinoVampLabel">
+                <constraints>
+                  <grid row="17" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Chordino (VAMP)"/>
+                </properties>
+              </component>
+              <component id="d58ef" class="javax.swing.JButton" binding="segmentTrackButton">
+                <constraints>
+                  <grid row="17" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Extract Chords from WAV"/>
                 </properties>
               </component>
             </children>
