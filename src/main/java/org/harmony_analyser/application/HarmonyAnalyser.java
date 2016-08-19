@@ -104,9 +104,9 @@ class HarmonyAnalyser extends JFrame {
 	private JLabel selectPluginThreeLabel;
 	private JButton runAnalysisButton;
 	private JComboBox comboBoxTwo;
-	private DrawPanel drawPanel1;
-	private DrawPanel drawPanel2;
-	private DrawPanel drawPanel3;
+	private JPanel drawPanel1;
+	private JPanel drawPanel2;
+	private JPanel drawPanel3;
 	private JFileChooser fileChooser;
 
 	private Harmony harmony1,harmony2 = null;
