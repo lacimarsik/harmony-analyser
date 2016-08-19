@@ -20,22 +20,47 @@ class DrawPanel extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		/*g.setColor(Color.RED);
+	}
+
+	public void paintChordSegmentation(Graphics g) {
+		drawChordSegmentation(g);
+	}
+
+	public void paintComplexityColumnGraph(Graphics g) {
+		drawComplexityColumnGraph(g, 3.1, 3.5, 1.4);
+	}
+
+	/* Private methods */
+
+	/* Complet analysis */
+
+	private void drawChordSegmentation(Graphics g) {
 		drawSegment(g, 0.2, Color.CYAN);
 		drawSegment(g, 0.2, Color.RED);
 		drawSegment(g, 0.2, Color.YELLOW);
 		drawSegment(g, 0.2, Color.BLUE);
-		drawSegment(g, 0.2, Color.BLACK);*/
-		int[] dv = new int[10];
-		String[] dn = new String[10];
-		for (int i = 0; i < 10; i++) {
-			dv[i] = i;
-			dn[i] = "Des " + i;
-		}
-		drawColumnChart(g, dv, dn, 10, "Test chart", "Descriptors", "Values", Color.BLACK);
+		drawSegment(g, 0.2, Color.BLACK);
 	}
 
-	/* Private methods */
+	private void drawComplexityColumnGraph(Graphics g, double atc, double ahc, double rtc) {
+		double[] descriptorValues = new double[3];
+		String[] descriptorDescriptions = new String[3];
+		String[] descriptorShortcuts = new String[3];
+
+		descriptorValues[0] = atc;
+		descriptorShortcuts[0] = "ATC";
+		descriptorDescriptions[0] = "Avg. Transition Compl.";
+		descriptorValues[1] = ahc;
+		descriptorShortcuts[1] = "ACC";
+		descriptorDescriptions[1] = "Avg. Chord Compl.";
+		descriptorValues[2] = rtc;
+		descriptorShortcuts[2] = "RTC";
+		descriptorDescriptions[2] = "Rel. Transition Compl.";
+
+		drawColumnChart(g, descriptorValues, descriptorShortcuts, descriptorDescriptions, "Complexity results", "", "", Color.BLACK);
+	}
+
+	/* Analysis components */
 
 	/**
 	 * Draws segment of relative length from the client length, using the moving cursor
@@ -54,24 +79,26 @@ class DrawPanel extends JPanel {
 	 * Draws simple column chart using JFreeChart
 	 * @param g [Graphics] main Graphics object
 	 * @param descriptorValues [int[]] descriptor values to plot
-	 * @param descriptorNames [String[]] names of descriptors
-	 * @param maxY [int] maximum value of chart
+	 * @param descriptorDescriptions [String[]] descriptions of descriptors
+	 * @param descriptorShortcuts [String[]] names of descriptors
 	 * @param chartTitle [String] name of the chart
 	 * @param xAxisTitle [String] name of X axis
 	 * @param yAxisTitle [String] name of Y axis
 	 * @param gridLinePaint [Color] color of the line paint
 	 */
-	private void drawColumnChart(Graphics g, int[] descriptorValues, String[] descriptorNames, int maxY, String chartTitle, String xAxisTitle, String yAxisTitle, Color gridLinePaint) {
+	private void drawColumnChart(Graphics g, double[] descriptorValues, String[] descriptorShortcuts, String[] descriptorDescriptions, String chartTitle, String xAxisTitle, String yAxisTitle, Color gridLinePaint) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (int i = 0; i < descriptorValues.length; i++) {
-			dataset.setValue(descriptorValues[i], "", descriptorNames[i]);
+			dataset.setValue(descriptorValues[i], descriptorDescriptions[i], descriptorShortcuts[i]);
 		}
 		JFreeChart chart = ChartFactory.createBarChart(chartTitle, xAxisTitle, yAxisTitle,dataset, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot categoryPlot = chart.getCategoryPlot();
 		categoryPlot.setRangeGridlinePaint(gridLinePaint);
+		categoryPlot.setBackgroundPaint(Color.WHITE);
+		chart.getTitle().setFont(new Font("Sans", 1, 15));
 		this.removeAll();
-		ChartPanel chartPanel = new ChartPanel(chart);
-		this.add(chartPanel, BorderLayout.CENTER);
+		ChartPanel chartPanel = new ChartPanel(chart, this.getWidth(), this.getHeight(), this.getWidth(), this.getHeight(), this.getWidth(), this.getHeight(), false, true, true, true, true, true);
+		this.add(chartPanel);
 		this.validate();
 	}
 }
