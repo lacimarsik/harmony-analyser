@@ -104,6 +104,9 @@ class HarmonyAnalyser extends JFrame {
 	private JLabel selectPluginThreeLabel;
 	private JButton runAnalysisButton;
 	private JComboBox comboBoxTwo;
+	private DrawPanel drawPanel1;
+	private DrawPanel drawPanel2;
+	private DrawPanel drawPanel3;
 	private JFileChooser fileChooser;
 
 	private Harmony harmony1,harmony2 = null;
@@ -352,6 +355,12 @@ class HarmonyAnalyser extends JFrame {
 			inputFilesExtensions.add("-segmentation.txt");
 			String outputFileExtension = "-report.txt";
 			analyzeFolder(consolePane, inputFolderTextField, "harmanal:transition_complexity", inputFilesExtensions, outputFileExtension);
+		});
+
+		/* Visualization Tool - Initialization */
+
+		runAnalysisButton.addActionListener(actionEvent -> {
+
 		});
 	}
 
