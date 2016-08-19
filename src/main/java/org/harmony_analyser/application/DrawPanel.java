@@ -65,7 +65,8 @@ class DrawPanel extends JPanel {
 	/**
 	 * Draws segment of relative length from the client length, using the moving cursor
 	 * @param g [Graphics] main Graphics object
-	 * @param length [length] relative length, e.g. 0.2 for 20%-filled segment
+	 * @param length [double] relative length, e.g. 0.2 for 20%-filled segment
+	 * @param color [Color] color of the segment
 	 */
 	private void drawSegment(Graphics g, double length, Color color) {
 		int widthInPixels = (int) ((double) this.getWidth() * length);
