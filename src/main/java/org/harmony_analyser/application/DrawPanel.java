@@ -8,26 +8,31 @@ import org.jfree.chart.plot.*;
 import org.jfree.data.category.*;
 
 class DrawPanel extends JPanel {
-	private Point cursor; // cursor of drawing (moves from left to right on the canvas)
+	Point cursor; // cursor of drawing (moves from left to right on the canvas)
 
-	/* Public / Package methods */
-
-	public DrawPanel() {
+	DrawPanel() {
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		cursor = new Point();
 		cursor.setLocation(0, 0);
 	}
 
+	/* Public / Package methods */
+
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 	}
+}
 
-	public void paintChordSegmentation(Graphics g) {
-		drawChordSegmentation(g);
+class SegmentationDrawPanel extends DrawPanel {
+	public SegmentationDrawPanel() {
+		super();
 	}
 
-	public void paintComplexityColumnGraph(Graphics g) {
-		drawComplexityColumnGraph(g, 3.1, 3.5, 1.4);
+	/* Public / Package methods */
+
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		drawChordSegmentation(g);
 	}
 
 	/* Private methods */
@@ -41,6 +46,39 @@ class DrawPanel extends JPanel {
 		drawSegment(g, 0.2, Color.BLUE);
 		drawSegment(g, 0.2, Color.BLACK);
 	}
+
+	/* Analysis components */
+
+	/**
+	 * Draws segment of relative length from the client length, using the moving cursor
+	 * @param g [Graphics] main Graphics object
+	 * @param length [double] relative length, e.g. 0.2 for 20%-filled segment
+	 * @param color [Color] color of the segment
+	 */
+	private void drawSegment(Graphics g, double length, Color color) {
+		int widthInPixels = (int) ((double) this.getWidth() * length);
+
+		g.setColor(color);
+		g.fillRect((int) cursor.getX(), (int) cursor.getY(), widthInPixels, this.getHeight());
+		cursor.move((int) cursor.getX() + widthInPixels, (int) cursor.getY());
+	}
+}
+
+class ComplexityChartDrawPanel extends DrawPanel {
+	public ComplexityChartDrawPanel() {
+		super();
+	}
+
+	/* Public / Package methods */
+
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		drawComplexityColumnGraph(g, 3.1, 3.5, 1.4);
+	}
+
+	/* Private methods */
+
+	/* Complet analysis */
 
 	private void drawComplexityColumnGraph(Graphics g, double atc, double ahc, double rtc) {
 		double[] descriptorValues = new double[3];
@@ -63,20 +101,6 @@ class DrawPanel extends JPanel {
 	/* Analysis components */
 
 	/**
-	 * Draws segment of relative length from the client length, using the moving cursor
-	 * @param g [Graphics] main Graphics object
-	 * @param length [double] relative length, e.g. 0.2 for 20%-filled segment
-	 * @param color [Color] color of the segment
-	 */
-	private void drawSegment(Graphics g, double length, Color color) {
-		int widthInPixels = (int) ((double) this.getWidth() * length);
-
-		g.setColor(color);
-		g.fillRect((int) cursor.getX(), (int) cursor.getY(), widthInPixels, this.getHeight());
-		cursor.move((int) cursor.getX() + widthInPixels, (int) cursor.getY());
-	}
-
-	/**
 	 * Draws simple column chart using JFreeChart
 	 * @param g [Graphics] main Graphics object
 	 * @param descriptorValues [int[]] descriptor values to plot
@@ -96,7 +120,7 @@ class DrawPanel extends JPanel {
 		CategoryPlot categoryPlot = chart.getCategoryPlot();
 		categoryPlot.setRangeGridlinePaint(gridLinePaint);
 		categoryPlot.setBackgroundPaint(Color.WHITE);
-		chart.getTitle().setFont(new Font("Sans", 1, 15));
+		chart.getTitle().setFont(new Font("Sans", Font.PLAIN, 15));
 		this.removeAll();
 		ChartPanel chartPanel = new ChartPanel(chart, this.getWidth(), this.getHeight(), this.getWidth(), this.getHeight(), this.getWidth(), this.getHeight(), false, true, true, true, true, true);
 		this.add(chartPanel);
