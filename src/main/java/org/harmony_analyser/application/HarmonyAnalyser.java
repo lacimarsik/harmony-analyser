@@ -6,11 +6,13 @@ import org.harmony_analyser.plugins.AnalysisPlugin;
 
 import javax.sound.midi.*;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.nio.file.*;
 import java.nio.file.attribute.*;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -360,7 +362,29 @@ class HarmonyAnalyser extends JFrame {
 		/* Visualization Tool - Initialization */
 
 		runAnalysisButton.addActionListener(actionEvent -> {
+			drawPanel1.removeAll();
+			drawPanel1.setLayout(new GridLayout());
+			DrawPanel segmentationDrawPanel = new SegmentationDrawPanel();
+			segmentationDrawPanel.setPreferredSize(drawPanel1.getPreferredSize());
+			segmentationDrawPanel.setBounds(drawPanel1.getBounds());
+			drawPanel1.add(segmentationDrawPanel);
+			drawPanel1.revalidate();
 
+			drawPanel2.removeAll();
+			drawPanel2.setLayout(new GridLayout());
+			DrawPanel complexityChartDrawPanel = new ComplexityChartDrawPanel();
+			complexityChartDrawPanel.setPreferredSize(drawPanel2.getPreferredSize());
+			complexityChartDrawPanel.setBounds(drawPanel2.getBounds());
+			drawPanel2.add(complexityChartDrawPanel);
+			drawPanel2.revalidate();
+
+			drawPanel3.removeAll();
+			drawPanel3.setLayout(new GridLayout());
+			DrawPanel segmentationDrawPanel2 = new SegmentationDrawPanel();
+			segmentationDrawPanel2.setPreferredSize(drawPanel3.getPreferredSize());
+			segmentationDrawPanel2.setBounds(drawPanel3.getBounds());
+			drawPanel3.add(segmentationDrawPanel2);
+			drawPanel3.revalidate();
 		});
 	}
 
