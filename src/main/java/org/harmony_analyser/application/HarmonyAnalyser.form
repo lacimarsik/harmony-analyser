@@ -793,7 +793,9 @@
                 <children>
                   <component id="5a382" class="javax.swing.JTextPane" binding="visualizationConsoleTextPane">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <text value="&gt; Choose plugins and run analysis"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>

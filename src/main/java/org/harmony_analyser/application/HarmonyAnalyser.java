@@ -363,6 +363,8 @@ class HarmonyAnalyser extends JFrame {
 
 		/* Visualization Tool - Initialization */
 
+		visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\n");
+
 		String[] visualizationPlugins = AudioAnalyser.getVisualPlugins();
 		for (String pluginName : visualizationPlugins) {
 			comboBoxOne.addItem(pluginName);
@@ -375,7 +377,7 @@ class HarmonyAnalyser extends JFrame {
 		}
 
 		runAnalysisButton.addActionListener(actionEvent -> {
-			visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "> Running analysis ...");
+			visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\n> Running analysis ...");
 
 			drawPanel1.removeAll();
 			drawPanel1.setLayout(new GridLayout());
