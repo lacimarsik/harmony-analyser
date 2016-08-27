@@ -41,7 +41,7 @@ class HarmonyAnalyser extends JFrame {
 	private JTextPane chordComplexityPaneOne;
 	private JTextPane chordComplexityPaneTwo;
 	private JTextPane transitionComplexityPane;
-	private JTextPane consolePane;
+	private JTextPane consoleTextPane;
 	private JTextField inputFolderTextField;
 	private JPanel rootPanel;
 	private JCheckBox captureMIDICheckBoxOne;
@@ -109,6 +109,8 @@ class HarmonyAnalyser extends JFrame {
 	private JPanel drawPanel1;
 	private JPanel drawPanel2;
 	private JPanel drawPanel3;
+	private JTextPane visualizationConsoleTextPane;
+	private JScrollPane visualizationConsoleScrollPane;
 	private JFileChooser fileChooser;
 
 	private Harmony harmony1,harmony2 = null;
@@ -293,19 +295,19 @@ class HarmonyAnalyser extends JFrame {
 
 		/* Audio Analysis Tool - Initialization */
 
-		consolePane.setText(consolePane.getText() + "\n");
+		consoleTextPane.setText(consoleTextPane.getText() + "\n");
 
 		listPluginsButton.addActionListener(actionEvent -> {
 			try {
-				consolePane.setText(consolePane.getText() + AudioAnalyser.printPlugins());
+				consoleTextPane.setText(consoleTextPane.getText() + AudioAnalyser.printPlugins());
 			} catch (Exception e) {
-				consolePane.setText(e.getMessage());
+				consoleTextPane.setText(e.getMessage());
 			}
 		});
 
 		buttonNNLS.addActionListener(actionEvent -> {
 			try {
-				consolePane.setText(consolePane.getText() + AudioAnalyser.printParameters("nnls-chroma:nnls-chroma"));
+				consoleTextPane.setText(consoleTextPane.getText() + AudioAnalyser.printParameters("nnls-chroma:nnls-chroma"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
@@ -313,7 +315,7 @@ class HarmonyAnalyser extends JFrame {
 
 		buttonChordino.addActionListener(actionEvent -> {
 			try {
-				consolePane.setText(consolePane.getText() + AudioAnalyser.printParameters("nnls-chroma:chordino"));
+				consoleTextPane.setText(consoleTextPane.getText() + AudioAnalyser.printParameters("nnls-chroma:chordino"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
@@ -321,7 +323,7 @@ class HarmonyAnalyser extends JFrame {
 
 		buttonComplexity.addActionListener(actionEvent -> {
 			try {
-				consolePane.setText(consolePane.getText() + AudioAnalyser.printParameters("harmanal:transition_complexity"));
+				consoleTextPane.setText(consoleTextPane.getText() + AudioAnalyser.printParameters("harmanal:transition_complexity"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
@@ -332,7 +334,7 @@ class HarmonyAnalyser extends JFrame {
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			if (fileChooser.showOpenDialog(rootPanel) == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
-				consolePane.setText(consolePane.getText() + "\n\n> Selected directory: " + file.getAbsolutePath());
+				consoleTextPane.setText(consoleTextPane.getText() + "\n\n> Selected directory: " + file.getAbsolutePath());
 				inputFolderTextField.setText(file.getAbsolutePath());
 			}
 		});
@@ -341,14 +343,14 @@ class HarmonyAnalyser extends JFrame {
 			List<String> inputFilesExtensions = new ArrayList<>();
 			inputFilesExtensions.add("");
 			String outputFileExtension = "-chromas.txt";
-			analyzeFolder(consolePane, inputFolderTextField, "nnls-chroma:nnls-chroma", inputFilesExtensions, outputFileExtension);
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma", inputFilesExtensions, outputFileExtension);
 		});
 
 		segmentTrackButton.addActionListener(actionEvent -> {
 			List<String> inputFilesExtensions = new ArrayList<>();
 			inputFilesExtensions.add("");
 			String outputFileExtension = "-segmentation.txt";
-			analyzeFolder(consolePane, inputFolderTextField, "nnls-chroma:chordino", inputFilesExtensions, outputFileExtension);
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino", inputFilesExtensions, outputFileExtension);
 		});
 
 		analyzeComplexityButton.addActionListener(actionEvent -> {
@@ -356,7 +358,7 @@ class HarmonyAnalyser extends JFrame {
 			inputFilesExtensions.add("-chromas.txt");
 			inputFilesExtensions.add("-segmentation.txt");
 			String outputFileExtension = "-report.txt";
-			analyzeFolder(consolePane, inputFolderTextField, "harmanal:transition_complexity", inputFilesExtensions, outputFileExtension);
+			analyzeFolder(consoleTextPane, inputFolderTextField, "harmanal:transition_complexity", inputFilesExtensions, outputFileExtension);
 		});
 
 		/* Visualization Tool - Initialization */
@@ -373,6 +375,8 @@ class HarmonyAnalyser extends JFrame {
 		}
 
 		runAnalysisButton.addActionListener(actionEvent -> {
+			visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "> Running analysis ...");
+
 			drawPanel1.removeAll();
 			drawPanel1.setLayout(new GridLayout());
 			DrawPanel segmentationDrawPanel = new SegmentationDrawPanel();
