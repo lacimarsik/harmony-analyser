@@ -341,14 +341,14 @@ class HarmonyAnalyser extends JFrame {
 
 		extractChromasButton.addActionListener(actionEvent -> {
 			List<String> inputFilesExtensions = new ArrayList<>();
-			inputFilesExtensions.add("");
+			inputFilesExtensions.add(".wav");
 			String outputFileExtension = "-chromas.txt";
 			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma", inputFilesExtensions, outputFileExtension);
 		});
 
 		segmentTrackButton.addActionListener(actionEvent -> {
 			List<String> inputFilesExtensions = new ArrayList<>();
-			inputFilesExtensions.add("");
+			inputFilesExtensions.add(".wav");
 			String outputFileExtension = "-segmentation.txt";
 			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino", inputFilesExtensions, outputFileExtension);
 		});
@@ -376,32 +376,109 @@ class HarmonyAnalyser extends JFrame {
 			comboBoxThree.addItem(pluginName);
 		}
 
+		browseButtonVisualization.addActionListener(actionEvent -> {
+			fileChooser = new JFileChooser();
+			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			if (fileChooser.showOpenDialog(rootPanel) == JFileChooser.APPROVE_OPTION) {
+				File file = fileChooser.getSelectedFile();
+				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\n\n> Selected file: " + file.getAbsolutePath());
+				selectFileTextField.setText(file.getAbsolutePath());
+			}
+		});
+
 		runAnalysisButton.addActionListener(actionEvent -> {
 			visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\n> Running analysis ...");
+			if (selectFileTextField.getText().equals("")) {
+				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nERROR: Input file not specifed!");
+				return;
+			}
 
-			drawPanel1.removeAll();
-			drawPanel1.setLayout(new GridLayout());
-			DrawPanel segmentationDrawPanel = new SegmentationDrawPanel();
-			segmentationDrawPanel.setPreferredSize(drawPanel1.getPreferredSize());
-			segmentationDrawPanel.setBounds(drawPanel1.getBounds());
-			drawPanel1.add(segmentationDrawPanel);
-			drawPanel1.revalidate();
+			// Visualization 1
+			try {
+				List<String> inputFiles1 = new ArrayList<>();
+				inputFiles1.add(selectFileTextField.getText());
+				String pluginKey1 = comboBoxOne.getSelectedItem().toString();
+				String outputFileExtension = "-default.txt";
+				switch (pluginKey1) {
+					case "nnls-chroma:chordino":
+						outputFileExtension = "-segmentation.txt";
+						break;
+					case "harmanal:transition_complexity":
+						outputFileExtension = "-report.txt";
+						break;
+				}
+				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles1, selectFileTextField.getText() + outputFileExtension, pluginKey1));
 
-			drawPanel2.removeAll();
-			drawPanel2.setLayout(new GridLayout());
-			DrawPanel complexityChartDrawPanel = new ComplexityChartDrawPanel();
-			complexityChartDrawPanel.setPreferredSize(drawPanel2.getPreferredSize());
-			complexityChartDrawPanel.setBounds(drawPanel2.getBounds());
-			drawPanel2.add(complexityChartDrawPanel);
-			drawPanel2.revalidate();
+				drawPanel1.removeAll();
+				drawPanel1.setLayout(new GridLayout());
+				DrawPanel segmentationDrawPanel = new SegmentationDrawPanel();
+				segmentationDrawPanel.setPreferredSize(drawPanel1.getPreferredSize());
+				segmentationDrawPanel.setBounds(drawPanel1.getBounds());
+				drawPanel1.add(segmentationDrawPanel);
+				drawPanel1.revalidate();
+			} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
+				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nERROR: " + e.getMessage());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
-			drawPanel3.removeAll();
-			drawPanel3.setLayout(new GridLayout());
-			DrawPanel segmentationDrawPanel2 = new SegmentationDrawPanel();
-			segmentationDrawPanel2.setPreferredSize(drawPanel3.getPreferredSize());
-			segmentationDrawPanel2.setBounds(drawPanel3.getBounds());
-			drawPanel3.add(segmentationDrawPanel2);
-			drawPanel3.revalidate();
+			// Visualization 2
+			try {
+				List<String> inputFiles2 = new ArrayList<>();
+				inputFiles2.add(selectFileTextField.getText());
+				String pluginKey2 = comboBoxTwo.getSelectedItem().toString();
+				String outputFileExtension = "-default.txt";
+				switch (pluginKey2) {
+					case "nnls-chroma:chordino":
+						outputFileExtension = "-segmentation.txt";
+						break;
+					case "harmanal:transition_complexity":
+						outputFileExtension = "-report.txt";
+						break;
+				}
+				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles2, selectFileTextField.getText() + outputFileExtension, pluginKey2));
+
+				drawPanel2.removeAll();
+				drawPanel2.setLayout(new GridLayout());
+				DrawPanel complexityChartDrawPanel = new ComplexityChartDrawPanel();
+				complexityChartDrawPanel.setPreferredSize(drawPanel2.getPreferredSize());
+				complexityChartDrawPanel.setBounds(drawPanel2.getBounds());
+				drawPanel2.add(complexityChartDrawPanel);
+				drawPanel2.revalidate();
+			} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
+				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nERROR: " + e.getMessage());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			// Visualization 3
+			try {
+				List<String> inputFiles3 = new ArrayList<>();
+				inputFiles3.add(selectFileTextField.getText());
+				String pluginKey3 = comboBoxThree.getSelectedItem().toString();
+				String outputFileExtension = "-default.txt";
+				switch (pluginKey3) {
+					case "nnls-chroma:chordino":
+						outputFileExtension = "-segmentation.txt";
+						break;
+					case "harmanal:transition_complexity":
+						outputFileExtension = "-report.txt";
+						break;
+				}
+				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles3, selectFileTextField.getText() + outputFileExtension, pluginKey3));
+
+				drawPanel3.removeAll();
+				drawPanel3.setLayout(new GridLayout());
+				DrawPanel segmentationDrawPanel2 = new SegmentationDrawPanel();
+				segmentationDrawPanel2.setPreferredSize(drawPanel3.getPreferredSize());
+				segmentationDrawPanel2.setBounds(drawPanel3.getBounds());
+				drawPanel3.add(segmentationDrawPanel2);
+				drawPanel3.revalidate();
+			} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
+				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nERROR: " + e.getMessage());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		});
 	}
 
