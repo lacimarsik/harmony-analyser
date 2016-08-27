@@ -25,6 +25,11 @@ public class AudioAnalyser {
 		"harmanal:transition_complexity"
 	};
 
+	private static final String[] VISUAL_PLUGINS = new String[] {
+		"nnls-chroma:chordino",
+		"harmanal:transition_complexity"
+	};
+
 	/* Public / Package methods */
 
 	public static String printPlugins() {
@@ -32,6 +37,12 @@ public class AudioAnalyser {
 		result += "\n> Available plugins (" + AVAILABLE_PLUGINS.length + "):\n";
 
 		for (String availablePluginKey : AVAILABLE_PLUGINS) {
+			result += availablePluginKey + "\n";
+		}
+
+		result += "\n> Available visualizations (" + VISUAL_PLUGINS.length + "):\n";
+
+		for (String availablePluginKey : VISUAL_PLUGINS) {
 			result += availablePluginKey + "\n";
 		}
 

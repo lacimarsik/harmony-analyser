@@ -508,7 +508,7 @@
                   </component>
                 </children>
               </scrollpane>
-              <component id="12f1b" class="javax.swing.JButton" binding="loadPluginsButton" default-binding="true">
+              <component id="12f1b" class="javax.swing.JButton" binding="listPluginsButton">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -713,7 +713,9 @@
                 <constraints>
                   <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <model/>
+                </properties>
               </component>
               <component id="d90b6" class="javax.swing.JLabel" binding="selectPluginTwoLabel">
                 <constraints>

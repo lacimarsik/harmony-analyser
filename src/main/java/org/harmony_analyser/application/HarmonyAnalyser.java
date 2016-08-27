@@ -26,7 +26,7 @@ class HarmonyAnalyser extends JFrame {
 	private JButton playButtonOne;
 	private JButton playButtonTwo;
 	private JTextPane transitionPane;
-	private JButton loadPluginsButton;
+	private JButton listPluginsButton;
 	private JList<String> midiList;
 	private JTextPane nameOnePane;
 	private JTextPane nameTwoPane;
@@ -295,7 +295,7 @@ class HarmonyAnalyser extends JFrame {
 
 		consolePane.setText(consolePane.getText() + "\n");
 
-		loadPluginsButton.addActionListener(actionEvent -> {
+		listPluginsButton.addActionListener(actionEvent -> {
 			try {
 				consolePane.setText(consolePane.getText() + AudioAnalyser.printPlugins());
 			} catch (Exception e) {
