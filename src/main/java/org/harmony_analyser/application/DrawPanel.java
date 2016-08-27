@@ -58,7 +58,6 @@ class SegmentationDrawPanel extends DrawPanel {
 	 */
 	private void drawSegment(Graphics g, double length, Color color) {
 		int widthInPixels = (int) ((double) this.getWidth() * length);
-		System.out.println(widthInPixels);
 
 		g.setColor(color);
 		g.fillRect((int) cursor.getX(), (int) cursor.getY(), widthInPixels, this.getHeight());
