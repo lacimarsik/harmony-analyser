@@ -99,13 +99,13 @@ class HarmonyAnalyser extends JFrame {
 	private JLabel selectFileLabel;
 	private JTextField selectFileTextField;
 	private JButton browseButtonVisualization;
-	private JComboBox comboBoxOne;
+	private JComboBox<String> comboBoxOne;
 	private JLabel selectPluginOneLabel;
-	private JComboBox comboBoxThree;
+	private JComboBox<String> comboBoxThree;
 	private JLabel selectPluginTwoLabel;
 	private JLabel selectPluginThreeLabel;
 	private JButton runAnalysisButton;
-	private JComboBox comboBoxTwo;
+	private JComboBox<String> comboBoxTwo;
 	private JPanel drawPanel1;
 	private JPanel drawPanel2;
 	private JPanel drawPanel3;
@@ -360,6 +360,17 @@ class HarmonyAnalyser extends JFrame {
 		});
 
 		/* Visualization Tool - Initialization */
+
+		String[] visualizationPlugins = AudioAnalyser.getVisualPlugins();
+		for (String pluginName : visualizationPlugins) {
+			comboBoxOne.addItem(pluginName);
+		}
+		for (String pluginName : visualizationPlugins) {
+			comboBoxTwo.addItem(pluginName);
+		}
+		for (String pluginName : visualizationPlugins) {
+			comboBoxThree.addItem(pluginName);
+		}
 
 		runAnalysisButton.addActionListener(actionEvent -> {
 			drawPanel1.removeAll();

@@ -32,6 +32,10 @@ public class AudioAnalyser {
 
 	/* Public / Package methods */
 
+	public static String[] getVisualPlugins() {
+		return VISUAL_PLUGINS;
+	}
+
 	public static String printPlugins() {
 		String result = "";
 		result += "\n> Available plugins (" + AVAILABLE_PLUGINS.length + "):\n";
