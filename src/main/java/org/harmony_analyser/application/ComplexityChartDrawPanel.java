@@ -12,15 +12,22 @@ import java.util.*;
 import java.util.List;
 
 public class ComplexityChartDrawPanel extends DrawPanel {
-	public ComplexityChartDrawPanel(List<Map<Float, String>> data) {
+	double[] descriptorValues;
+	String[] descriptorDescriptions;
+	String[] descriptorShortcuts;
+
+	public ComplexityChartDrawPanel(Map<Float, String> data) {
 		super();
+		descriptorValues = new double[3];
+		descriptorDescriptions = new String[3];
+		descriptorShortcuts = new String[3];
 	}
 
 	/* Public / Package methods */
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		drawComplexityColumnGraph(g, 3.1, 3.5, 1.4);
+		drawComplexityColumnGraph(g, descriptorValues[0], descriptorValues[1], descriptorValues[2]);
 	}
 
 	/* Private methods */
@@ -28,10 +35,6 @@ public class ComplexityChartDrawPanel extends DrawPanel {
 	/* Complet analysis */
 
 	private void drawComplexityColumnGraph(Graphics g, double atc, double ahc, double rtc) {
-		double[] descriptorValues = new double[3];
-		String[] descriptorDescriptions = new String[3];
-		String[] descriptorShortcuts = new String[3];
-
 		descriptorValues[0] = atc;
 		descriptorShortcuts[0] = "ATC";
 		descriptorDescriptions[0] = "Avg. Transition Compl.";

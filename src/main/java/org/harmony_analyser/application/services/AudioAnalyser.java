@@ -100,7 +100,7 @@ public class AudioAnalyser {
 	}
 
 	public DrawPanel getDrawPanel(String outputFile, String pluginKey) throws IOException {
-		List<Map<Float, String>> data = getDataFromOutput(outputFile, pluginKey);
+		Map<Float, String> data = getDataFromOutput(outputFile, pluginKey);
 		switch (pluginKey) {
 			case "nnls-chroma:chordino":
 				return new SegmentationDrawPanel(data);
@@ -113,8 +113,8 @@ public class AudioAnalyser {
 
 	/* Private methods */
 
-	private List<Map<Float, String>> getDataFromOutput(String outputFile, String pluginKey) throws IOException {
-		List<Map<Float, String>> result = new ArrayList<>();
+	private Map<Float, String> getDataFromOutput(String outputFile, String pluginKey) throws IOException {
+		Map<Float, String> result = new HashMap<>();
 		File file = new File(outputFile);
 		if (!file.exists() || file.isDirectory()) {
 			throw new IOException("Output file is invalid");
@@ -134,18 +134,22 @@ public class AudioAnalyser {
 					if (sc.hasNextFloat()) {
 						dataInString1 = Float.toString(new Float(sc.nextFloat()));
 					}
-					Scanner sc = new Scanner(linesList.get(linesList.size() - 3));
-					sc.next(); // skip annotation
+					Scanner sc2 = new Scanner(linesList.get(linesList.size() - 3));
+					sc2.next(); // skip annotation
 					String dataInString2 = new String();
-					if (sc.hasNextFloat()) {
-						dataInString2 = Float.toString(new Float(sc.nextFloat()));
+					if (sc2.hasNextFloat()) {
+						dataInString2 = Float.toString(new Float(sc2.nextFloat()));
 					}
-					Scanner sc = new Scanner(linesList.get(linesList.size() - 3));
-					sc.next(); // skip annotation
+					Scanner sc3 = new Scanner(linesList.get(linesList.size() - 3));
+					sc3.next(); // skip annotation
 					String dataInString3 = new String();
-					if (sc.hasNextFloat()) {
-						dataInString3 = Float.toString(new Float(sc.nextFloat()));
+					if (sc3.hasNextFloat()) {
+						dataInString3 = Float.toString(new Float(sc3.nextFloat()));
 					}
+
+					result.put(new Float(0.0), dataInString1);
+					result.put(new Float(1.0), dataInString2);
+					result.put(new Float(2.0), dataInString3);
 					break;
 			}
 		}

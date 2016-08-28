@@ -5,7 +5,7 @@ import java.util.*;
 import java.util.List;
 
 public class SegmentationDrawPanel extends DrawPanel {
-	public SegmentationDrawPanel(List<Map<Float, String>> data) {
+	public SegmentationDrawPanel(Map<Float, String> data) {
 		super();
 	}
 
