@@ -1,9 +1,11 @@
 package org.harmony_analyser.application;
 
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public class SegmentationDrawPanel extends DrawPanel {
-	public SegmentationDrawPanel() {
+	public SegmentationDrawPanel(List<Map<Float, String>> data) {
 		super();
 	}
 

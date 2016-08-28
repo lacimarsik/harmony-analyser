@@ -412,7 +412,7 @@ class HarmonyAnalyser extends JFrame {
 
 				drawPanel1.removeAll();
 				drawPanel1.setLayout(new GridLayout());
-				DrawPanel segmentationDrawPanel = new AudioAnalyser().getDrawPanel(pluginKey1);
+				DrawPanel segmentationDrawPanel = new AudioAnalyser().getDrawPanel(outputFile, pluginKey1);
 				segmentationDrawPanel.setPreferredSize(drawPanel1.getPreferredSize());
 				segmentationDrawPanel.setBounds(drawPanel1.getBounds());
 				drawPanel1.add(segmentationDrawPanel);
@@ -442,7 +442,7 @@ class HarmonyAnalyser extends JFrame {
 
 				drawPanel2.removeAll();
 				drawPanel2.setLayout(new GridLayout());
-				DrawPanel complexityChartDrawPanel = new AudioAnalyser().getDrawPanel(pluginKey2);
+				DrawPanel complexityChartDrawPanel = new AudioAnalyser().getDrawPanel(outputFile, pluginKey2);
 				complexityChartDrawPanel.setPreferredSize(drawPanel2.getPreferredSize());
 				complexityChartDrawPanel.setBounds(drawPanel2.getBounds());
 				drawPanel2.add(complexityChartDrawPanel);
@@ -472,7 +472,7 @@ class HarmonyAnalyser extends JFrame {
 
 				drawPanel3.removeAll();
 				drawPanel3.setLayout(new GridLayout());
-				DrawPanel segmentationDrawPanel2 = new AudioAnalyser().getDrawPanel(pluginKey3);
+				DrawPanel segmentationDrawPanel2 = new AudioAnalyser().getDrawPanel(outputFile, pluginKey3);
 				segmentationDrawPanel2.setPreferredSize(drawPanel3.getPreferredSize());
 				segmentationDrawPanel2.setBounds(drawPanel3.getBounds());
 				drawPanel3.add(segmentationDrawPanel2);

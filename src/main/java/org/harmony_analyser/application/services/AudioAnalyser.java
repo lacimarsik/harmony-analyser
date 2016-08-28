@@ -6,8 +6,12 @@ import org.harmony_analyser.plugins.vamp_plugins.*;
 import org.harmony_analyser.application.*;
 import org.vamp_plugins.*;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.*;
+
+import static org.harmony_analyser.plugins.AnalysisPlugin.*;
 
 /**
  * Class to direct all levels of audio analysis, using available plugins
@@ -95,18 +99,41 @@ public class AudioAnalyser {
 		}
 	}
 
-	public DrawPanel getDrawPanel(String pluginKey) {
+	public DrawPanel getDrawPanel(String outputFile, String pluginKey) {
+		List<Map<Float, String>> data = getDataFromOutput(outputFile, pluginKey);
 		switch (pluginKey) {
 			case "nnls-chroma:chordino":
-				return new SegmentationDrawPanel();
+				return new SegmentationDrawPanel(data);
 			case "harmanal:transition_complexity":
-				return new ComplexityChartDrawPanel();
+				return new ComplexityChartDrawPanel(data);
 			default:
 				return null;
 		}
 	}
 
 	/* Private methods */
+
+	private List<Map<Float, String>> getDataFromOutput(String outputFile, String pluginKey) throws IOException {
+		List<Map<Float, String>> result = new ArrayList<>();
+		File file = new File(outputFile);
+		if (!file.exists() || file.isDirectory()) {
+			throw new IOException("Output file is invalid");
+		} else {
+			List<String> linesList = Files.readAllLines(new File(outputFile).toPath(), Charset.defaultCharset());
+			switch (pluginKey) {
+				case "nnls-chroma:nnls-chroma":
+					// we do not visualize chroma files yet
+					break;
+				case "nnls-chroma:chordino":
+
+					break;
+				case "harmanal:transition_complexity":
+
+					break;
+			}
+		}
+		return result;
+	}
 
 	private static AnalysisPlugin getPlugin(String pluginKey) throws LoadFailedException {
 		AnalysisPlugin plugin;

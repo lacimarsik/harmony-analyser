@@ -8,9 +8,11 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public class ComplexityChartDrawPanel extends DrawPanel {
-	public ComplexityChartDrawPanel() {
+	public ComplexityChartDrawPanel(List<Map<Float, String>> data) {
 		super();
 	}
 
