@@ -13,7 +13,7 @@ import java.util.*;
 
 public abstract class AnalysisPlugin {
 	protected static List<String> inputFileSuffixes;
-	protected static String outputFileSuffixes;
+	protected static String outputFileSuffix;
 	protected String pluginKey;
 	protected String pluginName;
 	protected Map<String, Float> parameters;
@@ -43,7 +43,7 @@ public abstract class AnalysisPlugin {
 	@SuppressWarnings("WeakerAccess")
 
 	protected void checkInputFiles(String inputFile, boolean force) throws IncorrectInputException, OutputAlreadyExists {
-		File file = new File(inputFile + outputFileSuffixes);
+		File file = new File(inputFile + outputFileSuffix);
 		if (file.exists() && !file.isDirectory() && !force) {
 			throw new OutputAlreadyExists("Output already exists");
 		}
@@ -61,7 +61,7 @@ public abstract class AnalysisPlugin {
 	}
 
 	public List<String> getResultFromFile(String inputFile) throws OutputNotReady, IOException {
-		File file = new File(inputFile + outputFileSuffixes);
+		File file = new File(inputFile + outputFileSuffix);
 		if (!file.exists() || file.isDirectory()) {
 			throw new OutputNotReady("Output is not ready yet");
 		}

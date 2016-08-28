@@ -47,7 +47,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		inputFileSuffixes.add("-chromas.txt");
 		inputFileSuffixes.add("-segmentation.txt");
 
-		outputFileSuffixes = "-report.txt";
+		outputFileSuffix = "-report.txt";
 
 		parameters = new HashMap<>();
 		parameters.put("audibleThreshold", (float) 0.07);
@@ -68,7 +68,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 
 	public String analyse(String inputFile, boolean force) throws IOException, IncorrectInputException, OutputAlreadyExists {
 		String result = super.analyse(inputFile, force);
-		String outputFile = inputFile + outputFileSuffixes;
+		String outputFile = inputFile + outputFileSuffix;
 
 		String chromaFile = inputFile + "-chromas.txt";
 		String segmentationFile = inputFile + "-segmentation.txt";

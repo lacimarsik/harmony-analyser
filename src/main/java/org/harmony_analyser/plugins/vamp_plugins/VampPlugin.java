@@ -175,7 +175,7 @@ public class VampPlugin extends AnalysisPlugin {
 
 	public String analyse(String inputFile, boolean force) throws IOException, IncorrectInputException, OutputAlreadyExists {
 		String result = super.analyse(inputFile, force);
-		String outputFile = inputFile + outputFileSuffixes;
+		String outputFile = inputFile + outputFileSuffix;
 
 		try {
 			File f = new File(inputFile);

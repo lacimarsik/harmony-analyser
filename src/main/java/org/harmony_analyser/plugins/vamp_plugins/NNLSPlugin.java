@@ -57,7 +57,7 @@ public class NNLSPlugin extends VampPlugin {
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add(""); // Plugin handles raw WAV files
 
-		outputFileSuffixes = "-chromas.txt";
+		outputFileSuffix = "-chromas.txt";
 
 		parameters = new HashMap<>();
 		parameters.put("useNNLS", (float) 1);
