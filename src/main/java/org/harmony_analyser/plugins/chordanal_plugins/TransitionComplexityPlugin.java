@@ -216,7 +216,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		float rtc = (float) sumTransitionComplexities / (float) sumOfAllTones;
 
 		String results = "Average Transition Complexity (ATC): " + atc + "\n" +
-		"Average Harmony Complexity (ACH): " + ahc + "\n" +
+		"Average Chord Complexity (ACC): " + ahc + "\n" +
 		"Relative Transition Complexity (RTC): " + rtc + "\n";
 
 		out.write(results);
