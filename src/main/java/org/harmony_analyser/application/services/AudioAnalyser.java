@@ -66,6 +66,24 @@ public class AudioAnalyser {
 		return plugin.analyse(inputFiles, outputFile);
 	}
 
+	public List<String> getInputFileExtensions(String pluginKey) {
+		List<String> result = new ArrayList<>();
+		switch (pluginKey) {
+			case "nnls-chroma:nnls-chroma":
+				result.add("");
+				return result;
+			case "nnls-chroma:chordino":
+				result.add("");
+				return result;
+			case "harmanal:transition_complexity":
+				result.add("-chromas.txt");
+				result.add("-segmentation.txt");
+				return result;
+			default:
+				return null;
+		}
+	}
+
 	public String getOutputFileExtension(String pluginKey) {
 		switch (pluginKey) {
 			case "nnls-chroma:chordino":

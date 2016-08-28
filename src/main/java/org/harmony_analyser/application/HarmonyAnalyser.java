@@ -341,14 +341,14 @@ class HarmonyAnalyser extends JFrame {
 
 		extractChromasButton.addActionListener(actionEvent -> {
 			List<String> inputFilesExtensions = new ArrayList<>();
-			inputFilesExtensions.add(".wav");
+			inputFilesExtensions.add("");
 			String outputFileExtension = "-chromas.txt";
 			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma", inputFilesExtensions, outputFileExtension);
 		});
 
 		segmentTrackButton.addActionListener(actionEvent -> {
 			List<String> inputFilesExtensions = new ArrayList<>();
-			inputFilesExtensions.add(".wav");
+			inputFilesExtensions.add("");
 			String outputFileExtension = "-segmentation.txt";
 			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino", inputFilesExtensions, outputFileExtension);
 		});
@@ -396,8 +396,11 @@ class HarmonyAnalyser extends JFrame {
 			// Visualization 1
 			try {
 				List<String> inputFiles1 = new ArrayList<>();
-				inputFiles1.add(selectFileTextField.getText());
 				String pluginKey1 = comboBoxOne.getSelectedItem().toString();
+				List<String> inputFileExtensions = new AudioAnalyser().getInputFileExtensions(pluginKey1);
+				for (String extension : inputFileExtensions) {
+					inputFiles1.add(selectFileTextField.getText() + extension);
+				}
 				String outputFileExtension = new AudioAnalyser().getOutputFileExtension(pluginKey1);
 				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles1, selectFileTextField.getText() + outputFileExtension, pluginKey1));
 
@@ -417,8 +420,11 @@ class HarmonyAnalyser extends JFrame {
 			// Visualization 2
 			try {
 				List<String> inputFiles2 = new ArrayList<>();
-				inputFiles2.add(selectFileTextField.getText());
 				String pluginKey2 = comboBoxTwo.getSelectedItem().toString();
+				List<String> inputFileExtensions = new AudioAnalyser().getInputFileExtensions(pluginKey2);
+				for (String extension : inputFileExtensions) {
+					inputFiles2.add(selectFileTextField.getText() + extension);
+				}
 				String outputFileExtension = new AudioAnalyser().getOutputFileExtension(pluginKey2);
 				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles2, selectFileTextField.getText() + outputFileExtension, pluginKey2));
 
@@ -438,8 +444,11 @@ class HarmonyAnalyser extends JFrame {
 			// Visualization 3
 			try {
 				List<String> inputFiles3 = new ArrayList<>();
-				inputFiles3.add(selectFileTextField.getText());
 				String pluginKey3 = comboBoxThree.getSelectedItem().toString();
+				List<String> inputFileExtensions = new AudioAnalyser().getInputFileExtensions(pluginKey3);
+				for (String extension : inputFileExtensions) {
+					inputFiles3.add(selectFileTextField.getText() + extension);
+				}
 				String outputFileExtension = new AudioAnalyser().getOutputFileExtension(pluginKey3);
 				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles3, selectFileTextField.getText() + outputFileExtension, pluginKey3));
 
