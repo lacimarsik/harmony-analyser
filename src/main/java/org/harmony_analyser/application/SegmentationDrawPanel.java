@@ -2,7 +2,8 @@ package org.harmony_analyser.application;
 
 import java.awt.*;
 import java.util.*;
-import java.util.List;
+
+@SuppressWarnings({"SameParameterValue", "UnusedParameters"})
 
 public class SegmentationDrawPanel extends DrawPanel {
 	public SegmentationDrawPanel(Map<Float, String> data) {

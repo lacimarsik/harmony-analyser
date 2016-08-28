@@ -5,8 +5,6 @@ import org.junit.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Unit tests for AudioAnalyser class
@@ -15,7 +13,7 @@ import java.util.List;
 public class AudioAnalyserTest {
 	private AudioAnalyser audioAnalyser;
 	private File testWavFile, testReportFixture;
-	private List<String> inputFiles;
+	private String inputFile;
 	private String resultFile;
 
 	// XXX: Until Mockito is added as dependency and mocks are in practice, expect the fail scenario rather than proper call
@@ -23,14 +21,11 @@ public class AudioAnalyserTest {
 	@Before
 	public void setUp() {
 		audioAnalyser = new AudioAnalyser();
-		inputFiles = new ArrayList<>();
-		inputFiles.add("test.wav-chromas.txt");
-		inputFiles.add("wrongfile");
-		resultFile = "result.txt";
+		inputFile = "wrongfile";
 	}
 
 	@Test(expected = AnalysisPlugin.IncorrectInputException.class)
-	public void shouldRunAnalysis() throws AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, IOException {
-		audioAnalyser.runAnalysis(inputFiles, resultFile, "harmanal:transition_complexity");
+	public void shouldRunAnalysis() throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists {
+		audioAnalyser.runAnalysis(inputFile, "harmanal:transition_complexity", true);
 	}
 }

@@ -1,17 +1,24 @@
 package org.harmony_analyser.plugins;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.*;
 
 /**
  * Abstract class for low and high-level audio analysis plugin
  */
 
+@SuppressWarnings("SameParameterValue")
+
 public abstract class AnalysisPlugin {
 	protected static List<String> inputFileExtensions;
+	protected static String outputFileExtension;
 	protected String pluginKey;
 	protected String pluginName;
 	protected Map<String, Float> parameters;
+
+	/* Exceptions */
 
 	public class IncorrectInputException extends Exception {
 		public IncorrectInputException(String message) {
@@ -19,31 +26,46 @@ public abstract class AnalysisPlugin {
 		}
 	}
 
+	public class OutputAlreadyExists extends Exception {
+		public OutputAlreadyExists(String message) {
+			super(message);
+		}
+	}
+
+	public class OutputNotReady extends Exception {
+		OutputNotReady(String message) {
+			super(message);
+		}
+	}
+
+	/* Public / Package methods */
+
+	@SuppressWarnings("WeakerAccess")
+
+	protected void checkInputFiles(String inputFile, boolean force) throws IncorrectInputException, OutputAlreadyExists {
+		File file = new File(inputFile + outputFileExtension);
+		if (file.exists() && !file.isDirectory() && !force) {
+			throw new OutputAlreadyExists("Output already exists");
+		}
+		for (String inputFileExtension : inputFileExtensions) {
+			String fileName = inputFile + inputFileExtension;
+			File fileInput = new File(inputFile + inputFileExtension);
+			if (!fileInput.exists() || fileInput.isDirectory()) {
+				throw new IncorrectInputException("Input file " + fileName + " does not exist");
+			}
+		}
+	}
+
 	public List<String> getInputFileExtensions() {
 		return inputFileExtensions;
 	}
 
-	protected void checkInputFiles(List<String> inputFiles) throws IncorrectInputException {
-		if (inputFiles.size() != inputFileExtensions.size()) {
-			throw new IncorrectInputException("Wrong number of input files, expected " + inputFileExtensions.size());
+	public List<String> getResultFromFile(String inputFile) throws OutputNotReady, IOException {
+		File file = new File(inputFile + outputFileExtension);
+		if (!file.exists() || file.isDirectory()) {
+			throw new OutputNotReady("Output is not ready yet");
 		}
-		boolean correctInput;
-		for (String inputFile : inputFiles) {
-			correctInput = false;
-			for (String suffix : inputFileExtensions) {
-				if (inputFile.endsWith(suffix)) {
-					correctInput = true;
-				}
-			}
-			if (!correctInput) {
-				throw new IncorrectInputException("Input file " + inputFile + " does not have the required extension");
-			} else {
-				File file = new File(inputFile);
-				if (!file.exists() || file.isDirectory()) {
-					throw new IncorrectInputException("Input file " + inputFile + " does not exist");
-				}
-			}
-		}
+		return Files.readAllLines(file.toPath(), Charset.defaultCharset());
 	}
 
 	public String printParameters() {
@@ -68,5 +90,8 @@ public abstract class AnalysisPlugin {
 
 	protected abstract void setParameters();
 
-	public abstract String analyse(List<String> inputFiles, String outputFile) throws IOException, IncorrectInputException;
+	public String analyse(String inputFile, boolean force) throws IOException, IncorrectInputException, OutputAlreadyExists {
+		checkInputFiles(inputFile, force);
+		return "\nBeginning analysis: " + pluginKey + "\n";
+	}
 }

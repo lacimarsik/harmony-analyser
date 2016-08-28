@@ -47,6 +47,8 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		inputFileExtensions.add("-chromas.txt");
 		inputFileExtensions.add("-segmentation.txt");
 
+		outputFileExtension = "-report.txt";
+
 		parameters = new HashMap<>();
 		parameters.put("audibleThreshold", (float) 0.07);
 		parameters.put("maximumNumberOfChordTones", (float) 4.0);
@@ -58,18 +60,18 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 	/**
 	 * Analyzes the song: converts chroma + segmentation information to harmony complexity descriptors
 	 *
-	 * @param inputFiles [List<String>]
-	 *    chromaFile: name of the file containing chroma information (suffix: -chromas.txt)
-	 *    segmentationFile: name of the file containing segmentation information (suffix: -segmentation.txt)
-	 * @param outputFile [String] name of the file to write a report (recommended suffix: -report.txt)
+	 * @param inputFile [String] name of the WAV audio file
+	 *    These additional files are expected in the folder
+	 *    - chromaFile: name of the file containing chroma information (suffix: -chromas.txt)
+	 *    - segmentationFile: name of the file containing segmentation information (suffix: -segmentation.txt)
 	 */
 
-	public String analyse(List<String> inputFiles, String outputFile) throws IOException, IncorrectInputException {
-		String result = "";
+	public String analyse(String inputFile, boolean force) throws IOException, IncorrectInputException, OutputAlreadyExists {
+		String result = super.analyse(inputFile, force);
+		String outputFile = inputFile + outputFileExtension;
 
-		checkInputFiles(inputFiles);
-		String chromaFile = inputFiles.get(0);
-		String segmentationFile = inputFiles.get(1);
+		String chromaFile = inputFile + "-chromas.txt";
+		String segmentationFile = inputFile + "-segmentation.txt";
 
 		result += "Chroma file: " + chromaFile + "\n";
 		result += "Segmentation file: " + segmentationFile + "\n";

@@ -7,8 +7,6 @@ import org.harmony_analyser.application.*;
 import org.vamp_plugins.*;
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.util.*;
 
 /**
@@ -62,43 +60,14 @@ public class AudioAnalyser {
 		return getPlugin(pluginKey).printParameters();
 	}
 
-	public String runAnalysis(List<String> inputFiles, String outputFile, String pluginKey) throws LoadFailedException, AnalysisPlugin.IncorrectInputException, IOException {
+	public String runAnalysis(String inputFile, String pluginKey, boolean force) throws AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, IOException, LoadFailedException {
 		AnalysisPlugin plugin = getPlugin(pluginKey);
 
-		return plugin.analyse(inputFiles, outputFile);
+		return plugin.analyse(inputFile, force);
 	}
 
-	public List<String> getInputFileExtensions(String pluginKey) {
-		List<String> result = new ArrayList<>();
-		switch (pluginKey) {
-			case "nnls-chroma:nnls-chroma":
-				result.add("");
-				return result;
-			case "nnls-chroma:chordino":
-				result.add("");
-				return result;
-			case "harmanal:transition_complexity":
-				result.add("-chromas.txt");
-				result.add("-segmentation.txt");
-				return result;
-			default:
-				return null;
-		}
-	}
-
-	public String getOutputFileExtension(String pluginKey) {
-		switch (pluginKey) {
-			case "nnls-chroma:chordino":
-				return "-segmentation.txt";
-			case "harmanal:transition_complexity":
-				return "-report.txt";
-			default:
-				return "-default.txt";
-		}
-	}
-
-	public DrawPanel getDrawPanel(String outputFile, String pluginKey) throws IOException {
-		Map<Float, String> data = getDataFromOutput(outputFile, pluginKey);
+	public DrawPanel getDrawPanel(String inputFile, String pluginKey) throws IOException, LoadFailedException, AnalysisPlugin.OutputNotReady {
+		Map<Float, String> data = getDataFromOutput(inputFile, pluginKey);
 		switch (pluginKey) {
 			case "nnls-chroma:chordino":
 				return new SegmentationDrawPanel(data);
@@ -111,55 +80,52 @@ public class AudioAnalyser {
 
 	/* Private methods */
 
-	private Map<Float, String> getDataFromOutput(String outputFile, String pluginKey) throws IOException {
+	private Map<Float, String> getDataFromOutput(String inputFile, String pluginKey) throws IOException, LoadFailedException, AnalysisPlugin.OutputNotReady {
 		Map<Float, String> result = new HashMap<>();
-		File file = new File(outputFile);
-		if (!file.exists() || file.isDirectory()) {
-			throw new IOException("Output file is invalid");
-		} else {
-			List<String> linesList = Files.readAllLines(new File(outputFile).toPath(), Charset.defaultCharset());
-			switch (pluginKey) {
-				case "nnls-chroma:nnls-chroma":
-					// we do not visualize chroma files yet
-					break;
-				case "nnls-chroma:chordino":
 
-					break;
-				case "harmanal:transition_complexity":
-					Scanner sc = new Scanner(linesList.get(linesList.size() - 3));
-					sc.next(); // skip annotation
-					sc.next(); // skip annotation
-					sc.next(); // skip annotation
-					sc.next(); // skip annotation
-					String dataInString1 = new String();
-					if (sc.hasNextFloat()) {
-						dataInString1 = Float.toString(new Float(sc.nextFloat()));
-					}
-					Scanner sc2 = new Scanner(linesList.get(linesList.size() - 2));
-					sc2.next(); // skip annotation
-					sc2.next(); // skip annotation
-					sc2.next(); // skip annotation
-					sc2.next(); // skip annotation
-					String dataInString2 = new String();
-					if (sc2.hasNextFloat()) {
-						dataInString2 = Float.toString(new Float(sc2.nextFloat()));
-					}
-					Scanner sc3 = new Scanner(linesList.get(linesList.size() - 1));
-					sc3.next(); // skip annotation
-					sc3.next(); // skip annotation
-					sc3.next(); // skip annotation
-					sc3.next(); // skip annotation
-					String dataInString3 = new String();
-					if (sc3.hasNextFloat()) {
-						dataInString3 = Float.toString(new Float(sc3.nextFloat()));
-					}
+		List<String> linesList = getPlugin(pluginKey).getResultFromFile(inputFile);
+		switch (pluginKey) {
+			case "nnls-chroma:nnls-chroma":
+				// we do not visualize chroma files yet
+				break;
+			case "nnls-chroma:chordino":
 
-					result.put(new Float(0.0), dataInString1);
-					result.put(new Float(1.0), dataInString2);
-					result.put(new Float(2.0), dataInString3);
-					break;
-			}
+				break;
+			case "harmanal:transition_complexity":
+				Scanner sc = new Scanner(linesList.get(linesList.size() - 3));
+				sc.next(); // skip annotation
+				sc.next(); // skip annotation
+				sc.next(); // skip annotation
+				sc.next(); // skip annotation
+				String dataInString1 = "";
+				if (sc.hasNextFloat()) {
+					dataInString1 = Float.toString(sc.nextFloat());
+				}
+				Scanner sc2 = new Scanner(linesList.get(linesList.size() - 2));
+				sc2.next(); // skip annotation
+				sc2.next(); // skip annotation
+				sc2.next(); // skip annotation
+				sc2.next(); // skip annotation
+				String dataInString2 = "";
+				if (sc2.hasNextFloat()) {
+					dataInString2 = Float.toString(sc2.nextFloat());
+				}
+				Scanner sc3 = new Scanner(linesList.get(linesList.size() - 1));
+				sc3.next(); // skip annotation
+				sc3.next(); // skip annotation
+				sc3.next(); // skip annotation
+				sc3.next(); // skip annotation
+				String dataInString3 = "";
+				if (sc3.hasNextFloat()) {
+					dataInString3 = Float.toString(sc3.nextFloat());
+				}
+
+				result.put(0.0f, dataInString1);
+				result.put(1.0f, dataInString2);
+				result.put(2.0f, dataInString3);
+				break;
 		}
+
 		return result;
 	}
 

@@ -23,18 +23,16 @@ public class NNLSPluginTest {
 		nnls = new NNLSPlugin();
 		ClassLoader classLoader = getClass().getClassLoader();
 		testWavFile = new File(classLoader.getResource("test.wav").getPath());
-		inputFiles = new ArrayList<>();
-		inputFiles.add(testWavFile.toString());
 	}
 
 	@Test
 	public void shouldExtractChromas() {
 		try {
-			nnls.analyse(inputFiles, testWavFile.toString() + "-chromas.txt");
+			nnls.analyse(testWavFile.toString(), true);
 			BufferedReader reader = new BufferedReader(new FileReader(testWavFile.toString() + "-chromas.txt"));
 			String line = reader.readLine();
 			assertEquals(" 0.371519274: 0.3387495 0.48584637 1.1177865 0.70092547 0.9088075 0.10086642 1.0208882 0.56879604 0.7536442 1.5223277 0.08982226 0.535174 ", line);
-		} catch (IOException | AnalysisPlugin.IncorrectInputException e) {
+		} catch (IOException | AnalysisPlugin.IncorrectInputException | AnalysisPlugin.OutputAlreadyExists e) {
 			e.printStackTrace();
 		}
 	}

@@ -11,9 +11,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.nio.file.*;
 import java.nio.file.attribute.*;
-import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * GUI for HarmonyAnalyser
@@ -339,27 +337,11 @@ class HarmonyAnalyser extends JFrame {
 			}
 		});
 
-		extractChromasButton.addActionListener(actionEvent -> {
-			List<String> inputFilesExtensions = new ArrayList<>();
-			inputFilesExtensions.add("");
-			String outputFileExtension = "-chromas.txt";
-			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma", inputFilesExtensions, outputFileExtension);
-		});
+		extractChromasButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma"));
 
-		segmentTrackButton.addActionListener(actionEvent -> {
-			List<String> inputFilesExtensions = new ArrayList<>();
-			inputFilesExtensions.add("");
-			String outputFileExtension = "-segmentation.txt";
-			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino", inputFilesExtensions, outputFileExtension);
-		});
+		segmentTrackButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino"));
 
-		analyzeComplexityButton.addActionListener(actionEvent -> {
-			List<String> inputFilesExtensions = new ArrayList<>();
-			inputFilesExtensions.add("-chromas.txt");
-			inputFilesExtensions.add("-segmentation.txt");
-			String outputFileExtension = "-report.txt";
-			analyzeFolder(consoleTextPane, inputFolderTextField, "harmanal:transition_complexity", inputFilesExtensions, outputFileExtension);
-		});
+		analyzeComplexityButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "harmanal:transition_complexity"));
 
 		/* Visualization Tool - Initialization */
 
@@ -393,91 +375,13 @@ class HarmonyAnalyser extends JFrame {
 				return;
 			}
 
-			// Visualization 1
 			try {
-				List<String> inputFiles1 = new ArrayList<>();
-				String pluginKey1 = comboBoxOne.getSelectedItem().toString();
-				List<String> inputFileExtensions = new AudioAnalyser().getInputFileExtensions(pluginKey1);
-				for (String extension : inputFileExtensions) {
-					inputFiles1.add(selectFileTextField.getText() + extension);
-				}
-				String outputFileExtension = new AudioAnalyser().getOutputFileExtension(pluginKey1);
-				String outputFile = selectFileTextField.getText() + outputFileExtension;
-				File file = new File(outputFile);
-				if (!file.exists() || file.isDirectory()) {
-					visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles1, outputFile, pluginKey1));
-				} else {
-					visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nOutput file " + outputFile + " exists, skipping analysis ...");
-				}
+				File file = new File(selectFileTextField.getText());
 
-				drawPanel1.removeAll();
-				drawPanel1.setLayout(new GridLayout());
-				DrawPanel segmentationDrawPanel = new AudioAnalyser().getDrawPanel(outputFile, pluginKey1);
-				segmentationDrawPanel.setPreferredSize(drawPanel1.getPreferredSize());
-				segmentationDrawPanel.setBounds(drawPanel1.getBounds());
-				drawPanel1.add(segmentationDrawPanel);
-				drawPanel1.revalidate();
-			} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException | IOException e) {
-				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nERROR: " + e.getMessage());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			// Visualization 2
-			try {
-				List<String> inputFiles2 = new ArrayList<>();
-				String pluginKey2 = comboBoxTwo.getSelectedItem().toString();
-				List<String> inputFileExtensions = new AudioAnalyser().getInputFileExtensions(pluginKey2);
-				for (String extension : inputFileExtensions) {
-					inputFiles2.add(selectFileTextField.getText() + extension);
-				}
-				String outputFileExtension = new AudioAnalyser().getOutputFileExtension(pluginKey2);
-				String outputFile = selectFileTextField.getText() + outputFileExtension;
-				File file = new File(outputFile);
-				if (!file.exists() || file.isDirectory()) {
-					visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles2, outputFile, pluginKey2));
-				} else {
-					visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nOutput file " + outputFile + " exists, skipping analysis ...");
-				}
-
-				drawPanel2.removeAll();
-				drawPanel2.setLayout(new GridLayout());
-				DrawPanel complexityChartDrawPanel = new AudioAnalyser().getDrawPanel(outputFile, pluginKey2);
-				complexityChartDrawPanel.setPreferredSize(drawPanel2.getPreferredSize());
-				complexityChartDrawPanel.setBounds(drawPanel2.getBounds());
-				drawPanel2.add(complexityChartDrawPanel);
-				drawPanel2.revalidate();
-			} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException | IOException e) {
-				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nERROR: " + e.getMessage());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			// Visualization 3
-			try {
-				List<String> inputFiles3 = new ArrayList<>();
-				String pluginKey3 = comboBoxThree.getSelectedItem().toString();
-				List<String> inputFileExtensions = new AudioAnalyser().getInputFileExtensions(pluginKey3);
-				for (String extension : inputFileExtensions) {
-					inputFiles3.add(selectFileTextField.getText() + extension);
-				}
-				String outputFileExtension = new AudioAnalyser().getOutputFileExtension(pluginKey3);
-				String outputFile = selectFileTextField.getText() + outputFileExtension;
-				File file = new File(outputFile);
-				if (!file.exists() || file.isDirectory()) {
-					visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles3, outputFile, pluginKey3));
-				} else {
-					visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nOutput file " + outputFile + " exists, skipping analysis ...");
-				}
-
-				drawPanel3.removeAll();
-				drawPanel3.setLayout(new GridLayout());
-				DrawPanel segmentationDrawPanel2 = new AudioAnalyser().getDrawPanel(outputFile, pluginKey3);
-				segmentationDrawPanel2.setPreferredSize(drawPanel3.getPreferredSize());
-				segmentationDrawPanel2.setBounds(drawPanel3.getBounds());
-				drawPanel3.add(segmentationDrawPanel2);
-				drawPanel3.revalidate();
-			} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException | IOException e) {
+				performSelectedVisualization(comboBoxOne, drawPanel1, file.toString(), visualizationConsoleTextPane);
+				performSelectedVisualization(comboBoxTwo, drawPanel2, file.toString(), visualizationConsoleTextPane);
+				performSelectedVisualization(comboBoxThree, drawPanel3, file.toString(), visualizationConsoleTextPane);
+			} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException | AnalysisPlugin.OutputNotReady | IOException e) {
 				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nERROR: " + e.getMessage());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -510,7 +414,7 @@ class HarmonyAnalyser extends JFrame {
 
 	/* Chord Transition Tool - Handling methods */
 
-	private void analyzeFolder(JTextPane consolePane, JTextField inputFolderTextField, String pluginKey, List<String> inputFilesExtensions, String outputFileExtension) {
+	private void analyzeFolder(JTextPane consolePane, JTextField inputFolderTextField, String pluginKey) {
 		try {
 			consolePane.setText(consolePane.getText() + "\n\n> Analyzing input folder using plugin: " + pluginKey);
 			if (inputFolderTextField.getText().equals("")) {
@@ -531,11 +435,8 @@ class HarmonyAnalyser extends JFrame {
 						consolePane.setText(consolePane.getText() + "\nProcessing: " + file.toString() + "\n");
 
 						try {
-							List<String> inputFiles = inputFilesExtensions.stream().map(inputFileExtension -> file.toString() + inputFileExtension).collect(Collectors.toList());
-							String outputFile = file.toString() + outputFileExtension;
-							String analysisResult = new AudioAnalyser().runAnalysis(inputFiles, outputFile, pluginKey);
+							String analysisResult = new AudioAnalyser().runAnalysis(file.toString(), pluginKey, true);
 							consolePane.setText(consolePane.getText() + "\n" + analysisResult);
-							consolePane.setText(consolePane.getText() + "\nOutput saved in: " + outputFile + "\n");
 						} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
 							consolePane.setText(consolePane.getText() + "\nERROR: " + e.getMessage());
 						} catch (Exception e) {
@@ -553,6 +454,29 @@ class HarmonyAnalyser extends JFrame {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	/* Visualization Tool - Handling methods */
+
+	private void performSelectedVisualization(JComboBox comboBox, JPanel parentPanel, String inputFile, JTextPane consoleTextPane) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputNotReady, IOException {
+		String pluginKey = comboBox.getSelectedItem().toString();
+
+		try {
+			consoleTextPane.setText(consoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFile, pluginKey, false));
+		} catch (AnalysisPlugin.OutputAlreadyExists e) {
+			consoleTextPane.setText(consoleTextPane.getText() + "\nINFO: " + e.getMessage());
+		}
+		createGraph(parentPanel, inputFile, pluginKey);
+	}
+
+	private void createGraph(JPanel parentPanel, String inputFile, String pluginKey) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException {
+		parentPanel.removeAll();
+		parentPanel.setLayout(new GridLayout());
+		DrawPanel drawPanel = new AudioAnalyser().getDrawPanel(inputFile, pluginKey);
+		drawPanel.setPreferredSize(parentPanel.getPreferredSize());
+		drawPanel.setBounds(parentPanel.getBounds());
+		parentPanel.add(drawPanel);
+		parentPanel.revalidate();
 	}
 
 	/* Helpers */

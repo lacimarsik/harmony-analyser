@@ -23,20 +23,18 @@ public class ChordinoPluginTest {
 		chordino = new ChordinoPlugin();
 		ClassLoader classLoader = getClass().getClassLoader();
 		testWavFile = new File(classLoader.getResource("test.wav").getPath());
-		inputFiles = new ArrayList<>();
-		inputFiles.add(testWavFile.toString());
 	}
 
 	@Test
 	public void shouldExtractChords() {
 		try {
-			chordino.analyse(inputFiles, testWavFile.toString() + "-segmentation.txt");
+			chordino.analyse(testWavFile.toString(), true);
 			BufferedReader reader = new BufferedReader(new FileReader(testWavFile.toString() + "-segmentation.txt"));
 			String line = reader.readLine();
 			assertEquals(" 0.371519274: N", line);
 			line = reader.readLine();
 			assertEquals(" 0.464399092: B", line);
-		} catch (IOException | AnalysisPlugin.IncorrectInputException e) {
+		} catch (IOException | AnalysisPlugin.IncorrectInputException | AnalysisPlugin.OutputAlreadyExists e) {
 			e.printStackTrace();
 		}
 	}

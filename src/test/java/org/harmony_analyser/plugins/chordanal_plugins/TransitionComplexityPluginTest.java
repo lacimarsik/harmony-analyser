@@ -24,20 +24,15 @@ public class TransitionComplexityPluginTest {
 	public void setUp() {
 		ClassLoader classLoader = getClass().getClassLoader();
 		testWavFile = new File(classLoader.getResource("test.wav").getFile());
-		inputFilesVamp = new ArrayList<>();
-		inputFilesVamp.add(testWavFile.toString());
-		inputFilesComplexity = new ArrayList<>();
-		inputFilesComplexity.add(testWavFile.toString() + "-chromas.txt");
-		inputFilesComplexity.add(testWavFile.toString() + "-segmentation.txt");
 		testReportFixture = new File(classLoader.getResource("test-reportFixture.txt").getFile());
 	}
 
 	@Test
 	public void shouldCreateReport() {
 		try {
-			new NNLSPlugin().analyse(inputFilesVamp, testWavFile.toString() + "-chromas.txt");
-			new ChordinoPlugin().analyse(inputFilesVamp, testWavFile.toString() + "-segmentation.txt");
-			new TransitionComplexityPlugin().analyse(inputFilesComplexity, testWavFile.toString() + "-report.txt");
+			new NNLSPlugin().analyse(testWavFile.toString(), true);
+			new ChordinoPlugin().analyse(testWavFile.toString(), true);
+			new TransitionComplexityPlugin().analyse(testWavFile.toString(), true);
 			BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-report.txt"));
 			BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
 			StringBuilder reportString = new StringBuilder();
@@ -50,7 +45,7 @@ public class TransitionComplexityPluginTest {
 				fixtureString.append(line);
 			}
 			assertEquals(fixtureString.toString(), reportString.toString());
-		} catch (IOException | AnalysisPlugin.IncorrectInputException | PluginLoader.LoadFailedException e) {
+		} catch (IOException | AnalysisPlugin.IncorrectInputException | PluginLoader.LoadFailedException | AnalysisPlugin.OutputAlreadyExists e) {
 			e.printStackTrace();
 		}
 	}

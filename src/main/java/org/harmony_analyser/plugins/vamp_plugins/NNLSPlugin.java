@@ -55,7 +55,9 @@ public class NNLSPlugin extends VampPlugin {
 		blockSize = 16384;
 
 		inputFileExtensions = new ArrayList<>();
-		inputFileExtensions.add(".wav");
+		inputFileExtensions.add(""); // Plugin handles raw WAV files
+
+		outputFileExtension = "-chromas.txt";
 
 		parameters = new HashMap<>();
 		parameters.put("useNNLS", (float) 1);

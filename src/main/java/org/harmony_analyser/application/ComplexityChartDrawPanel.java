@@ -10,10 +10,12 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import java.awt.*;
 import java.util.*;
 
+@SuppressWarnings({"SameParameterValue", "UnusedParameters"})
+
 public class ComplexityChartDrawPanel extends DrawPanel {
-	double[] descriptorValues;
-	String[] descriptorDescriptions;
-	String[] descriptorShortcuts;
+	private final double[] descriptorValues;
+	private final String[] descriptorDescriptions;
+	private final String[] descriptorShortcuts;
 
 	public ComplexityChartDrawPanel(Map<Float, String> data) {
 		super();
@@ -22,8 +24,6 @@ public class ComplexityChartDrawPanel extends DrawPanel {
 		descriptorShortcuts = new String[3];
 		int i = 0;
 		for(Map.Entry<Float, String> entry : data.entrySet()) {
-			System.out.println(i);
-			System.out.println(Float.parseFloat(entry.getValue()));
 			descriptorValues[i] = (double) Float.parseFloat(entry.getValue());
 			i++;
 		}
