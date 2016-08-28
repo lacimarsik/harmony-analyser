@@ -43,11 +43,11 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		pluginKey = "harmanal:transition_complexity";
 		pluginName = "Transition Complexity";
 
-		inputFileExtensions = new ArrayList<>();
-		inputFileExtensions.add("-chromas.txt");
-		inputFileExtensions.add("-segmentation.txt");
+		inputFileSuffixes = new ArrayList<>();
+		inputFileSuffixes.add("-chromas.txt");
+		inputFileSuffixes.add("-segmentation.txt");
 
-		outputFileExtension = "-report.txt";
+		outputFileSuffixes = "-report.txt";
 
 		parameters = new HashMap<>();
 		parameters.put("audibleThreshold", (float) 0.07);
@@ -68,7 +68,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 
 	public String analyse(String inputFile, boolean force) throws IOException, IncorrectInputException, OutputAlreadyExists {
 		String result = super.analyse(inputFile, force);
-		String outputFile = inputFile + outputFileExtension;
+		String outputFile = inputFile + outputFileSuffixes;
 
 		String chromaFile = inputFile + "-chromas.txt";
 		String segmentationFile = inputFile + "-segmentation.txt";

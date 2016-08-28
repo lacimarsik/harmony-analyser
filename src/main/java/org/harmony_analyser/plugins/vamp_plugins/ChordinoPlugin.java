@@ -57,10 +57,10 @@ public class ChordinoPlugin extends VampPlugin {
 		outputNumber = 0;
 		blockSize = 16384;
 
-		inputFileExtensions = new ArrayList<>();
-		inputFileExtensions.add(""); // Plugin handles raw WAV files
+		inputFileSuffixes = new ArrayList<>();
+		inputFileSuffixes.add(""); // Plugin handles raw WAV files
 
-		outputFileExtension = "-segmentation.txt";
+		outputFileSuffixes = "-segmentation.txt";
 
 		parameters = new HashMap<>();
 		parameters.put("useNNLS", (float) 1.0);

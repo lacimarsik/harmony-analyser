@@ -12,8 +12,8 @@ import java.util.*;
 @SuppressWarnings("SameParameterValue")
 
 public abstract class AnalysisPlugin {
-	protected static List<String> inputFileExtensions;
-	protected static String outputFileExtension;
+	protected static List<String> inputFileSuffixes;
+	protected static String outputFileSuffixes;
 	protected String pluginKey;
 	protected String pluginName;
 	protected Map<String, Float> parameters;
@@ -43,11 +43,11 @@ public abstract class AnalysisPlugin {
 	@SuppressWarnings("WeakerAccess")
 
 	protected void checkInputFiles(String inputFile, boolean force) throws IncorrectInputException, OutputAlreadyExists {
-		File file = new File(inputFile + outputFileExtension);
+		File file = new File(inputFile + outputFileSuffixes);
 		if (file.exists() && !file.isDirectory() && !force) {
 			throw new OutputAlreadyExists("Output already exists");
 		}
-		for (String inputFileExtension : inputFileExtensions) {
+		for (String inputFileExtension : inputFileSuffixes) {
 			String fileName = inputFile + inputFileExtension;
 			File fileInput = new File(inputFile + inputFileExtension);
 			if (!fileInput.exists() || fileInput.isDirectory()) {
@@ -57,11 +57,11 @@ public abstract class AnalysisPlugin {
 	}
 
 	public List<String> getInputFileExtensions() {
-		return inputFileExtensions;
+		return inputFileSuffixes;
 	}
 
 	public List<String> getResultFromFile(String inputFile) throws OutputNotReady, IOException {
-		File file = new File(inputFile + outputFileExtension);
+		File file = new File(inputFile + outputFileSuffixes);
 		if (!file.exists() || file.isDirectory()) {
 			throw new OutputNotReady("Output is not ready yet");
 		}
@@ -73,9 +73,9 @@ public abstract class AnalysisPlugin {
 
 		result += "\n> Parameters for " + pluginName + "\n";
 		result += "identifier: " + pluginKey + "\n\n";
-		result += "number of inputs: " + inputFileExtensions.size() + "\n";
+		result += "number of inputs: " + inputFileSuffixes.size() + "\n";
 		result += "expected extensions:\n";
-		for (String suffix : inputFileExtensions) {
+		for (String suffix : inputFileSuffixes) {
 			result += "  " + suffix + "\n";
 		}
 		result += "\n";
