@@ -417,7 +417,7 @@ class HarmonyAnalyser extends JFrame {
 				segmentationDrawPanel.setBounds(drawPanel1.getBounds());
 				drawPanel1.add(segmentationDrawPanel);
 				drawPanel1.revalidate();
-			} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
+			} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException | IOException e) {
 				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nERROR: " + e.getMessage());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -447,7 +447,7 @@ class HarmonyAnalyser extends JFrame {
 				complexityChartDrawPanel.setBounds(drawPanel2.getBounds());
 				drawPanel2.add(complexityChartDrawPanel);
 				drawPanel2.revalidate();
-			} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
+			} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException | IOException e) {
 				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nERROR: " + e.getMessage());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -477,7 +477,7 @@ class HarmonyAnalyser extends JFrame {
 				segmentationDrawPanel2.setBounds(drawPanel3.getBounds());
 				drawPanel3.add(segmentationDrawPanel2);
 				drawPanel3.revalidate();
-			} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
+			} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException | IOException e) {
 				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nERROR: " + e.getMessage());
 			} catch (Exception e) {
 				e.printStackTrace();

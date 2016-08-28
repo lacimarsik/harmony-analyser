@@ -99,7 +99,7 @@ public class AudioAnalyser {
 		}
 	}
 
-	public DrawPanel getDrawPanel(String outputFile, String pluginKey) {
+	public DrawPanel getDrawPanel(String outputFile, String pluginKey) throws IOException {
 		List<Map<Float, String>> data = getDataFromOutput(outputFile, pluginKey);
 		switch (pluginKey) {
 			case "nnls-chroma:chordino":
