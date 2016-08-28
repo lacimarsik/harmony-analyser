@@ -9,7 +9,6 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 public class ComplexityChartDrawPanel extends DrawPanel {
 	double[] descriptorValues;
@@ -21,6 +20,13 @@ public class ComplexityChartDrawPanel extends DrawPanel {
 		descriptorValues = new double[3];
 		descriptorDescriptions = new String[3];
 		descriptorShortcuts = new String[3];
+		int i = 0;
+		for(Map.Entry<Float, String> entry : data.entrySet()) {
+			System.out.println(i);
+			System.out.println(Float.parseFloat(entry.getValue()));
+			descriptorValues[i] = (double) Float.parseFloat(entry.getValue());
+			i++;
+		}
 	}
 
 	/* Public / Package methods */

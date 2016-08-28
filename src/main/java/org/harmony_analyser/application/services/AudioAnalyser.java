@@ -11,8 +11,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.*;
 
-import static org.harmony_analyser.plugins.AnalysisPlugin.*;
-
 /**
  * Class to direct all levels of audio analysis, using available plugins
  */
@@ -130,17 +128,26 @@ public class AudioAnalyser {
 				case "harmanal:transition_complexity":
 					Scanner sc = new Scanner(linesList.get(linesList.size() - 3));
 					sc.next(); // skip annotation
+					sc.next(); // skip annotation
+					sc.next(); // skip annotation
+					sc.next(); // skip annotation
 					String dataInString1 = new String();
 					if (sc.hasNextFloat()) {
 						dataInString1 = Float.toString(new Float(sc.nextFloat()));
 					}
-					Scanner sc2 = new Scanner(linesList.get(linesList.size() - 3));
+					Scanner sc2 = new Scanner(linesList.get(linesList.size() - 2));
+					sc2.next(); // skip annotation
+					sc2.next(); // skip annotation
+					sc2.next(); // skip annotation
 					sc2.next(); // skip annotation
 					String dataInString2 = new String();
 					if (sc2.hasNextFloat()) {
 						dataInString2 = Float.toString(new Float(sc2.nextFloat()));
 					}
-					Scanner sc3 = new Scanner(linesList.get(linesList.size() - 3));
+					Scanner sc3 = new Scanner(linesList.get(linesList.size() - 1));
+					sc3.next(); // skip annotation
+					sc3.next(); // skip annotation
+					sc3.next(); // skip annotation
 					sc3.next(); // skip annotation
 					String dataInString3 = new String();
 					if (sc3.hasNextFloat()) {
