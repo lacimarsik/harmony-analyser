@@ -402,7 +402,13 @@ class HarmonyAnalyser extends JFrame {
 					inputFiles1.add(selectFileTextField.getText() + extension);
 				}
 				String outputFileExtension = new AudioAnalyser().getOutputFileExtension(pluginKey1);
-				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles1, selectFileTextField.getText() + outputFileExtension, pluginKey1));
+				String outputFile = selectFileTextField.getText() + outputFileExtension;
+				File file = new File(outputFile);
+				if (!file.exists() || file.isDirectory()) {
+					visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles1, outputFile, pluginKey1));
+				} else {
+					visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nOutput file " + outputFile + " exists, skipping analysis ...");
+				}
 
 				drawPanel1.removeAll();
 				drawPanel1.setLayout(new GridLayout());
@@ -426,7 +432,13 @@ class HarmonyAnalyser extends JFrame {
 					inputFiles2.add(selectFileTextField.getText() + extension);
 				}
 				String outputFileExtension = new AudioAnalyser().getOutputFileExtension(pluginKey2);
-				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles2, selectFileTextField.getText() + outputFileExtension, pluginKey2));
+				String outputFile = selectFileTextField.getText() + outputFileExtension;
+				File file = new File(outputFile);
+				if (!file.exists() || file.isDirectory()) {
+					visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles2, outputFile, pluginKey2));
+				} else {
+					visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nOutput file " + outputFile + " exists, skipping analysis ...");
+				}
 
 				drawPanel2.removeAll();
 				drawPanel2.setLayout(new GridLayout());
@@ -450,7 +462,13 @@ class HarmonyAnalyser extends JFrame {
 					inputFiles3.add(selectFileTextField.getText() + extension);
 				}
 				String outputFileExtension = new AudioAnalyser().getOutputFileExtension(pluginKey3);
-				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles3, selectFileTextField.getText() + outputFileExtension, pluginKey3));
+				String outputFile = selectFileTextField.getText() + outputFileExtension;
+				File file = new File(outputFile);
+				if (!file.exists() || file.isDirectory()) {
+					visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles3, outputFile, pluginKey3));
+				} else {
+					visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nOutput file " + outputFile + " exists, skipping analysis ...");
+				}
 
 				drawPanel3.removeAll();
 				drawPanel3.setLayout(new GridLayout());
