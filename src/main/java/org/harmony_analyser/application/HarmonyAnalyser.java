@@ -398,20 +398,12 @@ class HarmonyAnalyser extends JFrame {
 				List<String> inputFiles1 = new ArrayList<>();
 				inputFiles1.add(selectFileTextField.getText());
 				String pluginKey1 = comboBoxOne.getSelectedItem().toString();
-				String outputFileExtension = "-default.txt";
-				switch (pluginKey1) {
-					case "nnls-chroma:chordino":
-						outputFileExtension = "-segmentation.txt";
-						break;
-					case "harmanal:transition_complexity":
-						outputFileExtension = "-report.txt";
-						break;
-				}
+				String outputFileExtension = new AudioAnalyser().getOutputFileExtension(pluginKey1);
 				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles1, selectFileTextField.getText() + outputFileExtension, pluginKey1));
 
 				drawPanel1.removeAll();
 				drawPanel1.setLayout(new GridLayout());
-				DrawPanel segmentationDrawPanel = new SegmentationDrawPanel();
+				DrawPanel segmentationDrawPanel = new AudioAnalyser().getDrawPanel(pluginKey1);
 				segmentationDrawPanel.setPreferredSize(drawPanel1.getPreferredSize());
 				segmentationDrawPanel.setBounds(drawPanel1.getBounds());
 				drawPanel1.add(segmentationDrawPanel);
@@ -427,20 +419,12 @@ class HarmonyAnalyser extends JFrame {
 				List<String> inputFiles2 = new ArrayList<>();
 				inputFiles2.add(selectFileTextField.getText());
 				String pluginKey2 = comboBoxTwo.getSelectedItem().toString();
-				String outputFileExtension = "-default.txt";
-				switch (pluginKey2) {
-					case "nnls-chroma:chordino":
-						outputFileExtension = "-segmentation.txt";
-						break;
-					case "harmanal:transition_complexity":
-						outputFileExtension = "-report.txt";
-						break;
-				}
+				String outputFileExtension = new AudioAnalyser().getOutputFileExtension(pluginKey2);
 				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles2, selectFileTextField.getText() + outputFileExtension, pluginKey2));
 
 				drawPanel2.removeAll();
 				drawPanel2.setLayout(new GridLayout());
-				DrawPanel complexityChartDrawPanel = new ComplexityChartDrawPanel();
+				DrawPanel complexityChartDrawPanel = new AudioAnalyser().getDrawPanel(pluginKey2);
 				complexityChartDrawPanel.setPreferredSize(drawPanel2.getPreferredSize());
 				complexityChartDrawPanel.setBounds(drawPanel2.getBounds());
 				drawPanel2.add(complexityChartDrawPanel);
@@ -456,20 +440,12 @@ class HarmonyAnalyser extends JFrame {
 				List<String> inputFiles3 = new ArrayList<>();
 				inputFiles3.add(selectFileTextField.getText());
 				String pluginKey3 = comboBoxThree.getSelectedItem().toString();
-				String outputFileExtension = "-default.txt";
-				switch (pluginKey3) {
-					case "nnls-chroma:chordino":
-						outputFileExtension = "-segmentation.txt";
-						break;
-					case "harmanal:transition_complexity":
-						outputFileExtension = "-report.txt";
-						break;
-				}
+				String outputFileExtension = new AudioAnalyser().getOutputFileExtension(pluginKey3);
 				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFiles3, selectFileTextField.getText() + outputFileExtension, pluginKey3));
 
 				drawPanel3.removeAll();
 				drawPanel3.setLayout(new GridLayout());
-				DrawPanel segmentationDrawPanel2 = new SegmentationDrawPanel();
+				DrawPanel segmentationDrawPanel2 = new AudioAnalyser().getDrawPanel(pluginKey3);
 				segmentationDrawPanel2.setPreferredSize(drawPanel3.getPreferredSize());
 				segmentationDrawPanel2.setBounds(drawPanel3.getBounds());
 				drawPanel3.add(segmentationDrawPanel2);

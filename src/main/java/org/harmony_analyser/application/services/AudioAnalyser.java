@@ -3,6 +3,7 @@ package org.harmony_analyser.application.services;
 import org.harmony_analyser.plugins.*;
 import org.harmony_analyser.plugins.chordanal_plugins.*;
 import org.harmony_analyser.plugins.vamp_plugins.*;
+import org.harmony_analyser.application.*;
 import org.vamp_plugins.*;
 
 import java.io.IOException;
@@ -63,6 +64,28 @@ public class AudioAnalyser {
 		AnalysisPlugin plugin = getPlugin(pluginKey);
 
 		return plugin.analyse(inputFiles, outputFile);
+	}
+
+	public String getOutputFileExtension(String pluginKey) {
+		switch (pluginKey) {
+			case "nnls-chroma:chordino":
+				return "-segmentation.txt";
+			case "harmanal:transition_complexity":
+				return "-report.txt";
+			default:
+				return "-default.txt";
+		}
+	}
+
+	public DrawPanel getDrawPanel(String pluginKey) {
+		switch (pluginKey) {
+			case "nnls-chroma:chordino":
+				return new SegmentationDrawPanel();
+			case "harmanal:transition_complexity":
+				return new ComplexityChartDrawPanel();
+			default:
+				return null;
+		}
 	}
 
 	/* Private methods */
