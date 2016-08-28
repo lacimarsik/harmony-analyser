@@ -128,7 +128,24 @@ public class AudioAnalyser {
 
 					break;
 				case "harmanal:transition_complexity":
-
+					Scanner sc = new Scanner(linesList.get(linesList.size() - 3));
+					sc.next(); // skip annotation
+					String dataInString1 = new String();
+					if (sc.hasNextFloat()) {
+						dataInString1 = Float.toString(new Float(sc.nextFloat()));
+					}
+					Scanner sc = new Scanner(linesList.get(linesList.size() - 3));
+					sc.next(); // skip annotation
+					String dataInString2 = new String();
+					if (sc.hasNextFloat()) {
+						dataInString2 = Float.toString(new Float(sc.nextFloat()));
+					}
+					Scanner sc = new Scanner(linesList.get(linesList.size() - 3));
+					sc.next(); // skip annotation
+					String dataInString3 = new String();
+					if (sc.hasNextFloat()) {
+						dataInString3 = Float.toString(new Float(sc.nextFloat()));
+					}
 					break;
 			}
 		}
