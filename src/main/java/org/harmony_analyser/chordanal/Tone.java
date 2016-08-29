@@ -31,7 +31,7 @@ public class Tone {
 		return this.volume;
 	}
 
-	int getNumberMapped() {
+	public int getNumberMapped() {
 		return this.number % 12;
 	}
 

@@ -99,7 +99,7 @@ public class AudioAnalyser {
 
 	// gets String label for the line, after ':'
 	public static String getLabelFromLine(String line) {
-		return line.substring(line.lastIndexOf(':'));
+		return line.substring(line.lastIndexOf(':') + 2);
 	}
 
 	/* Private methods */

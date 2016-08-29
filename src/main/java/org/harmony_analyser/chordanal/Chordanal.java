@@ -245,7 +245,7 @@ public class Chordanal {
 		}
 	}
 
-	static Tone createToneFromRelativeName(String relativeName) {
+	public static Tone createToneFromRelativeName(String relativeName) {
 		Tone tone = createToneFromName(relativeName + "3");
 		if (tone == null) {
 			return null;

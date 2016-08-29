@@ -1,6 +1,7 @@
 package org.harmony_analyser.application;
 
 import org.harmony_analyser.application.services.*;
+import org.harmony_analyser.chordanal.*;
 import org.harmony_analyser.plugins.*;
 import org.harmony_analyser.plugins.vamp_plugins.*;
 import org.vamp_plugins.PluginLoader;
@@ -57,11 +58,36 @@ public class SegmentationDrawPanel extends DrawPanel {
 	/* Complet analysis */
 
 	private void drawChordSegmentation(Graphics g) {
-		for (Color color : palette) {
-			drawSegment(g, 0.077, color);
+		float maximalTimestamp = timestamps.get(timestamps.size() - 1);
+
+		cursor.setLocation(0, 0);
+		float previousTimestamp = timestamps.get(0);
+		float segmentSize;
+		String relativeToneName;
+		int i = 0;
+		for (float timestamp : timestamps) {
+			relativeToneName = labels.get(i).substring(0, Math.min(labels.get(i).length(), 2));
+			segmentSize = ((timestamp - previousTimestamp) / maximalTimestamp);
+			drawSegment(g, segmentSize, getColorForTone(relativeToneName));
+			previousTimestamp = timestamp;
+			i++;
 		}
 		cursor.setLocation(0, 0);
 	}
 
 	/* Analysis components */
+
+	private Color getColorForTone(String relativeToneName) {
+		String notAllowedCharacters = "mda/";
+		if ((relativeToneName.length() == 2) && ((Character.isDigit(relativeToneName.charAt(1)) || (notAllowedCharacters.contains(relativeToneName.substring(1,1)))))) {
+			relativeToneName = relativeToneName.substring(0,1);
+		}
+
+		Tone tone = Chordanal.createToneFromRelativeName(relativeToneName);
+		if (tone == null) {
+			return palette.get(12);
+		} else {
+			return palette.get(tone.getNumberMapped());
+		}
+	}
 }
