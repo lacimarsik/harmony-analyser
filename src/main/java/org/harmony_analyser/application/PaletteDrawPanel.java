@@ -39,7 +39,7 @@ public class PaletteDrawPanel extends DrawPanel {
 		}
 		Harmony chromaticScale = Chordanal.createHarmonyFromRelativeTones("C C# D D# E F F# G G# A A# B");
 		if (chromaticScale != null) {
-			cursor.setLocation(20, 0);
+			cursor.setLocation(0, 0);
 			int i = 0;
 			for (Color color : palette) {
 				if (i >= 12) {
@@ -65,8 +65,9 @@ public class PaletteDrawPanel extends DrawPanel {
 		int widthInPixels = (int) ((double) this.getWidth() * length);
 		int heightInPixels = (int) ((double) this.getHeight() / 2);
 
+		cursor.move((int) (cursor.getX() + (widthInPixels / 2)), (int) cursor.getY());
 		g.setColor(color);
 		g.drawString(note, (int) cursor.getX(), heightInPixels);
-		cursor.move((int) cursor.getX() + widthInPixels, heightInPixels);
+		cursor.move((int) (cursor.getX() + (widthInPixels / 2)), heightInPixels);
 	}
 }

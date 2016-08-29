@@ -25,7 +25,6 @@ public abstract class DrawPanel extends JPanel {
 		palette.remove(palette.size() - 1);
 		palette.add(new Color(0, 0, 0));
 		palette.add(new Color(150, 150, 150));
-		System.out.println(palette.size());
 	}
 
 	DrawPanel() {
