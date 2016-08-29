@@ -16,12 +16,20 @@ public abstract class DrawPanel extends JPanel {
 		cursor.setLocation(0, 0);
 	}
 
+	/* Exceptions */
+
+	public class CannotVisualize extends Exception {
+		CannotVisualize(String message) {
+			super(message);
+		}
+	}
+
 	/* Public / Package methods */
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 	}
 
-	abstract void getData(String inputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady;
+	abstract void getData(String inputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, CannotVisualize;
 }
 

@@ -11,6 +11,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @SuppressWarnings({"SameParameterValue", "UnusedParameters"})
 
@@ -19,7 +20,7 @@ public class ComplexityChartDrawPanel extends DrawPanel {
 	private final String[] descriptorDescriptions;
 	private final String[] descriptorShortcuts;
 
-	public ComplexityChartDrawPanel(String inputFile) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException {
+	public ComplexityChartDrawPanel(String inputFile) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException, CannotVisualize {
 		super();
 		descriptorValues = new double[3];
 		descriptorDescriptions = new String[3];
@@ -34,34 +35,30 @@ public class ComplexityChartDrawPanel extends DrawPanel {
 		drawComplexityColumnGraph(g, descriptorValues[0], descriptorValues[1], descriptorValues[2]);
 	}
 
-	void getData(String inputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady {
+	void getData(String inputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, CannotVisualize {
 		List<String> linesList = new TransitionComplexityPlugin().getResultFromFile(inputFile);
+
+		/* Plugin-specific parsing of the result */
 		Scanner sc = new Scanner(linesList.get(linesList.size() - 3));
-		sc.next(); // skip annotation
-		sc.next(); // skip annotation
-		sc.next(); // skip annotation
-		sc.next(); // skip annotation
-		String dataInString1 = "";
+		sc.skip(Pattern.compile("\\bAverage Transition Complexity \\(ATC\\):"));
 		if (sc.hasNextFloat()) {
 			descriptorValues[0] = (double) sc.nextFloat();
+		} else {
+			throw new CannotVisualize("Output did not have the required fields");
 		}
-		Scanner sc2 = new Scanner(linesList.get(linesList.size() - 2));
-		sc2.next(); // skip annotation
-		sc2.next(); // skip annotation
-		sc2.next(); // skip annotation
-		sc2.next(); // skip annotation
-		String dataInString2 = "";
-		if (sc2.hasNextFloat()) {
-			descriptorValues[1] = (double) sc2.nextFloat();
+		sc = new Scanner(linesList.get(linesList.size() - 2));
+		sc.skip(Pattern.compile("\\bAverage Chord Complexity \\(ACC\\):"));
+		if (sc.hasNextFloat()) {
+			descriptorValues[1] = (double) sc.nextFloat();
+		} else {
+			throw new CannotVisualize("Output did not have the required fields");
 		}
-		Scanner sc3 = new Scanner(linesList.get(linesList.size() - 1));
-		sc3.next(); // skip annotation
-		sc3.next(); // skip annotation
-		sc3.next(); // skip annotation
-		sc3.next(); // skip annotation
-		String dataInString3 = "";
-		if (sc3.hasNextFloat()) {
-			descriptorValues[2] = (double) sc3.nextFloat();
+		sc = new Scanner(linesList.get(linesList.size() - 1));
+		sc.skip(Pattern.compile("\\bRelative Transition Complexity \\(RTC\\):"));
+		if (sc.hasNextFloat()) {
+			descriptorValues[2] = (double) sc.nextFloat();
+		} else {
+			throw new CannotVisualize("Output did not have the required fields");
 		}
 	}
 

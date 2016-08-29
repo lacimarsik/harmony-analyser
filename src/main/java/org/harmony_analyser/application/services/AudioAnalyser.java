@@ -66,7 +66,7 @@ public class AudioAnalyser {
 		return plugin.analyse(inputFile, force);
 	}
 
-	public DrawPanel getDrawPanel(String inputFile, String pluginKey) throws IOException, LoadFailedException, AnalysisPlugin.OutputNotReady {
+	public DrawPanel getDrawPanel(String inputFile, String pluginKey) throws IOException, LoadFailedException, AnalysisPlugin.OutputNotReady, DrawPanel.CannotVisualize {
 		switch (pluginKey) {
 			case "nnls-chroma:chordino":
 				return new SegmentationDrawPanel(inputFile);

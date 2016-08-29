@@ -458,7 +458,7 @@ class HarmonyAnalyser extends JFrame {
 
 	/* Visualization Tool - Handling methods */
 
-	private void performSelectedVisualization(JComboBox comboBox, JPanel parentPanel, String inputFile, JTextPane consoleTextPane) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputNotReady, IOException {
+	private void performSelectedVisualization(JComboBox comboBox, JPanel parentPanel, String inputFile, JTextPane consoleTextPane) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputNotReady, DrawPanel.CannotVisualize, IOException {
 		String pluginKey = comboBox.getSelectedItem().toString();
 
 		try {
@@ -469,7 +469,7 @@ class HarmonyAnalyser extends JFrame {
 		createGraph(parentPanel, inputFile, pluginKey);
 	}
 
-	private void createGraph(JPanel parentPanel, String inputFile, String pluginKey) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException {
+	private void createGraph(JPanel parentPanel, String inputFile, String pluginKey) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, DrawPanel.CannotVisualize, IOException {
 		parentPanel.removeAll();
 		parentPanel.setLayout(new GridLayout());
 		DrawPanel drawPanel = new AudioAnalyser().getDrawPanel(inputFile, pluginKey);
