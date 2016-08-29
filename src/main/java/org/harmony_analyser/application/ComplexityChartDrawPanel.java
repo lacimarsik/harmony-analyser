@@ -4,6 +4,7 @@ import org.harmony_analyser.application.services.*;
 import org.harmony_analyser.plugins.*;
 import org.harmony_analyser.plugins.chordanal_plugins.*;
 import org.jfree.chart.*;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.*;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -96,6 +97,9 @@ public class ComplexityChartDrawPanel extends DrawPanel {
 		CategoryPlot categoryPlot = chart.getCategoryPlot();
 		categoryPlot.setRangeGridlinePaint(gridLinePaint);
 		categoryPlot.setBackgroundPaint(Color.WHITE);
+		CategoryPlot yPlot = chart.getCategoryPlot();
+		NumberAxis rangeAxis = (NumberAxis) yPlot.getRangeAxis();
+		rangeAxis.setRange(0.0, 4.0);
 		chart.getTitle().setFont(new Font("Sans", Font.PLAIN, 15));
 		this.removeAll();
 		ChartPanel chartPanel = new ChartPanel(chart, this.getWidth(), this.getHeight(), this.getWidth(), this.getHeight(), this.getWidth(), this.getHeight(), false, true, true, true, true, true);
