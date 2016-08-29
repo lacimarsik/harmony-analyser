@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 /**
  * Class to handle all static naming and structure analysis
  * 
- * version 1.2
+ * version 1.0
  */
 
 public class Chordanal {
