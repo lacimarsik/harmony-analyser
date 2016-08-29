@@ -20,7 +20,7 @@ public class ChordanalTest {
 
 	@Test
 	public void factoryMethodsShouldCreateEntities() {
-		assertEquals(Chordanal.createToneFromName("G4").getName(), "G4");
+		assertEquals(Chordanal.createToneFromName("Gb4").getName(), "F#4");
 		assertEquals(Chordanal.createToneFromRelativeName("G").getName(), "G3");
 		assertEquals(Chordanal.createHarmonyFromTones("C4 D4 E4 F4").getToneNames(), "C4 D4 E4 F4 ");
 		assertEquals(Chordanal.createHarmonyFromRelativeTones("C D E F").getToneNames(), "C3 D3 E3 F3 ");

@@ -44,18 +44,18 @@ public class Chordanal {
 
 		tonesNames = new DatabaseTable();
 
-		tonesNames.add("0;C;B#;Dbb");
-		tonesNames.add("1;C#;Db;B##");
-		tonesNames.add("2;D;C##;Ebb");
-		tonesNames.add("3;D#;Eb;Fbb");
-		tonesNames.add("4;E;Fb;D##");
-		tonesNames.add("5;F;E#;Gbb");
-		tonesNames.add("6;F#;Gb;E##");
-		tonesNames.add("7;G;F##;Abb");
-		tonesNames.add("8;G#;Ab");
-		tonesNames.add("9;A;G##;Bbb");
-		tonesNames.add("10;A#;Bb;Cbb");
-		tonesNames.add("11;B;Cb;A##");
+		tonesNames.add("0;C,B#,Dbb");
+		tonesNames.add("1;C#,Db,B##");
+		tonesNames.add("2;D,C##,Ebb");
+		tonesNames.add("3;D#,Eb,Fbb");
+		tonesNames.add("4;E,Fb,D##");
+		tonesNames.add("5;F,E#,Gbb");
+		tonesNames.add("6;F#,Gb,E##");
+		tonesNames.add("7;G,F##,Abb");
+		tonesNames.add("8;G#,Ab");
+		tonesNames.add("9;A,G##,Bbb");
+		tonesNames.add("10;A#,Bb,Cbb");
+		tonesNames.add("11;B,Cb,A##");
 
 		functionTable = new DatabaseTable();
 		functionTable.add("0;T");
