@@ -18,13 +18,11 @@ import java.util.regex.Pattern;
 public class ComplexityChartDrawPanel extends DrawPanel {
 	private final double[] descriptorValues;
 	private final String[] descriptorDescriptions;
-	private final String[] descriptorShortcuts;
 
 	public ComplexityChartDrawPanel(String inputFile) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException, CannotVisualize {
 		super();
 		descriptorValues = new double[3];
 		descriptorDescriptions = new String[3];
-		descriptorShortcuts = new String[3];
 		getData(inputFile);
 	}
 
@@ -68,16 +66,13 @@ public class ComplexityChartDrawPanel extends DrawPanel {
 
 	private void drawComplexityColumnGraph(Graphics g, double atc, double ahc, double rtc) {
 		descriptorValues[0] = atc;
-		descriptorShortcuts[0] = "ATC";
 		descriptorDescriptions[0] = "Avg. Transition Compl.";
 		descriptorValues[1] = ahc;
-		descriptorShortcuts[1] = "ACC";
 		descriptorDescriptions[1] = "Avg. Chord Compl.";
 		descriptorValues[2] = rtc;
-		descriptorShortcuts[2] = "RTC";
 		descriptorDescriptions[2] = "Rel. Transition Compl.";
 
-		drawColumnChart(g, descriptorValues, descriptorShortcuts, descriptorDescriptions, "Complexity results", "", "", Color.BLACK);
+		drawColumnChart(g, descriptorValues, descriptorDescriptions, "Complexity results", "", "", Color.BLACK);
 	}
 
 	/* Analysis components */
@@ -87,16 +82,15 @@ public class ComplexityChartDrawPanel extends DrawPanel {
 	 * @param g [Graphics] main Graphics object
 	 * @param descriptorValues [int[]] descriptor values to plot
 	 * @param descriptorDescriptions [String[]] descriptions of descriptors
-	 * @param descriptorShortcuts [String[]] names of descriptors
 	 * @param chartTitle [String] name of the chart
 	 * @param xAxisTitle [String] name of X axis
 	 * @param yAxisTitle [String] name of Y axis
 	 * @param gridLinePaint [Color] color of the line paint
 	 */
-	private void drawColumnChart(Graphics g, double[] descriptorValues, String[] descriptorShortcuts, String[] descriptorDescriptions, String chartTitle, String xAxisTitle, String yAxisTitle, Color gridLinePaint) {
+	private void drawColumnChart(Graphics g, double[] descriptorValues, String[] descriptorDescriptions, String chartTitle, String xAxisTitle, String yAxisTitle, Color gridLinePaint) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (int i = 0; i < descriptorValues.length; i++) {
-			dataset.setValue(descriptorValues[i], descriptorDescriptions[i], descriptorShortcuts[i]);
+			dataset.setValue(descriptorValues[i], descriptorDescriptions[i], "");
 		}
 		JFreeChart chart = ChartFactory.createBarChart(chartTitle, xAxisTitle, yAxisTitle,dataset, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot categoryPlot = chart.getCategoryPlot();

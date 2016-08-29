@@ -783,9 +783,9 @@
               <scrollpane id="1c02a" binding="visualizationConsoleScrollPane">
                 <constraints>
                   <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="1" hsize-policy="7" anchor="1" fill="1" indent="0" use-parent-layout="false">
-                    <minimum-size width="-1" height="30"/>
-                    <preferred-size width="-1" height="30"/>
-                    <maximum-size width="-1" height="30"/>
+                    <minimum-size width="-1" height="54"/>
+                    <preferred-size width="-1" height="54"/>
+                    <maximum-size width="-1" height="54"/>
                   </grid>
                 </constraints>
                 <properties/>
@@ -794,6 +794,9 @@
                   <component id="5a382" class="javax.swing.JTextPane" binding="visualizationConsoleTextPane">
                     <constraints/>
                     <properties>
+                      <maximumSize width="2147483647" height="54"/>
+                      <minimumSize width="70" height="54"/>
+                      <preferredSize width="282" height="54"/>
                       <text value="&gt; Choose plugins and run analysis"/>
                     </properties>
                   </component>
