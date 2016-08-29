@@ -67,67 +67,17 @@ public class AudioAnalyser {
 	}
 
 	public DrawPanel getDrawPanel(String inputFile, String pluginKey) throws IOException, LoadFailedException, AnalysisPlugin.OutputNotReady {
-		Map<Float, String> data = getDataFromOutput(inputFile, pluginKey);
 		switch (pluginKey) {
 			case "nnls-chroma:chordino":
-				return new SegmentationDrawPanel(data);
+				return new SegmentationDrawPanel(inputFile);
 			case "harmanal:transition_complexity":
-				return new ComplexityChartDrawPanel(data);
+				return new ComplexityChartDrawPanel(inputFile);
 			default:
 				return null;
 		}
 	}
 
 	/* Private methods */
-
-	private Map<Float, String> getDataFromOutput(String inputFile, String pluginKey) throws IOException, LoadFailedException, AnalysisPlugin.OutputNotReady {
-		Map<Float, String> result = new HashMap<>();
-
-		List<String> linesList = getPlugin(pluginKey).getResultFromFile(inputFile);
-		switch (pluginKey) {
-			case "nnls-chroma:nnls-chroma":
-				// we do not visualize chroma files yet
-				break;
-			case "nnls-chroma:chordino":
-
-				break;
-			case "harmanal:transition_complexity":
-				Scanner sc = new Scanner(linesList.get(linesList.size() - 3));
-				sc.next(); // skip annotation
-				sc.next(); // skip annotation
-				sc.next(); // skip annotation
-				sc.next(); // skip annotation
-				String dataInString1 = "";
-				if (sc.hasNextFloat()) {
-					dataInString1 = Float.toString(sc.nextFloat());
-				}
-				Scanner sc2 = new Scanner(linesList.get(linesList.size() - 2));
-				sc2.next(); // skip annotation
-				sc2.next(); // skip annotation
-				sc2.next(); // skip annotation
-				sc2.next(); // skip annotation
-				String dataInString2 = "";
-				if (sc2.hasNextFloat()) {
-					dataInString2 = Float.toString(sc2.nextFloat());
-				}
-				Scanner sc3 = new Scanner(linesList.get(linesList.size() - 1));
-				sc3.next(); // skip annotation
-				sc3.next(); // skip annotation
-				sc3.next(); // skip annotation
-				sc3.next(); // skip annotation
-				String dataInString3 = "";
-				if (sc3.hasNextFloat()) {
-					dataInString3 = Float.toString(sc3.nextFloat());
-				}
-
-				result.put(0.0f, dataInString1);
-				result.put(1.0f, dataInString2);
-				result.put(2.0f, dataInString3);
-				break;
-		}
-
-		return result;
-	}
 
 	private static AnalysisPlugin getPlugin(String pluginKey) throws LoadFailedException {
 		AnalysisPlugin plugin;

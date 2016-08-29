@@ -1,9 +1,13 @@
 package org.harmony_analyser.application;
 
+import org.harmony_analyser.application.services.AudioAnalyser;
+import org.harmony_analyser.plugins.AnalysisPlugin;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 
-public class DrawPanel extends JPanel {
+public abstract class DrawPanel extends JPanel {
 	final Point cursor; // cursor of drawing (moves from left to right on the canvas)
 
 	DrawPanel() {
@@ -17,5 +21,7 @@ public class DrawPanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 	}
+
+	abstract void getData(String inputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady;
 }
 

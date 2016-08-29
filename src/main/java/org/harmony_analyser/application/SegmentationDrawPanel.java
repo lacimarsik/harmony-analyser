@@ -1,13 +1,17 @@
 package org.harmony_analyser.application;
 
+import org.harmony_analyser.application.services.AudioAnalyser;
+import org.harmony_analyser.plugins.AnalysisPlugin;
+
 import java.awt.*;
-import java.util.*;
+import java.io.IOException;
 
 @SuppressWarnings({"SameParameterValue", "UnusedParameters"})
 
 public class SegmentationDrawPanel extends DrawPanel {
-	public SegmentationDrawPanel(Map<Float, String> data) {
+	public SegmentationDrawPanel(String inputFile) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException {
 		super();
+		getData(inputFile);
 	}
 
 	/* Public / Package methods */
@@ -15,6 +19,9 @@ public class SegmentationDrawPanel extends DrawPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		drawChordSegmentation(g);
+	}
+
+	void getData(String inputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady {
 	}
 
 	/* Private methods */

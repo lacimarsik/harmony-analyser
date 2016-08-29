@@ -1,14 +1,16 @@
 package org.harmony_analyser.application;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
+import org.harmony_analyser.application.services.*;
+import org.harmony_analyser.plugins.*;
+import org.harmony_analyser.plugins.chordanal_plugins.*;
+import org.jfree.chart.*;
+import org.jfree.chart.plot.*;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 @SuppressWarnings({"SameParameterValue", "UnusedParameters"})
 
@@ -17,16 +19,12 @@ public class ComplexityChartDrawPanel extends DrawPanel {
 	private final String[] descriptorDescriptions;
 	private final String[] descriptorShortcuts;
 
-	public ComplexityChartDrawPanel(Map<Float, String> data) {
+	public ComplexityChartDrawPanel(String inputFile) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException {
 		super();
 		descriptorValues = new double[3];
 		descriptorDescriptions = new String[3];
 		descriptorShortcuts = new String[3];
-		int i = 0;
-		for(Map.Entry<Float, String> entry : data.entrySet()) {
-			descriptorValues[i] = (double) Float.parseFloat(entry.getValue());
-			i++;
-		}
+		getData(inputFile);
 	}
 
 	/* Public / Package methods */
@@ -34,6 +32,37 @@ public class ComplexityChartDrawPanel extends DrawPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		drawComplexityColumnGraph(g, descriptorValues[0], descriptorValues[1], descriptorValues[2]);
+	}
+
+	void getData(String inputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady {
+		List<String> linesList = new TransitionComplexityPlugin().getResultFromFile(inputFile);
+		Scanner sc = new Scanner(linesList.get(linesList.size() - 3));
+		sc.next(); // skip annotation
+		sc.next(); // skip annotation
+		sc.next(); // skip annotation
+		sc.next(); // skip annotation
+		String dataInString1 = "";
+		if (sc.hasNextFloat()) {
+			descriptorValues[0] = (double) sc.nextFloat();
+		}
+		Scanner sc2 = new Scanner(linesList.get(linesList.size() - 2));
+		sc2.next(); // skip annotation
+		sc2.next(); // skip annotation
+		sc2.next(); // skip annotation
+		sc2.next(); // skip annotation
+		String dataInString2 = "";
+		if (sc2.hasNextFloat()) {
+			descriptorValues[1] = (double) sc2.nextFloat();
+		}
+		Scanner sc3 = new Scanner(linesList.get(linesList.size() - 1));
+		sc3.next(); // skip annotation
+		sc3.next(); // skip annotation
+		sc3.next(); // skip annotation
+		sc3.next(); // skip annotation
+		String dataInString3 = "";
+		if (sc3.hasNextFloat()) {
+			descriptorValues[2] = (double) sc3.nextFloat();
+		}
 	}
 
 	/* Private methods */
