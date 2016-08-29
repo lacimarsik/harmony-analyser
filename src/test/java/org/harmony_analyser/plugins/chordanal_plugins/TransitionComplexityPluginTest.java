@@ -1,5 +1,6 @@
 package org.harmony_analyser.plugins.chordanal_plugins;
 
+import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.AnalysisPlugin;
 import org.harmony_analyser.plugins.vamp_plugins.*;
 import org.vamp_plugins.*;
@@ -45,7 +46,7 @@ public class TransitionComplexityPluginTest {
 				fixtureString.append(line);
 			}
 			assertEquals(fixtureString.toString(), reportString.toString());
-		} catch (IOException | AnalysisPlugin.IncorrectInputException | PluginLoader.LoadFailedException | AnalysisPlugin.OutputAlreadyExists e) {
+		} catch (IOException | AnalysisPlugin.IncorrectInputException | PluginLoader.LoadFailedException | AnalysisPlugin.OutputAlreadyExists | Chroma.WrongChromaSize e) {
 			e.printStackTrace();
 		}
 	}

@@ -24,6 +24,9 @@ public class ComplexityChartDrawPanel extends DrawPanel {
 		super();
 		descriptorValues = new double[3];
 		descriptorDescriptions = new String[3];
+		descriptorDescriptions[0] = "Avg. Transition Compl.";
+		descriptorDescriptions[1] = "Avg. Chord Compl.";
+		descriptorDescriptions[2] = "Rel. Transition Compl.";
 		getData(inputFile);
 	}
 
@@ -31,7 +34,7 @@ public class ComplexityChartDrawPanel extends DrawPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		drawComplexityColumnGraph(g, descriptorValues[0], descriptorValues[1], descriptorValues[2]);
+		drawComplexityColumnGraph(g);
 	}
 
 	void getData(String inputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, CannotVisualize {
@@ -65,14 +68,7 @@ public class ComplexityChartDrawPanel extends DrawPanel {
 
 	/* Complet analysis */
 
-	private void drawComplexityColumnGraph(Graphics g, double atc, double ahc, double rtc) {
-		descriptorValues[0] = atc;
-		descriptorDescriptions[0] = "Avg. Transition Compl.";
-		descriptorValues[1] = ahc;
-		descriptorDescriptions[1] = "Avg. Chord Compl.";
-		descriptorValues[2] = rtc;
-		descriptorDescriptions[2] = "Rel. Transition Compl.";
-
+	private void drawComplexityColumnGraph(Graphics g) {
 		drawColumnChart(g, descriptorValues, descriptorDescriptions, "Complexity results", "", "", Color.BLACK);
 	}
 
@@ -93,7 +89,7 @@ public class ComplexityChartDrawPanel extends DrawPanel {
 		for (int i = 0; i < descriptorValues.length; i++) {
 			dataset.setValue(descriptorValues[i], descriptorDescriptions[i], "");
 		}
-		JFreeChart chart = ChartFactory.createBarChart(chartTitle, xAxisTitle, yAxisTitle,dataset, PlotOrientation.VERTICAL, true, true, true);
+		JFreeChart chart = ChartFactory.createBarChart(chartTitle, xAxisTitle, yAxisTitle, dataset, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot categoryPlot = chart.getCategoryPlot();
 		categoryPlot.setRangeGridlinePaint(gridLinePaint);
 		categoryPlot.setBackgroundPaint(Color.WHITE);

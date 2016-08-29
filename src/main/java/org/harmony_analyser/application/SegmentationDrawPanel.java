@@ -14,8 +14,8 @@ import java.util.List;
 @SuppressWarnings({"SameParameterValue", "UnusedParameters"})
 
 public class SegmentationDrawPanel extends DrawPanel {
-	private List<Float> timestamps;
-	private List<String> labels;
+	private final List<Float> timestamps;
+	private final List<String> labels;
 
 	public SegmentationDrawPanel(String inputFile) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException, PluginLoader.LoadFailedException, CannotVisualize {
 		super();

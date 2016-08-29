@@ -7,13 +7,11 @@ import org.vamp_plugins.PluginLoader;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings({"SameParameterValue", "UnusedParameters"})
 
 public class PaletteDrawPanel extends DrawPanel {
-	public PaletteDrawPanel(String inputFile) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException, PluginLoader.LoadFailedException, CannotVisualize {
+	public PaletteDrawPanel(String inputFile) {
 		super();
 	}
 

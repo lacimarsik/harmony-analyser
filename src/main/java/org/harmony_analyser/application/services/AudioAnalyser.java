@@ -1,7 +1,9 @@
 package org.harmony_analyser.application.services;
 
+import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.*;
 import org.harmony_analyser.plugins.chordanal_plugins.*;
+import org.harmony_analyser.plugins.chromanal_plugins.*;
 import org.harmony_analyser.plugins.vamp_plugins.*;
 import org.harmony_analyser.application.*;
 import org.vamp_plugins.*;
@@ -23,12 +25,14 @@ public class AudioAnalyser {
 	private static final String[] AVAILABLE_PLUGINS = new String[] {
 		"nnls-chroma:nnls-chroma",
 		"nnls-chroma:chordino",
-		"harmanal:transition_complexity"
+		"harmanal:transition_complexity",
+		"chromanal:chroma_complexity_simple"
 	};
 
 	private static final String[] VISUAL_PLUGINS = new String[] {
 		"nnls-chroma:chordino",
-		"harmanal:transition_complexity"
+		"harmanal:transition_complexity",
+		"chromanal:chroma_complexity_simple"
 	};
 
 	private static final String[] STATIC_VISUALIZATIONS = new String[] {
@@ -67,7 +71,7 @@ public class AudioAnalyser {
 		return getPlugin(pluginKey).printParameters();
 	}
 
-	public String runAnalysis(String inputFile, String pluginKey, boolean force) throws AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, IOException, LoadFailedException {
+	public String runAnalysis(String inputFile, String pluginKey, boolean force) throws AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, IOException, LoadFailedException, Chroma.WrongChromaSize {
 		if (Arrays.asList(STATIC_VISUALIZATIONS).contains(pluginKey)) {
 			return "\nPerforming static visualization: (" + pluginKey + ")\n";
 		} else {
@@ -84,6 +88,8 @@ public class AudioAnalyser {
 				return new PaletteDrawPanel(inputFile);
 			case "harmanal:transition_complexity":
 				return new ComplexityChartDrawPanel(inputFile);
+			case "chromanal:chroma_complexity_simple":
+				return new ChromaDrawPanel(inputFile);
 			default:
 				return null;
 		}
@@ -120,6 +126,9 @@ public class AudioAnalyser {
 					break;
 				case "harmanal:transition_complexity":
 					plugin = new TransitionComplexityPlugin();
+					break;
+				case "chromanal:chroma_complexity_simple":
+					plugin = new ChromaComplexitySimplePlugin();
 					break;
 				default:
 					throw new LoadFailedException("Plugin with key " + pluginKey + " is not available");

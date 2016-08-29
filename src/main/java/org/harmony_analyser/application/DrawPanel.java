@@ -9,6 +9,8 @@ import java.awt.*;
 import java.io.*;
 import java.util.*;
 
+@SuppressWarnings("SameParameterValue")
+
 public abstract class DrawPanel extends JPanel {
 	final Point cursor; // cursor of drawing (moves from left to right on the canvas)
 	static final java.util.List<Color> palette;
@@ -47,7 +49,7 @@ public abstract class DrawPanel extends JPanel {
 		super.paintComponent(g);
 	}
 
-	abstract void getData(String inputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, CannotVisualize, PluginLoader.LoadFailedException;
+	abstract void getData(String inputFile) throws IOException, AnalysisPlugin.OutputNotReady, CannotVisualize, PluginLoader.LoadFailedException, AudioAnalyser.LoadFailedException;
 
 	/* Analysis Components */
 

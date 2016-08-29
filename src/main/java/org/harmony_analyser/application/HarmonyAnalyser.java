@@ -2,6 +2,7 @@ package org.harmony_analyser.application;
 
 import org.harmony_analyser.application.services.*;
 import org.harmony_analyser.chordanal.*;
+import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.AnalysisPlugin;
 import org.vamp_plugins.PluginLoader;
 
@@ -110,6 +111,7 @@ class HarmonyAnalyser extends JFrame {
 	private JPanel drawPanel3;
 	private JTextPane visualizationConsoleTextPane;
 	private JScrollPane visualizationConsoleScrollPane;
+	private JButton chromaComplexityButton;
 	private JFileChooser fileChooser;
 
 	private Harmony harmony1,harmony2 = null;
@@ -328,6 +330,14 @@ class HarmonyAnalyser extends JFrame {
 			}
 		});
 
+		chromaComplexityButton.addActionListener(actionEvent -> {
+			try {
+				consoleTextPane.setText(consoleTextPane.getText() + AudioAnalyser.printParameters("chromanal:chroma_complexity_simple"));
+			} catch (AudioAnalyser.LoadFailedException e) {
+				e.printStackTrace();
+			}
+		});
+
 		browseButton.addActionListener(actionEvent -> {
 			fileChooser = new JFileChooser();
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -459,7 +469,7 @@ class HarmonyAnalyser extends JFrame {
 
 	/* Visualization Tool - Handling methods */
 
-	private void performSelectedVisualization(JComboBox comboBox, JPanel parentPanel, String inputFile, JTextPane consoleTextPane) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputNotReady, DrawPanel.CannotVisualize, IOException, PluginLoader.LoadFailedException {
+	private void performSelectedVisualization(JComboBox comboBox, JPanel parentPanel, String inputFile, JTextPane consoleTextPane) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputNotReady, DrawPanel.CannotVisualize, IOException, PluginLoader.LoadFailedException, Chroma.WrongChromaSize {
 		String pluginKey = comboBox.getSelectedItem().toString();
 
 		try {

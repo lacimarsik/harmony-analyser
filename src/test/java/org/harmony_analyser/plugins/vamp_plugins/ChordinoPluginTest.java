@@ -1,5 +1,6 @@
 package org.harmony_analyser.plugins.vamp_plugins;
 
+import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.*;
 import org.junit.*;
 import java.io.*;
@@ -34,7 +35,7 @@ public class ChordinoPluginTest {
 			assertEquals(" 0.371519274: N", line);
 			line = reader.readLine();
 			assertEquals(" 0.464399092: B", line);
-		} catch (IOException | AnalysisPlugin.IncorrectInputException | AnalysisPlugin.OutputAlreadyExists e) {
+		} catch (IOException | AnalysisPlugin.IncorrectInputException | AnalysisPlugin.OutputAlreadyExists | Chroma.WrongChromaSize e) {
 			e.printStackTrace();
 		}
 	}

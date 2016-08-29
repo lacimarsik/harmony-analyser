@@ -1,5 +1,6 @@
 package org.harmony_analyser.application.services;
 
+import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.AnalysisPlugin;
 import org.junit.*;
 
@@ -25,7 +26,7 @@ public class AudioAnalyserTest {
 	}
 
 	@Test(expected = AnalysisPlugin.IncorrectInputException.class)
-	public void shouldRunAnalysis() throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists {
+	public void shouldRunAnalysis() throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		audioAnalyser.runAnalysis(inputFile, "harmanal:transition_complexity", true);
 	}
 }

@@ -1,5 +1,6 @@
 package org.harmony_analyser.plugins.vamp_plugins;
 
+import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.*;
 import org.vamp_plugins.*;
 
@@ -173,7 +174,7 @@ public class VampPlugin extends AnalysisPlugin {
 	 * @param inputFile [String] name of the WAV audio file
 	 */
 
-	public String analyse(String inputFile, boolean force) throws IOException, IncorrectInputException, OutputAlreadyExists {
+	public String analyse(String inputFile, boolean force) throws IOException, IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
 		String result = super.analyse(inputFile, force);
 		String outputFile = inputFile + outputFileSuffix;
 

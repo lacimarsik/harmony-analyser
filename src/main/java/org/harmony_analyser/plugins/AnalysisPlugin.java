@@ -1,5 +1,7 @@
 package org.harmony_analyser.plugins;
 
+import org.harmony_analyser.chromanal.Chroma;
+
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -90,8 +92,37 @@ public abstract class AnalysisPlugin {
 
 	protected abstract void setParameters();
 
-	public String analyse(String inputFile, boolean force) throws IOException, IncorrectInputException, OutputAlreadyExists {
+	public String analyse(String inputFile, boolean force) throws IOException, IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
 		checkInputFiles(inputFile, force);
 		return "\nBeginning analysis: " + pluginKey + "\n";
+	}
+
+	/* Helpers */
+
+	// Read chroma information from the line of String
+	protected float[] getChromaFromLine(String line) throws IncorrectInputException {
+		float[] result = new float[12];
+		Scanner sc = new Scanner(line);
+		sc.next(); // skip timestamp
+		for (int i = 0; i < 12; i++) {
+			if (sc.hasNextFloat()) {
+				result[i] = sc.nextFloat();
+			} else {
+				throw new IncorrectInputException("Chroma information is invalid.");
+			}
+		}
+		return result;
+	}
+
+	// Shifts chroma a step semitones up
+	protected float[] shiftChroma(float[] chroma, int step) {
+		float[] result = new float[12];
+		if (step < 0) {
+			step = 12 - step;
+		}
+		for (int i = 0; i < 12; i++) {
+			result[i] = chroma[(i + step) % 12];
+		}
+		return result;
 	}
 }
