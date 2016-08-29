@@ -111,7 +111,7 @@ class HarmonyAnalyser extends JFrame {
 	private JPanel drawPanel3;
 	private JTextPane visualizationConsoleTextPane;
 	private JScrollPane visualizationConsoleScrollPane;
-	private JButton chromaComplexityButton;
+	private JButton chromaSimpleButton;
 	private JFileChooser fileChooser;
 
 	private Harmony harmony1,harmony2 = null;
@@ -330,7 +330,7 @@ class HarmonyAnalyser extends JFrame {
 			}
 		});
 
-		chromaComplexityButton.addActionListener(actionEvent -> {
+		chromaSimpleButton.addActionListener(actionEvent -> {
 			try {
 				consoleTextPane.setText(consoleTextPane.getText() + AudioAnalyser.printParameters("chromanal:chroma_complexity_simple"));
 			} catch (AudioAnalyser.LoadFailedException e) {
