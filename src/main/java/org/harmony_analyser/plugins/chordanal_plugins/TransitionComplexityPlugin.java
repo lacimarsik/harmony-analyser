@@ -1,5 +1,6 @@
 package org.harmony_analyser.plugins.chordanal_plugins;
 
+import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.plugins.*;
 import org.harmony_analyser.chordanal.*;
 
@@ -8,6 +9,8 @@ import java.nio.charset.*;
 import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.harmony_analyser.application.services.AudioAnalyser.*;
 
 /**
  * Plugin for high-level audio analysis using chroma / chord transcription input, based on Chordanal model
@@ -82,7 +85,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		List<Float> segmentationTimestampList = new ArrayList<>();
 
 		// 1. Get timestamps from the segmentation file
-		segmentationTimestampList.addAll(segmentationLinesList.stream().map(this::getTimestampFromLine).collect(Collectors.toList()));
+		segmentationTimestampList.addAll(segmentationLinesList.stream().map(AudioAnalyser::getTimestampFromLine).collect(Collectors.toList()));
 
 		float chromaTimestamp;
 		float[] chroma ;
@@ -235,12 +238,6 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 	}
 
 	/* Private methods */
-
-	// gets timestamp from the first word in the line, before ':'
-	private float getTimestampFromLine(String line) {
-		String stringTimestamp = line.substring(0, line.lastIndexOf(':'));
-		return Float.parseFloat(stringTimestamp);
-	}
 
 	// averages multiple chromas from vector of their sum into one chroma
 	private float[] averageChroma(float[] chromaSums, int countChromas) {

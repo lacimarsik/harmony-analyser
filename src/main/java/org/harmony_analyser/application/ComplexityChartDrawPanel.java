@@ -34,7 +34,7 @@ public class ComplexityChartDrawPanel extends DrawPanel {
 	}
 
 	void getData(String inputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, CannotVisualize {
-		List<String> linesList = new TransitionComplexityPlugin().getResultFromFile(inputFile);
+		List<String> linesList = new TransitionComplexityPlugin().getResultForInputFile(inputFile);
 
 		/* Plugin-specific parsing of the result */
 		Scanner sc = new Scanner(linesList.get(linesList.size() - 3));

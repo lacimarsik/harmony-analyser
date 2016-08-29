@@ -60,7 +60,7 @@ public abstract class AnalysisPlugin {
 		return inputFileSuffixes;
 	}
 
-	public List<String> getResultFromFile(String inputFile) throws OutputNotReady, IOException {
+	public List<String> getResultForInputFile(String inputFile) throws OutputNotReady, IOException {
 		File file = new File(inputFile + outputFileSuffix);
 		if (!file.exists() || file.isDirectory()) {
 			throw new OutputNotReady("Output is not ready yet");

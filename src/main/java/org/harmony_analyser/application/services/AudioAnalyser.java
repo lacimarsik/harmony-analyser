@@ -31,10 +31,17 @@ public class AudioAnalyser {
 		"harmanal:transition_complexity"
 	};
 
+	private static final String[] STATIC_VISUALIZATIONS = new String[] {
+		"chord_palette"
+	};
+
 	/* Public / Package methods */
 
 	public static String[] getVisualPlugins() {
-		return VISUAL_PLUGINS;
+		String[] all_visualizations = new String[VISUAL_PLUGINS.length + STATIC_VISUALIZATIONS.length];
+		System.arraycopy(VISUAL_PLUGINS, 0, all_visualizations, 0, VISUAL_PLUGINS.length);
+		System.arraycopy(STATIC_VISUALIZATIONS, 0, all_visualizations, VISUAL_PLUGINS.length, STATIC_VISUALIZATIONS.length);
+		return all_visualizations;
 	}
 
 	public static String printPlugins() {
@@ -61,20 +68,38 @@ public class AudioAnalyser {
 	}
 
 	public String runAnalysis(String inputFile, String pluginKey, boolean force) throws AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, IOException, LoadFailedException {
-		AnalysisPlugin plugin = getPlugin(pluginKey);
-
-		return plugin.analyse(inputFile, force);
+		if (Arrays.asList(STATIC_VISUALIZATIONS).contains(pluginKey)) {
+			return "\nPerforming static visualization: (" + pluginKey + ")\n";
+		} else {
+			AnalysisPlugin plugin = getPlugin(pluginKey);
+			return plugin.analyse(inputFile, force);
+		}
 	}
 
-	public DrawPanel getDrawPanel(String inputFile, String pluginKey) throws IOException, LoadFailedException, AnalysisPlugin.OutputNotReady, DrawPanel.CannotVisualize {
+	public DrawPanel getDrawPanel(String inputFile, String pluginKey) throws IOException, LoadFailedException, AnalysisPlugin.OutputNotReady, DrawPanel.CannotVisualize, PluginLoader.LoadFailedException {
 		switch (pluginKey) {
 			case "nnls-chroma:chordino":
 				return new SegmentationDrawPanel(inputFile);
+			case "chord_palette":
+				return new PaletteDrawPanel(inputFile);
 			case "harmanal:transition_complexity":
 				return new ComplexityChartDrawPanel(inputFile);
 			default:
 				return null;
 		}
+	}
+
+	/* Helpers */
+
+	// gets timestamp from the first word in the line, before ':'
+	public static float getTimestampFromLine(String line) {
+		String stringTimestamp = line.substring(0, line.lastIndexOf(':'));
+		return Float.parseFloat(stringTimestamp);
+	}
+
+	// gets String label for the line, after ':'
+	public static String getLabelFromLine(String line) {
+		return line.substring(line.lastIndexOf(':'));
 	}
 
 	/* Private methods */

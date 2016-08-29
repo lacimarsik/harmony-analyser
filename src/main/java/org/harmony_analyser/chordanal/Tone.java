@@ -47,7 +47,7 @@ public class Tone {
 		return Chordanal.getToneName(this);
 	}
 
-	String getNameMapped() {
+	public String getNameMapped() {
 		return Chordanal.getToneNameMapped(this);
 	}
 }
