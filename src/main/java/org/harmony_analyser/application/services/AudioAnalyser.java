@@ -26,13 +26,15 @@ public class AudioAnalyser {
 		"nnls-chroma:nnls-chroma",
 		"nnls-chroma:chordino",
 		"harmanal:transition_complexity",
-		"chromanal:chroma_complexity_simple"
+		"chromanal:chroma_complexity_simple",
+		"chromanal:chroma_complexity_tonal"
 	};
 
 	private static final String[] VISUAL_PLUGINS = new String[] {
 		"nnls-chroma:chordino",
 		"harmanal:transition_complexity",
-		"chromanal:chroma_complexity_simple"
+		"chromanal:chroma_complexity_simple",
+		"chromanal:chroma_complexity_tonal"
 	};
 
 	private static final String[] STATIC_VISUALIZATIONS = new String[] {
@@ -89,7 +91,9 @@ public class AudioAnalyser {
 			case "harmanal:transition_complexity":
 				return new ComplexityChartDrawPanel(inputFile);
 			case "chromanal:chroma_complexity_simple":
-				return new ChromaDrawPanel(inputFile);
+				return new ChromaDrawPanel(inputFile, "Simple");
+			case "chromanal:chroma_complexity_tonal":
+				return new ChromaDrawPanel(inputFile, "Tonal");
 			default:
 				return null;
 		}
@@ -129,6 +133,9 @@ public class AudioAnalyser {
 					break;
 				case "chromanal:chroma_complexity_simple":
 					plugin = new ChromaComplexitySimplePlugin();
+					break;
+				case "chromanal:chroma_complexity_tonal":
+					plugin = new ChromaComplexityTonalPlugin();
 					break;
 				default:
 					throw new LoadFailedException("Plugin with key " + pluginKey + " is not available");

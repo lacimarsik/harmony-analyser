@@ -18,11 +18,13 @@ import java.util.List;
 public class ChromaDrawPanel extends DrawPanel {
 	private final List<Float> timestamps;
 	private final List<Float> values;
+	private final String type;
 
-	public ChromaDrawPanel(String inputFile) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException, CannotVisualize {
+	public ChromaDrawPanel(String inputFile, String type) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException, CannotVisualize {
 		super();
 		timestamps = new ArrayList<>();
 		values = new ArrayList<>();
+		this.type = type;
 		getData(inputFile);
 	}
 
@@ -34,7 +36,15 @@ public class ChromaDrawPanel extends DrawPanel {
 	}
 
 	void getData(String inputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, CannotVisualize {
-		List<String> linesList = new ChromaComplexitySimplePlugin().getResultForInputFile(inputFile);
+		List<String> linesList = new ArrayList<>();
+		switch (type) {
+			case "Simple":
+				linesList = new ChromaComplexitySimplePlugin().getResultForInputFile(inputFile);
+				break;
+			case "Tonal":
+				linesList = new ChromaComplexityTonalPlugin().getResultForInputFile(inputFile);
+				break;
+		}
 
 		float timestamp, value;
 
@@ -56,7 +66,7 @@ public class ChromaDrawPanel extends DrawPanel {
 	/* Complet analysis */
 
 	private void drawChromaComplexityGraph(Graphics g) {
-		drawLineChart(g, "Chroma Complexity Simple", "", "", Color.BLACK);
+		drawLineChart(g, "Chroma Complexity " + type, "", "", Color.BLACK);
 	}
 
 	/* Analysis components */

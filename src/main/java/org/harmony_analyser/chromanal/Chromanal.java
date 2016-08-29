@@ -15,5 +15,13 @@ public class Chromanal {
 		return sum;
 	}
 
+	public static float getChromaComplexityTonal(Chroma chroma1, Chroma chroma2) {
+		float sum = 0;
+		for (int i = 0; i < CHROMA_LENGTH; i++) {
+			sum += Math.abs(chroma1.values[i] - chroma2.values[i]);
+		}
+		return sum;
+	}
+
 	/* Private methods */
 }

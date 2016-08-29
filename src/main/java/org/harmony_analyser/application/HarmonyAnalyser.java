@@ -112,6 +112,7 @@ class HarmonyAnalyser extends JFrame {
 	private JTextPane visualizationConsoleTextPane;
 	private JScrollPane visualizationConsoleScrollPane;
 	private JButton chromaSimpleButton;
+	private JButton chromaTonalButton;
 	private JFileChooser fileChooser;
 
 	private Harmony harmony1,harmony2 = null;
@@ -333,6 +334,14 @@ class HarmonyAnalyser extends JFrame {
 		chromaSimpleButton.addActionListener(actionEvent -> {
 			try {
 				consoleTextPane.setText(consoleTextPane.getText() + AudioAnalyser.printParameters("chromanal:chroma_complexity_simple"));
+			} catch (AudioAnalyser.LoadFailedException e) {
+				e.printStackTrace();
+			}
+		});
+
+		chromaTonalButton.addActionListener(actionEvent -> {
+			try {
+				consoleTextPane.setText(consoleTextPane.getText() + AudioAnalyser.printParameters("chromanal:chroma_complexity_tonal"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}

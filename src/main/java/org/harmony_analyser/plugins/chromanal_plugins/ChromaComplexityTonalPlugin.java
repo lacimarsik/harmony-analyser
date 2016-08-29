@@ -1,20 +1,26 @@
 package org.harmony_analyser.plugins.chromanal_plugins;
 
 import org.harmony_analyser.application.services.AudioAnalyser;
-import org.harmony_analyser.chromanal.*;
+import org.harmony_analyser.chromanal.Chroma;
+import org.harmony_analyser.chromanal.Chromanal;
 import org.harmony_analyser.plugins.AnalysisPlugin;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Plugin for high-level audio analysis using chroma input, based on Chromanal model
  */
 
 /*
- * ChromaComplexitySimplePlugin
+ * ChromaComplexityTonalPlugin
  *
  * - requires: chroma
  * - complexity of transition = sum of absolute value of changes
@@ -22,15 +28,15 @@ import java.util.*;
 
 @SuppressWarnings("SameParameterValue")
 
-public class ChromaComplexitySimplePlugin extends AnalysisPlugin {
-	public ChromaComplexitySimplePlugin() {
-		pluginKey = "chromanal:chroma_complexity_simple";
-		pluginName = "Simple Chroma Complexity";
+public class ChromaComplexityTonalPlugin extends AnalysisPlugin {
+	public ChromaComplexityTonalPlugin() {
+		pluginKey = "chromanal:chroma_complexity_tonal";
+		pluginName = "Tonal Chroma Complexity";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas.txt");
 
-		outputFileSuffix = "-chroma-complexity-simple.txt";
+		outputFileSuffix = "-chroma-complexity-tonal.txt";
 
 		parameters = new HashMap<>();
 
@@ -76,7 +82,7 @@ public class ChromaComplexitySimplePlugin extends AnalysisPlugin {
 			if (previousChroma == null) {
 				out.write(timestamp + ": 0\n");
 			} else {
-				out.write(timestamp + ": " + Float.toString((Chromanal.getChromaComplexitySimple(previousChroma, chroma))) + "\n");
+				out.write(timestamp + ": " + Float.toString((Chromanal.getChromaComplexityTonal(previousChroma, chroma))) + "\n");
 			}
 
 			previousChroma = chroma;
