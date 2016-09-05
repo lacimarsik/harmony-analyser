@@ -1,5 +1,5 @@
 # harmony-analyser
-Cross-platform Java application for analysing harmonies and chord progressions of musical pieces or MIDI input.
+Cross-platform Java application for analysing harmonies and chord progressions of musical pieces or MIDI input. Project website: [harmony-analyser.org](http://harmony-analyser.org)
 
 ## Installation
 Pre-requisites:
