@@ -113,6 +113,8 @@ class HarmonyAnalyser extends JFrame {
 	private JScrollPane visualizationConsoleScrollPane;
 	private JButton chromaSimpleButton;
 	private JButton chromaTonalButton;
+	private JButton chromaTransitionsSimpleButton;
+	private JButton chromaTransitionsTonalButton;
 	private JFileChooser fileChooser;
 
 	private Harmony harmony1,harmony2 = null;
@@ -362,6 +364,10 @@ class HarmonyAnalyser extends JFrame {
 		segmentTrackButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino"));
 
 		analyzeComplexityButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "harmanal:transition_complexity"));
+
+		chromaTransitionsSimpleButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "chromanal:chroma_complexity_simple"));
+
+		chromaTransitionsTonalButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "chromanal:chroma_complexity_tonal"));
 
 		/* Visualization Tool - Initialization */
 
