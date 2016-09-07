@@ -65,12 +65,8 @@ public class SegmentationDrawPanel extends DrawPanel {
 		float segmentSize;
 		String relativeToneName;
 		int i = 0;
+		timestamps.remove(0); // Skip first timestamp
 		for (float timestamp : timestamps) {
-			if (i == 0) {
-				// Skip first timestamp
-				i++;
-				continue;
-			}
 			relativeToneName = labels.get(i).substring(0, Math.min(labels.get(i).length(), 2));
 			segmentSize = ((timestamp - previousTimestamp) / maximalTimestamp);
 			drawSegment(g, segmentSize, getColorForTone(relativeToneName));
