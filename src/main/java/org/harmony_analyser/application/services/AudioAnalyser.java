@@ -44,9 +44,9 @@ public class AudioAnalyser {
 	/* Public / Package methods */
 
 	public static String[] getVisualPlugins() {
-		String[] all_visualizations = new String[VISUAL_PLUGINS.length + STATIC_VISUALIZATIONS.length];
-		System.arraycopy(VISUAL_PLUGINS, 0, all_visualizations, 0, VISUAL_PLUGINS.length);
+		String[] all_visualizations = new String[STATIC_VISUALIZATIONS.length + VISUAL_PLUGINS.length];
 		System.arraycopy(STATIC_VISUALIZATIONS, 0, all_visualizations, VISUAL_PLUGINS.length, STATIC_VISUALIZATIONS.length);
+		System.arraycopy(VISUAL_PLUGINS, 0, all_visualizations, 0, VISUAL_PLUGINS.length);
 		return all_visualizations;
 	}
 
