@@ -39,7 +39,7 @@ public class Chromanal {
 		if ((harmony_1 != null) && (harmony_2 != null)) {
 			List<String> roots1 = Harmanal.getRootsFormatted(harmony_1);
 			List<String> roots2 = Harmanal.getRootsFormatted(harmony_2);
-			if ((roots1 != null) && (roots2 != null)) {
+			if ((roots1 != null) && (roots2 != null) && (roots1.size() > 0) && (roots2.size() > 0)) {
 				Scanner sc1 = new Scanner(roots1.get(0));
 				Scanner sc2 = new Scanner(roots2.get(0));
 
