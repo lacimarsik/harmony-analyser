@@ -58,15 +58,16 @@ public class SegmentationDrawPanel extends DrawPanel {
 	/* Complet analysis */
 
 	private void drawChordSegmentation(Graphics g) {
-		float maximalTimestamp = timestamps.get(timestamps.size() - 1);
+		List<Float> timestampsCopy = new ArrayList<>(timestamps);
+		float maximalTimestamp = timestampsCopy.get(timestampsCopy.size() - 1);
 
 		cursor.setLocation(0, 0);
-		float previousTimestamp = timestamps.get(0);
+		float previousTimestamp = timestampsCopy.get(0);
 		float segmentSize;
 		String relativeToneName;
 		int i = 0;
-		timestamps.remove(0); // Skip first timestamp
-		for (float timestamp : timestamps) {
+		timestampsCopy.remove(0); // Skip first timestamp
+		for (float timestamp : timestampsCopy) {
 			relativeToneName = labels.get(i).substring(0, Math.min(labels.get(i).length(), 2));
 			segmentSize = ((timestamp - previousTimestamp) / maximalTimestamp);
 			drawSegment(g, segmentSize, getColorForTone(relativeToneName));
