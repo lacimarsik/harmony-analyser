@@ -115,13 +115,13 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 				segmentationTimestamp = segmentationTimestampList.get(segmentationIndex);
 
 				// Average chromas in the previous block, use AUDIBLE_THRESHOLD to filter non-audible activations
-				chromaVector = filterChroma(averageChroma(chromaSums, countChromasForAveraging));
+				chromaVector = AudioAnalysisHelper.filterChroma(AudioAnalysisHelper.averageChroma(chromaSums, countChromasForAveraging), audibleThreshold);
 				Arrays.fill(chromaSums, (float) 0);
 				countChromasForAveraging = 0;
 
 				// Create a binary chord representation from chroma
 				// XXX: Take MAXIMUM_NUMBER_OF_CHORD_TONES tones with the maximum activation
-				harmony = createBinaryChord(chromaVector);
+				harmony = AudioAnalysisHelper.createBinaryChord(chromaVector, maximumNumberOfChordTones);
 
 				// Add created harmony to the list of chord progressions
 				chordProgression.add(harmony);
@@ -155,7 +155,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		// 3. Iterate over chord progression, deriving chord and transition complexities
 		for (int[] chord : chordProgression) {
 			// sum number of all tones for final averages
-			int numberTones = getNumberOfTones(chord);
+			int numberTones = AudioAnalysisHelper.getNumberOfTones(chord);
 			sumOfAllTones += numberTones;
 
 			// get timestamp of this transition
@@ -236,63 +236,5 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		audibleThreshold = parameters.get("audibleThreshold");
 		maximumNumberOfChordTones = Math.round(parameters.get("maximumNumberOfChordTones"));
 		maximalComplexity = Math.round(parameters.get("maximalComplexity"));
-	}
-
-	/* Private methods */
-
-	// averages multiple chromas from vector of their sum into one chroma
-	private float[] averageChroma(float[] chromaSums, int countChromas) {
-		float[] resultChroma = new float[12];
-		for (int i = 0; i < chromaSums.length; i++) {
-			resultChroma[i] = chromaSums[i] / countChromas;
-		}
-		return resultChroma;
-	}
-
-	// filters chroma using AUDIBLE_THRESHOLD, setting values below the threshold to 0
-	private float[] filterChroma(float[] chroma) {
-		float[] resultChroma = new float[12];
-		for (int i = 0; i < chroma.length; i++) {
-			if (chroma[i] < audibleThreshold) {
-				resultChroma[i] = 0;
-			} else {
-				resultChroma[i] = chroma[i];
-			}
-		}
-		return resultChroma;
-	}
-
-	// Creates binary representation of a chord, taking MAXIMUM_NUMBER_OF_CHORD_TONES tones with the maximum activation from chroma
-	private int[] createBinaryChord(float[] chroma) {
-		int[] result = new int[12];
-		Arrays.fill(result, 0);
-		float max;
-		int id;
-		for (int g = 0; g < maximumNumberOfChordTones; g++) {
-			max = 0;
-			id = 0;
-			for (int i = 0; i < chroma.length; i++) {
-				if (chroma[i] > max) {
-					id = i;
-					max = chroma[i];
-				}
-			}
-			if (chroma[id] > 0) {
-				result[id] = 1;
-			}
-			chroma[id] = (float) 0;
-		}
-		return result;
-	}
-
-	// Get number of tones from the binary representation of a chord
-	private int getNumberOfTones(int[] chord) {
-		int result = 0;
-		for (int tonePresence : chord) {
-			if (tonePresence == 1) {
-				result++;
-			}
-		}
-		return result;
 	}
 }

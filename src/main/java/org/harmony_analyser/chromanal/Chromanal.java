@@ -1,9 +1,7 @@
 package org.harmony_analyser.chromanal;
 
-import org.harmony_analyser.chordanal.Chordanal;
-import org.harmony_analyser.chordanal.Harmanal;
-import org.harmony_analyser.chordanal.Harmony;
-import org.harmony_analyser.chordanal.Tone;
+import org.harmony_analyser.application.services.AudioAnalysisHelper;
+import org.harmony_analyser.chordanal.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +11,8 @@ public class Chromanal {
 	/* Exceptions */
 
 	static final int CHROMA_LENGTH = 12;
+	private static final float audibleThreshold = (float) 0.07;
+	private static int maximumNumberOfChordTones = 4;
 
 	/* Public / Package methods */
 
@@ -26,10 +26,10 @@ public class Chromanal {
 
 	public static float getChromaComplexityTonal(Chroma chroma1, Chroma chroma2) throws Chroma.WrongChromaSize {
 		float complexity = (float) 0.0;
-		float[] chromaVector1 = filterChroma(chroma1.values);
-		int[] harmony1 = createBinaryChord(chromaVector1);
-		float[] chromaVector2 = filterChroma(chroma2.values);
-		int[] harmony2 = createBinaryChord(chromaVector2);
+		float[] chromaVector1 = AudioAnalysisHelper.filterChroma(chroma1.values, audibleThreshold);
+		int[] harmony1 = AudioAnalysisHelper.createBinaryChord(chromaVector1, maximumNumberOfChordTones);
+		float[] chromaVector2 = AudioAnalysisHelper.filterChroma(chroma2.values, audibleThreshold);
+		int[] harmony2 = AudioAnalysisHelper.createBinaryChord(chromaVector2, maximumNumberOfChordTones);
 
 		// create chords using Chordanal
 		String currentChordTones = Chordanal.getStringOfTones(harmony1);
@@ -57,15 +57,21 @@ public class Chromanal {
 
 				if (!tone1.equals("")) {
 					Tone tone1c = Chordanal.createToneFromRelativeName(tone1);
-					chromaVector1[tone1c.getNumberMapped()] = 0;
+					if (tone1c != null) {
+						chromaVector1[tone1c.getNumberMapped()] = 0;
+					}
 				}
 				if (!tone2.equals("")) {
 					Tone tone2c = Chordanal.createToneFromRelativeName(tone2);
-					chromaVector1[tone2c.getNumberMapped()] = 0;
+					if (tone2c != null) {
+						chromaVector1[tone2c.getNumberMapped()] = 0;
+					}
 				}
 				if (!tone3.equals("")) {
 					Tone tone3c = Chordanal.createToneFromRelativeName(tone3);
-					chromaVector1[tone3c.getNumberMapped()] = 0;
+					if (tone3c != null) {
+						chromaVector1[tone3c.getNumberMapped()] = 0;
+					}
 				}
 
 				sc2.nextLine();
@@ -81,61 +87,25 @@ public class Chromanal {
 				}
 				if (!tone2_1.equals("")) {
 					Tone tone1c = Chordanal.createToneFromRelativeName(tone2_1);
-					chromaVector2[tone1c.getNumberMapped()] = 0;
+					if (tone1c != null) {
+						chromaVector2[tone1c.getNumberMapped()] = 0;
+					}
 				}
 				if (!tone2_2.equals("")) {
 					Tone tone2c = Chordanal.createToneFromRelativeName(tone2_2);
-					chromaVector2[tone2c.getNumberMapped()] = 0;
+					if (tone2c != null) {
+						chromaVector2[tone2c.getNumberMapped()] = 0;
+					}
 				}
 				if (!tone2_3.equals("")) {
 					Tone tone3c = Chordanal.createToneFromRelativeName(tone2_3);
-					chromaVector2[tone3c.getNumberMapped()] = 0;
+					if (tone3c != null) {
+						chromaVector2[tone3c.getNumberMapped()] = 0;
+					}
 				}
 			}
 		}
 
 		return getChromaComplexitySimple(new Chroma(chromaVector1), new Chroma(chromaVector2));
-	}
-
-	/* Private methods */
-
-	private static final double audibleThreshold = 0.07;
-
-	// filters chroma using AUDIBLE_THRESHOLD, setting values below the threshold to 0
-	private static float[] filterChroma(float[] chroma) {
-		float[] resultChroma = new float[12];
-		for (int i = 0; i < chroma.length; i++) {
-			if (chroma[i] < audibleThreshold) {
-				resultChroma[i] = 0;
-			} else {
-				resultChroma[i] = chroma[i];
-			}
-		}
-		return resultChroma;
-	}
-
-	private static int maximumNumberOfChordTones = 4;
-
-	// Creates binary representation of a chord, taking MAXIMUM_NUMBER_OF_CHORD_TONES tones with the maximum activation from chroma
-	private static int[] createBinaryChord(float[] chroma) {
-		int[] result = new int[12];
-		Arrays.fill(result, 0);
-		float max;
-		int id;
-		for (int g = 0; g < maximumNumberOfChordTones; g++) {
-			max = 0;
-			id = 0;
-			for (int i = 0; i < chroma.length; i++) {
-				if (chroma[i] > max) {
-					id = i;
-					max = chroma[i];
-				}
-			}
-			if (chroma[id] > 0) {
-				result[id] = 1;
-			}
-			chroma[id] = (float) 0;
-		}
-		return result;
 	}
 }
