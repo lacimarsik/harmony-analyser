@@ -51,8 +51,8 @@ public class ChromaDrawPanel extends DrawPanel {
 		/* Plugin-specific parsing of the result */
 		try {
 			for (String line : linesList) {
-				timestamp = AudioAnalyser.getTimestampFromLine(line);
-				value = Float.parseFloat(AudioAnalyser.getLabelFromLine(line));
+				timestamp = AudioAnalysisHelper.getTimestampFromLine(line);
+				value = Float.parseFloat(AudioAnalysisHelper.getLabelFromLine(line));
 				timestamps.add(timestamp);
 				values.add(value);
 			}

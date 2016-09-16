@@ -1,6 +1,6 @@
 package org.harmony_analyser.plugins.chromanal_plugins;
 
-import org.harmony_analyser.application.services.AudioAnalyser;
+import org.harmony_analyser.application.services.AudioAnalysisHelper;
 import org.harmony_analyser.chromanal.*;
 import org.harmony_analyser.plugins.AnalysisPlugin;
 
@@ -66,7 +66,7 @@ public class ChromaComplexitySimplePlugin extends AnalysisPlugin {
 		for (String line : chromaLinesList) {
 			// Get chroma from the current line
 			chromaArray = getChromaFromLine(line);
-			timestamp = AudioAnalyser.getTimestampFromLine(line);
+			timestamp = AudioAnalysisHelper.getTimestampFromLine(line);
 
 			// Shift chroma for proper alignment for analysis
 			// XXX: chromas from NNLS Chroma Vamp plugin start from A, chroma for Chordanal are starting from C)

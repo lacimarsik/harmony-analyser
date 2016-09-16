@@ -40,8 +40,8 @@ public class SegmentationDrawPanel extends DrawPanel {
 
 		try {
 			for (String line : linesList) {
-				timestamp = AudioAnalyser.getTimestampFromLine(line);
-				label = AudioAnalyser.getLabelFromLine(line);
+				timestamp = AudioAnalysisHelper.getTimestampFromLine(line);
+				label = AudioAnalysisHelper.getLabelFromLine(line);
 				if (label.equals("")) {
 					throw new CannotVisualize("Output did not have the required fields");
 				}

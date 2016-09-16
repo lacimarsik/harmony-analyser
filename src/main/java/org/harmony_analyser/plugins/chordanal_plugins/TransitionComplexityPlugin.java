@@ -1,6 +1,6 @@
 package org.harmony_analyser.plugins.chordanal_plugins;
 
-import org.harmony_analyser.application.services.AudioAnalyser;
+import org.harmony_analyser.application.services.AudioAnalysisHelper;
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.*;
 import org.harmony_analyser.chordanal.*;
@@ -86,7 +86,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		List<Float> segmentationTimestampList = new ArrayList<>();
 
 		// 1. Get timestamps from the segmentation file
-		segmentationTimestampList.addAll(segmentationLinesList.stream().map(AudioAnalyser::getTimestampFromLine).collect(Collectors.toList()));
+		segmentationTimestampList.addAll(segmentationLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
 
 		float chromaTimestamp;
 		float[] chroma;
@@ -103,7 +103,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 
 		// 2. Iterate over chromas, transforming them into chord progression
 		for (String line : chromaLinesList) {
-			chromaTimestamp = getTimestampFromLine(line);
+			chromaTimestamp = AudioAnalysisHelper.getTimestampFromLine(line);
 
 			if (chromaTimestamp > segmentationTimestamp) {
 				// Go to the next segmentation timestamp
