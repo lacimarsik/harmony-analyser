@@ -115,9 +115,11 @@ class HarmonyAnalyser extends JFrame {
 	private JButton chromaTonalButton;
 	private JButton chromaTransitionsSimpleButton;
 	private JButton chromaTransitionsTonalButton;
+	private JButton searchAgainButton;
 	private JFileChooser fileChooser;
 
 	private Harmony harmony1,harmony2 = null;
+	private final MidiHandler midiHandler;
 
 	/* Public / Package methods */
 
@@ -143,15 +145,11 @@ class HarmonyAnalyser extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		setTitle("Harmony Analyser");
+		midiHandler = new MidiHandler();
 
 		/* Chord Transition Tool - Initialization */
 
-		// Obtain information about all the installed input MIDI devices
-		final MidiHandler midiHandler = new MidiHandler();
-		String[] inputDevices = midiHandler.getInputDeviceList();
-		midiList.setListData(inputDevices);
-
-		midiList.addListSelectionListener(listSelectionEvent -> selectMidiButton.setEnabled(true));
+		searchForMidiDevices();
 
 		selectMidiButton.addActionListener(actionEvent -> {
 			MidiDevice selectedDevice = midiHandler.getMidiDevice(midiList.getSelectedValue());
@@ -170,6 +168,8 @@ class HarmonyAnalyser extends JFrame {
 			playButtonOne.setEnabled(false);
 			playButtonTwo.setEnabled(false);
 		});
+
+		searchAgainButton.addActionListener(actionEvent -> searchForMidiDevices());
 
 		captureMIDICheckBoxOne.addActionListener(actionEvent -> {
 			try {
@@ -417,6 +417,18 @@ class HarmonyAnalyser extends JFrame {
 
 	/* Chord Transition Tool - Handling methods */
 
+	// Obtain information about all the installed input MIDI devices
+	private void searchForMidiDevices() {
+		String[] inputDevices = midiHandler.getInputDeviceList();
+		if (inputDevices[0].equals("No MIDI devices found")) {
+			midiList.setEnabled(false);
+		} else {
+			midiList.addListSelectionListener(listSelectionEvent -> selectMidiButton.setEnabled(true));
+			midiList.setEnabled(true);
+		}
+		midiList.setListData(inputDevices);
+	}
+
 	private void analyzeHarmony(Harmony harmony, JTextPane txtRelative, JTextPane txtAbsolute, JTextPane txtName, JTextPane txtStructure, JTextPane txtFunction, JTextPane txtComplexity) {
 		txtRelative.setText(harmony.getToneNamesMapped());
 		txtRelative.setCaretPosition(0);
@@ -438,7 +450,7 @@ class HarmonyAnalyser extends JFrame {
 		txtTransitionComplexity.setText(Integer.toString(Harmanal.getTransitionComplexity(harmony1, harmony2)));
 	}
 
-	/* Chord Transition Tool - Handling methods */
+	/* Audio Analysis Tool - Handling methods */
 
 	private void analyzeFolder(JTextPane consolePane, JTextField inputFolderTextField, String pluginKey) {
 		try {

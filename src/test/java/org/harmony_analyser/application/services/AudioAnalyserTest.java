@@ -26,7 +26,7 @@ public class AudioAnalyserTest {
 	}
 
 	@Test(expected = AnalysisPlugin.IncorrectInputException.class)
-	public void shouldRunAnalysis() throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
+	public void shouldThrowExceptionOnWrongFile() throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		audioAnalyser.runAnalysis(inputFile, "harmanal:transition_complexity", true);
 	}
 }

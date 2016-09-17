@@ -148,8 +148,14 @@ public class MidiHandler {
 			}
 		}
 
-		String[] result = new String[inputDeviceInfos.size()];
+		String[] result;
+		if (inputDeviceInfos.size() == 0) {
+			result = new String[1];
+			result[0] = "No MIDI devices found";
+			return result;
+		}
 
+		result = new String[inputDeviceInfos.size()];
 		for (int i = 0; i < inputDeviceInfos.size(); i++) {
 			result[i] = inputDeviceInfos.get(i).getName();
 		}
