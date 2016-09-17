@@ -1,5 +1,6 @@
 package org.harmony_analyser.application.services;
 
+import org.harmony_analyser.application.visualizations.DrawPanelFactory;
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.*;
 import org.junit.*;
@@ -16,12 +17,14 @@ import static org.junit.Assert.assertEquals;
 
 public class AudioAnalyserTest {
 	private AudioAnalyser audioAnalyser;
+	private DrawPanelFactory drawPanelFactory;
 	private String wrongInputFile;
 	private File testWavFile;
 	private String resultFile;
 
 	@Before
 	public void setUp() {
+		drawPanelFactory = new DrawPanelFactory();
 		wrongInputFile = "wrongfile";
 		ClassLoader classLoader = getClass().getClassLoader();
 		testWavFile = new File(classLoader.getResource("test.wav").getPath());
@@ -30,7 +33,7 @@ public class AudioAnalyserTest {
 	@Test(expected = AnalysisPlugin.IncorrectInputException.class)
 	public void shouldThrowExceptionOnWrongFile() throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		AnalysisPluginFactory analysisPluginFactory = new AnalysisPluginFactory();
-		audioAnalyser = new AudioAnalyser(analysisPluginFactory);
+		audioAnalyser = new AudioAnalyser(analysisPluginFactory, drawPanelFactory);
 		audioAnalyser.runAnalysis(wrongInputFile, "harmanal:transition_complexity", true);
 	}
 
@@ -44,7 +47,7 @@ public class AudioAnalyserTest {
 				return analysisPlugin;
 			}
 		};
-		audioAnalyser = new AudioAnalyser(analysisPluginFactory);
+		audioAnalyser = new AudioAnalyser(analysisPluginFactory, drawPanelFactory);
 
 		assertEquals("Done!", audioAnalyser.runAnalysis(testWavFile.toString(), "harmanal:transition_complexity", true));
 	}

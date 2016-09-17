@@ -1,7 +1,7 @@
 package org.harmony_analyser.application;
 
 import org.harmony_analyser.application.services.*;
-import org.harmony_analyser.application.visualizations.DrawPanel;
+import org.harmony_analyser.application.visualizations.*;
 import org.harmony_analyser.chordanal.*;
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.*;
@@ -148,11 +148,11 @@ class HarmonyAnalyser extends JFrame {
 		setVisible(true);
 		setTitle("Harmony Analyser");
 
-		/* Services - Initialization */
+		/* Services and Visualizations - Initialization */
 
 		AnalysisPluginFactory analysisPluginFactory = new AnalysisPluginFactory();
-		audioAnalyser = new AudioAnalyser(analysisPluginFactory);
-
+		DrawPanelFactory drawPanelFactory = new DrawPanelFactory();
+		audioAnalyser = new AudioAnalyser(analysisPluginFactory, drawPanelFactory);
 		midiHandler = new MidiHandler();
 
 		/* Chord Transition Tool - Initialization */
@@ -412,9 +412,9 @@ class HarmonyAnalyser extends JFrame {
 			try {
 				File file = new File(selectFileTextField.getText());
 
-				performSelectedVisualization(comboBoxOne, drawPanel1, file.toString(), visualizationConsoleTextPane);
-				performSelectedVisualization(comboBoxTwo, drawPanel2, file.toString(), visualizationConsoleTextPane);
-				performSelectedVisualization(comboBoxThree, drawPanel3, file.toString(), visualizationConsoleTextPane);
+				performSelectedVisualization(comboBoxOne, drawPanel1, file.toString(), visualizationConsoleTextPane, drawPanelFactory);
+				performSelectedVisualization(comboBoxTwo, drawPanel2, file.toString(), visualizationConsoleTextPane, drawPanelFactory);
+				performSelectedVisualization(comboBoxThree, drawPanel3, file.toString(), visualizationConsoleTextPane, drawPanelFactory);
 			} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException | AnalysisPlugin.OutputNotReady | IOException e) {
 				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nERROR: " + e.getMessage());
 			} catch (Exception e) {
@@ -504,7 +504,7 @@ class HarmonyAnalyser extends JFrame {
 
 	/* Visualization Tool - Handling methods */
 
-	private void performSelectedVisualization(JComboBox comboBox, JPanel parentPanel, String inputFile, JTextPane consoleTextPane) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputNotReady, DrawPanel.CannotVisualize, IOException, PluginLoader.LoadFailedException, Chroma.WrongChromaSize {
+	private void performSelectedVisualization(JComboBox comboBox, JPanel parentPanel, String inputFile, JTextPane consoleTextPane, DrawPanelFactory drawPanelFactory) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputNotReady, DrawPanel.CannotVisualize, IOException, PluginLoader.LoadFailedException, Chroma.WrongChromaSize {
 		String pluginKey = comboBox.getSelectedItem().toString();
 
 		try {
@@ -512,13 +512,13 @@ class HarmonyAnalyser extends JFrame {
 		} catch (AnalysisPlugin.OutputAlreadyExists e) {
 			consoleTextPane.setText(consoleTextPane.getText() + "\nINFO: " + e.getMessage());
 		}
-		createGraph(parentPanel, inputFile, pluginKey);
+		createGraph(parentPanel, inputFile, pluginKey, drawPanelFactory);
 	}
 
-	private void createGraph(JPanel parentPanel, String inputFile, String pluginKey) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, DrawPanel.CannotVisualize, IOException, PluginLoader.LoadFailedException {
+	private void createGraph(JPanel parentPanel, String inputFile, String pluginKey, DrawPanelFactory drawPanelFactory) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, DrawPanel.CannotVisualize, IOException, PluginLoader.LoadFailedException {
 		parentPanel.removeAll();
 		parentPanel.setLayout(new GridLayout());
-		DrawPanel drawPanel = audioAnalyser.getDrawPanel(inputFile, pluginKey);
+		DrawPanel drawPanel = drawPanelFactory.createDrawPanel(inputFile, pluginKey);
 		drawPanel.setPreferredSize(parentPanel.getPreferredSize());
 		drawPanel.setBounds(parentPanel.getBounds());
 		parentPanel.add(drawPanel);
