@@ -14,45 +14,44 @@ import java.util.*;
  */
 
 public class AudioAnalyser {
+	private AnalysisPluginFactory analysisPluginFactory;
+
+	// Dependency injection: AnalysisPluginFactory
+	public AudioAnalyser(AnalysisPluginFactory analysisPluginFactory) {
+		this.analysisPluginFactory = analysisPluginFactory;
+	}
+
 	public static class LoadFailedException extends Exception {
 		public LoadFailedException(String message) {
 			super(message);
 		}
 	}
 
-	public static final String[] AVAILABLE_PLUGINS = new String[] {
-		"nnls-chroma:nnls-chroma",
+	private final String[] VISUAL_PLUGINS = new String[] {
 		"nnls-chroma:chordino",
 		"harmanal:transition_complexity",
 		"chromanal:chroma_complexity_simple",
 		"chromanal:chroma_complexity_tonal"
 	};
 
-	private static final String[] VISUAL_PLUGINS = new String[] {
-		"nnls-chroma:chordino",
-		"harmanal:transition_complexity",
-		"chromanal:chroma_complexity_simple",
-		"chromanal:chroma_complexity_tonal"
-	};
-
-	private static final String[] STATIC_VISUALIZATIONS = new String[] {
+	private final String[] STATIC_VISUALIZATIONS = new String[] {
 		"chord_palette"
 	};
 
 	/* Public / Package methods */
 
-	public static String[] getVisualPlugins() {
+	public String[] getVisualPlugins() {
 		String[] all_visualizations = new String[STATIC_VISUALIZATIONS.length + VISUAL_PLUGINS.length];
 		System.arraycopy(STATIC_VISUALIZATIONS, 0, all_visualizations, 0, STATIC_VISUALIZATIONS.length);
 		System.arraycopy(VISUAL_PLUGINS, 0, all_visualizations, STATIC_VISUALIZATIONS.length, VISUAL_PLUGINS.length);
 		return all_visualizations;
 	}
 
-	public static String printPlugins() {
+	public String printPlugins() {
 		String result = "";
-		result += "\n> Available plugins (" + AVAILABLE_PLUGINS.length + "):\n";
+		result += "\n> Available plugins (" + analysisPluginFactory.AVAILABLE_PLUGINS.length + "):\n";
 
-		for (String availablePluginKey : AVAILABLE_PLUGINS) {
+		for (String availablePluginKey : analysisPluginFactory.AVAILABLE_PLUGINS) {
 			result += availablePluginKey + "\n";
 		}
 
@@ -67,15 +66,15 @@ public class AudioAnalyser {
 		return result;
 	}
 
-	public static String printParameters(String pluginKey) throws LoadFailedException {
-		return AnalysisPluginFactory.getInstance().createPlugin(pluginKey).printParameters();
+	public String printParameters(String pluginKey) throws LoadFailedException {
+		return analysisPluginFactory.createPlugin(pluginKey).printParameters();
 	}
 
 	public String runAnalysis(String inputFile, String pluginKey, boolean force) throws AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, IOException, LoadFailedException, Chroma.WrongChromaSize {
 		if (Arrays.asList(STATIC_VISUALIZATIONS).contains(pluginKey)) {
 			return "\nPerforming static visualization: (" + pluginKey + ")\n";
 		} else {
-			AnalysisPlugin plugin = AnalysisPluginFactory.getInstance().createPlugin(pluginKey);
+			AnalysisPlugin plugin = analysisPluginFactory.createPlugin(pluginKey);
 			return plugin.analyse(inputFile, force);
 		}
 	}

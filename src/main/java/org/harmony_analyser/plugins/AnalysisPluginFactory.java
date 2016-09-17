@@ -13,22 +13,17 @@ import java.util.Arrays;
  */
 
 public class AnalysisPluginFactory {
-	private static AnalysisPluginFactory instance = null;
+	public final String[] AVAILABLE_PLUGINS = new String[] {
+		"nnls-chroma:nnls-chroma",
+		"nnls-chroma:chordino",
+		"harmanal:transition_complexity",
+		"chromanal:chroma_complexity_simple",
+		"chromanal:chroma_complexity_tonal"
+	};
 
-	protected AnalysisPluginFactory() {
-		// Avoid instantiation
-	}
-
-	public static AnalysisPluginFactory getInstance() {
-		if (instance == null) {
-			instance = new AnalysisPluginFactory();
-		}
-		return instance;
-	}
-
-	public static AnalysisPlugin createPlugin(String pluginKey) throws AudioAnalyser.LoadFailedException {
+	public AnalysisPlugin createPlugin(String pluginKey) throws AudioAnalyser.LoadFailedException {
 		AnalysisPlugin plugin;
-		if (!Arrays.asList(AudioAnalyser.AVAILABLE_PLUGINS).contains(pluginKey)) {
+		if (!Arrays.asList(AVAILABLE_PLUGINS).contains(pluginKey)) {
 			throw new AudioAnalyser.LoadFailedException("Plugin with key " + pluginKey + " is not available");
 		}
 

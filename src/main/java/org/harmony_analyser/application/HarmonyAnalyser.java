@@ -3,7 +3,7 @@ package org.harmony_analyser.application;
 import org.harmony_analyser.application.services.*;
 import org.harmony_analyser.chordanal.*;
 import org.harmony_analyser.chromanal.Chroma;
-import org.harmony_analyser.plugins.AnalysisPlugin;
+import org.harmony_analyser.plugins.*;
 import org.vamp_plugins.PluginLoader;
 
 import javax.sound.midi.*;
@@ -120,6 +120,8 @@ class HarmonyAnalyser extends JFrame {
 
 	private Harmony harmony1,harmony2 = null;
 	private final MidiHandler midiHandler;
+	private final AudioAnalyser audioAnalyser;
+	private final AnalysisPluginFactory analysisPluginFactory;
 
 	/* Public / Package methods */
 
@@ -145,6 +147,12 @@ class HarmonyAnalyser extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		setTitle("Harmony Analyser");
+
+		/* Services - Initialization */
+
+		analysisPluginFactory = new AnalysisPluginFactory();
+		audioAnalyser = new AudioAnalyser(analysisPluginFactory);
+
 		midiHandler = new MidiHandler();
 
 		/* Chord Transition Tool - Initialization */
@@ -303,7 +311,7 @@ class HarmonyAnalyser extends JFrame {
 
 		listPluginsButton.addActionListener(actionEvent -> {
 			try {
-				consoleTextPane.setText(consoleTextPane.getText() + AudioAnalyser.printPlugins());
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printPlugins());
 			} catch (Exception e) {
 				consoleTextPane.setText(e.getMessage());
 			}
@@ -311,7 +319,7 @@ class HarmonyAnalyser extends JFrame {
 
 		buttonNNLS.addActionListener(actionEvent -> {
 			try {
-				consoleTextPane.setText(consoleTextPane.getText() + AudioAnalyser.printParameters("nnls-chroma:nnls-chroma"));
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("nnls-chroma:nnls-chroma"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
@@ -319,7 +327,7 @@ class HarmonyAnalyser extends JFrame {
 
 		buttonChordino.addActionListener(actionEvent -> {
 			try {
-				consoleTextPane.setText(consoleTextPane.getText() + AudioAnalyser.printParameters("nnls-chroma:chordino"));
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("nnls-chroma:chordino"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
@@ -327,7 +335,7 @@ class HarmonyAnalyser extends JFrame {
 
 		buttonComplexity.addActionListener(actionEvent -> {
 			try {
-				consoleTextPane.setText(consoleTextPane.getText() + AudioAnalyser.printParameters("harmanal:transition_complexity"));
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("harmanal:transition_complexity"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
@@ -335,7 +343,7 @@ class HarmonyAnalyser extends JFrame {
 
 		chromaSimpleButton.addActionListener(actionEvent -> {
 			try {
-				consoleTextPane.setText(consoleTextPane.getText() + AudioAnalyser.printParameters("chromanal:chroma_complexity_simple"));
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("chromanal:chroma_complexity_simple"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
@@ -343,7 +351,7 @@ class HarmonyAnalyser extends JFrame {
 
 		chromaTonalButton.addActionListener(actionEvent -> {
 			try {
-				consoleTextPane.setText(consoleTextPane.getText() + AudioAnalyser.printParameters("chromanal:chroma_complexity_tonal"));
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("chromanal:chroma_complexity_tonal"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
@@ -373,7 +381,7 @@ class HarmonyAnalyser extends JFrame {
 
 		visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\n");
 
-		String[] visualizationPlugins = AudioAnalyser.getVisualPlugins();
+		String[] visualizationPlugins = audioAnalyser.getVisualPlugins();
 		for (String pluginName : visualizationPlugins) {
 			comboBoxOne.addItem(pluginName);
 		}
@@ -473,7 +481,7 @@ class HarmonyAnalyser extends JFrame {
 						consolePane.setText(consolePane.getText() + "\nProcessing: " + file.toString() + "\n");
 
 						try {
-							String analysisResult = new AudioAnalyser().runAnalysis(file.toString(), pluginKey, true);
+							String analysisResult = audioAnalyser.runAnalysis(file.toString(), pluginKey, true);
 							consolePane.setText(consolePane.getText() + "\n" + analysisResult);
 						} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
 							consolePane.setText(consolePane.getText() + "\nERROR: " + e.getMessage());
@@ -500,7 +508,7 @@ class HarmonyAnalyser extends JFrame {
 		String pluginKey = comboBox.getSelectedItem().toString();
 
 		try {
-			consoleTextPane.setText(consoleTextPane.getText() + new AudioAnalyser().runAnalysis(inputFile, pluginKey, false));
+			consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.runAnalysis(inputFile, pluginKey, false));
 		} catch (AnalysisPlugin.OutputAlreadyExists e) {
 			consoleTextPane.setText(consoleTextPane.getText() + "\nINFO: " + e.getMessage());
 		}
@@ -510,7 +518,7 @@ class HarmonyAnalyser extends JFrame {
 	private void createGraph(JPanel parentPanel, String inputFile, String pluginKey) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, DrawPanel.CannotVisualize, IOException, PluginLoader.LoadFailedException {
 		parentPanel.removeAll();
 		parentPanel.setLayout(new GridLayout());
-		DrawPanel drawPanel = new AudioAnalyser().getDrawPanel(inputFile, pluginKey);
+		DrawPanel drawPanel = audioAnalyser.getDrawPanel(inputFile, pluginKey);
 		drawPanel.setPreferredSize(parentPanel.getPreferredSize());
 		drawPanel.setBounds(parentPanel.getBounds());
 		parentPanel.add(drawPanel);
