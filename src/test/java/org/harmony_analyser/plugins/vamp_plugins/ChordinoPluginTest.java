@@ -27,16 +27,12 @@ public class ChordinoPluginTest {
 	}
 
 	@Test
-	public void shouldExtractChords() {
-		try {
-			chordino.analyse(testWavFile.toString(), true);
-			BufferedReader reader = new BufferedReader(new FileReader(testWavFile.toString() + "-segmentation.txt"));
-			String line = reader.readLine();
-			assertEquals(" 0.371519274: N", line);
-			line = reader.readLine();
-			assertEquals(" 0.464399092: B", line);
-		} catch (IOException | AnalysisPlugin.IncorrectInputException | AnalysisPlugin.OutputAlreadyExists | Chroma.WrongChromaSize e) {
-			e.printStackTrace();
-		}
+	public void shouldExtractChords() throws IOException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
+		chordino.analyse(testWavFile.toString(), true);
+		BufferedReader reader = new BufferedReader(new FileReader(testWavFile.toString() + "-segmentation.txt"));
+		String line = reader.readLine();
+		assertEquals(" 0.371519274: N", line);
+		line = reader.readLine();
+		assertEquals(" 0.464399092: B", line);
 	}
 }

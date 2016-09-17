@@ -29,25 +29,21 @@ public class TransitionComplexityPluginTest {
 	}
 
 	@Test
-	public void shouldCreateReport() {
-		try {
-			new NNLSPlugin().analyse(testWavFile.toString(), true);
-			new ChordinoPlugin().analyse(testWavFile.toString(), true);
-			new TransitionComplexityPlugin().analyse(testWavFile.toString(), true);
-			BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-report.txt"));
-			BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
-			StringBuilder reportString = new StringBuilder();
-			StringBuilder fixtureString = new StringBuilder();
-			String line;
-			while ((line = readerReport.readLine()) != null) {
-				reportString.append(line);
-			}
-			while ((line = readerFixture.readLine()) != null) {
-				fixtureString.append(line);
-			}
-			assertEquals(fixtureString.toString(), reportString.toString());
-		} catch (IOException | AnalysisPlugin.IncorrectInputException | PluginLoader.LoadFailedException | AnalysisPlugin.OutputAlreadyExists | Chroma.WrongChromaSize e) {
-			e.printStackTrace();
+	public void shouldCreateReport() throws IOException, AnalysisPlugin.IncorrectInputException, PluginLoader.LoadFailedException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
+		new NNLSPlugin().analyse(testWavFile.toString(), true);
+		new ChordinoPlugin().analyse(testWavFile.toString(), true);
+		new TransitionComplexityPlugin().analyse(testWavFile.toString(), true);
+		BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-report.txt"));
+		BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
+		StringBuilder reportString = new StringBuilder();
+		StringBuilder fixtureString = new StringBuilder();
+		String line;
+		while ((line = readerReport.readLine()) != null) {
+			reportString.append(line);
 		}
+		while ((line = readerFixture.readLine()) != null) {
+			fixtureString.append(line);
+		}
+		assertEquals(fixtureString.toString(), reportString.toString());
 	}
 }
