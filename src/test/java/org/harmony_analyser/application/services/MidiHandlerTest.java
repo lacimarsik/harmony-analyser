@@ -17,6 +17,7 @@ public class MidiHandlerTest {
 
 	@Test
 	public void shouldGetInputDeviceList() {
-		midiHandler.getInputDeviceList();
+		String[] deviceList = midiHandler.getInputDeviceList();
+		assert(deviceList[0].equals("No MIDI devices found") || (deviceList[0].contains("hw")));
 	}
 }
