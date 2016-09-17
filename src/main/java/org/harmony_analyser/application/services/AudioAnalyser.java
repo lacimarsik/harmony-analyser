@@ -14,7 +14,7 @@ import java.util.*;
  */
 
 public class AudioAnalyser {
-	private AnalysisPluginFactory analysisPluginFactory;
+	private final AnalysisPluginFactory analysisPluginFactory;
 
 	// Dependency injection: AnalysisPluginFactory
 	public AudioAnalyser(AnalysisPluginFactory analysisPluginFactory) {

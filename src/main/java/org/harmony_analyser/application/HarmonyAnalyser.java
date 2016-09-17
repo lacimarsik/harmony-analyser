@@ -121,7 +121,6 @@ class HarmonyAnalyser extends JFrame {
 	private Harmony harmony1,harmony2 = null;
 	private final MidiHandler midiHandler;
 	private final AudioAnalyser audioAnalyser;
-	private final AnalysisPluginFactory analysisPluginFactory;
 
 	/* Public / Package methods */
 
@@ -150,7 +149,7 @@ class HarmonyAnalyser extends JFrame {
 
 		/* Services - Initialization */
 
-		analysisPluginFactory = new AnalysisPluginFactory();
+		AnalysisPluginFactory analysisPluginFactory = new AnalysisPluginFactory();
 		audioAnalyser = new AudioAnalyser(analysisPluginFactory);
 
 		midiHandler = new MidiHandler();

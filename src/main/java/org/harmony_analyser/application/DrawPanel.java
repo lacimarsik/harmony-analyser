@@ -1,6 +1,5 @@
 package org.harmony_analyser.application;
 
-import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.plugins.AnalysisPlugin;
 import org.vamp_plugins.PluginLoader;
 
@@ -49,7 +48,7 @@ public abstract class DrawPanel extends JPanel {
 		super.paintComponent(g);
 	}
 
-	abstract void getData(String inputFile) throws IOException, AnalysisPlugin.OutputNotReady, CannotVisualize, PluginLoader.LoadFailedException, AudioAnalyser.LoadFailedException;
+	abstract void getData(String inputFile) throws IOException, AnalysisPlugin.OutputNotReady, CannotVisualize, PluginLoader.LoadFailedException;
 
 	/* Analysis Components */
 

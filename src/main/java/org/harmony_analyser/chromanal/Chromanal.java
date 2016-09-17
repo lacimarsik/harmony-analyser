@@ -3,16 +3,17 @@ package org.harmony_analyser.chromanal;
 import org.harmony_analyser.application.services.AudioAnalysisHelper;
 import org.harmony_analyser.chordanal.*;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+@SuppressWarnings("FieldCanBeLocal")
 
 public class Chromanal {
 	/* Exceptions */
 
 	static final int CHROMA_LENGTH = 12;
-	private static final float audibleThreshold = (float) 0.07;
-	private static int maximumNumberOfChordTones = 4;
+	private final static float audibleThreshold = (float) 0.07;
+	private final static int maximumNumberOfChordTones = 4;
 
 	/* Public / Package methods */
 
@@ -25,7 +26,6 @@ public class Chromanal {
 	}
 
 	public static float getChromaComplexityTonal(Chroma chroma1, Chroma chroma2) throws Chroma.WrongChromaSize {
-		float complexity = (float) 0.0;
 		float[] chromaVector1 = AudioAnalysisHelper.filterChroma(chroma1.values, audibleThreshold);
 		int[] harmony1 = AudioAnalysisHelper.createBinaryChord(chromaVector1, maximumNumberOfChordTones);
 		float[] chromaVector2 = AudioAnalysisHelper.filterChroma(chroma2.values, audibleThreshold);

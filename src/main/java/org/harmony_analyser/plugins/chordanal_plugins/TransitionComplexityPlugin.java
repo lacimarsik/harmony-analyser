@@ -11,8 +11,6 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.harmony_analyser.application.services.AudioAnalyser.*;
-
 /**
  * Plugin for high-level audio analysis using chroma / chord transcription input, based on Chordanal model
  */

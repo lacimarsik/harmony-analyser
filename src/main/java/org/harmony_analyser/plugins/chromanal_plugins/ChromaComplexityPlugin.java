@@ -18,7 +18,7 @@ import java.util.List;
 
 @SuppressWarnings("SameParameterValue")
 
-public abstract class ChromaComplexityPlugin extends AnalysisPlugin {
+abstract class ChromaComplexityPlugin extends AnalysisPlugin {
 	/**
 	 * Analyzes the song: converts chroma information to chroma complexity descriptors
 	 *
@@ -69,7 +69,7 @@ public abstract class ChromaComplexityPlugin extends AnalysisPlugin {
 		return result;
 	}
 
-	public abstract float getChromaComplexity(Chroma previousChroma, Chroma chroma) throws Chroma.WrongChromaSize;
+	protected abstract float getChromaComplexity(Chroma previousChroma, Chroma chroma) throws Chroma.WrongChromaSize;
 
 	protected void setParameters() {
 		// No parameters present

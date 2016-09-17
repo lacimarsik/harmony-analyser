@@ -21,7 +21,7 @@ public class AudioAnalyserTest {
 	private String resultFile;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		wrongInputFile = "wrongfile";
 		ClassLoader classLoader = getClass().getClassLoader();
 		testWavFile = new File(classLoader.getResource("test.wav").getPath());
@@ -31,7 +31,7 @@ public class AudioAnalyserTest {
 	public void shouldThrowExceptionOnWrongFile() throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		AnalysisPluginFactory analysisPluginFactory = new AnalysisPluginFactory();
 		audioAnalyser = new AudioAnalyser(analysisPluginFactory);
-		audioAnalyser.runAnalysis(wrongInputFile.toString(), "harmanal:transition_complexity", true);
+		audioAnalyser.runAnalysis(wrongInputFile, "harmanal:transition_complexity", true);
 	}
 
 	@Test
