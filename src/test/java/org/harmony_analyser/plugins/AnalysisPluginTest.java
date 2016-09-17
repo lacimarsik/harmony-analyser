@@ -19,7 +19,7 @@ public class AnalysisPluginTest {
 	}
 
 	@Test(expected = AnalysisPlugin.IncorrectInputException.class)
-	public void shouldCheckInputFiles() throws AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists {
+	public void shouldThrowForIncorrectInputFiles() throws AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists {
 		chordino.checkInputFiles(inputFile, true);
 	}
 }
