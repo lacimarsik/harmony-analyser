@@ -2,8 +2,6 @@ package org.harmony_analyser.application.services;
 
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.*;
-import org.harmony_analyser.plugins.chordanal_plugins.*;
-import org.harmony_analyser.plugins.chromanal_plugins.*;
 import org.harmony_analyser.plugins.vamp_plugins.*;
 import org.harmony_analyser.application.*;
 import org.vamp_plugins.*;
@@ -17,12 +15,12 @@ import java.util.*;
 
 public class AudioAnalyser {
 	public static class LoadFailedException extends Exception {
-		LoadFailedException(String message) {
+		public LoadFailedException(String message) {
 			super(message);
 		}
 	}
 
-	private static final String[] AVAILABLE_PLUGINS = new String[] {
+	public static final String[] AVAILABLE_PLUGINS = new String[] {
 		"nnls-chroma:nnls-chroma",
 		"nnls-chroma:chordino",
 		"harmanal:transition_complexity",
@@ -70,14 +68,14 @@ public class AudioAnalyser {
 	}
 
 	public static String printParameters(String pluginKey) throws LoadFailedException {
-		return getPlugin(pluginKey).printParameters();
+		return AnalysisPluginFactory.getInstance().createPlugin(pluginKey).printParameters();
 	}
 
 	public String runAnalysis(String inputFile, String pluginKey, boolean force) throws AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, IOException, LoadFailedException, Chroma.WrongChromaSize {
 		if (Arrays.asList(STATIC_VISUALIZATIONS).contains(pluginKey)) {
 			return "\nPerforming static visualization: (" + pluginKey + ")\n";
 		} else {
-			AnalysisPlugin plugin = getPlugin(pluginKey);
+			AnalysisPlugin plugin = AnalysisPluginFactory.getInstance().createPlugin(pluginKey);
 			return plugin.analyse(inputFile, force);
 		}
 	}
@@ -97,39 +95,5 @@ public class AudioAnalyser {
 			default:
 				return null;
 		}
-	}
-
-	/* Private methods */
-
-	private static AnalysisPlugin getPlugin(String pluginKey) throws LoadFailedException {
-		AnalysisPlugin plugin;
-		if (!Arrays.asList(AVAILABLE_PLUGINS).contains(pluginKey)) {
-			throw new LoadFailedException("Plugin with key " + pluginKey + " is not available");
-		}
-
-		try {
-			switch (pluginKey) {
-				case "nnls-chroma:nnls-chroma":
-					plugin = new NNLSPlugin();
-					break;
-				case "nnls-chroma:chordino":
-					plugin = new ChordinoPlugin();
-					break;
-				case "harmanal:transition_complexity":
-					plugin = new TransitionComplexityPlugin();
-					break;
-				case "chromanal:chroma_complexity_simple":
-					plugin = new ChromaComplexitySimplePlugin();
-					break;
-				case "chromanal:chroma_complexity_tonal":
-					plugin = new ChromaComplexityTonalPlugin();
-					break;
-				default:
-					throw new LoadFailedException("Plugin with key " + pluginKey + " is not available");
-			}
-		} catch (PluginLoader.LoadFailedException e) {
-			throw new LoadFailedException(e.getMessage());
-		}
-		return plugin;
 	}
 }
