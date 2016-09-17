@@ -1,4 +1,4 @@
-package org.harmony_analyser.application;
+package org.harmony_analyser.application.visualizations;
 
 import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.chordanal.*;

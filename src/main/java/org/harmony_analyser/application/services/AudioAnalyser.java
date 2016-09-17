@@ -1,9 +1,9 @@
 package org.harmony_analyser.application.services;
 
+import org.harmony_analyser.application.visualizations.*;
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.*;
 import org.harmony_analyser.plugins.vamp_plugins.*;
-import org.harmony_analyser.application.*;
 import org.vamp_plugins.*;
 
 import java.io.*;

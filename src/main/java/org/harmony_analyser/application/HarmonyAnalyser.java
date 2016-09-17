@@ -1,6 +1,7 @@
 package org.harmony_analyser.application;
 
 import org.harmony_analyser.application.services.*;
+import org.harmony_analyser.application.visualizations.DrawPanel;
 import org.harmony_analyser.chordanal.*;
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.*;

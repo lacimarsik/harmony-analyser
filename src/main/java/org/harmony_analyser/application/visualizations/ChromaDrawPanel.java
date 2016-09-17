@@ -1,4 +1,4 @@
-package org.harmony_analyser.application;
+package org.harmony_analyser.application.visualizations;
 
 import org.harmony_analyser.application.services.*;
 import org.harmony_analyser.plugins.AnalysisPlugin;
