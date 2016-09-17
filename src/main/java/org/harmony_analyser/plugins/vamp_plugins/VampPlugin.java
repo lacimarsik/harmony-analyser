@@ -104,39 +104,11 @@ public class VampPlugin extends AnalysisPlugin {
 	int outputNumber;
 	int blockSize;
 
-	private static final String[] WRAPPED_PLUGINS = new String[] {
-		"nnls-chroma:nnls-chroma",
-		"nnls-chroma:chordino"
-	};
-
 	static {
 		loader = PluginLoader.getInstance();
 	}
 
 	/* Public / Package methods */
-
-	public static String printInstalledVampPlugins() {
-		String result = "";
-		String[] plugins = loader.listPlugins();
-		result += "\n> Locally installed VAMP plugins (" + plugins.length + "):\n";
-		for (int i = 0; i < plugins.length; ++i) {
-			result += i + ": " + plugins[i] + "\n";
-		}
-
-		List<String> wrappedPlugins = new ArrayList<>();
-		for (int i = 0; i < plugins.length; ++i) {
-			for (String wrapped_plugin : WRAPPED_PLUGINS) {
-				if (plugins[i].equals(wrapped_plugin)) {
-					wrappedPlugins.add(i + ": " + plugins[i] + "\n");
-				}
-			}
-		}
-		result += "\n> Implemented VAMP plugins (" + wrappedPlugins.size() + "):\n";
-		for (String s : wrappedPlugins) {
-			result += s;
-		}
-		return result;
-	}
 
 	public String printParameters() {
 		String result = super.printParameters();

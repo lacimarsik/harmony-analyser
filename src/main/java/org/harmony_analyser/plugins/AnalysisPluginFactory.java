@@ -13,13 +13,26 @@ import java.util.Arrays;
  */
 
 public class AnalysisPluginFactory {
-	public final String[] AVAILABLE_PLUGINS = new String[] {
+	private final String[] AVAILABLE_PLUGINS = new String[] {
 		"nnls-chroma:nnls-chroma",
 		"nnls-chroma:chordino",
 		"harmanal:transition_complexity",
 		"chromanal:chroma_complexity_simple",
 		"chromanal:chroma_complexity_tonal"
 	};
+
+	private final String[] WRAPPED_VAMP_PLUGINS = new String[] {
+		"nnls-chroma:nnls-chroma",
+		"nnls-chroma:chordino"
+	};
+
+	public String[] getAvailablePlugins() {
+		return AVAILABLE_PLUGINS;
+	}
+
+	public String[] getWrappedVampPlugins() {
+		return WRAPPED_VAMP_PLUGINS;
+	}
 
 	public AnalysisPlugin createPlugin(String pluginKey) throws AudioAnalyser.LoadFailedException {
 		AnalysisPlugin plugin;
