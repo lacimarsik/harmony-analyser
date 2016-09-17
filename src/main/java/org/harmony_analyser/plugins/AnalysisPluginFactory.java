@@ -9,7 +9,7 @@ import org.vamp_plugins.PluginLoader;
 import java.util.Arrays;
 
 /**
- * Singleton factory to create Analysis plugins on demand
+ * Factory to create Analysis plugins on demand
  */
 
 public class AnalysisPluginFactory {
