@@ -1,6 +1,8 @@
 package org.harmony_analyser.plugins.chromanal_plugins;
 
+import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.application.services.AudioAnalysisHelper;
+import org.harmony_analyser.application.visualizations.VisualizationData;
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.AnalysisPlugin;
 
@@ -10,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,6 +70,30 @@ abstract class ChromaComplexityPlugin extends AnalysisPlugin {
 		out.close();
 
 		return result;
+	}
+
+	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, AnalysisPlugin.ParseOutputError {
+		VisualizationData data = new VisualizationData();
+		List<Float> timestamps = new ArrayList<>();
+		List<Float> values = new ArrayList<>();
+		List<String> linesList = readOutputFile(outputFile);
+
+		float timestamp, value;
+
+		/* Plugin-specific parsing of the result */
+		try {
+			for (String line : linesList) {
+				timestamp = AudioAnalysisHelper.getTimestampFromLine(line);
+				value = Float.parseFloat(AudioAnalysisHelper.getLabelFromLine(line));
+				timestamps.add(timestamp);
+				values.add(value);
+			}
+		} catch (NumberFormatException e) {
+			throw new ParseOutputError("Output did not have the required fields");
+		}
+		data.setTimestamps(timestamps);
+		data.setValues(values);
+		return data;
 	}
 
 	protected abstract float getChromaComplexity(Chroma previousChroma, Chroma chroma) throws Chroma.WrongChromaSize;

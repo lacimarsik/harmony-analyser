@@ -1,17 +1,17 @@
 package org.harmony_analyser.application.visualizations;
 
-import org.harmony_analyser.application.services.AudioAnalyser;
-import org.harmony_analyser.plugins.AnalysisPlugin;
-import org.vamp_plugins.PluginLoader;
-
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
 import java.util.*;
+
+/**
+ * Class to visualize data in JPanel
+ */
 
 @SuppressWarnings("SameParameterValue")
 
 public abstract class DrawPanel extends JPanel {
+	VisualizationData visualizationData;
 	final Point cursor; // cursor of drawing (moves from left to right on the canvas)
 	static final java.util.List<Color> palette;
 	private static final int paletteStepCount = 2; // how many steps in one color space (R / G / B)
@@ -29,7 +29,8 @@ public abstract class DrawPanel extends JPanel {
 		palette.add(new Color(150, 150, 150));
 	}
 
-	DrawPanel() {
+	DrawPanel(VisualizationData visualizationData) {
+		this.visualizationData = visualizationData;
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		cursor = new Point();
 		cursor.setLocation(0, 0);
@@ -37,19 +38,11 @@ public abstract class DrawPanel extends JPanel {
 
 	/* Exceptions */
 
-	public class CannotVisualize extends Exception {
-		CannotVisualize(String message) {
-			super(message);
-		}
-	}
-
 	/* Public / Package methods */
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 	}
-
-	abstract void getData(String inputFile) throws IOException, AnalysisPlugin.OutputNotReady, CannotVisualize, PluginLoader.LoadFailedException, AudioAnalyser.LoadFailedException;
 
 	/* Analysis Components */
 

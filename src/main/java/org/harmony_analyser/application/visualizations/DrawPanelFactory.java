@@ -32,18 +32,18 @@ public class DrawPanelFactory {
 		return STATIC_VISUALIZATIONS;
 	}
 
-	public DrawPanel createDrawPanel(String inputFile, String pluginKey) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, DrawPanel.CannotVisualize, PluginLoader.LoadFailedException {
+	public DrawPanel createDrawPanel(String pluginKey, VisualizationData visualizationData) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, PluginLoader.LoadFailedException {
 		switch (pluginKey) {
 			case "nnls-chroma:chordino":
-				return new SegmentationDrawPanel(inputFile);
+				return new SegmentationDrawPanel(visualizationData);
 			case "chord_palette":
-				return new PaletteDrawPanel(inputFile);
+				return new PaletteDrawPanel(visualizationData);
 			case "harmanal:transition_complexity":
-				return new ComplexityChartDrawPanel(inputFile);
+				return new ComplexityChartDrawPanel(visualizationData);
 			case "chromanal:chroma_complexity_simple":
-				return new ChromaDrawPanel(inputFile, "Simple");
+				return new ChromaDrawPanel(visualizationData, "Simple");
 			case "chromanal:chroma_complexity_tonal":
-				return new ChromaDrawPanel(inputFile, "Tonal");
+				return new ChromaDrawPanel(visualizationData, "Tonal");
 			default:
 				return null;
 		}

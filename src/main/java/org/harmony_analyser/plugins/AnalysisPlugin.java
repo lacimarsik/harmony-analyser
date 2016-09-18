@@ -1,6 +1,9 @@
 package org.harmony_analyser.plugins;
 
+import org.harmony_analyser.application.services.AudioAnalyser;
+import org.harmony_analyser.application.visualizations.VisualizationData;
 import org.harmony_analyser.chromanal.Chroma;
+import org.vamp_plugins.PluginLoader;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -40,6 +43,13 @@ public abstract class AnalysisPlugin {
 		}
 	}
 
+	public class ParseOutputError extends Exception {
+		public ParseOutputError(String message) {
+			super(message);
+		}
+	}
+
+
 	/* Public / Package methods */
 
 	@SuppressWarnings("WeakerAccess")
@@ -62,8 +72,8 @@ public abstract class AnalysisPlugin {
 		return inputFileSuffixes;
 	}
 
-	public List<String> getResultForInputFile(String inputFile) throws OutputNotReady, IOException {
-		File file = new File(inputFile + outputFileSuffix);
+	protected List<String> readOutputFile(String outputFile) throws OutputNotReady, IOException {
+		File file = new File(outputFile + outputFileSuffix);
 		if (!file.exists() || file.isDirectory()) {
 			throw new OutputNotReady("Output is not ready yet");
 		}
@@ -96,6 +106,8 @@ public abstract class AnalysisPlugin {
 		checkInputFiles(inputFile, force);
 		return "\nBeginning analysis: " + pluginKey + "\n";
 	}
+
+	public abstract VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, OutputNotReady, ParseOutputError, PluginLoader.LoadFailedException;
 
 	/* Helpers */
 

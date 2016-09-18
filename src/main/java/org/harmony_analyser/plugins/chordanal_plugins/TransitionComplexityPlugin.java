@@ -1,6 +1,8 @@
 package org.harmony_analyser.plugins.chordanal_plugins;
 
+import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.application.services.AudioAnalysisHelper;
+import org.harmony_analyser.application.visualizations.VisualizationData;
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.*;
 import org.harmony_analyser.chordanal.*;
@@ -40,6 +42,8 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 	private static float audibleThreshold = (float) 0.07; // used to filter chroma activations that we consider not audible
 	private static int maximumNumberOfChordTones = 4; // used to limit number of tones we work with in chord
 	private static int maximalComplexity = 7; // used to assign a maximal value for 2 chords that have no common root
+
+	private final static int NUMBER_OUTPUTS = 3;
 
 	public TransitionComplexityPlugin() {
 		pluginKey = "harmanal:transition_complexity";
@@ -228,6 +232,30 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		out.close();
 
 		return result;
+	}
+
+	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, ParseOutputError {
+		VisualizationData data = new VisualizationData();
+		List<Float> values = new ArrayList<>();
+		List<String> labels = new ArrayList<>();
+		List<String> linesList = readOutputFile(outputFile);
+
+		/* Plugin-specific parsing of the result */
+		// get last NUMBER_OUTPUTS lines
+		List<String> tail = linesList.subList(Math.max(linesList.size() - NUMBER_OUTPUTS, 0), linesList.size());
+		for (String line : tail) {
+			Scanner sc = new Scanner(line).useDelimiter("\\s*\\:\\s*");
+			labels.add(sc.next());
+			if (sc.hasNextFloat()) {
+				values.add(sc.nextFloat());
+			} else {
+				throw new ParseOutputError("Output did not have the required fields");
+			}
+			sc.close();
+		}
+		data.setValues(values);
+		data.setLabels(labels);
+		return data;
 	}
 
 	protected void setParameters() {

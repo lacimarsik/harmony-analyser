@@ -96,7 +96,7 @@ import javax.sound.sampled.*;
  * https://github.com/c4dm/jvamp/blob/master/host/host.java
  */
 
-public class VampPlugin extends AnalysisPlugin {
+abstract class VampPlugin extends AnalysisPlugin {
 	final static PluginLoader loader;
 	final int adapterFlag = PluginLoader.AdapterFlags.ADAPT_ALL;
 	final int defaultRate = 44100;

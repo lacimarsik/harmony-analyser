@@ -13,15 +13,9 @@ import java.util.List;
 
 @SuppressWarnings({"SameParameterValue", "UnusedParameters"})
 
-public class SegmentationDrawPanel extends DrawPanel {
-	private final List<Float> timestamps;
-	private final List<String> labels;
-
-	public SegmentationDrawPanel(String inputFile) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException, PluginLoader.LoadFailedException, CannotVisualize {
-		super();
-		timestamps = new ArrayList<>();
-		labels = new ArrayList<>();
-		getData(inputFile);
+class SegmentationDrawPanel extends DrawPanel {
+	SegmentationDrawPanel(VisualizationData visualizationData) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException, PluginLoader.LoadFailedException {
+		super(visualizationData);
 	}
 
 	/* Public / Package methods */
@@ -31,34 +25,12 @@ public class SegmentationDrawPanel extends DrawPanel {
 		drawChordSegmentation(g);
 	}
 
-	void getData(String inputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, PluginLoader.LoadFailedException, CannotVisualize {
-		List<String> linesList = new ChordinoPlugin().getResultForInputFile(inputFile);
-
-		/* Plugin-specific parsing of the result */
-		float timestamp;
-		String label;
-
-		try {
-			for (String line : linesList) {
-				timestamp = AudioAnalysisHelper.getTimestampFromLine(line);
-				label = AudioAnalysisHelper.getLabelFromLine(line);
-				if (label.equals("")) {
-					throw new CannotVisualize("Output did not have the required fields");
-				}
-				timestamps.add(timestamp);
-				labels.add(label);
-			}
-		} catch (NumberFormatException e) {
-			throw new CannotVisualize("Output did not have the required fields");
-		}
-	}
-
 	/* Private methods */
 
 	/* Complet analysis */
 
 	private void drawChordSegmentation(Graphics g) {
-		List<Float> timestampsCopy = new ArrayList<>(timestamps);
+		List<Float> timestampsCopy = new ArrayList<>(visualizationData.getTimestamps());
 		float maximalTimestamp = timestampsCopy.get(timestampsCopy.size() - 1);
 
 		cursor.setLocation(0, 0);
@@ -68,7 +40,7 @@ public class SegmentationDrawPanel extends DrawPanel {
 		int i = 0;
 		timestampsCopy.remove(0); // Skip first timestamp
 		for (float timestamp : timestampsCopy) {
-			relativeToneName = labels.get(i).substring(0, Math.min(labels.get(i).length(), 2));
+			relativeToneName = visualizationData.getLabels().get(i).substring(0, Math.min(visualizationData.getLabels().get(i).length(), 2));
 			segmentSize = ((timestamp - previousTimestamp) / maximalTimestamp);
 			drawSegment(g, segmentSize, getColorForTone(relativeToneName));
 			previousTimestamp = timestamp;
@@ -81,7 +53,7 @@ public class SegmentationDrawPanel extends DrawPanel {
 
 	private Color getColorForTone(String relativeToneName) {
 		String notAllowedCharacters = "mda/";
-		if ((relativeToneName.length() == 2) && ((Character.isDigit(relativeToneName.charAt(1)) || (notAllowedCharacters.contains(relativeToneName.substring(1,1)))))) {
+		if ((relativeToneName.length() == 2) && ((Character.isDigit(relativeToneName.charAt(1)) || (notAllowedCharacters.contains(relativeToneName.substring(1, 1)))))) {
 			relativeToneName = relativeToneName.substring(0,1);
 		}
 

@@ -412,9 +412,9 @@ class HarmonyAnalyser extends JFrame {
 			try {
 				File file = new File(selectFileTextField.getText());
 
-				performSelectedVisualization(comboBoxOne, drawPanel1, file.toString(), visualizationConsoleTextPane, drawPanelFactory);
-				performSelectedVisualization(comboBoxTwo, drawPanel2, file.toString(), visualizationConsoleTextPane, drawPanelFactory);
-				performSelectedVisualization(comboBoxThree, drawPanel3, file.toString(), visualizationConsoleTextPane, drawPanelFactory);
+				performSelectedVisualization(comboBoxOne, drawPanel1, file.toString(), visualizationConsoleTextPane);
+				performSelectedVisualization(comboBoxTwo, drawPanel2, file.toString(), visualizationConsoleTextPane);
+				performSelectedVisualization(comboBoxThree, drawPanel3, file.toString(), visualizationConsoleTextPane);
 			} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException | AnalysisPlugin.OutputNotReady | IOException e) {
 				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nERROR: " + e.getMessage());
 			} catch (Exception e) {
@@ -504,7 +504,7 @@ class HarmonyAnalyser extends JFrame {
 
 	/* Visualization Tool - Handling methods */
 
-	private void performSelectedVisualization(JComboBox comboBox, JPanel parentPanel, String inputFile, JTextPane consoleTextPane, DrawPanelFactory drawPanelFactory) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputNotReady, DrawPanel.CannotVisualize, IOException, PluginLoader.LoadFailedException, Chroma.WrongChromaSize {
+	private void performSelectedVisualization(JComboBox comboBox, JPanel parentPanel, String inputFile, JTextPane consoleTextPane) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputNotReady, IOException, PluginLoader.LoadFailedException, Chroma.WrongChromaSize, AnalysisPlugin.ParseOutputError {
 		String pluginKey = comboBox.getSelectedItem().toString();
 
 		try {
@@ -512,13 +512,13 @@ class HarmonyAnalyser extends JFrame {
 		} catch (AnalysisPlugin.OutputAlreadyExists e) {
 			consoleTextPane.setText(consoleTextPane.getText() + "\nINFO: " + e.getMessage());
 		}
-		createGraph(parentPanel, inputFile, pluginKey, drawPanelFactory);
+		createGraph(parentPanel, inputFile, pluginKey);
 	}
 
-	private void createGraph(JPanel parentPanel, String inputFile, String pluginKey, DrawPanelFactory drawPanelFactory) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, DrawPanel.CannotVisualize, IOException, PluginLoader.LoadFailedException {
+	private void createGraph(JPanel parentPanel, String inputFile, String pluginKey) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException, PluginLoader.LoadFailedException, AnalysisPlugin.ParseOutputError {
 		parentPanel.removeAll();
 		parentPanel.setLayout(new GridLayout());
-		DrawPanel drawPanel = drawPanelFactory.createDrawPanel(inputFile, pluginKey);
+		DrawPanel drawPanel = audioAnalyser.createDrawPanel(inputFile, pluginKey);
 		drawPanel.setPreferredSize(parentPanel.getPreferredSize());
 		drawPanel.setBounds(parentPanel.getBounds());
 		parentPanel.add(drawPanel);

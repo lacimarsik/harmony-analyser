@@ -1,7 +1,12 @@
 package org.harmony_analyser.plugins.vamp_plugins;
 
+import org.harmony_analyser.application.services.AudioAnalyser;
+import org.harmony_analyser.application.services.AudioAnalysisHelper;
+import org.harmony_analyser.application.visualizations.VisualizationData;
+import org.harmony_analyser.plugins.AnalysisPlugin;
 import org.vamp_plugins.*;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -73,5 +78,33 @@ public class ChordinoPlugin extends VampPlugin {
 
 		p = loader.loadPlugin(pluginKey, defaultRate, adapterFlag);
 		setParameters();
+	}
+
+	public VisualizationData getDataFromOutput(String inputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, PluginLoader.LoadFailedException, ParseOutputError {
+		VisualizationData data = new VisualizationData();
+		List<Float> timestamps = new ArrayList<>();
+		List<String> labels = new ArrayList<>();
+		List<String> linesList = readOutputFile(inputFile);
+
+		/* Plugin-specific parsing of the result */
+		float timestamp;
+		String label;
+
+		try {
+			for (String line : linesList) {
+				timestamp = AudioAnalysisHelper.getTimestampFromLine(line);
+				label = AudioAnalysisHelper.getLabelFromLine(line);
+				if (label.equals("")) {
+					throw new ParseOutputError("Output did not have the required fields");
+				}
+				timestamps.add(timestamp);
+				labels.add(label);
+			}
+		} catch (NumberFormatException e) {
+			throw new ParseOutputError("Output did not have the required fields");
+		}
+		data.setTimestamps(timestamps);
+		data.setLabels(labels);
+		return data;
 	}
 }

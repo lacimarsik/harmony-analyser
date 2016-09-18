@@ -10,9 +10,9 @@ import java.io.IOException;
 
 @SuppressWarnings({"SameParameterValue", "UnusedParameters"})
 
-public class PaletteDrawPanel extends DrawPanel {
-	public PaletteDrawPanel(String inputFile) {
-		super();
+class PaletteDrawPanel extends DrawPanel {
+	PaletteDrawPanel(VisualizationData visualizationData) {
+		super(visualizationData);
 	}
 
 	/* Public / Package methods */
@@ -20,11 +20,6 @@ public class PaletteDrawPanel extends DrawPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		drawPalette(g);
-	}
-
-	@Override
-	void getData(String inputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, CannotVisualize, PluginLoader.LoadFailedException {
-		// No data needed for static panel
 	}
 
 	/* Private methods */
