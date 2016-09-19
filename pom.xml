@@ -13,6 +13,8 @@
             <groupId>org.vamp_plugins</groupId>
             <artifactId>jvamp</artifactId>
             <version>1.3</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/jvamp.jar</systemPath>
         </dependency>
 
         <dependency>
