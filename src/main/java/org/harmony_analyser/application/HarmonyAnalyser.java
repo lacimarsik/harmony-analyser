@@ -146,7 +146,7 @@ class HarmonyAnalyser extends JFrame {
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
-		setTitle("Harmony Analyser 1.1");
+		setTitle("Harmony Analyser 1.2-beta");
 
 		/* Services and Visualizations - Initialization */
 
