@@ -5,7 +5,7 @@ Project website: [harmony-analyser.org](http://harmony-analyser.org)
 
 ## Installation
 Pre-requisites:
-* Running [JRE](https://www.java.com/en/download/) 6 or higher on your machine
+* Running [JRE](https://www.java.com/en/download/) 8 or higher on your machine
 * Download and install [Chordino and NNLS Chroma](http://www.isophonics.net/nnls-chroma) Vamp plugins 1.1 or higher (Linux: compile and place `nnls-chroma.so` to `usr/local/lib/vamp` folder)
 
 To run the application:
