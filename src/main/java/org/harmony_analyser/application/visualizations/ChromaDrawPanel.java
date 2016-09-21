@@ -2,17 +2,13 @@ package org.harmony_analyser.application.visualizations;
 
 import org.harmony_analyser.application.services.*;
 import org.harmony_analyser.plugins.AnalysisPlugin;
-import org.harmony_analyser.plugins.chromanal_plugins.*;
 import org.jfree.chart.*;
-import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.*;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.*;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.*;
-import java.util.List;
 
 @SuppressWarnings({"SameParameterValue", "UnusedParameters"})
 
