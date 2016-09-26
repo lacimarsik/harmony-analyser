@@ -26,7 +26,6 @@ public class DrawPanelFactoryTest {
 	@Before
 	public void setUp() {
 		drawPanelFactory = new DrawPanelFactory();
-		ClassLoader classLoader = getClass().getClassLoader();
 	}
 
 	@Test
