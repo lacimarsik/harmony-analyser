@@ -24,12 +24,19 @@ public class DrawPanelFactory {
 		"chord_palette"
 	};
 
-	public String[] getVisualPlugins() {
+	private String[] getVisualPlugins() {
 		return VISUAL_PLUGINS;
 	}
 
-	public String[] getStaticVisualizations() {
+	private String[] getStaticVisualizations() {
 		return STATIC_VISUALIZATIONS;
+	}
+
+	public String[] getAllVisualizations() {
+		String[] all_visualizations = new String[getStaticVisualizations().length + getVisualPlugins().length];
+		System.arraycopy(getStaticVisualizations(), 0, all_visualizations, 0, getStaticVisualizations().length);
+		System.arraycopy(getVisualPlugins(), 0, all_visualizations, getStaticVisualizations().length, getVisualPlugins().length);
+		return all_visualizations;
 	}
 
 	public DrawPanel createDrawPanel(String pluginKey, VisualizationData visualizationData) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, PluginLoader.LoadFailedException {

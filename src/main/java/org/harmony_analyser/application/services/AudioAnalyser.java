@@ -30,11 +30,8 @@ public class AudioAnalyser {
 
 	/* Public / Package methods */
 
-	public String[] getVisualPlugins() {
-		String[] all_visualizations = new String[drawPanelFactory.getStaticVisualizations().length + drawPanelFactory.getVisualPlugins().length];
-		System.arraycopy(drawPanelFactory.getStaticVisualizations(), 0, all_visualizations, 0, drawPanelFactory.getStaticVisualizations().length);
-		System.arraycopy(drawPanelFactory.getVisualPlugins(), 0, all_visualizations, drawPanelFactory.getStaticVisualizations().length, drawPanelFactory.getVisualPlugins().length);
-		return all_visualizations;
+	public String[] getVisualPLugins() {
+		return drawPanelFactory.getAllVisualizations();
 	}
 
 	public String printPlugins() {
@@ -45,9 +42,9 @@ public class AudioAnalyser {
 			result += availablePluginKey + "\n";
 		}
 
-		result += "\n> Available visualizations (" + drawPanelFactory.getVisualPlugins().length + "):\n";
+		result += "\n> Available visualizations (" + drawPanelFactory.getAllVisualizations().length + "):\n";
 
-		for (String availablePluginKey : drawPanelFactory.getVisualPlugins()) {
+		for (String availablePluginKey : drawPanelFactory.getAllVisualizations()) {
 			result += availablePluginKey + "\n";
 		}
 

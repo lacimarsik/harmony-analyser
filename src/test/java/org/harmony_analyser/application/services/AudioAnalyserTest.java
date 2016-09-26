@@ -45,7 +45,7 @@ public class AudioAnalyserTest {
 		AnalysisPluginFactory analysisPluginFactory = mock(AnalysisPluginFactory.class);
 		when(analysisPluginFactory.getAvailablePlugins()).thenReturn(availablePlugins);
 		DrawPanelFactory drawPanelFactory = mock(DrawPanelFactory.class);
-		when(drawPanelFactory.getVisualPlugins()).thenReturn(visualPlugins);
+		when(drawPanelFactory.getAllVisualizations()).thenReturn(visualPlugins);
 
 		audioAnalyser = new AudioAnalyser(analysisPluginFactory, drawPanelFactory) {
 			public String printInstalledVampPlugins() {
@@ -57,7 +57,7 @@ public class AudioAnalyserTest {
 		StringBuilder fixtureString = new StringBuilder();
 		String line;
 		while ((line = readerFixture.readLine()) != null) {
-			fixtureString.append(line + "\n");
+			fixtureString.append(line).append("\n");
 		}
 
 		assertEquals(fixtureString.toString(), audioAnalyser.printPlugins());
