@@ -7,6 +7,7 @@ import java.util.*;
  */
 
 public class VisualizationData {
+	private String pluginName;
 	private List<Float> timestamps;
 	private List<Float> values;
 	private List<String> labels;
@@ -29,6 +30,10 @@ public class VisualizationData {
 		return labels;
 	}
 
+	String getPluginName() {
+		return pluginName;
+	}
+
 	public void setTimestamps(List<Float> timestamps) {
 		this.timestamps = timestamps;
 	}
@@ -39,6 +44,10 @@ public class VisualizationData {
 
 	public void setLabels(List<String> labels) {
 		this.labels = labels;
+	}
+
+	public void setPluginName(String pluginName) {
+		this.pluginName = pluginName;
 	}
 
 	/* Null object */

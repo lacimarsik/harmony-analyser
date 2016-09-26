@@ -5,6 +5,7 @@ import org.harmony_analyser.application.services.AudioAnalysisHelper;
 import org.harmony_analyser.application.visualizations.VisualizationData;
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.AnalysisPlugin;
+import org.vamp_plugins.PluginLoader;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -72,8 +73,8 @@ abstract class ChromaComplexityPlugin extends AnalysisPlugin {
 		return result;
 	}
 
-	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, AnalysisPlugin.ParseOutputError {
-		VisualizationData data = new VisualizationData();
+	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, AnalysisPlugin.ParseOutputError, PluginLoader.LoadFailedException {
+		VisualizationData data = super.getDataFromOutput(outputFile);
 		List<Float> timestamps = new ArrayList<>();
 		List<Float> values = new ArrayList<>();
 		List<String> linesList = readOutputFile(outputFile);

@@ -107,7 +107,11 @@ public abstract class AnalysisPlugin {
 		return "\nBeginning analysis: " + pluginKey + "\n";
 	}
 
-	public abstract VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, OutputNotReady, ParseOutputError, PluginLoader.LoadFailedException;
+	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, OutputNotReady, ParseOutputError, PluginLoader.LoadFailedException {
+		VisualizationData visualizationData = new VisualizationData();
+		visualizationData.setPluginName(pluginName);
+		return visualizationData;
+	}
 
 	/* Helpers */
 
