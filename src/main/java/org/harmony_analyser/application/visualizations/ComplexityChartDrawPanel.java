@@ -31,7 +31,7 @@ class ComplexityChartDrawPanel extends DrawPanel {
 	/* Complet analysis */
 
 	private void drawComplexityColumnGraph(Graphics g) {
-		drawColumnChart(g, "Complexity results", "", "", Color.BLACK);
+		drawColumnChart(g, visualizationData.getPluginName(), "", "", Color.BLACK);
 	}
 
 	/* Analysis components */

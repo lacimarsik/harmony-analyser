@@ -29,7 +29,7 @@ class ChromaDrawPanel extends DrawPanel {
 	/* Complet analysis */
 
 	private void drawChromaComplexityGraph(Graphics g) {
-		drawLineChart(g, "Chroma Complexity", "", "", Color.BLACK);
+		drawLineChart(g, visualizationData.getPluginName(), "", "", Color.BLACK);
 	}
 
 	/* Analysis components */
