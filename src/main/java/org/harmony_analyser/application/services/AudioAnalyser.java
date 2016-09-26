@@ -30,7 +30,7 @@ public class AudioAnalyser {
 
 	/* Public / Package methods */
 
-	public String[] getVisualPLugins() {
+	public String[] getAllVisualizations() {
 		return drawPanelFactory.getAllVisualizations();
 	}
 

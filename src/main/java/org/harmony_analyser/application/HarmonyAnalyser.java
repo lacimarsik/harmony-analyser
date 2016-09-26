@@ -381,7 +381,7 @@ class HarmonyAnalyser extends JFrame {
 
 		visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\n");
 
-		String[] visualizationPlugins = audioAnalyser.getVisualPlugins();
+		String[] visualizationPlugins = audioAnalyser.getAllVisualizations();
 		for (String pluginName : visualizationPlugins) {
 			comboBoxOne.addItem(pluginName);
 		}
