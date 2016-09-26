@@ -18,20 +18,22 @@ import static org.powermock.api.mockito.PowerMockito.whenNew;
 @PrepareForTest(DrawPanelFactory.class)
 public class DrawPanelFactoryTest {
 	private DrawPanelFactory drawPanelFactory;
+	private VisualizationData visualizationData;
 
 	@Before
 	public void setUp() {
 		drawPanelFactory = new DrawPanelFactory();
+		visualizationData = VisualizationData.VOID_VISUALIZATION_DATA;
 	}
 
 	@Test
 	public void shouldCreateDrawPanel() throws Exception {
 		SegmentationDrawPanel segmentationDrawPanel = mock(SegmentationDrawPanel.class);
 		VisualizationData visualizationData = mock(VisualizationData.class);
-		whenNew(SegmentationDrawPanel.class).withArguments(any(VisualizationData.class)).thenReturn(segmentationDrawPanel);
+		whenNew(SegmentationDrawPanel.class).withArguments(visualizationData).thenReturn(segmentationDrawPanel);
 
 		DrawPanel drawPanel = drawPanelFactory.createDrawPanel("nnls-chroma:chordino", visualizationData);
 
-		verifyNew(SegmentationDrawPanel.class).withArguments(any(VisualizationData.class));
+		verifyNew(SegmentationDrawPanel.class).withArguments(visualizationData);
 	}
 }
