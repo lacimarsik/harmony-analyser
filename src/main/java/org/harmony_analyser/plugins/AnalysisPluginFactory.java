@@ -18,7 +18,8 @@ public class AnalysisPluginFactory {
 		"nnls-chroma:chordino",
 		"harmanal:transition_complexity",
 		"chromanal:chroma_complexity_simple",
-		"chromanal:chroma_complexity_tonal"
+		"chromanal:chroma_complexity_tonal",
+		"chord_palette"
 	};
 
 	private final String[] WRAPPED_VAMP_PLUGINS = new String[] {
@@ -36,10 +37,6 @@ public class AnalysisPluginFactory {
 
 	public AnalysisPlugin createPlugin(String pluginKey) throws AudioAnalyser.LoadFailedException {
 		AnalysisPlugin plugin;
-		if (!Arrays.asList(AVAILABLE_PLUGINS).contains(pluginKey)) {
-			throw new AudioAnalyser.LoadFailedException("Plugin with key " + pluginKey + " is not available");
-		}
-
 		try {
 			switch (pluginKey) {
 				case "nnls-chroma:nnls-chroma":
@@ -56,6 +53,9 @@ public class AnalysisPluginFactory {
 					break;
 				case "chromanal:chroma_complexity_tonal":
 					plugin = new ChromaComplexityTonalPlugin();
+					break;
+				case "chord_palette":
+					plugin = new VoidPlugin();
 					break;
 				default:
 					throw new AudioAnalyser.LoadFailedException("Plugin with key " + pluginKey + " is not available");

@@ -84,23 +84,10 @@ public class AudioAnalyser {
 	}
 
 	public String runAnalysis(String inputFile, String pluginKey, boolean force) throws AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, IOException, LoadFailedException, Chroma.WrongChromaSize {
-		// TODO: Handle this better
-		if (Arrays.asList(drawPanelFactory.getStaticVisualizations()).contains(pluginKey)) {
-			return "\nPerforming static visualization: (" + pluginKey + ")\n";
-		} else {
-			AnalysisPlugin plugin = analysisPluginFactory.createPlugin(pluginKey);
-			return plugin.analyse(inputFile, force);
-		}
+		return analysisPluginFactory.createPlugin(pluginKey).analyse(inputFile, force);
 	}
 
 	public DrawPanel createDrawPanel(String inputFile, String pluginKey) throws LoadFailedException, AnalysisPlugin.OutputNotReady, AnalysisPlugin.ParseOutputError, PluginLoader.LoadFailedException, IOException {
-		VisualizationData visualizationData;
-		// TODO: Handle this better
-		if (Arrays.asList(drawPanelFactory.getStaticVisualizations()).contains(pluginKey)) {
-			visualizationData =  null;
-		} else {
-			visualizationData = analysisPluginFactory.createPlugin(pluginKey).getDataFromOutput(inputFile);
-		}
-		return drawPanelFactory.createDrawPanel(pluginKey, visualizationData);
+		return drawPanelFactory.createDrawPanel(pluginKey, analysisPluginFactory.createPlugin(pluginKey).getDataFromOutput(inputFile));
 	}
 }

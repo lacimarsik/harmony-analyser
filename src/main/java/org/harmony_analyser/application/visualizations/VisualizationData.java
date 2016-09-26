@@ -1,6 +1,6 @@
 package org.harmony_analyser.application.visualizations;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Wrapper for data to visualzize
@@ -10,6 +10,12 @@ public class VisualizationData {
 	private List<Float> timestamps;
 	private List<Float> values;
 	private List<String> labels;
+
+	public VisualizationData() {
+		setTimestamps(new ArrayList<>());
+		setValues(new ArrayList<>());
+		setLabels(new ArrayList<>());
+	}
 
 	List<Float> getTimestamps() {
 		return timestamps;
@@ -34,4 +40,8 @@ public class VisualizationData {
 	public void setLabels(List<String> labels) {
 		this.labels = labels;
 	}
+
+	/* Null object */
+
+	public static VisualizationData VOID_VISUALIZATION_DATA = new VisualizationData();
 }
