@@ -29,7 +29,6 @@ public class DrawPanelFactoryTest {
 	@Test
 	public void shouldCreateDrawPanel() throws Exception {
 		SegmentationDrawPanel segmentationDrawPanel = mock(SegmentationDrawPanel.class);
-		VisualizationData visualizationData = mock(VisualizationData.class);
 		whenNew(SegmentationDrawPanel.class).withArguments(visualizationData).thenReturn(segmentationDrawPanel);
 
 		DrawPanel drawPanel = drawPanelFactory.createDrawPanel("nnls-chroma:chordino", visualizationData);
