@@ -13,11 +13,8 @@ import java.io.IOException;
 @SuppressWarnings({"SameParameterValue", "UnusedParameters"})
 
 class ChromaDrawPanel extends DrawPanel {
-	private final String type;
-
-	ChromaDrawPanel(VisualizationData visualizationData, String type) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException {
+	ChromaDrawPanel(VisualizationData visualizationData) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException {
 		super(visualizationData);
-		this.type = type;
 	}
 
 	/* Public / Package methods */
@@ -32,7 +29,7 @@ class ChromaDrawPanel extends DrawPanel {
 	/* Complet analysis */
 
 	private void drawChromaComplexityGraph(Graphics g) {
-		drawLineChart(g, "Chroma Complexity " + type, "", "", Color.BLACK);
+		drawLineChart(g, "Chroma Complexity", "", "", Color.BLACK);
 	}
 
 	/* Analysis components */

@@ -48,9 +48,8 @@ public class DrawPanelFactory {
 			case "harmanal:transition_complexity":
 				return new ComplexityChartDrawPanel(visualizationData);
 			case "chromanal:chroma_complexity_simple":
-				return new ChromaDrawPanel(visualizationData, "Simple");
 			case "chromanal:chroma_complexity_tonal":
-				return new ChromaDrawPanel(visualizationData, "Tonal");
+				return new ChromaDrawPanel(visualizationData);
 			default:
 				return null;
 		}
