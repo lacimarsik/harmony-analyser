@@ -13,30 +13,18 @@ import java.io.IOException;
 @SuppressWarnings("SameParameterValue")
 
 public class DrawPanelFactory {
-	private final String[] VISUAL_PLUGINS = new String[] {
+	private final String[] ALL_VISUALIZATIONS = new String[] {
+		// Visual plugins
 		"nnls-chroma:chordino",
 		"harmanal:transition_complexity",
 		"chromanal:chroma_complexity_simple",
-		"chromanal:chroma_complexity_tonal"
-	};
-
-	private final String[] STATIC_VISUALIZATIONS = new String[] {
+		"chromanal:chroma_complexity_tonal",
+		// Static visualizations
 		"chord_palette"
 	};
 
-	private String[] getVisualPlugins() {
-		return VISUAL_PLUGINS;
-	}
-
-	private String[] getStaticVisualizations() {
-		return STATIC_VISUALIZATIONS;
-	}
-
 	public String[] getAllVisualizations() {
-		String[] all_visualizations = new String[getStaticVisualizations().length + getVisualPlugins().length];
-		System.arraycopy(getStaticVisualizations(), 0, all_visualizations, 0, getStaticVisualizations().length);
-		System.arraycopy(getVisualPlugins(), 0, all_visualizations, getStaticVisualizations().length, getVisualPlugins().length);
-		return all_visualizations;
+		return ALL_VISUALIZATIONS;
 	}
 
 	public DrawPanel createDrawPanel(String pluginKey, VisualizationData visualizationData) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, PluginLoader.LoadFailedException {
