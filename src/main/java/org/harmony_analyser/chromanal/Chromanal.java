@@ -32,8 +32,8 @@ public class Chromanal {
 		int[] harmony2 = AudioAnalysisHelper.createBinaryChord(chromaVector2, maximumNumberOfChordTones);
 
 		// create chords using Chordanal
-		String currentChordTones = Chordanal.getStringOfTones(harmony1);
-		String previousChordTones = Chordanal.getStringOfTones(harmony2);
+		String currentChordTones = Chordanal.getStringOfTones(harmony2);
+		String previousChordTones = Chordanal.getStringOfTones(harmony1);
 		Harmony harmony_1 = Chordanal.createHarmonyFromRelativeTones(previousChordTones);
 		Harmony harmony_2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
 		if ((harmony_1 != null) && (harmony_2 != null)) {
