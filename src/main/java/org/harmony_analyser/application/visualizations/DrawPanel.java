@@ -11,7 +11,7 @@ import java.util.*;
 @SuppressWarnings("SameParameterValue")
 
 public abstract class DrawPanel extends JPanel {
-	VisualizationData visualizationData;
+	final VisualizationData visualizationData;
 	final Point cursor; // cursor of drawing (moves from left to right on the canvas)
 	static final java.util.List<Color> palette;
 	private static final int paletteStepCount = 2; // how many steps in one color space (R / G / B)

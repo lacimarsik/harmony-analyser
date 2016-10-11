@@ -52,5 +52,5 @@ public class VisualizationData {
 
 	/* Null object */
 
-	public static VisualizationData VOID_VISUALIZATION_DATA = new VisualizationData();
+	public final static VisualizationData VOID_VISUALIZATION_DATA = new VisualizationData();
 }

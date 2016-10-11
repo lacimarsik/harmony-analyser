@@ -15,6 +15,7 @@ import static org.powermock.api.mockito.PowerMockito.whenNew;
  * Unit tests for AnalysisPluginFactory class
  */
 
+@SuppressWarnings("UnusedAssignment")
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(AnalysisPluginFactory.class)
 public class AnalysisPluginFactoryTest {

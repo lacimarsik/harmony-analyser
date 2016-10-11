@@ -2,7 +2,6 @@ package org.harmony_analyser.plugins.vamp_plugins;
 
 import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.application.visualizations.VisualizationData;
-import org.harmony_analyser.plugins.AnalysisPlugin;
 import org.vamp_plugins.*;
 
 import java.io.IOException;

@@ -1,11 +1,5 @@
 package org.harmony_analyser.application.visualizations;
 
-import org.harmony_analyser.application.services.AudioAnalyser;
-import org.harmony_analyser.plugins.AnalysisPlugin;
-import org.vamp_plugins.PluginLoader;
-
-import java.io.IOException;
-
 /**
  * Factory to create Draw panels on demand
  */
@@ -27,7 +21,7 @@ public class DrawPanelFactory {
 		return ALL_VISUALIZATIONS;
 	}
 
-	public DrawPanel createDrawPanel(String pluginKey, VisualizationData visualizationData) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, PluginLoader.LoadFailedException {
+	public DrawPanel createDrawPanel(String pluginKey, VisualizationData visualizationData) {
 		switch (pluginKey) {
 			case "nnls-chroma:chordino":
 				return new SegmentationDrawPanel(visualizationData);

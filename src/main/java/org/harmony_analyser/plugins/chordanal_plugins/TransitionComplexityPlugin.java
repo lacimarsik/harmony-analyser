@@ -245,7 +245,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		// get last NUMBER_OUTPUTS lines
 		List<String> tail = linesList.subList(Math.max(linesList.size() - NUMBER_OUTPUTS, 0), linesList.size());
 		for (String line : tail) {
-			Scanner sc = new Scanner(line).useDelimiter("\\s*\\:\\s*");
+			Scanner sc = new Scanner(line).useDelimiter("\\s*:\\s*");
 			labels.add(sc.next());
 			if (sc.hasNextFloat()) {
 				values.add(sc.nextFloat());

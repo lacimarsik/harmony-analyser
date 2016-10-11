@@ -6,8 +6,6 @@ import org.harmony_analyser.plugins.chromanal_plugins.*;
 import org.harmony_analyser.plugins.vamp_plugins.*;
 import org.vamp_plugins.PluginLoader;
 
-import java.util.Arrays;
-
 /**
  * Factory to create Analysis plugins on demand
  */

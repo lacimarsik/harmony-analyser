@@ -14,6 +14,7 @@ import static org.powermock.api.mockito.PowerMockito.whenNew;
  * Unit tests for DrawPanelFactory class
  */
 
+@SuppressWarnings("UnusedAssignment")
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(DrawPanelFactory.class)
 public class DrawPanelFactoryTest {

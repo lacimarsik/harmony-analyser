@@ -1,20 +1,15 @@
 package org.harmony_analyser.application.visualizations;
 
-import org.harmony_analyser.application.services.*;
 import org.harmony_analyser.chordanal.*;
-import org.harmony_analyser.plugins.*;
-import org.harmony_analyser.plugins.vamp_plugins.*;
-import org.vamp_plugins.PluginLoader;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
 @SuppressWarnings({"SameParameterValue", "UnusedParameters"})
 
 class SegmentationDrawPanel extends DrawPanel {
-	SegmentationDrawPanel(VisualizationData visualizationData) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException, PluginLoader.LoadFailedException {
+	SegmentationDrawPanel(VisualizationData visualizationData) {
 		super(visualizationData);
 	}
 

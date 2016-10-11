@@ -1,12 +1,7 @@
 package org.harmony_analyser.application.visualizations;
 
-import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.chordanal.*;
-import org.harmony_analyser.plugins.AnalysisPlugin;
-import org.vamp_plugins.PluginLoader;
-
 import java.awt.*;
-import java.io.IOException;
 
 @SuppressWarnings({"SameParameterValue", "UnusedParameters"})
 
