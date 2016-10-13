@@ -37,75 +37,14 @@ public class Chromanal {
 		Harmony harmony_1 = Chordanal.createHarmonyFromRelativeTones(previousChordTones);
 		Harmony harmony_2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
 		if ((harmony_1 != null) && (harmony_2 != null)) {
-			DatabaseTable roots1 = Harmanal.getRoots(harmony_1);
-			DatabaseTable roots2 = Harmanal.getRoots(harmony_2);
-			if ((roots1 != null) && (roots2 != null) && !roots1.isEmpty() && !roots2.isEmpty()) {
-				List<String> rootKeys1 = roots1.getAllKeys().get(0);
-				List<String> rootKeys2 = roots2.getAllKeys().get(0);
-				Scanner sc1 = new Scanner(rootKeys1.get(2));
-				String tone1 = "";
-				String tone2 = "";
-				String tone3 = "";
-				if (sc1.hasNext()) {
-					tone1 = sc1.next();
-				}
-				if (sc1.hasNext()) {
-					tone2 = sc1.next();
-				}
-				if (sc1.hasNext()) {
-					tone3 = sc1.next();
-				}
-
-				if (!tone1.equals("")) {
-					Tone tone1c = Chordanal.createToneFromRelativeName(tone1);
-					if (tone1c != null) {
-						chromaVector1[tone1c.getNumberMapped()] = 0;
-					}
-				}
-				if (!tone2.equals("")) {
-					Tone tone2c = Chordanal.createToneFromRelativeName(tone2);
-					if (tone2c != null) {
-						chromaVector1[tone2c.getNumberMapped()] = 0;
-					}
-				}
-				if (!tone3.equals("")) {
-					Tone tone3c = Chordanal.createToneFromRelativeName(tone3);
-					if (tone3c != null) {
-						chromaVector1[tone3c.getNumberMapped()] = 0;
-					}
-				}
-				Scanner sc2 = new Scanner(rootKeys2.get(2));
-				String tone2_1 = "";
-				String tone2_2 = "";
-				String tone2_3 = "";
-				if (sc2.hasNext()) {
-					tone2_1 = sc2.next();
-				}
-				if (sc2.hasNext()) {
-					tone2_2 = sc2.next();
-				}
-				if (sc2.hasNext()) {
-					tone2_3 = sc2.next();
-				}
-
-				if (!tone2_1.equals("")) {
-					Tone tone1c = Chordanal.createToneFromRelativeName(tone2_1);
-					if (tone1c != null) {
-						chromaVector2[tone1c.getNumberMapped()] = 0;
-					}
-				}
-				if (!tone2_2.equals("")) {
-					Tone tone2c = Chordanal.createToneFromRelativeName(tone2_2);
-					if (tone2c != null) {
-						chromaVector2[tone2c.getNumberMapped()] = 0;
-					}
-				}
-				if (!tone2_3.equals("")) {
-					Tone tone3c = Chordanal.createToneFromRelativeName(tone2_3);
-					if (tone3c != null) {
-						chromaVector2[tone3c.getNumberMapped()] = 0;
-					}
-				}
+			// subtract root tones from the chords
+			Harmony rootHarmony1 = Harmanal.getRootHarmony(harmony_1);
+			for (Tone tone : rootHarmony1.tones) {
+				chromaVector1[tone.getNumberMapped()] = 0;
+			}
+			Harmony rootHarmony2 = Harmanal.getRootHarmony(harmony_2);
+			for (Tone tone : rootHarmony2.tones) {
+				chromaVector2[tone.getNumberMapped()] = 0;
 			}
 		}
 

@@ -124,6 +124,28 @@ public class Harmanal {
 		return result;
 	}
 
+	public static Harmony getRootHarmony(Harmony harmony) {
+		DatabaseTable roots = Harmanal.getRoots(harmony);
+		if ((roots == null) || (roots.isEmpty())) {
+			return null;
+		}
+		List<String> rootKeys = roots.getAllKeys().get(0);
+		Scanner sc1 = new Scanner(rootKeys.get(2));
+		String tone1 = "";
+		String tone2 = "";
+		String tone3 = "";
+		if (sc1.hasNext()) {
+			tone1 = sc1.next();
+		}
+		if (sc1.hasNext()) {
+			tone2 = sc1.next();
+		}
+		if (sc1.hasNext()) {
+			tone3 = sc1.next();
+		}
+		return Chordanal.createHarmonyFromRelativeTones(tone1 + " " + tone2 + " " + tone3);
+	}
+
 	/**
 	 * Gets the common roots table for two harmonies
 	 */
