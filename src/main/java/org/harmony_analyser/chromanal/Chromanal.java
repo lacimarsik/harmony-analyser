@@ -37,22 +37,23 @@ public class Chromanal {
 		Harmony harmony_1 = Chordanal.createHarmonyFromRelativeTones(previousChordTones);
 		Harmony harmony_2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
 		if ((harmony_1 != null) && (harmony_2 != null)) {
-			List<String> roots1 = Harmanal.getRootsFormatted(harmony_1);
-			List<String> roots2 = Harmanal.getRootsFormatted(harmony_2);
-			if ((roots1 != null) && (roots2 != null) && (roots1.size() > 0) && (roots2.size() > 0)) {
-				Scanner sc1 = new Scanner(roots1.get(0));
-				Scanner sc2 = new Scanner(roots2.get(0));
-
-				sc1.nextLine();
-				sc1.next();
-				String tone1 = sc1.next();
-				String tone2 = sc1.next();
-				String tone3 = sc1.next();
-				if (tone2.equals("steps:")) {
-					tone2 = "";
+			DatabaseTable roots1 = Harmanal.getRoots(harmony_1);
+			DatabaseTable roots2 = Harmanal.getRoots(harmony_2);
+			if ((roots1 != null) && (roots2 != null) && !roots1.isEmpty() && !roots2.isEmpty()) {
+				List<String> rootKeys1 = roots1.getAllKeys().get(0);
+				List<String> rootKeys2 = roots2.getAllKeys().get(0);
+				Scanner sc1 = new Scanner(rootKeys1.get(2));
+				String tone1 = "";
+				String tone2 = "";
+				String tone3 = "";
+				if (sc1.hasNext()) {
+					tone1 = sc1.next();
 				}
-				if (tone3.equals("steps:")) {
-					tone3 = "";
+				if (sc1.hasNext()) {
+					tone2 = sc1.next();
+				}
+				if (sc1.hasNext()) {
+					tone3 = sc1.next();
 				}
 
 				if (!tone1.equals("")) {
@@ -73,18 +74,20 @@ public class Chromanal {
 						chromaVector1[tone3c.getNumberMapped()] = 0;
 					}
 				}
+				Scanner sc2 = new Scanner(rootKeys2.get(2));
+				String tone2_1 = "";
+				String tone2_2 = "";
+				String tone2_3 = "";
+				if (sc2.hasNext()) {
+					tone2_1 = sc2.next();
+				}
+				if (sc2.hasNext()) {
+					tone2_2 = sc2.next();
+				}
+				if (sc2.hasNext()) {
+					tone2_3 = sc2.next();
+				}
 
-				sc2.nextLine();
-				sc2.next();
-				String tone2_1 = sc2.next();
-				String tone2_2 = sc2.next();
-				String tone2_3 = sc2.next();
-				if (tone2_2.equals("steps:")) {
-					tone2_2 = "";
-				}
-				if (tone2_3.equals("steps:")) {
-					tone2_3 = "";
-				}
 				if (!tone2_1.equals("")) {
 					Tone tone1c = Chordanal.createToneFromRelativeName(tone2_1);
 					if (tone1c != null) {

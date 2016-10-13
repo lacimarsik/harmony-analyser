@@ -106,7 +106,7 @@ public class Harmanal {
 	 * Gets function roots table for a harmony
 	 */
 
-	static DatabaseTable getRoots(Harmony harmony) {
+	public static DatabaseTable getRoots(Harmony harmony) {
 		Key key;
 		DatabaseTable result = new DatabaseTable();
 
