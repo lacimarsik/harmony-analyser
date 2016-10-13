@@ -318,13 +318,13 @@ public class Harmanal {
 		DatabaseTable result = new DatabaseTable();
 		DatabaseTable rows;
 
-		if ((rows = getRoots(harmony,key.getTonic(),Chordanal.TONIC,key)) != null) {
+		if ((rows = getRoots(harmony,key.getTonic(), Chordanal.TONIC,key)) != null) {
 			result.addAll(rows);
 		}
-		if ((rows = getRoots(harmony,key.getSubdominant(),Chordanal.SUBDOMINANT,key)) != null) {
+		if ((rows = getRoots(harmony,key.getSubdominant(), Chordanal.SUBDOMINANT,key)) != null) {
 			result.addAll(rows);
 		}
-		if ((rows = getRoots(harmony,key.getDominant(),Chordanal.DOMINANT,key)) != null) {
+		if ((rows = getRoots(harmony,key.getDominant(), Chordanal.DOMINANT,key)) != null) {
 			result.addAll(rows);
 		}
 		return result;
