@@ -26,19 +26,17 @@ class PaletteDrawPanel extends DrawPanel {
 			drawSegment(g, 0.077, color);
 		}
 		Harmony chromaticScale = Chordanal.createHarmonyFromRelativeTones("C C# D D# E F F# G G# A A# B");
-		if (chromaticScale != null) {
-			cursor.setLocation(0, 0);
-			int i = 0;
-			for (Color color : palette) {
-				if (i >= 12) {
-					drawNote(g, "N", 0.077, Color.WHITE);
-				} else {
-					drawNote(g, chromaticScale.tones.get(i).getNameMapped(), 0.077, Color.WHITE);
-				}
-				i++;
+		cursor.setLocation(0, 0);
+		int i = 0;
+		for (Color color : palette) {
+			if (i >= 12) {
+				drawNote(g, "N", 0.077, Color.WHITE);
+			} else {
+				drawNote(g, chromaticScale.tones.get(i).getNameMapped(), 0.077, Color.WHITE);
 			}
-			cursor.setLocation(0, 0);
+			i++;
 		}
+		cursor.setLocation(0, 0);
 	}
 
 	/* Analysis components */

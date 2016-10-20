@@ -44,7 +44,7 @@ abstract class ChromaComplexityPlugin extends AnalysisPlugin {
 
 		float[] chromaArray;
 		Chroma chroma;
-		Chroma previousChroma = null;
+		Chroma previousChroma = Chroma.EMPTY_CHROMA;
 		float timestamp;
 		BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
 
@@ -59,7 +59,7 @@ abstract class ChromaComplexityPlugin extends AnalysisPlugin {
 			chromaArray = shiftChroma(chromaArray, 3);
 			chroma = new Chroma(chromaArray);
 
-			if (previousChroma == null) {
+			if (previousChroma.equals(Chroma.EMPTY_CHROMA)) {
 				out.write(timestamp + ": 0\n");
 			} else {
 				out.write(timestamp + ": " + Float.toString((this.getChromaComplexity(previousChroma, chroma))) + "\n");

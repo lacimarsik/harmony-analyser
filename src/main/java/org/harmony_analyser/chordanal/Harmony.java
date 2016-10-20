@@ -11,6 +11,8 @@ import java.util.*;
 public class Harmony {
 	public List<Tone> tones;
 
+	public static final Harmony EMPTY_HARMONY = new Harmony(new ArrayList<>());
+
 	/**
 	 * Creates Harmony from integer array. Can be unsorted and with duplicities.
 	 */
@@ -55,7 +57,7 @@ public class Harmony {
 	String[] getIntervals() {
 		String[] result;
 
-		if (tones.size() == 1) {
+		if (tones.size() <= 1) {
 			result = new String[1];
 			result[0] = "0";
 			return result;
@@ -74,7 +76,7 @@ public class Harmony {
 		newTones.addAll(tones);
 		newTones.remove(0);
 		if ((tones.get(0).getNumber()+12) > 127) {
-			return null;
+			return Harmony.EMPTY_HARMONY;
 		}
 		newTones.add(new Tone(tones.get(0).getNumber()+12));
 
@@ -84,8 +86,8 @@ public class Harmony {
 	Harmony inversionDown() {
 		ArrayList<Tone> newTones = new ArrayList<>();
 
-		if ((tones.get(tones.size()-1).getNumber()-12) < 0) {
-			return null;
+		if ((tones.get(tones.size() - 1).getNumber() - 12) < 0) {
+			return Harmony.EMPTY_HARMONY;
 		}
 		newTones.add(new Tone(tones.get(tones.size()-1).getNumber()-12));
 		newTones.addAll(tones);
@@ -108,8 +110,8 @@ public class Harmony {
 			for (Tone tone2 : otherHarmony.tones) {
 				if (tone1.getNameMapped().equals(tone2.getNameMapped())) {
 					Tone tone = Chordanal.createToneFromRelativeName(tone1.getNameMapped());
-					if (tone == null) {
-						return null;
+					if (tone.equals(Tone.EMPTY_TONE)) {
+						return Harmony.EMPTY_HARMONY;
 					} else {
 						boolean alreadyInFound = false;
 						for (Tone inFound : found) {

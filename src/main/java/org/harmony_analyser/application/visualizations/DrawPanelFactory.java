@@ -33,7 +33,7 @@ public class DrawPanelFactory {
 			case "chromanal:chroma_complexity_tonal":
 				return new ChromaDrawPanel(visualizationData);
 			default:
-				return null;
+				return new EmptyDrawPanel(VisualizationData.EMPTY_VISUALIZATION_DATA);
 		}
 	}
 }
