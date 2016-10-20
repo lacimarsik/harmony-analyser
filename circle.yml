@@ -1,4 +1,4 @@
 dependencies:
   pre:
     - mvn install:install-file -DgroupId=org.vamp_plugins -DartifactId=jvamp -Dversion=1.3 -Dpackaging=jar -Dfile=./lib/jvamp.jar
-    - cp ./lib/libvamp-jni.so /lib
+    - sudo cp ./lib/libvamp-jni.so /lib
