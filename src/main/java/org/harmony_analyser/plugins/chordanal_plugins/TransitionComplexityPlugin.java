@@ -171,7 +171,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 			Harmony harmony1 = Chordanal.createHarmonyFromRelativeTones(previousChordTones);
 			Harmony harmony2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
 
-			if ((harmony1 == null) || (harmony2 == null)) {
+			if (harmony1.equals(Harmony.EMPTY_HARMONY) || harmony2.equals(Harmony.EMPTY_HARMONY)) {
 				out.write("SKIP (one or both chords were not assigned)\n\n");
 			} else {
 				// Print chord names to output
@@ -189,7 +189,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 				} else {
 					List<String> transitionsFormatted = Harmanal.getTransitionsFormatted(harmony1, harmony2);
 					String transitionFormatted;
-					if (transitionsFormatted == null) {
+					if (transitionsFormatted.size() == 0) {
 						transitionFormatted = "(not found)";
 					} else {
 						transitionFormatted = transitionsFormatted.get(0);

@@ -75,6 +75,6 @@ public class NNLSPlugin extends VampPlugin {
 	}
 
 	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, OutputNotReady, ParseOutputError, PluginLoader.LoadFailedException {
-		return VisualizationData.VOID_VISUALIZATION_DATA;
+		return VisualizationData.EMPTY_VISUALIZATION_DATA;
 	}
 }

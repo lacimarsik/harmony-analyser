@@ -56,7 +56,7 @@ public class AudioAnalyserTest {
 		BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
 		StringBuilder fixtureString = new StringBuilder();
 		String line;
-		while ((line = readerFixture.readLine()) != null) {
+		while ((line = readerFixture.readLine()) != null) { // Check for null is valid
 			fixtureString.append(line).append("\n");
 		}
 

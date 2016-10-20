@@ -53,7 +53,7 @@ class SegmentationDrawPanel extends DrawPanel {
 		}
 
 		Tone tone = Chordanal.createToneFromRelativeName(relativeToneName);
-		if (tone == null) {
+		if (tone.equals(Tone.EMPTY_TONE)) {
 			return palette.get(12);
 		} else {
 			return palette.get(tone.getNumberMapped());

@@ -24,7 +24,7 @@ public class DrawPanelFactoryTest {
 	@Before
 	public void setUp() {
 		drawPanelFactory = new DrawPanelFactory();
-		visualizationData = VisualizationData.VOID_VISUALIZATION_DATA;
+		visualizationData = VisualizationData.EMPTY_VISUALIZATION_DATA;
 	}
 
 	@Test

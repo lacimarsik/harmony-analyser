@@ -3,9 +3,6 @@ package org.harmony_analyser.chromanal;
 import org.harmony_analyser.application.services.AudioAnalysisHelper;
 import org.harmony_analyser.chordanal.*;
 
-import java.util.List;
-import java.util.Scanner;
-
 @SuppressWarnings("FieldCanBeLocal")
 
 public class Chromanal {
@@ -36,16 +33,14 @@ public class Chromanal {
 		String previousChordTones = Chordanal.getStringOfTones(harmony1);
 		Harmony harmony_1 = Chordanal.createHarmonyFromRelativeTones(previousChordTones);
 		Harmony harmony_2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
-		if ((harmony_1 != null) && (harmony_2 != null)) {
-			// subtract root tones from the chords
-			Harmony rootHarmony1 = Harmanal.getRootHarmony(harmony_1);
-			for (Tone tone : rootHarmony1.tones) {
-				chromaVector1[tone.getNumberMapped()] = 0;
-			}
-			Harmony rootHarmony2 = Harmanal.getRootHarmony(harmony_2);
-			for (Tone tone : rootHarmony2.tones) {
-				chromaVector2[tone.getNumberMapped()] = 0;
-			}
+		// subtract root tones from the chords
+		Harmony rootHarmony1 = Harmanal.getRootHarmony(harmony_1);
+		for (Tone tone : rootHarmony1.tones) {
+			chromaVector1[tone.getNumberMapped()] = 0;
+		}
+		Harmony rootHarmony2 = Harmanal.getRootHarmony(harmony_2);
+		for (Tone tone : rootHarmony2.tones) {
+			chromaVector2[tone.getNumberMapped()] = 0;
 		}
 
 		return getChromaComplexitySimple(new Chroma(chromaVector1), new Chroma(chromaVector2));

@@ -53,7 +53,7 @@ public class AnalysisPluginFactory {
 					plugin = new ChromaComplexityTonalPlugin();
 					break;
 				case "chord_palette":
-					plugin = new VoidPlugin();
+					plugin = new EmptyPlugin();
 					break;
 				default:
 					throw new AudioAnalyser.LoadFailedException("Plugin with key " + pluginKey + " is not available");

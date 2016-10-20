@@ -38,10 +38,10 @@ public class TransitionComplexityPluginTest {
 		StringBuilder reportString = new StringBuilder();
 		StringBuilder fixtureString = new StringBuilder();
 		String line;
-		while ((line = readerReport.readLine()) != null) {
+		while ((line = readerReport.readLine()) != null) { // Check for null is valid
 			reportString.append(line);
 		}
-		while ((line = readerFixture.readLine()) != null) {
+		while ((line = readerFixture.readLine()) != null) { // Check for null is valid
 			fixtureString.append(line);
 		}
 		assertEquals(fixtureString.toString(), reportString.toString());
