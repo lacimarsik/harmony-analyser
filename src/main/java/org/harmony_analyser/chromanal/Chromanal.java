@@ -3,9 +3,6 @@ package org.harmony_analyser.chromanal;
 import org.harmony_analyser.application.services.AudioAnalysisHelper;
 import org.harmony_analyser.chordanal.*;
 
-import java.util.List;
-import java.util.Scanner;
-
 @SuppressWarnings("FieldCanBeLocal")
 
 public class Chromanal {
@@ -39,12 +36,16 @@ public class Chromanal {
 		if ((harmony_1 != null) && (harmony_2 != null)) {
 			// subtract root tones from the chords
 			Harmony rootHarmony1 = Harmanal.getRootHarmony(harmony_1);
-			for (Tone tone : rootHarmony1.tones) {
-				chromaVector1[tone.getNumberMapped()] = 0;
+			if (rootHarmony1 != null) {
+				for (Tone tone : rootHarmony1.tones) {
+					chromaVector1[tone.getNumberMapped()] = 0;
+				}
 			}
 			Harmony rootHarmony2 = Harmanal.getRootHarmony(harmony_2);
-			for (Tone tone : rootHarmony2.tones) {
-				chromaVector2[tone.getNumberMapped()] = 0;
+			if (rootHarmony2 != null) {
+				for (Tone tone : rootHarmony2.tones) {
+					chromaVector2[tone.getNumberMapped()] = 0;
+				}
 			}
 		}
 
