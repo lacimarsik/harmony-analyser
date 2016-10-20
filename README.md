@@ -22,7 +22,7 @@ To install the dependency properly, issue from the project root:
 
 In addition to this, jVamp, Vamp Plugin SDK and libsndfile binaries need to be installed locally in order to build application. Download and install [jVamp](https://code.soundsoftware.ac.uk/projects/jvamp)
 (Linux: compile and place `libvamp-jni.so` to your `java.library.path` folder (run `java -XshowSettings:properties` if you are unsure of the location), [Vamp Plugins SDK](https://code.soundsoftware.ac.uk/projects/vamp-plugin-sdk)
-(Linux: `./configure && make sdk && make install`) and [libsndfile](http://www.mega-nerd.com/libsndfile/) (Linux: Usually supported by package manager).
+(Linux: Supported by package manager, or `./configure && make sdk && make install`) and [libsndfile](http://www.mega-nerd.com/libsndfile/) (Linux: Usually supported by package manager).
 
 ## Documentation
 For more details and sample analysis please refer to the documentation located in `documentation` folder.
