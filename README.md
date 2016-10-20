@@ -1,4 +1,4 @@
-[Circle CI](https://circleci.com/gh/lacimarsik/harmony-analyser.svg?style=shield&circle-token=:circle-token)]
+[Circle CI](https://circleci.com/gh/lacimarsik/harmony-analyser.svg?style=shield&circle-token=:circle-token)
 
 # harmony-analyser
 Cross-platform Java application for analysing harmonies and chord progressions of musical pieces or MIDI input.
