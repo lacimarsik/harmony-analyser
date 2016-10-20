@@ -1,5 +1,5 @@
 [![Circle CI](https://circleci.com/gh/lacimarsik/harmony-analyser.svg?style=shield&circle-token=75d33ca47b62b8f09af431379c206b6cf80bd361)](https://circleci.com/gh/lacimarsik/harmony-analyser)
-[![Coverage Status](https://coveralls.io/repos/github/lacimarsik/harmony-analyser/badge.svg?branch=master)](https://coveralls.io/github/lacimarsik/harmony-analyser?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/lacimarsik/harmony-analyser/badge.png?branch=master)](https://coveralls.io/github/lacimarsik/harmony-analyser?branch=master)
 
 # harmony-analyser
 Cross-platform Java application for analysing harmonies and chord progressions of musical pieces or MIDI input.
