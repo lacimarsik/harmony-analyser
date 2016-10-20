@@ -1,11 +1,13 @@
 package org.harmony_analyser.plugins.vamp_plugins;
 
+import org.harmony_analyser.application.services.AudioAnalysisHelper;
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.*;
 import org.junit.*;
 import java.io.*;
 import java.util.*;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -31,6 +33,16 @@ public class NNLSPluginTest {
 		nnls.analyse(testWavFile.toString(), true);
 		BufferedReader reader = new BufferedReader(new FileReader(testWavFile.toString() + "-chromas.txt"));
 		String line = reader.readLine();
-		assertEquals(" 0.371519274: 0.3387495 0.48584637 1.1177865 0.70092547 0.9088075 0.10086642 1.0208882 0.56879604 0.7536442 1.5223277 0.08982226 0.535174 ", line);
+		float timestamp = AudioAnalysisHelper.getTimestampFromLine(line);
+		String chromaString = AudioAnalysisHelper.getLabelFromLine(line);
+		Scanner scanner = new Scanner(chromaString);
+		float[] chroma = new float[12];
+		for (int i = 0; i < chroma.length; i++) {
+			assert(scanner.hasNextFloat());
+			chroma[i] = scanner.nextFloat();
+		}
+
+		assertEquals(timestamp, 0.371519274f, 0.000001f);
+		assertArrayEquals(chroma, new float[]{ 0.3387495f, 0.48584637f, 1.1177865f, 0.70092547f, 0.9088075f, 0.10086642f, 1.0208882f, 0.56879604f, 0.7536442f, 1.5223277f, 0.08982226f, 0.535174f }, 0.000001f);
 	}
 }
