@@ -1,5 +1,9 @@
 dependencies:
   pre:
     - mvn install:install-file -DgroupId=org.vamp_plugins -DartifactId=jvamp -Dversion=1.3 -Dpackaging=jar -Dfile=./lib/jvamp.jar
-    - sudo cp ./lib/libvamp-jni.so ./lib/libvamp-hostsdk.so.3 ./lib/nnls-chroma.so /lib
-    - sudo cp ./lib/libstdc++.so.6 /usr/lib/x86_64-linux-gnu/
+    - cd /tmp
+    - wget https://code.soundsoftware.ac.uk/attachments/download/1574/jvamp-1.3.tar.gz
+    - tar -xzf jvamp-1.3.tar.gz
+    - sudo mv jvamp-1.3 /usr/local/src
+    - cd /usr/local/src/jvamp-1.3
+    - make && make install
