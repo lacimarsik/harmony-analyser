@@ -4,6 +4,7 @@ dependencies:
     - vamp-plugin-sdk-2.6   # relative to the build directory
   pre:
     - mvn install:install-file -DgroupId=org.vamp_plugins -DartifactId=jvamp -Dversion=1.3 -Dpackaging=jar -Dfile=./lib/jvamp.jar
+    - sudo sudo apt-get update; apt-get install libsndfile1-dev
     - echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> ~/.bashrc && source ~/.bashrc
     - if [[ ! -e vamp-plugin-sdk-2.6/libvamp-hostsdk.so ]]; then wget https://code.soundsoftware.ac.uk/attachments/download/1520/vamp-plugin-sdk-2.6.tar.gz && tar -xzf vamp-plugin-sdk-2.6.tar.gz && cd vamp-plugin-sdk-2.6 && ./configure --disable-programs && make sdk && make install; fi
     - if [[ ! -e jvamp-1.3/libvamp-jni.so ]]; then wget https://code.soundsoftware.ac.uk/attachments/download/1574/jvamp-1.3.tar.gz && tar -xzf jvamp-1.3.tar.gz && cd jvamp-1.3 && make; fi
