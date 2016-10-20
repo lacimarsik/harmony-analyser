@@ -22,7 +22,7 @@ To install the dependency properly, issue from the project root:
 
 In addition to this, jVamp and Vamp Plugin SDK binaries need to be installed locally in order to build application. Download and install [jVamp](https://code.soundsoftware.ac.uk/projects/jvamp)
 (Linux: compile and place `libvamp-jni.so` to your `java.library.path` folder (run `java -XshowSettings:properties` if you are unsure of the location) and [Vamp Plugins SDK](https://code.soundsoftware.ac.uk/projects/vamp-plugin-sdk)
-(Linux: `./configure && make && make install`)
+(Linux: `./configure && make sdk && make install`)
 
 ## Documentation
 For more details and sample analysis please refer to the documentation located in `documentation` folder.
