@@ -20,7 +20,8 @@ Project uses a local dependency in form of JAR located in `lib`:
 To install the dependency properly, issue from the project root:
 `mvn install:install-file -DgroupId=org.vamp_plugins -DartifactId=jvamp -Dversion=1.3 -Dpackaging=jar -Dfile=./lib/jvamp.jar`
 
-In addition to this, `libvamp-jni.so` located in `lib` folder, or compiled on your machine, needs to be put to `java.library.path` (run `java -XshowSettings:properties` to find a suitable location)
+In addition to this, jVamp binaries need to be installed locally, in order to be able to execute native C++ code. Download and install [jVamp](https://code.soundsoftware.ac.uk/projects/jvamp)
+(Linux: compile and place `libvamp-jni.so` to your `java.library.path` folder (run `java -XshowSettings:properties` if you are unsure of the location)
 
 ## Documentation
 For more details and sample analysis please refer to the documentation located in `documentation` folder.
