@@ -1,7 +1,8 @@
 dependencies:
   pre:
     - mvn install:install-file -DgroupId=org.vamp_plugins -DartifactId=jvamp -Dversion=1.3 -Dpackaging=jar -Dfile=./lib/jvamp.jar
-    - sudo updatedb && locate jni.h
+    - sudo export JAVA_HOME = $JAVA_HOME:/usr/lib/jvm/java-8-openjdk-amd64 && env-update && source /etc/profile
+    - echo $JAVA_HOME
     - wget https://code.soundsoftware.ac.uk/attachments/download/1574/jvamp-1.3.tar.gz
     - tar -xzf jvamp-1.3.tar.gz
     - cd jvamp-1.3 && make
