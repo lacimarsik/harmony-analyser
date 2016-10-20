@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/lacimarsik/harmony-analyser.svg?style=shield&circle-token=75d33ca47b62b8f09af431379c206b6cf80bd361)](https://circleci.com/gh/lacimarsik/harmony-analyser)
+[![Circle CI](https://circleci.com/gh/lacimarsik/harmony-analyser.png?style=shield&circle-token=75d33ca47b62b8f09af431379c206b6cf80bd361)](https://circleci.com/gh/lacimarsik/harmony-analyser)
 [![Coverage Status](https://coveralls.io/repos/github/lacimarsik/harmony-analyser/badge.png?branch=master)](https://coveralls.io/github/lacimarsik/harmony-analyser?branch=master)
 
 # harmony-analyser
