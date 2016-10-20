@@ -7,5 +7,5 @@ dependencies:
     - sudo apt-get install vamp-plugin-sdk
     - if [[ ! -e jvamp-1.3/libvamp-jni.so ]]; then echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> ~/.bashrc && source ~/.bashrc && wget https://code.soundsoftware.ac.uk/attachments/download/1574/jvamp-1.3.tar.gz && tar -xzf jvamp-1.3.tar.gz && cd jvamp-1.3 && make clean && make && cd ..; fi
     - sudo cp jvamp-1.3/libvamp-jni.so /lib
-    - if [[ ! -e nnls-chroma-1.1/nnls-chroma.so ]]; then wget https://code.soundsoftware.ac.uk/attachments/download/1691/nnls-chroma-1.1.tar.gz && tar -xzf nnls-chroma-1.1.tar.gz && cd nnls-chroma-1.1 && make && cd ..; fi
+    - if [[ ! -e nnls-chroma-1.1/nnls-chroma.so ]]; then wget https://code.soundsoftware.ac.uk/attachments/download/1691/nnls-chroma-1.1.tar.gz && tar -xzf nnls-chroma-1.1.tar.gz && cd nnls-chroma-1.1 && cp Makefile.linux Makefile && make && cd ..; fi
     - sudo mkdir -p /usr/local/lib/vamp && sudo cp nnls-chroma-1.1/nnls-chroma.so /usr/local/lib/vamp
