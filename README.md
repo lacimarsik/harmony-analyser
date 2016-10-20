@@ -6,10 +6,10 @@ Project website: [harmony-analyser.org](http://harmony-analyser.org)
 ## Installation
 Pre-requisites:
 * Running [JRE](https://www.java.com/en/download/) 8 or higher on your machine
-* Download and install [Chordino and NNLS Chroma](http://www.isophonics.net/nnls-chroma) Vamp plugins 1.1 or higher (Linux: compile and place `nnls-chroma.so` to `usr/local/lib/vamp` folder)
-* Download and install [jVamp](https://code.soundsoftware.ac.uk/projects/jvamp) 1.3 or higher (Linux: compile and place `libvamp-jni.so` to your `java.library.path` folder; run `java -XshowSettings:properties` if you are unsure of the location)
-* Download and install [Vamp Plugins SDK](https://code.soundsoftware.ac.uk/projects/vamp-plugin-sdk) (Linux: Supported by package manager, or `./configure && make sdk && make install`)
 * Download and install [libsndfile](http://www.mega-nerd.com/libsndfile/) (Linux: Usually supported by package manager)
+* Download and install [Vamp Plugins SDK](https://code.soundsoftware.ac.uk/projects/vamp-plugin-sdk) (Linux: Supported by package manager, or `./configure && make sdk && make install`)
+* Download and install [jVamp](https://code.soundsoftware.ac.uk/projects/jvamp) 1.3 or higher (Linux: compile and place `libvamp-jni.so` to your `java.library.path` folder; run `java -XshowSettings:properties` if you are unsure of the location)
+* Download and install [Chordino and NNLS Chroma](http://www.isophonics.net/nnls-chroma) Vamp plugins 1.1 or higher (Linux: compile and place `nnls-chroma.so` to `usr/local/lib/vamp` folder)
 
 To run the application:
 * Download and open `harmony-analyser-<version>.jar` (where version is the currently available version) located in `target` folder, using your Java Virtual Machine (or invoke `java -jar out/harmony_analyser-<version>.jar` in command-line)
