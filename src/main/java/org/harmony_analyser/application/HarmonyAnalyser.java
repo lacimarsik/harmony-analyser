@@ -341,11 +341,21 @@ class HarmonyAnalyser extends JFrame {
 
 		segmentTrackButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino"));
 
-		analyzeComplexityButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "harmanal:transition_complexity"));
+		analyzeComplexityButton.addActionListener(actionEvent -> {
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "harmanal:transition_complexity");
+		});
 
-		chromaTransitionsSimpleButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "chromanal:chroma_complexity_simple"));
+		chromaTransitionsSimpleButton.addActionListener(actionEvent -> {
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "chromanal:chroma_complexity_simple");
+		});
 
-		chromaTransitionsTonalButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "chromanal:chroma_complexity_tonal"));
+		chromaTransitionsTonalButton.addActionListener(actionEvent -> {
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "chromanal:chroma_complexity_tonal");
+		});
 
 		/* Visualization Tool - Initialization */
 
