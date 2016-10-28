@@ -6,7 +6,7 @@ class EmptyPlugin extends AnalysisPlugin {
 	protected void setParameters() { /* Do nothing */ }
 
 	@Override
-	public String analyse(String inputFile, boolean force) {
+	public String analyse(String inputFile, boolean force, boolean verbose) {
 		return "";
 	}
 

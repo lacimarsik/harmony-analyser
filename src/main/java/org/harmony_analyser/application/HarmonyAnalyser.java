@@ -461,7 +461,7 @@ class HarmonyAnalyser extends JFrame {
 						consolePane.setText(consolePane.getText() + "\nProcessing: " + file.toString() + "\n");
 
 						try {
-							String analysisResult = audioAnalyser.runAnalysis(file.toString(), pluginKey, true);
+							String analysisResult = audioAnalyser.runAnalysis(file.toString(), pluginKey, true, false);
 							consolePane.setText(consolePane.getText() + "\n" + analysisResult);
 						} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
 							consolePane.setText(consolePane.getText() + "\nERROR: " + e.getMessage());
@@ -488,7 +488,7 @@ class HarmonyAnalyser extends JFrame {
 		String pluginKey = comboBox.getSelectedItem().toString();
 
 		try {
-			consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.runAnalysis(inputFile, pluginKey, false));
+			consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.runAnalysis(inputFile, pluginKey, false, false));
 		} catch (AnalysisPlugin.OutputAlreadyExists e) {
 			consoleTextPane.setText(consoleTextPane.getText() + "\nINFO: " + e.getMessage());
 		}
