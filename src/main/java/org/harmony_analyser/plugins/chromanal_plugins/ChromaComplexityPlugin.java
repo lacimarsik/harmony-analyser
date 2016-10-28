@@ -37,7 +37,7 @@ abstract class ChromaComplexityPlugin extends AnalysisPlugin {
 		String outputFileVerbose = inputFileWav + outputFileSuffix + ".txt";
 		List<String> inputFiles = new ArrayList<>();
 		for (String suffix : inputFileSuffixes) {
-			String inputFileName = inputFileWav + suffix + ".txt";
+			String inputFileName = inputFileWav + suffix + inputFileExtension;
 			inputFiles.add(inputFileName);
 		}
 

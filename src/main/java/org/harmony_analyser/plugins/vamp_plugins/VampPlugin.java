@@ -152,7 +152,7 @@ abstract class VampPlugin extends AnalysisPlugin {
 		String outputFileVerbose = inputFileWav + outputFileSuffix + ".txt";
 		List<String> inputFiles = new ArrayList<>();
 		for (String suffix : inputFileSuffixes) {
-			String inputFileName = inputFileWav + suffix + ""; // Plugin handles raw WAV files
+			String inputFileName = inputFileWav + suffix + inputFileExtension;
 			inputFiles.add(inputFileName);
 		}
 

@@ -23,6 +23,7 @@ public class ChromaComplexitySimplePlugin extends ChromaComplexityPlugin {
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas");
+		inputFileExtension = ".txt";
 
 		outputFileSuffix = "-chroma-complexity-simple";
 

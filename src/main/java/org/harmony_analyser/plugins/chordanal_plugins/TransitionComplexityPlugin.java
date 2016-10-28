@@ -53,6 +53,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas");
 		inputFileSuffixes.add("-segmentation");
+		inputFileExtension = ".txt";
 
 		outputFileSuffix = "-report";
 
@@ -79,7 +80,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		String outputFileVerbose = inputFileWav + outputFileSuffix + ".txt";
 		List<String> inputFiles = new ArrayList<>();
 		for (String suffix : inputFileSuffixes) {
-			String inputFileName = inputFileWav + suffix + ".txt";
+			String inputFileName = inputFileWav + suffix + inputFileExtension;
 			inputFiles.add(inputFileName);
 		}
 

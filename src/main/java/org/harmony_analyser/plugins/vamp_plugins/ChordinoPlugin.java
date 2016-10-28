@@ -64,6 +64,7 @@ public class ChordinoPlugin extends VampPlugin {
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add(""); // Plugin handles raw WAV files
+		inputFileExtension = ""; // Plugin handles raw WAV files
 
 		outputFileSuffix = "-segmentation";
 

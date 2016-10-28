@@ -18,6 +18,7 @@ import java.util.*;
 
 public abstract class AnalysisPlugin {
 	protected static List<String> inputFileSuffixes;
+	protected String inputFileExtension;
 	protected static String outputFileSuffix;
 	protected String pluginKey;
 	protected String pluginName;
@@ -59,9 +60,9 @@ public abstract class AnalysisPlugin {
 		if (file.exists() && !file.isDirectory() && !force) {
 			throw new OutputAlreadyExists("Output already exists");
 		}
-		for (String inputFileExtension : inputFileSuffixes) {
-			String fileName = inputFileWav + inputFileExtension + ".txt";
-			File fileInput = new File(inputFileWav + inputFileExtension);
+		for (String suffix : inputFileSuffixes) {
+			String fileName = inputFileWav + suffix + inputFileExtension;
+			File fileInput = new File(fileName);
 			if (!fileInput.exists() || fileInput.isDirectory()) {
 				throw new IncorrectInputException("Input file " + fileName + " does not exist");
 			}

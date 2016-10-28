@@ -23,6 +23,7 @@ public class ChromaComplexityTonalPlugin extends ChromaComplexityPlugin {
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas");
+		inputFileExtension = ".txt";
 
 		outputFileSuffix = "-chroma-complexity-tonal";
 
