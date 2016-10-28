@@ -147,7 +147,7 @@ public class Harmanal {
 	 * Gets the common roots table for two harmonies
 	 */
 
-	static DatabaseTable getCommonRoots(Harmony harmony1, Harmony harmony2) {
+	public static DatabaseTable getCommonRoots(Harmony harmony1, Harmony harmony2) {
 		DatabaseTable roots1 = getRoots(harmony1).sortByValueByFirstNumeric();
 		DatabaseTable roots2 = getRoots(harmony2).sortByValueByFirstNumeric();
 

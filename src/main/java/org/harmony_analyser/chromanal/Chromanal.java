@@ -33,14 +33,17 @@ public class Chromanal {
 		String previousChordTones = Chordanal.getStringOfTones(harmony1);
 		Harmony harmony_1 = Chordanal.createHarmonyFromRelativeTones(previousChordTones);
 		Harmony harmony_2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
-		// subtract root tones from the chords
-		Harmony rootHarmony1 = Harmanal.getRootHarmony(harmony_1);
-		for (Tone tone : rootHarmony1.tones) {
-			chromaVector1[tone.getNumberMapped()] = 0;
-		}
-		Harmony rootHarmony2 = Harmanal.getRootHarmony(harmony_2);
-		for (Tone tone : rootHarmony2.tones) {
-			chromaVector2[tone.getNumberMapped()] = 0;
+		// get common roots for both harmonies
+		DatabaseTable commonRoots = Harmanal.getCommonRoots(harmony_1, harmony_2);
+		if (!commonRoots.equals(DatabaseTable.EMPTY_RESULT) && !commonRoots.isEmpty()) {
+			String rootTones = commonRoots.getAllKeys().get(0).get(commonRoots.getAllKeys().get(0).size() - 1);
+			Harmony commonRootHarmony = Chordanal.createHarmonyFromRelativeTones(rootTones);
+			for (Tone tone : commonRootHarmony.tones) {
+				chromaVector1[tone.getNumberMapped()] = 0;
+			}
+			for (Tone tone : commonRootHarmony.tones) {
+				chromaVector2[tone.getNumberMapped()] = 0;
+			}
 		}
 
 		return getChromaComplexitySimple(new Chroma(chromaVector1), new Chroma(chromaVector2));
