@@ -54,14 +54,14 @@ public abstract class AnalysisPlugin {
 
 	@SuppressWarnings("WeakerAccess")
 
-	protected void checkInputFiles(String inputFile, boolean force) throws IncorrectInputException, OutputAlreadyExists {
-		File file = new File(inputFile + outputFileSuffix);
+	protected void checkInputFiles(String inputFileWav, boolean force) throws IncorrectInputException, OutputAlreadyExists {
+		File file = new File(inputFileWav + outputFileSuffix + ".txt");
 		if (file.exists() && !file.isDirectory() && !force) {
 			throw new OutputAlreadyExists("Output already exists");
 		}
 		for (String inputFileExtension : inputFileSuffixes) {
-			String fileName = inputFile + inputFileExtension;
-			File fileInput = new File(inputFile + inputFileExtension);
+			String fileName = inputFileWav + inputFileExtension + ".txt";
+			File fileInput = new File(inputFileWav + inputFileExtension);
 			if (!fileInput.exists() || fileInput.isDirectory()) {
 				throw new IncorrectInputException("Input file " + fileName + " does not exist");
 			}
@@ -102,9 +102,21 @@ public abstract class AnalysisPlugin {
 
 	protected abstract void setParameters();
 
-	public String analyse(String inputFile, boolean force) throws IOException, IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
-		checkInputFiles(inputFile, force);
-		return "\nBeginning analysis: " + pluginKey + "\n";
+	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
+		String result = "";
+		checkInputFiles(inputFileWav, force);
+		result += "\nBeginning analysis: " + pluginKey + "\n";
+
+		result += "Input file(s):\n";
+		for (String suffix : inputFileSuffixes) {
+			String inputFileName = inputFileWav + suffix + ".txt";
+			result += inputFileName + "\n";
+		}
+		result += "\nOutput file:\n" + inputFileWav + outputFileSuffix + ".txt" + "\n";
+		if (verbose) {
+			result += "Verbose Output:\n" +inputFileWav + outputFileSuffix + ".txt" + "\n";
+		}
+		return result;
 	}
 
 	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, OutputNotReady, ParseOutputError, PluginLoader.LoadFailedException {

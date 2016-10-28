@@ -22,9 +22,9 @@ public class ChromaComplexityTonalPlugin extends ChromaComplexityPlugin {
 		pluginName = "Tonal Chroma Complexity";
 
 		inputFileSuffixes = new ArrayList<>();
-		inputFileSuffixes.add("-chromas.txt");
+		inputFileSuffixes.add("-chromas");
 
-		outputFileSuffix = "-chroma-complexity-tonal.txt";
+		outputFileSuffix = "-chroma-complexity-tonal";
 
 		parameters = new HashMap<>();
 

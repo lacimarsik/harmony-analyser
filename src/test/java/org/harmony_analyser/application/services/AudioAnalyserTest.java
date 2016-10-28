@@ -35,7 +35,7 @@ public class AudioAnalyserTest {
 	public void shouldThrowExceptionOnWrongFile() throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		AnalysisPluginFactory analysisPluginFactory = new AnalysisPluginFactory();
 		audioAnalyser = new AudioAnalyser(analysisPluginFactory, drawPanelFactory);
-		audioAnalyser.runAnalysis(wrongInputFile, "harmanal:transition_complexity", true);
+		audioAnalyser.runAnalysis(wrongInputFile, "harmanal:transition_complexity", true, false);
 	}
 
 	@Test
@@ -66,7 +66,7 @@ public class AudioAnalyserTest {
 	@Test
 	public void shouldCallPluginAnalyse() throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		AnalysisPlugin analysisPlugin = mock(AnalysisPlugin.class);
-		when(analysisPlugin.analyse(testWavFile.toString(), true)).thenReturn("Done!");
+		when(analysisPlugin.analyse(testWavFile.toString(), true, false)).thenReturn("Done!");
 
 		AnalysisPluginFactory analysisPluginFactory = new AnalysisPluginFactory() {
 			public AnalysisPlugin createPlugin(String pluginKey) {
@@ -75,6 +75,6 @@ public class AudioAnalyserTest {
 		};
 		audioAnalyser = new AudioAnalyser(analysisPluginFactory, drawPanelFactory);
 
-		assertEquals("Done!", audioAnalyser.runAnalysis(testWavFile.toString(), "harmanal:transition_complexity", true));
+		assertEquals("Done!", audioAnalyser.runAnalysis(testWavFile.toString(), "harmanal:transition_complexity", true, false));
 	}
 }

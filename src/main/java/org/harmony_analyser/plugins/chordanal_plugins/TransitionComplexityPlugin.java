@@ -51,10 +51,10 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		pluginName = "Transition Complexity";
 
 		inputFileSuffixes = new ArrayList<>();
-		inputFileSuffixes.add("-chromas.txt");
-		inputFileSuffixes.add("-segmentation.txt");
+		inputFileSuffixes.add("-chromas");
+		inputFileSuffixes.add("-segmentation");
 
-		outputFileSuffix = "-report.txt";
+		outputFileSuffix = "-report";
 
 		parameters = new HashMap<>();
 		parameters.put("audibleThreshold", (float) 0.07);
@@ -67,25 +67,24 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 	/**
 	 * Analyzes the song: converts chroma + segmentation information to harmony complexity descriptors
 	 *
-	 * @param inputFile [String] name of the WAV audio file
+	 * @param inputFileWav [String] name of the WAV audio file
 	 *    These additional files are expected in the folder
 	 *    - chromaFile: name of the file containing chroma information (suffix: -chromas.txt)
 	 *    - segmentationFile: name of the file containing segmentation information (suffix: -segmentation.txt)
 	 */
 
-	public String analyse(String inputFile, boolean force) throws IOException, IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
-		String result = super.analyse(inputFile, force);
-		String outputFile = inputFile + outputFileSuffix;
+	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
+		String result = super.analyse(inputFileWav, force, verbose);
+		String outputFile = inputFileWav + outputFileSuffix + ".txt";
+		String outputFileVerbose = inputFileWav + outputFileSuffix + ".txt";
+		List<String> inputFiles = new ArrayList<>();
+		for (String suffix : inputFileSuffixes) {
+			String inputFileName = inputFileWav + suffix + ".txt";
+			inputFiles.add(inputFileName);
+		}
 
-		String chromaFile = inputFile + "-chromas.txt";
-		String segmentationFile = inputFile + "-segmentation.txt";
-
-		result += "Chroma file: " + chromaFile + "\n";
-		result += "Segmentation file: " + segmentationFile + "\n";
-		result += "Output: " + outputFile + "\n";
-
-		List<String> chromaLinesList = Files.readAllLines(new File(chromaFile).toPath(), Charset.defaultCharset());
-		List<String> segmentationLinesList = Files.readAllLines(new File(segmentationFile).toPath(), Charset.defaultCharset());
+		List<String> chromaLinesList = Files.readAllLines(new File(inputFiles.get(0)).toPath(), Charset.defaultCharset());
+		List<String> segmentationLinesList = Files.readAllLines(new File(inputFiles.get(1)).toPath(), Charset.defaultCharset());
 		List<Float> segmentationTimestampList = new ArrayList<>();
 
 		// 1. Get timestamps from the segmentation file
@@ -154,6 +153,7 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		int sumOfAllTones = 0;
 		float timestamp;
 		BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
+		BufferedWriter outVerbose = new BufferedWriter(new FileWriter(outputFileVerbose));
 
 		// 3. Iterate over chord progression, deriving chord and transition complexities
 		for (int[] chord : chordProgression) {
@@ -163,7 +163,9 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 
 			// get timestamp of this transition
 			timestamp = timestampList.get(chordProgression.indexOf(chord));
-			out.write(timestamp + ":\n");
+			if (verbose) {
+				outVerbose.write(timestamp + ":\n");
+			}
 
 			// create chords using Chordanal
 			String currentChordTones = Chordanal.getStringOfTones(chord);
@@ -172,19 +174,25 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 			Harmony harmony2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
 
 			if (harmony1.equals(Harmony.EMPTY_HARMONY) || harmony2.equals(Harmony.EMPTY_HARMONY)) {
-				out.write("SKIP (one or both chords were not assigned)\n\n");
+				if (verbose) {
+					outVerbose.write("SKIP (one or both chords were not assigned)\n\n");
+				}
 			} else {
 				// Print chord names to output
 				String harmonyName1 = Chordanal.getHarmonyName(harmony1);
 				String harmonyName2 = Chordanal.getHarmonyName(harmony2);
 
-				out.write(previousChordTones + "-> " + currentChordTones + "\n");
-				out.write(harmonyName1 + "-> " + harmonyName2 + "\n");
+				if (verbose) {
+					outVerbose.write(previousChordTones + "-> " + currentChordTones + "\n");
+					outVerbose.write(harmonyName1 + "-> " + harmonyName2 + "\n");
+				}
 
 				// Get transition complexity using Harmanal
 				int transitionComplexity = Harmanal.getTransitionComplexity(harmony1, harmony2);
 				if (transitionComplexity == -1) {
-					out.write("transition: NO COMMON ROOTS (maximal complexity: " + maximalComplexity + ")\n");
+					if (verbose) {
+						outVerbose.write("transition: NO COMMON ROOTS (maximal complexity: " + maximalComplexity + ")\n");
+					}
 					transitionComplexity = maximalComplexity;
 				} else {
 					List<String> transitionsFormatted = Harmanal.getTransitionsFormatted(harmony1, harmony2);
@@ -194,7 +202,9 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 					} else {
 						transitionFormatted = transitionsFormatted.get(0);
 					}
-					out.write("transition: " + transitionFormatted + "\n");
+					if (verbose) {
+						outVerbose.write("transition: " + transitionFormatted + "\n");
+					}
 				}
 				transitionComplexityList.add(transitionComplexity);
 
@@ -213,7 +223,10 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 				if (chordComplexity > maximalChordComplexity) {
 					maximalChordComplexity = chordComplexity;
 				}
-				out.write("transition complexity: " + transitionComplexity + "\n\n");
+				if (verbose) {
+					outVerbose.write("transition complexity: " + transitionComplexity + "\n\n");
+				}
+				out.write(timestamp + ": " + transitionComplexity + "\n");
 			}
 
 			// Set previous chord
@@ -228,9 +241,12 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		"Average Chord Complexity (ACC): " + ahc + "\n" +
 		"Relative Transition Complexity (RTC): " + rtc + "\n";
 
-		out.write(results);
+		if (verbose) {
+			outVerbose.write(results);
+		}
 		result += results;
 		out.close();
+		outVerbose.close();
 
 		return result;
 	}

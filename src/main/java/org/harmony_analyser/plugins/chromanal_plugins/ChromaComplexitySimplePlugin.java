@@ -22,9 +22,9 @@ public class ChromaComplexitySimplePlugin extends ChromaComplexityPlugin {
 		pluginName = "Simple Chroma Complexity";
 
 		inputFileSuffixes = new ArrayList<>();
-		inputFileSuffixes.add("-chromas.txt");
+		inputFileSuffixes.add("-chromas");
 
-		outputFileSuffix = "-chroma-complexity-simple.txt";
+		outputFileSuffix = "-chroma-complexity-simple";
 
 		parameters = new HashMap<>();
 
