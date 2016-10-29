@@ -9,6 +9,7 @@ import static org.junit.Assert.assertEquals;
  * Unit tests for Chroma class
  */
 
+@SuppressWarnings("UnusedAssignment")
 public class ChromaTest {
 	private Chroma chroma;
 	private float[] chromaVector;

@@ -198,7 +198,7 @@ public class Chordanal {
 				note = absoluteToneName.substring(0, 1);
 				octave = Integer.parseInt(absoluteToneName.substring(1, 2));
 			} else {
-				return null;
+				return Tone.EMPTY_TONE;
 			}
 		} else {
 			if (absoluteToneName.length() == 3) {
@@ -211,17 +211,17 @@ public class Chordanal {
 						octave = Integer.parseInt(absoluteToneName.substring(2, 3));
 					}
 				} else {
-					return null;
+					return Tone.EMPTY_TONE;
 				}
 			} else if (absoluteToneName.length() == 4) {
 				if ((absoluteToneName.charAt(2) == '-') && (absoluteToneName.charAt(3) == '1')) {
 					note = absoluteToneName.substring(0, 2);
 					octave = Integer.parseInt(absoluteToneName.substring(2, 4));
 				} else {
-					return null;
+					return Tone.EMPTY_TONE;
 				}
 			} else {
-				return null;
+				return Tone.EMPTY_TONE;
 			}
 		}
 
@@ -235,37 +235,31 @@ public class Chordanal {
 			}
 		}
 		if (!isValid) {
-			return null;
+			return Tone.EMPTY_TONE;
 		}
 		int number = (octave + 1) * 12 + relativePitch;
 		if ((number > 127) || (number < 0)) {
-			return null;
+			return Tone.EMPTY_TONE;
 		} else {
 			return new Tone(number, Tone.DEFAULT_VOLUME);
 		}
 	}
 
 	public static Tone createToneFromRelativeName(String relativeName) {
-		Tone tone = createToneFromName(relativeName + "3");
-		if (tone == null) {
-			return null;
-		} else {
-			return createToneFromName(relativeName + "3");
-		}
+		return createToneFromName(relativeName + "3");
 	}
 
 	public static Harmony createHarmonyFromTones(String absoluteNames) {
 		if (!checkAbsoluteNames(absoluteNames)) {
-
-			return null;
+			return Harmony.EMPTY_HARMONY;
 		}
 
 		String[] namesArray = absoluteNames.split(" ");
 		int[] numberArray = new int[namesArray.length];
 		for (int i = 0; i < namesArray.length; i++) {
 			Tone tone = Chordanal.createToneFromName(namesArray[i]);
-			if (tone == null) {
-				return null;
+			if (tone.equals(Tone.EMPTY_TONE)) {
+				return Harmony.EMPTY_HARMONY;
 			} else {
 				numberArray[i] = tone.getNumber();
 			}
@@ -275,7 +269,7 @@ public class Chordanal {
 
 	public static Harmony createHarmonyFromRelativeTones(String relativeNames) {
 		if (!checkRelativeNames(relativeNames)) {
-			return null;
+			return Harmony.EMPTY_HARMONY;
 		}
 
 		String absoluteNames = "";
@@ -283,17 +277,12 @@ public class Chordanal {
 
 		for (String name : namesArray) {
 			Tone tone = createToneFromRelativeName(name);
-			if (tone == null) {
-				return null;
+			if (tone.equals(Tone.EMPTY_TONE)) {
+				return Harmony.EMPTY_HARMONY;
 			}
 			absoluteNames += tone.getName() + " ";
 		}
-		Harmony harmony = createHarmonyFromTones(absoluteNames);
-		if (harmony == null) {
-			return null;
-		} else {
-			return createHarmonyFromTones(absoluteNames);
-		}
+		return createHarmonyFromTones(absoluteNames);
 	}
 
 	// Get String of tone names from binary chord representation
@@ -346,9 +335,6 @@ public class Chordanal {
 			return "";
 		}
 		Tone rootTone = getRootTone(harmony);
-		if (rootTone == null) {
-			return "";
-		}
 		if (interval) {
 			if (unisone) {
 				return rootTone.getNameMapped() + " (" + getHarmonyNameRelative(harmony) + ")";
@@ -372,7 +358,7 @@ public class Chordanal {
 			return "";
 		}
 		Tone rootTone = getRootTone(harmony);
-		if (rootTone == null) {
+		if (rootTone.equals(Tone.EMPTY_TONE)) {
 			return "";
 		}
 		if (interval) {
@@ -607,6 +593,9 @@ public class Chordanal {
 
 	static Tone getRootTone(Harmony harmony) {
 		String harmonyStructure;
+		if (harmony.tones.size() == 0) {
+			return Tone.EMPTY_TONE;
+		}
 		if (harmony.tones.size() <= 2) {
 			// interval or unisone
 
@@ -658,7 +647,7 @@ public class Chordanal {
 						return harmony.tones.get(1);
 				}
 			}
-			return null;
+			return Tone.EMPTY_TONE;
 
 		} else {
 			return harmony.tones.get(0);
@@ -716,7 +705,7 @@ public class Chordanal {
 	private static boolean checkAbsoluteNames(String names) {
 		String[] namesArray = names.split(" ");
 		for (String name : namesArray) {
-			if (Chordanal.createToneFromName(name) == null) {
+			if (Chordanal.createToneFromName(name).equals(Tone.EMPTY_TONE)) {
 				return false;
 			}
 		}

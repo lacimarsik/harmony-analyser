@@ -31,6 +31,11 @@ public class MidiHandler {
 	private int volume = 100;
 	private int length = 0;
 
+	public static final MidiDevice EMPTY_MIDI_DEVICE = null; // Null value is enforced by the interface
+	public static final Sequencer EMPTY_SEQUENCER = null; // Null value is enforced by the interface
+	public static final Synthesizer EMPTY_SYNTHESIZER = null; // Null value is enforced by the interface
+	public static final MidiDecoder EMPTY_MIDI_DECODER = null; // Null value is enforced by the interface
+
 	/* Public / Package methods */
 
 	public int getInstrument() {
@@ -84,20 +89,28 @@ public class MidiHandler {
 		}
 	}
 
+	public MidiHandler() {
+		this.inputDevice = MidiHandler.EMPTY_MIDI_DEVICE;
+		this.decoder = MidiHandler.EMPTY_MIDI_DECODER;
+		this.sequencer = MidiHandler.EMPTY_SEQUENCER;
+		this.synthesizer = MidiHandler.EMPTY_SYNTHESIZER;
+		this.outputDevice = MidiHandler.EMPTY_MIDI_DEVICE;
+	}
+
 	/**
 	 * Initializes the MidiHandler with the custom Sequencer, Synthesizer, Input and Output devices or null values for default
 	 */
 
 	public void initialize(Sequencer sequencer, Synthesizer synthesizer, MidiDevice inputDevice, MidiDevice outputDevice, MidiDecoder decoder) {
 		try {
-			if (sequencer != null) {
+			if (sequencer != MidiHandler.EMPTY_SEQUENCER) {
 				this.sequencer = sequencer;
 			} else {
 				this.sequencer = MidiSystem.getSequencer();
 			}
 			this.sequencer.open();
 
-			if (synthesizer != null) {
+			if (synthesizer != MidiHandler.EMPTY_SYNTHESIZER) {
 				this.synthesizer = synthesizer;
 			} else {
 				this.synthesizer = MidiSystem.getSynthesizer();
@@ -106,24 +119,22 @@ public class MidiHandler {
 			channels = this.synthesizer.getChannels();
 			instruments = this.synthesizer.getDefaultSoundbank().getInstruments();
 
-			if (inputDevice != null) {
+			if (inputDevice != MidiHandler.EMPTY_MIDI_DEVICE) {
 				this.inputDevice = inputDevice;
 				this.inputDevice.open();
 			}
 
-			if (outputDevice != null) {
+			if (outputDevice != MidiHandler.EMPTY_MIDI_DEVICE) {
 				this.outputDevice = outputDevice;
 				this.outputDevice.open();
 			}
 
-			if (decoder != null) {
+			if (decoder != MidiHandler.EMPTY_MIDI_DECODER) {
 				this.decoder = decoder;
 			} else {
 				this.decoder = new MidiDecoder();
 			}
-
 		} catch (MidiUnavailableException e) {
-
 			e.printStackTrace();
 		}
 	}
@@ -178,7 +189,7 @@ public class MidiHandler {
 				e.printStackTrace();
 			}
 		}
-		return null;
+		return MidiHandler.EMPTY_MIDI_DEVICE;
 	}
 
 	/**
@@ -210,27 +221,27 @@ public class MidiHandler {
 	 */
 
 	public void close() {
-		if (inputDevice != null) {
+		if (inputDevice != MidiHandler.EMPTY_MIDI_DEVICE) {
 			if (inputDevice.isOpen()) {
 				inputDevice.close();
 			}
 		}
-		if (synthesizer != null) {
+		if (synthesizer != MidiHandler.EMPTY_SYNTHESIZER) {
 			if (synthesizer.isOpen()) {
 				synthesizer.close();
 			}
 		}
-		if (sequencer != null) {
+		if (sequencer != MidiHandler.EMPTY_SEQUENCER) {
 			if (sequencer.isOpen()) {
 				sequencer.close();
 			}
 		}
-		if (outputDevice != null) {
+		if (outputDevice != MidiHandler.EMPTY_MIDI_DEVICE) {
 			if (outputDevice.isOpen()) {
 				outputDevice.close();
 			}
 		}
-		if (decoder != null) {
+		if (decoder != MidiHandler.EMPTY_MIDI_DECODER) {
 			if (decoder.isOpen()) {
 				decoder.close();
 			}
@@ -240,7 +251,7 @@ public class MidiHandler {
 	public Harmony getBufferHarmony() {
 		String buffer = decoder.getBuffer();
 		if (buffer.equals("")) {
-			return null;
+			return Harmony.EMPTY_HARMONY;
 		}
 		String[] stringArray = buffer.split(" ");
 		int[] intArray = new int[stringArray.length];

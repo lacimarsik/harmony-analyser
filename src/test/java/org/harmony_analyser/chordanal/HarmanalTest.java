@@ -31,6 +31,11 @@ public class HarmanalTest {
 	}
 
 	@Test
+	public void shouldGetRootHarmony() {
+		assertEquals(Harmanal.getRootHarmony(Chordanal.createHarmonyFromTones("C4 E4 G4 G#4")).getToneNamesMapped(), "C E G ");
+	}
+
+	@Test
 	public void shouldGetCommonRootsForHarmonies() {
 		assertEquals(Harmanal.getCommonRootsByKey(Chordanal.createHarmonyFromTones("C4 E4 G4"), Chordanal.createHarmonyFromTones("F4 A4 C4")).getAll().get(0), "C major,Tonic,Subdominant,C E G ,C F A ;0,0");
 		assertEquals(Harmanal.getCommonRootsByKey(Chordanal.createHarmonyFromTones("C4 E4 G4"), Chordanal.createHarmonyFromTones("F4 A4 C4")).getAll().get(1), "F major,Dominant,Tonic,C E G ,C F A ;0,0");

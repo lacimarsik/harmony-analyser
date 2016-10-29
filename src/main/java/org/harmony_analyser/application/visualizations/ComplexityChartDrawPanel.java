@@ -1,21 +1,16 @@
 package org.harmony_analyser.application.visualizations;
 
-import org.harmony_analyser.application.services.*;
-import org.harmony_analyser.plugins.*;
 import org.jfree.chart.*;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.*;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import java.awt.*;
-import java.io.IOException;
-import java.util.*;
-import java.util.List;
 
 @SuppressWarnings({"SameParameterValue", "UnusedParameters"})
 
 class ComplexityChartDrawPanel extends DrawPanel {
-	ComplexityChartDrawPanel(VisualizationData visualizationData) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException {
+	ComplexityChartDrawPanel(VisualizationData visualizationData) {
 		super(visualizationData);
 	}
 

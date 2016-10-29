@@ -37,10 +37,7 @@ public class Harmanal {
 	public static List<String> getTransitionsFormatted(Harmony harmony1, Harmony harmony2) {
 		List<String> result = new ArrayList<>();
 
-		DatabaseTable unsortedTransitions = getTransitions(harmony1,harmony2);
-		if (unsortedTransitions == null) {
-			return null;
-		}
+		DatabaseTable unsortedTransitions = getTransitions(harmony1, harmony2);
 		DatabaseTable transitions = unsortedTransitions.sortByValueByFirstNumeric();
 		List<List<String>> keys = transitions.getAllKeys();
 		List<List<String>> values = transitions.getAllValues();
@@ -89,10 +86,10 @@ public class Harmanal {
 	 */
 
 	public static int getTransitionComplexity(Harmony harmony1, Harmony harmony2) {
-		DatabaseTable unsortedTransitions = getTransitions(harmony1,harmony2);
-		if (unsortedTransitions == null) {
-			return -1;
+		if (harmony1.equals(Harmony.EMPTY_HARMONY) || harmony2.equals(Harmony.EMPTY_HARMONY)) {
+			return 0;
 		}
+		DatabaseTable unsortedTransitions = getTransitions(harmony1, harmony2);
 		DatabaseTable transitions = unsortedTransitions.sortByValueByFirstNumeric();
 
 		if (transitions.isEmpty()) {
@@ -112,16 +109,38 @@ public class Harmanal {
 
 		// try all Major keys
 		for (int i = 0; i < 12; i++) {
-			key = new Key(i,Chordanal.MAJOR);
-			result.addAll(getRoots(harmony,key));
+			key = new Key(i, Chordanal.MAJOR);
+			result.addAll(getRoots(harmony, key));
 		}
 
 		// try all Minor keys
 		for (int i = 0; i < 12; i++) {
-			key = new Key(i,Chordanal.MINOR);
-			result.addAll(getRoots(harmony,key));
+			key = new Key(i, Chordanal.MINOR);
+			result.addAll(getRoots(harmony, key));
 		}
 		return result;
+	}
+
+	public static Harmony getRootHarmony(Harmony harmony) {
+		DatabaseTable roots = Harmanal.getRoots(harmony);
+		if (roots.equals(DatabaseTable.EMPTY_RESULT) || (roots.isEmpty())) {
+			return Harmony.EMPTY_HARMONY;
+		}
+		List<String> rootKeys = roots.getAllKeys().get(0);
+		Scanner sc1 = new Scanner(rootKeys.get(2));
+		String tone1 = "";
+		String tone2 = "";
+		String tone3 = "";
+		if (sc1.hasNext()) {
+			tone1 = sc1.next();
+		}
+		if (sc1.hasNext()) {
+			tone2 = sc1.next();
+		}
+		if (sc1.hasNext()) {
+			tone3 = sc1.next();
+		}
+		return Chordanal.createHarmonyFromRelativeTones(tone1 + " " + tone2 + " " + tone3);
 	}
 
 	/**
@@ -142,9 +161,6 @@ public class Harmanal {
 			String[] value = keyValue[1].split(",");
 			Harmony firstOption = Chordanal.createHarmonyFromRelativeTones(key[2]);
 			Harmony secondOption = Chordanal.createHarmonyFromRelativeTones(key[3]);
-			if (firstOption == null || secondOption == null) {
-				return null;
-			}
 			if (firstOption.containsMapped(secondOption)) {
 				result.add(key[0] + "," + key[1] + "," + key[3] + ";" + value[0] + "," + value[1]);
 			} else if (secondOption.containsMapped(firstOption)) {
@@ -172,13 +188,7 @@ public class Harmanal {
 
 	static DatabaseTable getCommonAncestors(Harmony harmony1, Harmony harmony2) {
 		DatabaseTable commonRoots = getCommonRoots(harmony1, harmony2);
-		if (commonRoots == null) {
-			return null;
-		}
 		List<String> commonRootsRows = commonRoots.getAll();
-		if (commonRootsRows == null) {
-			return null;
-		}
 
 		DatabaseTable result = new DatabaseTable();
 
@@ -189,7 +199,8 @@ public class Harmanal {
 			Harmony root = Chordanal.createHarmonyFromRelativeTones(key[2]);
 			Key commonKey = Chordanal.createKeyFromName(key[0]);
 
-			List<String> rightDerivation1 = null, rightDerivation2 = null;
+			List<String> rightDerivation1 = new ArrayList<>();
+			List<String> rightDerivation2 = new ArrayList<>();
 			int closestAncestor = 0;
 			for (List<String> derivation1 : getHarmonyDerivations(harmony1, root, commonKey)) {
 				for (List<String> derivation2 : getHarmonyDerivations(harmony2, root, commonKey)) {
@@ -213,9 +224,6 @@ public class Harmanal {
 					}
 				}
 			}
-			if (rightDerivation1 == null) {
-				return null;
-			}
 			result.add(key[0] + "," + key[1] + "," + rightDerivation1.get(closestAncestor) + ";" + (rightDerivation1.size() - closestAncestor -1) + "," + (rightDerivation2.size() - closestAncestor -1));
 		}
 		return result;
@@ -238,8 +246,8 @@ public class Harmanal {
 
 		// Transition amongst T/S/D
 		DatabaseTable commonAncestors = getCommonAncestors(harmony1, harmony2);
-		if (commonAncestors == null) {
-			return null;
+		if (commonAncestors.equals(DatabaseTable.EMPTY_RESULT)) {
+			return DatabaseTable.EMPTY_RESULT;
 		}
 		List<List<String>> keys2 = commonAncestors.getAllKeys();
 		List<List<String>> values2 = commonAncestors.getAllValues();
@@ -282,10 +290,10 @@ public class Harmanal {
 	 */
 
 	private static Tone getRootCompletionTone(Harmony root, Key key) {
+		Tone result = Tone.EMPTY_TONE;
 		if (root.tones.size() != 2) {
-			return null;
+			return result;
 		}
-		Tone result = null;
 		if (key.getTonic().containsMapped(root)) {
 			for (Tone functionTone : key.getTonic().tones) {
 				if (!root.containsMapped(functionTone)) {
@@ -318,13 +326,13 @@ public class Harmanal {
 		DatabaseTable result = new DatabaseTable();
 		DatabaseTable rows;
 
-		if ((rows = getRoots(harmony,key.getTonic(),Chordanal.TONIC,key)) != null) {
+		if (!(rows = getRoots(harmony, key.getTonic(), Chordanal.TONIC, key)).equals(DatabaseTable.EMPTY_RESULT)) {
 			result.addAll(rows);
 		}
-		if ((rows = getRoots(harmony,key.getSubdominant(),Chordanal.SUBDOMINANT,key)) != null) {
+		if (!(rows = getRoots(harmony, key.getSubdominant(), Chordanal.SUBDOMINANT, key)).equals(DatabaseTable.EMPTY_RESULT)) {
 			result.addAll(rows);
 		}
-		if ((rows = getRoots(harmony,key.getDominant(),Chordanal.DOMINANT,key)) != null) {
+		if (!(rows = getRoots(harmony, key.getDominant(), Chordanal.DOMINANT, key)).equals(DatabaseTable.EMPTY_RESULT)) {
 			result.addAll(rows);
 		}
 		return result;
@@ -340,12 +348,16 @@ public class Harmanal {
 
 		common = harmony.getCommonTones(function);
 
+		if (common.tones.size() == 0) {
+			return DatabaseTable.EMPTY_RESULT;
+		}
+
 		if (common.tones.size() == 3) {
 			result.add(Chordanal.getKeyName(key) + "," + Chordanal.getFunctionName(functionSign) + "," + common.getToneNamesMapped() + ";" + getHarmonyComplexity(harmony, Chordanal.createHarmonyFromRelativeTones(common.getToneNamesMapped()),key));
 		} else if (common.tones.size() == 2) {
 			Tone rootTone = Chordanal.getRootTone(function);
-			if (rootTone == null) {
-				return null;
+			if (rootTone.equals(Tone.EMPTY_TONE)) {
+				return DatabaseTable.EMPTY_RESULT;
 			}
 			if ((common.tones.get(0).getNumberMapped() == rootTone.getNumberMapped()) || (common.tones.get(1).getNumberMapped() == rootTone.getNumberMapped())) {
 				result.add(Chordanal.getKeyName(key) + "," + Chordanal.getFunctionName(functionSign) + "," + common.getToneNamesMapped() + ";" + getHarmonyComplexity(harmony, Chordanal.createHarmonyFromRelativeTones(common.getToneNamesMapped()),key));
@@ -361,9 +373,6 @@ public class Harmanal {
 	private static List<String> getHarmonyDerivation(Harmony root, List<Tone> added, Key key) {
 		List<String> result = new ArrayList<>();
 		Harmony phraseForm = Chordanal.createHarmonyFromRelativeTones(root.getToneNamesMapped());
-		if (phraseForm == null) {
-			return null;
-		}
 
 		result.add(root.getToneNamesMapped());
 
@@ -374,7 +383,7 @@ public class Harmanal {
 				// ADD operator step
 
 				special = false;
-				if ((rootCompletionTone = getRootCompletionTone(root, key)) != null) {
+				if (!(rootCompletionTone = getRootCompletionTone(root, key)).equals(Tone.EMPTY_TONE)) {
 					if ((root.tones.size() == 2) && (tone.getNumberMapped() == rootCompletionTone.getNumberMapped())) {
 						special = true;
 					}
@@ -398,7 +407,7 @@ public class Harmanal {
 						special = true;
 					}
 				}
-				if ((rootCompletionTone = getRootCompletionTone(root, key)) != null) {
+				if (!(rootCompletionTone = getRootCompletionTone(root, key)).equals(Tone.EMPTY_TONE)) {
 					if (diatonicTone.getNumberMapped() == rootCompletionTone.getNumberMapped()) {
 						special = true;
 					}

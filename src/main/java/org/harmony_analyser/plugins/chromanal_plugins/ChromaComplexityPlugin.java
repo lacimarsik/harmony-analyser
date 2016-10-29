@@ -26,25 +26,26 @@ abstract class ChromaComplexityPlugin extends AnalysisPlugin {
 	/**
 	 * Analyzes the song: converts chroma information to chroma complexity descriptors
 	 *
-	 * @param inputFile [String] name of the WAV audio file
+	 * @param inputFileWav [String] name of the WAV audio file
 	 *    These additional files are expected in the folder
 	 *    - chromaFile: name of the file containing chroma information (suffix: -chromas.txt)
 	 */
 
-	public String analyse(String inputFile, boolean force) throws IOException, IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
-		String result = super.analyse(inputFile, force);
-		String outputFile = inputFile + outputFileSuffix;
+	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
+		String result = super.analyse(inputFileWav, force, verbose);
+		String outputFile = inputFileWav + outputFileSuffix + ".txt";
+		String outputFileVerbose = inputFileWav + outputFileSuffix + ".txt";
+		List<String> inputFiles = new ArrayList<>();
+		for (String suffix : inputFileSuffixes) {
+			String inputFileName = inputFileWav + suffix + inputFileExtension;
+			inputFiles.add(inputFileName);
+		}
 
-		String chromaFile = inputFile + "-chromas.txt";
-
-		result += "Chroma file: " + chromaFile + "\n";
-		result += "Output: " + outputFile + "\n";
-
-		List<String> chromaLinesList = Files.readAllLines(new File(chromaFile).toPath(), Charset.defaultCharset());
+		List<String> chromaLinesList = Files.readAllLines(new File(inputFiles.get(0)).toPath(), Charset.defaultCharset());
 
 		float[] chromaArray;
 		Chroma chroma;
-		Chroma previousChroma = null;
+		Chroma previousChroma = Chroma.EMPTY_CHROMA;
 		float timestamp;
 		BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
 
@@ -59,7 +60,7 @@ abstract class ChromaComplexityPlugin extends AnalysisPlugin {
 			chromaArray = shiftChroma(chromaArray, 3);
 			chroma = new Chroma(chromaArray);
 
-			if (previousChroma == null) {
+			if (previousChroma.equals(Chroma.EMPTY_CHROMA)) {
 				out.write(timestamp + ": 0\n");
 			} else {
 				out.write(timestamp + ": " + Float.toString((this.getChromaComplexity(previousChroma, chroma))) + "\n");

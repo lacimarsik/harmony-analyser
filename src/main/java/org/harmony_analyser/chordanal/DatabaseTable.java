@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 class DatabaseTable {
 	final private Map<List<String>,List<String>> table;
 
+	final static DatabaseTable EMPTY_RESULT = new DatabaseTable();
+
 	DatabaseTable() {
 		table = new LinkedHashMap<>();
 	}
@@ -226,7 +228,7 @@ class DatabaseTable {
 		DatabaseTable result = new DatabaseTable();
 
 		if (values.size() < 2) {
-			return null;
+			return DatabaseTable.EMPTY_RESULT;
 		}
 
 		while (values.size() > 0) {

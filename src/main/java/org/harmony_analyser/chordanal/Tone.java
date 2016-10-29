@@ -12,6 +12,8 @@ public class Tone {
 	private int number;
 	private int volume;
 
+	public static final Tone EMPTY_TONE = new Tone(0, 0);
+
 	Tone(int number, int volume) {
 		this.number = number;
 		this.volume = volume;

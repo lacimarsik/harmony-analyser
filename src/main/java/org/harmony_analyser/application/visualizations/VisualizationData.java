@@ -12,6 +12,8 @@ public class VisualizationData {
 	private List<Float> values;
 	private List<String> labels;
 
+	public final static VisualizationData EMPTY_VISUALIZATION_DATA = new VisualizationData();
+
 	public VisualizationData() {
 		setTimestamps(new ArrayList<>());
 		setValues(new ArrayList<>());
@@ -49,8 +51,4 @@ public class VisualizationData {
 	public void setPluginName(String pluginName) {
 		this.pluginName = pluginName;
 	}
-
-	/* Null object */
-
-	public static VisualizationData VOID_VISUALIZATION_DATA = new VisualizationData();
 }

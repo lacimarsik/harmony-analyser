@@ -4,10 +4,12 @@ package org.harmony_analyser.chromanal;
  * Class to encapsulate Chromas
  */
 
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({"SameParameterValue", "WeakerAccess"})
 
 public class Chroma {
 	public final float[] values;
+
+	public static final Chroma EMPTY_CHROMA = new Chroma();
 
 	/* Exceptions */
 
@@ -15,6 +17,10 @@ public class Chroma {
 		public WrongChromaSize(String message) {
 			super(message);
 		}
+	}
+
+	public Chroma() {
+		this.values = new float[0];
 	}
 
 	public Chroma(float[] chroma) throws WrongChromaSize {

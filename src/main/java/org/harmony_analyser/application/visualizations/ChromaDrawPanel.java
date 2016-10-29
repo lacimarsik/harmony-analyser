@@ -1,19 +1,16 @@
 package org.harmony_analyser.application.visualizations;
 
-import org.harmony_analyser.application.services.*;
-import org.harmony_analyser.plugins.AnalysisPlugin;
 import org.jfree.chart.*;
 import org.jfree.chart.plot.*;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.*;
 
 import java.awt.*;
-import java.io.IOException;
 
 @SuppressWarnings({"SameParameterValue", "UnusedParameters"})
 
 class ChromaDrawPanel extends DrawPanel {
-	ChromaDrawPanel(VisualizationData visualizationData) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException {
+	ChromaDrawPanel(VisualizationData visualizationData) {
 		super(visualizationData);
 	}
 

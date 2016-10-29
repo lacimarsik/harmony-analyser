@@ -6,8 +6,6 @@ import org.harmony_analyser.plugins.chromanal_plugins.*;
 import org.harmony_analyser.plugins.vamp_plugins.*;
 import org.vamp_plugins.PluginLoader;
 
-import java.util.Arrays;
-
 /**
  * Factory to create Analysis plugins on demand
  */
@@ -55,7 +53,7 @@ public class AnalysisPluginFactory {
 					plugin = new ChromaComplexityTonalPlugin();
 					break;
 				case "chord_palette":
-					plugin = new VoidPlugin();
+					plugin = new EmptyPlugin();
 					break;
 				default:
 					throw new AudioAnalyser.LoadFailedException("Plugin with key " + pluginKey + " is not available");

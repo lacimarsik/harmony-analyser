@@ -2,7 +2,6 @@ package org.harmony_analyser.plugins.vamp_plugins;
 
 import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.application.visualizations.VisualizationData;
-import org.harmony_analyser.plugins.AnalysisPlugin;
 import org.vamp_plugins.*;
 
 import java.io.IOException;
@@ -60,8 +59,9 @@ public class NNLSPlugin extends VampPlugin {
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add(""); // Plugin handles raw WAV files
+		inputFileExtension = ""; // Plugin handles raw WAV files
 
-		outputFileSuffix = "-chromas.txt";
+		outputFileSuffix = "-chromas";
 
 		parameters = new HashMap<>();
 		parameters.put("useNNLS", (float) 1);
@@ -76,6 +76,6 @@ public class NNLSPlugin extends VampPlugin {
 	}
 
 	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, OutputNotReady, ParseOutputError, PluginLoader.LoadFailedException {
-		return VisualizationData.VOID_VISUALIZATION_DATA;
+		return VisualizationData.EMPTY_VISUALIZATION_DATA;
 	}
 }

@@ -30,18 +30,18 @@ public class TransitionComplexityPluginTest {
 
 	@Test
 	public void shouldCreateReport() throws IOException, AnalysisPlugin.IncorrectInputException, PluginLoader.LoadFailedException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
-		new NNLSPlugin().analyse(testWavFile.toString(), true);
-		new ChordinoPlugin().analyse(testWavFile.toString(), true);
-		new TransitionComplexityPlugin().analyse(testWavFile.toString(), true);
+		new NNLSPlugin().analyse(testWavFile.toString(), true, false);
+		new ChordinoPlugin().analyse(testWavFile.toString(), true, false);
+		new TransitionComplexityPlugin().analyse(testWavFile.toString(), true, false);
 		BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-report.txt"));
 		BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
 		StringBuilder reportString = new StringBuilder();
 		StringBuilder fixtureString = new StringBuilder();
 		String line;
-		while ((line = readerReport.readLine()) != null) {
+		while ((line = readerReport.readLine()) != null) { // Check for null is valid
 			reportString.append(line);
 		}
-		while ((line = readerFixture.readLine()) != null) {
+		while ((line = readerFixture.readLine()) != null) { // Check for null is valid
 			fixtureString.append(line);
 		}
 		assertEquals(fixtureString.toString(), reportString.toString());

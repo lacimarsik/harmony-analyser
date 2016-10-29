@@ -119,7 +119,7 @@ class HarmonyAnalyser extends JFrame {
 	private JButton searchAgainButton;
 	private JFileChooser fileChooser;
 
-	private Harmony harmony1,harmony2 = null;
+	private Harmony harmony1, harmony2 = Harmony.EMPTY_HARMONY;
 	private final MidiHandler midiHandler;
 	private final AudioAnalyser audioAnalyser;
 
@@ -166,7 +166,13 @@ class HarmonyAnalyser extends JFrame {
 				"\ndescription: " + selectedDevice.getDeviceInfo().getDescription().substring(0, selectedDevice.getDeviceInfo().getDescription().indexOf(",")));
 
 			midiHandler.close();
-			midiHandler.initialize(null, null, selectedDevice, null, null);
+			midiHandler.initialize(
+				MidiHandler.EMPTY_SEQUENCER,
+				MidiHandler.EMPTY_SYNTHESIZER,
+				selectedDevice,
+				MidiHandler.EMPTY_MIDI_DEVICE,
+				MidiHandler.EMPTY_MIDI_DECODER
+			);
 			midiHandler.connectInputSynthesizer();
 
 			captureMIDICheckBoxOne.setEnabled(true);
@@ -187,13 +193,9 @@ class HarmonyAnalyser extends JFrame {
 				} else {
 					midiHandler.closeInputDevice();
 					harmony1 = midiHandler.getBufferHarmony();
-					if (harmony1 != null) {
-						analyzeHarmony(harmony1, relativeInputPaneOne, absoluteInputPaneOne, nameOnePane, structureOnePane, functionOnePane, chordComplexityPaneOne);
-						playButtonOne.setEnabled(true);
-						if (harmony2 != null) {
-							analyzeTransition(harmony1,harmony2, transitionPane, transitionComplexityPane);
-						}
-					}
+					analyzeHarmony(harmony1, relativeInputPaneOne, absoluteInputPaneOne, nameOnePane, structureOnePane, functionOnePane, chordComplexityPaneOne);
+					playButtonOne.setEnabled(true);
+					analyzeTransition(harmony1,harmony2, transitionPane, transitionComplexityPane);
 					midiHandler.closeDecoder();
 					midiHandler.openInputDevice();
 					midiHandler.connectInputSynthesizer();
@@ -212,13 +214,9 @@ class HarmonyAnalyser extends JFrame {
 				} else {
 					midiHandler.closeInputDevice();
 					harmony2 = midiHandler.getBufferHarmony();
-					if (harmony2 != null) {
-						analyzeHarmony(harmony2, relativeInputPaneTwo, absoluteInputPaneTwo, nameTwoPane, structureTwoPane, functionTwoPane, chordComplexityPaneTwo);
-						playButtonTwo.setEnabled(true);
-						if (harmony1 != null) {
-							analyzeTransition(harmony1,harmony2, transitionPane, transitionComplexityPane);
-						}
-					}
+					analyzeHarmony(harmony2, relativeInputPaneTwo, absoluteInputPaneTwo, nameTwoPane, structureTwoPane, functionTwoPane, chordComplexityPaneTwo);
+					playButtonTwo.setEnabled(true);
+					analyzeTransition(harmony1, harmony2, transitionPane, transitionComplexityPane);
 					midiHandler.closeDecoder();
 					midiHandler.openInputDevice();
 					midiHandler.connectInputSynthesizer();
@@ -234,16 +232,9 @@ class HarmonyAnalyser extends JFrame {
 			public void focusLost(FocusEvent e) {
 				super.focusLost(e);
 				harmony1 = Chordanal.createHarmonyFromRelativeTones(relativeInputPaneOne.getText());
-				if (harmony1 != null) {
-					analyzeHarmony(harmony1, relativeInputPaneOne, absoluteInputPaneOne, nameOnePane, structureOnePane, functionOnePane, chordComplexityPaneOne);
-					playButtonOne.setEnabled(true);
-					if (harmony2 != null) {
-						analyzeTransition(harmony1,harmony2, transitionPane, transitionComplexityPane);
-					}
-				} else {
-					relativeInputPaneOne.setText("");
-					absoluteInputPaneOne.setText("");
-				}
+				analyzeHarmony(harmony1, relativeInputPaneOne, absoluteInputPaneOne, nameOnePane, structureOnePane, functionOnePane, chordComplexityPaneOne);
+				playButtonOne.setEnabled(true);
+					analyzeTransition(harmony1, harmony2, transitionPane, transitionComplexityPane);
 			}
 		});
 
@@ -252,16 +243,9 @@ class HarmonyAnalyser extends JFrame {
 			public void focusLost(FocusEvent e) {
 				super.focusLost(e);
 				harmony1 = Chordanal.createHarmonyFromTones(absoluteInputPaneOne.getText());
-				if (harmony1 != null) {
-					analyzeHarmony(harmony1, relativeInputPaneOne, absoluteInputPaneOne, nameOnePane, structureOnePane, functionOnePane, chordComplexityPaneOne);
-					playButtonOne.setEnabled(true);
-					if (harmony2 != null) {
-						analyzeTransition(harmony1,harmony2, transitionPane, transitionComplexityPane);
-					}
-				} else {
-					relativeInputPaneOne.setText("");
-					absoluteInputPaneOne.setText("");
-				}
+				analyzeHarmony(harmony1, relativeInputPaneOne, absoluteInputPaneOne, nameOnePane, structureOnePane, functionOnePane, chordComplexityPaneOne);
+				playButtonOne.setEnabled(true);
+				analyzeTransition(harmony1,harmony2, transitionPane, transitionComplexityPane);
 			}
 		});
 
@@ -270,16 +254,9 @@ class HarmonyAnalyser extends JFrame {
 			public void focusLost(FocusEvent e) {
 				super.focusLost(e);
 				harmony2 = Chordanal.createHarmonyFromRelativeTones(relativeInputPaneTwo.getText());
-				if (harmony2 != null) {
-					analyzeHarmony(harmony2, relativeInputPaneTwo, absoluteInputPaneTwo, nameTwoPane, structureTwoPane, functionTwoPane, chordComplexityPaneTwo);
-					playButtonTwo.setEnabled(true);
-					if (harmony1 != null) {
-						analyzeTransition(harmony1,harmony2, transitionPane, transitionComplexityPane);
-					}
-				} else {
-					relativeInputPaneTwo.setText("");
-					absoluteInputPaneTwo.setText("");
-				}
+				analyzeHarmony(harmony2, relativeInputPaneTwo, absoluteInputPaneTwo, nameTwoPane, structureTwoPane, functionTwoPane, chordComplexityPaneTwo);
+				playButtonTwo.setEnabled(true);
+				analyzeTransition(harmony1, harmony2, transitionPane, transitionComplexityPane);
 			}
 		});
 
@@ -288,16 +265,9 @@ class HarmonyAnalyser extends JFrame {
 			public void focusLost(FocusEvent e) {
 				super.focusLost(e);
 				harmony2 = Chordanal.createHarmonyFromTones(absoluteInputPaneTwo.getText());
-				if (harmony2 != null) {
-					analyzeHarmony(harmony2, relativeInputPaneTwo, absoluteInputPaneTwo, nameTwoPane, structureTwoPane, functionTwoPane, chordComplexityPaneTwo);
-					playButtonTwo.setEnabled(true);
-					if (harmony1 != null) {
-						analyzeTransition(harmony1,harmony2, transitionPane, transitionComplexityPane);
-					}
-				} else {
-					relativeInputPaneTwo.setText("");
-					absoluteInputPaneTwo.setText("");
-				}
+				analyzeHarmony(harmony2, relativeInputPaneTwo, absoluteInputPaneTwo, nameTwoPane, structureTwoPane, functionTwoPane, chordComplexityPaneTwo);
+				playButtonTwo.setEnabled(true);
+				analyzeTransition(harmony1, harmony2, transitionPane, transitionComplexityPane);
 			}
 		});
 
@@ -371,11 +341,21 @@ class HarmonyAnalyser extends JFrame {
 
 		segmentTrackButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino"));
 
-		analyzeComplexityButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "harmanal:transition_complexity"));
+		analyzeComplexityButton.addActionListener(actionEvent -> {
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "harmanal:transition_complexity");
+		});
 
-		chromaTransitionsSimpleButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "chromanal:chroma_complexity_simple"));
+		chromaTransitionsSimpleButton.addActionListener(actionEvent -> {
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "chromanal:chroma_complexity_simple");
+		});
 
-		chromaTransitionsTonalButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "chromanal:chroma_complexity_tonal"));
+		chromaTransitionsTonalButton.addActionListener(actionEvent -> {
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "chromanal:chroma_complexity_tonal");
+		});
 
 		/* Visualization Tool - Initialization */
 
@@ -481,7 +461,7 @@ class HarmonyAnalyser extends JFrame {
 						consolePane.setText(consolePane.getText() + "\nProcessing: " + file.toString() + "\n");
 
 						try {
-							String analysisResult = audioAnalyser.runAnalysis(file.toString(), pluginKey, true);
+							String analysisResult = audioAnalyser.runAnalysis(file.toString(), pluginKey, true, false);
 							consolePane.setText(consolePane.getText() + "\n" + analysisResult);
 						} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
 							consolePane.setText(consolePane.getText() + "\nERROR: " + e.getMessage());
@@ -508,7 +488,7 @@ class HarmonyAnalyser extends JFrame {
 		String pluginKey = comboBox.getSelectedItem().toString();
 
 		try {
-			consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.runAnalysis(inputFile, pluginKey, false));
+			consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.runAnalysis(inputFile, pluginKey, false, false));
 		} catch (AnalysisPlugin.OutputAlreadyExists e) {
 			consoleTextPane.setText(consoleTextPane.getText() + "\nINFO: " + e.getMessage());
 		}

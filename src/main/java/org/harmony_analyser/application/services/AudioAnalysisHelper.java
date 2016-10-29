@@ -41,24 +41,26 @@ public class AudioAnalysisHelper {
 	}
 
 	// Creates binary representation of a chord, taking maximumNumberOfChordTones tones with the maximum activation from chroma
-	public static int[] createBinaryChord(float[] chroma, float maximumNumberOfChordTones) {
+	public static int[] createBinaryChord(float[] chroma, int maximumNumberOfChordTones) {
 		int[] result = new int[12];
 		Arrays.fill(result, 0);
+		// Make copy of a chroma not to erase original
+		float[] chromaCopy = chroma.clone();
 		float max;
 		int id;
 		for (int g = 0; g < maximumNumberOfChordTones; g++) {
 			max = 0;
 			id = 0;
 			for (int i = 0; i < chroma.length; i++) {
-				if (chroma[i] > max) {
+				if (chromaCopy[i] > max) {
 					id = i;
-					max = chroma[i];
+					max = chromaCopy[i];
 				}
 			}
-			if (chroma[id] > 0) {
+			if (chromaCopy[id] > 0) {
 				result[id] = 1;
 			}
-			chroma[id] = (float) 0;
+			chromaCopy[id] = (float) 0;
 		}
 		return result;
 	}
