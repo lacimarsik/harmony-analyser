@@ -21,11 +21,6 @@ public class AudioAnalysisHelper {
 
 	// filters chroma using audibleThreshold, setting values below the threshold to 0
 	public static float[] filterChroma(float[] chroma, float audibleThreshold) {
-		System.out.println("FILTER METHOD CHROMA BEFORE:");
-		for (float value : chroma) {
-			System.out.print(value + " ");
-		}
-		System.out.println();
 		float[] resultChroma = new float[12];
 		for (int i = 0; i < chroma.length; i++) {
 			if (chroma[i] < audibleThreshold) {
@@ -34,11 +29,6 @@ public class AudioAnalysisHelper {
 				resultChroma[i] = chroma[i];
 			}
 		}
-		System.out.println("FILTER METHOD CHROMA AFTER:");
-		for (float value : resultChroma) {
-			System.out.print(value + " ");
-		}
-		System.out.println();
 		return resultChroma;
 	}
 
