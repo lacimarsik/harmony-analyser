@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 /* internal format: Map <KEY(List<String>) <-> VALUE(List<String>)> */
 /* handling format: key1,key2,...,keyN;value1,value2,...,valueN */
 
-class DatabaseTable {
+public class DatabaseTable {
 	final private Map<List<String>,List<String>> table;
 
-	final static DatabaseTable EMPTY_RESULT = new DatabaseTable();
+	public static final DatabaseTable EMPTY_RESULT = new DatabaseTable();
 
 	DatabaseTable() {
 		table = new LinkedHashMap<>();
@@ -211,7 +211,7 @@ class DatabaseTable {
 	 * Returns all keys as lists of Strings
 	 */
 
-	List<List<String>> getAllKeys() {
+	public List<List<String>> getAllKeys() {
 		ArrayList<List<String>> result = new ArrayList<>();
 		result.addAll(table.keySet());
 		return result;
@@ -408,7 +408,7 @@ class DatabaseTable {
 	 * Checks if the table is empty
 	 */
 
-	boolean isEmpty() {
+	public boolean isEmpty() {
 		return table.isEmpty();
 	}
 

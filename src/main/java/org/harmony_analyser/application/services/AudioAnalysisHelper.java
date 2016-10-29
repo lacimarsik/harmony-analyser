@@ -1,5 +1,7 @@
 package org.harmony_analyser.application.services;
 
+import org.harmony_analyser.chordanal.*;
+
 import java.util.Arrays;
 
 /**
@@ -77,5 +79,25 @@ public class AudioAnalysisHelper {
 	// gets String label for the line, after ':'
 	public static String getLabelFromLine(String line) {
 		return line.substring(line.lastIndexOf(':') + 2);
+	}
+
+	/* LOGGING */
+
+	// logs chroma float array to System.out with a given title
+	public static void logChromaFloatArray(float[] chroma, String title) {
+		System.out.println(title);
+		for (float f : chroma) {
+			System.out.print(f + " ");
+		}
+		System.out.println();
+	}
+
+	// logs Harmony to System.out with a given title
+	public static void logHarmony(Harmony harmony, String title) {
+		System.out.println(title);
+		for (Tone tone : harmony.tones) {
+			System.out.print(tone.getNameMapped() + " ");
+		}
+		System.out.println();
 	}
 }

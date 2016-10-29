@@ -33,6 +33,6 @@ public class ChromaComplexityTonalPlugin extends ChromaComplexityPlugin {
 	}
 
 	public float getChromaComplexity(Chroma previousChroma, Chroma chroma) throws Chroma.WrongChromaSize {
-		return Chromanal.getChromaComplexityTonal(previousChroma, chroma);
+		return Chromanal.getChromaComplexityTonal(previousChroma, chroma, false);
 	}
 }
