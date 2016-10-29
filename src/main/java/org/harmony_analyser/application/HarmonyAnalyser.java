@@ -117,6 +117,9 @@ class HarmonyAnalyser extends JFrame {
 	private JButton chromaTransitionsSimpleButton;
 	private JButton chromaTransitionsTonalButton;
 	private JButton searchAgainButton;
+	private JButton buttonKeyDetector;
+	private JButton extractKeyButton;
+	private JLabel keyDetectorVampLabel;
 	private JFileChooser fileChooser;
 
 	private Harmony harmony1, harmony2 = Harmony.EMPTY_HARMONY;
@@ -303,6 +306,14 @@ class HarmonyAnalyser extends JFrame {
 			}
 		});
 
+		buttonKeyDetector.addActionListener(actionEvent -> {
+			try {
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("qm-vamp-plugins:qm-keydetector"));
+			} catch (AudioAnalyser.LoadFailedException e) {
+				e.printStackTrace();
+			}
+		});
+
 		buttonComplexity.addActionListener(actionEvent -> {
 			try {
 				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("chordanal:harmonic_complexity"));
@@ -340,6 +351,8 @@ class HarmonyAnalyser extends JFrame {
 		extractChromasButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma"));
 
 		segmentTrackButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino"));
+
+		extractKeyButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "qm-vamp-plugins:qm-keydetector"));
 
 		analyzeComplexityButton.addActionListener(actionEvent -> {
 			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");

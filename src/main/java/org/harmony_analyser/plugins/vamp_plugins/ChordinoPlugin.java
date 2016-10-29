@@ -1,12 +1,7 @@
 package org.harmony_analyser.plugins.vamp_plugins;
 
-import org.harmony_analyser.application.services.AudioAnalyser;
-import org.harmony_analyser.application.services.AudioAnalysisHelper;
-import org.harmony_analyser.application.visualizations.VisualizationData;
-import org.harmony_analyser.plugins.AnalysisPlugin;
 import org.vamp_plugins.*;
 
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -51,15 +46,12 @@ import java.util.*;
  * 3: loglikelihood - Log likelihood of harmonic change
  */
 
-/**
- * Wrapper for Chordino VAMP plugin
- */
-
-public class ChordinoPlugin extends VampPlugin {
+public class ChordinoPlugin extends SegmentationVampPlugin {
 	public ChordinoPlugin() throws PluginLoader.LoadFailedException {
 		pluginKey = "nnls-chroma:chordino";
 		pluginName = "Chordino";
 		outputNumber = 0;
+		outputType = OutputType.VALUE_AND_LABEL;
 		blockSize = 16384;
 
 		inputFileSuffixes = new ArrayList<>();
@@ -79,33 +71,5 @@ public class ChordinoPlugin extends VampPlugin {
 
 		p = loader.loadPlugin(pluginKey, defaultRate, adapterFlag);
 		setParameters();
-	}
-
-	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, PluginLoader.LoadFailedException, ParseOutputError {
-		VisualizationData data = super.prepareVisualizationData(outputFile);
-		List<Float> timestamps = new ArrayList<>();
-		List<String> labels = new ArrayList<>();
-		List<String> linesList = readOutputFile(outputFile);
-
-		/* Plugin-specific parsing of the result */
-		float timestamp;
-		String label;
-
-		try {
-			for (String line : linesList) {
-				timestamp = AudioAnalysisHelper.getTimestampFromLine(line);
-				label = AudioAnalysisHelper.getLabelFromLine(line);
-				if (label.equals("")) {
-					throw new ParseOutputError("Output did not have the required fields");
-				}
-				timestamps.add(timestamp);
-				labels.add(label);
-			}
-		} catch (NumberFormatException e) {
-			throw new ParseOutputError("Output did not have the required fields");
-		}
-		data.setTimestamps(timestamps);
-		data.setLabels(labels);
-		return data;
 	}
 }

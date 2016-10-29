@@ -102,6 +102,7 @@ abstract class VampPlugin extends AnalysisPlugin {
 	final int defaultRate = 44100;
 	Plugin p;
 	int outputNumber;
+	String outputType;
 	int blockSize;
 
 	static {
@@ -137,6 +138,7 @@ abstract class VampPlugin extends AnalysisPlugin {
 		for (int i = 0; i < outputs.length; ++i) {
 			result += i + ": " + outputs[i].identifier + " (sample type: " + outputs[i].sampleType + ")\n";
 		}
+		result += "Plugin has OutputType: " + this.outputType + "\n";
 		return result;
 	}
 
@@ -244,7 +246,7 @@ abstract class VampPlugin extends AnalysisPlugin {
 
 	/* Private methods */
 
-	private static int readBlock(AudioFormat format, AudioInputStream stream, float[][] buffers) throws java.io.IOException {
+	private int readBlock(AudioFormat format, AudioInputStream stream, float[][] buffers) throws java.io.IOException {
 		// 16-bit LE signed PCM only
 		int channels = format.getChannels();
 		byte[] raw = new byte[buffers[0].length * channels * 2];
@@ -262,7 +264,7 @@ abstract class VampPlugin extends AnalysisPlugin {
 		return frames;
 	}
 
-	private static void printFeatures(RealTime frameTime, Integer output, Map<Integer, List<Feature>> features, PrintStream out) {
+	private void printFeatures(RealTime frameTime, Integer output, Map<Integer, List<Feature>> features, PrintStream out) {
 		if (!features.containsKey(output)) return;
 
 		for (Feature f : features.get(output)) {
@@ -275,11 +277,21 @@ abstract class VampPlugin extends AnalysisPlugin {
 				out.print("," + f.duration);
 			}
 			out.print(":");
-			for (float v : f.values) {
-				out.print(" " + v);
+			if (Arrays.asList(new String[] { OutputType.VALUE_ONLY, OutputType.VALUE_AND_LABEL }).contains(this.outputType)) {
+				for (float v : f.values) {
+					out.print(" " + v);
+				}
 			}
-			out.print(" " + f.label);
+			if (Arrays.asList(new String[] { OutputType.LABEL_ONLY, OutputType.VALUE_AND_LABEL}).contains(this.outputType)) {
+				out.print(" " + f.label);
+			}
 			out.println("");
 		}
+	}
+
+	class OutputType {
+		static final String VALUE_ONLY = "value_only";
+		static final String LABEL_ONLY = "label_only";
+		static final String VALUE_AND_LABEL = "value_and_label";
 	}
 }

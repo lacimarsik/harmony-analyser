@@ -10,6 +10,7 @@ public class DrawPanelFactory {
 	private final String[] ALL_VISUALIZATIONS = new String[] {
 		// Visual plugins
 		"nnls-chroma:chordino",
+		"qm-vamp-plugins:qm-keydetector",
 		"chordanal:harmonic_complexity",
 		"chordanal:tonal_distance",
 		"chromanal:chroma_complexity_simple",
@@ -25,6 +26,7 @@ public class DrawPanelFactory {
 	public DrawPanel createDrawPanel(String pluginKey, VisualizationData visualizationData) {
 		switch (pluginKey) {
 			case "nnls-chroma:chordino":
+			case "qm-vamp-plugins:qm-keydetector":
 				return new SegmentationDrawPanel(visualizationData);
 			case "chord_palette":
 				return new PaletteDrawPanel(visualizationData);

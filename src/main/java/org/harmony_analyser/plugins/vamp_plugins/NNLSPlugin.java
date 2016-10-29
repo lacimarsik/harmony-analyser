@@ -46,15 +46,12 @@ import java.util.*;
  * 5: chromagram and bass chromagram
  */
 
-/**
- * Wrapper for NNLS Chroma VAMP plugin
- */
-
 public class NNLSPlugin extends VampPlugin {
 	public NNLSPlugin() throws PluginLoader.LoadFailedException {
 		pluginKey = "nnls-chroma:nnls-chroma";
 		pluginName = "NNLS Chroma";
 		outputNumber = 3;
+		outputType = OutputType.VALUE_AND_LABEL;
 		blockSize = 16384;
 
 		inputFileSuffixes = new ArrayList<>();

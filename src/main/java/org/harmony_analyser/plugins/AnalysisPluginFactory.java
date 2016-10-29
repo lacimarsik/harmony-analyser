@@ -43,6 +43,9 @@ public class AnalysisPluginFactory {
 				case "nnls-chroma:chordino":
 					plugin = new ChordinoPlugin();
 					break;
+				case "qm-vamp-plugins:qm-keydetector":
+					plugin = new KeyDetectorPlugin();
+					break;
 				case "chordanal:harmonic_complexity":
 					plugin = new HarmonicComplexityPlugin();
 					break;
