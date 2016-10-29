@@ -9,8 +9,8 @@ import java.awt.*;
 
 @SuppressWarnings({"SameParameterValue", "UnusedParameters"})
 
-class ChromaDrawPanel extends DrawPanel {
-	ChromaDrawPanel(VisualizationData visualizationData) {
+class LineChartDrawPanel extends DrawPanel {
+	LineChartDrawPanel(VisualizationData visualizationData) {
 		super(visualizationData);
 	}
 
@@ -18,14 +18,14 @@ class ChromaDrawPanel extends DrawPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		drawChromaComplexityGraph(g);
+		drawLineChart(g);
 	}
 
 	/* Private methods */
 
 	/* Complet analysis */
 
-	private void drawChromaComplexityGraph(Graphics g) {
+	private void drawLineChart(Graphics g) {
 		drawLineChart(g, visualizationData.getPluginName(), "", "", Color.BLACK);
 	}
 

@@ -46,6 +46,9 @@ public class AnalysisPluginFactory {
 				case "chordanal:harmonic_complexity":
 					plugin = new HarmonicComplexityPlugin();
 					break;
+				case "chordanal:tonal_distance":
+					plugin = new TonalDistancePlugin();
+					break;
 				case "chromanal:chroma_complexity_simple":
 					plugin = new ChromaComplexitySimplePlugin();
 					break;

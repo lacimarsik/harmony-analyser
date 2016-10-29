@@ -26,8 +26,8 @@ import java.util.*;
 
 @SuppressWarnings("SameParameterValue")
 
-class TonalDistancePlugin extends ChordanalPlugin {
-	TonalDistancePlugin() {
+public class TonalDistancePlugin extends ChordanalPlugin {
+	public TonalDistancePlugin() {
 		pluginKey = "harmanal:tonal_distance";
 		pluginName = "Tonal Distance";
 

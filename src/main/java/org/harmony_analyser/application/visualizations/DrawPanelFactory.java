@@ -11,6 +11,7 @@ public class DrawPanelFactory {
 		// Visual plugins
 		"nnls-chroma:chordino",
 		"chordanal:harmonic_complexity",
+		"chordanal:tonal_distance",
 		"chromanal:chroma_complexity_simple",
 		"chromanal:chroma_complexity_tonal",
 		// Static visualizations
@@ -29,9 +30,10 @@ public class DrawPanelFactory {
 				return new PaletteDrawPanel(visualizationData);
 			case "chordanal:harmonic_complexity":
 				return new ComplexityChartDrawPanel(visualizationData);
+			case "chordanal:tonal_distance":
 			case "chromanal:chroma_complexity_simple":
 			case "chromanal:chroma_complexity_tonal":
-				return new ChromaDrawPanel(visualizationData);
+				return new LineChartDrawPanel(visualizationData);
 			default:
 				return new EmptyDrawPanel(VisualizationData.EMPTY_VISUALIZATION_DATA);
 		}
