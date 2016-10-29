@@ -12,12 +12,12 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Unit tests for Harmanal class
+ * Unit tests for HarmonicComplexityPlugin class
  */
 
 @SuppressWarnings("ConstantConditions")
 
-public class TransitionComplexityPluginTest {
+public class HarmonicComplexityPluginTest {
 	private File testWavFile, testReportFixture;
 	private List<String> inputFilesVamp, inputFilesComplexity;
 
