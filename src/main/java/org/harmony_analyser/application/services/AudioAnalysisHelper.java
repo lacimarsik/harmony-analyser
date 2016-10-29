@@ -1,5 +1,7 @@
 package org.harmony_analyser.application.services;
 
+import org.harmony_analyser.chordanal.*;
+
 import java.util.Arrays;
 
 /**
@@ -19,6 +21,11 @@ public class AudioAnalysisHelper {
 
 	// filters chroma using audibleThreshold, setting values below the threshold to 0
 	public static float[] filterChroma(float[] chroma, float audibleThreshold) {
+		System.out.println("FILTER METHOD CHROMA BEFORE:");
+		for (float value : chroma) {
+			System.out.print(value + " ");
+		}
+		System.out.println();
 		float[] resultChroma = new float[12];
 		for (int i = 0; i < chroma.length; i++) {
 			if (chroma[i] < audibleThreshold) {
@@ -27,6 +34,11 @@ public class AudioAnalysisHelper {
 				resultChroma[i] = chroma[i];
 			}
 		}
+		System.out.println("FILTER METHOD CHROMA AFTER:");
+		for (float value : resultChroma) {
+			System.out.print(value + " ");
+		}
+		System.out.println();
 		return resultChroma;
 	}
 
@@ -77,5 +89,25 @@ public class AudioAnalysisHelper {
 	// gets String label for the line, after ':'
 	public static String getLabelFromLine(String line) {
 		return line.substring(line.lastIndexOf(':') + 2);
+	}
+
+	/* LOGGING */
+
+	// logs chroma float array to System.out with a given title
+	public static void logChromaFloatArray(float[] chroma, String title) {
+		System.out.println(title);
+		for (float f : chroma) {
+			System.out.print(f + " ");
+		}
+		System.out.println();
+	}
+
+	// logs Harmony to System.out with a given title
+	public static void logHarmony(Harmony harmony, String title) {
+		System.out.println(title);
+		for (Tone tone : harmony.tones) {
+			System.out.print(tone.getNameMapped() + " ");
+		}
+		System.out.println();
 	}
 }

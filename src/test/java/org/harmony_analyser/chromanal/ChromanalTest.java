@@ -36,6 +36,6 @@ public class ChromanalTest {
 		// IGNORING CHORD TONES C, G
 		// D: 0.5 => 0
 		// Sum of Deltas: 0.8
-		assertEquals(0.8, Chromanal.getChromaComplexityTonal(chroma1, chroma2), 0.01);
+		assertEquals(0.8, Chromanal.getChromaComplexityTonal(chroma1, chroma2, false), 0.01);
 	}
 }
