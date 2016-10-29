@@ -110,7 +110,7 @@ public abstract class AnalysisPlugin {
 
 		result += "Input file(s):\n";
 		for (String suffix : inputFileSuffixes) {
-			String inputFileName = inputFileWav + suffix + ".txt";
+			String inputFileName = inputFileWav + suffix + inputFileExtension;
 			result += inputFileName + "\n";
 		}
 		result += "\nOutput file:\n" + inputFileWav + outputFileSuffix + ".txt" + "\n";
