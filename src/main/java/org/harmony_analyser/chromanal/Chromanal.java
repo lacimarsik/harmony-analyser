@@ -1,5 +1,6 @@
 package org.harmony_analyser.chromanal;
 
+import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.application.services.AudioAnalysisHelper;
 import org.harmony_analyser.chordanal.*;
 
@@ -23,59 +24,20 @@ public class Chromanal {
 	}
 
 	public static float getChromaComplexityTonal(Chroma chroma1, Chroma chroma2, boolean verbose) throws Chroma.WrongChromaSize {
-		if (verbose) {
-			System.out.println("Chroma 1:");
-			for (float value : chroma1.values) {
-				System.out.print(value + " ");
-			}
-			System.out.println();
-
-			System.out.println("Chroma 2:");
-			for (float value : chroma2.values) {
-				System.out.print(value + " ");
-			}
-			System.out.println();
-		}
+		if (verbose) AudioAnalysisHelper.logChromaFloatArray(chroma1.values, "Chroma 1");
+		if (verbose) AudioAnalysisHelper.logChromaFloatArray(chroma2.values, "Chroma 2");
 
 		float[] chromaVector1 = AudioAnalysisHelper.filterChroma(chroma1.values, audibleThreshold);
 
-		if (verbose) {
-			System.out.println("Chroma 1:");
-			for (float f : chromaVector1) {
-				System.out.print(f + " ");
-			}
-			System.out.println();
-		}
+		if (verbose) AudioAnalysisHelper.logChromaFloatArray(chromaVector1, "Filtered Chroma 1");
 
 		int[] harmony1 = AudioAnalysisHelper.createBinaryChord(chromaVector1, maximumNumberOfChordTones);
 
-		if (verbose) {
-			System.out.println("Chroma 1 (check):");
-			for (float f : chromaVector1) {
-				System.out.print(f + " ");
-			}
-			System.out.println();
-		}
-
 		float[] chromaVector2 = AudioAnalysisHelper.filterChroma(chroma2.values, audibleThreshold);
 
-		if (verbose) {
-			System.out.println("Chroma 2:");
-			for (float f : chromaVector2) {
-				System.out.print(f + " ");
-			}
-			System.out.println();
-		}
+		if (verbose) AudioAnalysisHelper.logChromaFloatArray(chromaVector1, "Filtered Chroma 2");
 
 		int[] harmony2 = AudioAnalysisHelper.createBinaryChord(chromaVector2, maximumNumberOfChordTones);
-
-		if (verbose) {
-			System.out.println("Chroma 2 (check):");
-			for (float f : chromaVector2) {
-				System.out.print(f + " ");
-			}
-			System.out.println();
-		}
 
 		// create chords using Chordanal
 		String currentChordTones = Chordanal.getStringOfTones(harmony2);
@@ -84,40 +46,21 @@ public class Chromanal {
 		Harmony harmony_2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
 
 		// subtract root tones from the chords
-		if (verbose) {
-			System.out.println("First chord:");
-		}
 		Harmony rootHarmony1 = Harmanal.getRootHarmony(harmony_1);
 		for (Tone tone : rootHarmony1.tones) {
-			if (verbose) {
-				System.out.print(tone.getNameMapped() + " ");
-			}
 			chromaVector1[tone.getNumberMapped()] = 0;
 		}
+		if (verbose) AudioAnalysisHelper.logHarmony(rootHarmony1, "Root Harmony 1");
+
 		Harmony rootHarmony2 = Harmanal.getRootHarmony(harmony_2);
-		if (verbose) {
-			System.out.println("Second chord:");
-		}
 		for (Tone tone : rootHarmony2.tones) {
-			if (verbose) {
-				System.out.print(tone.getNameMapped() + " ");
-			}
 			chromaVector2[tone.getNumberMapped()] = 0;
 		}
-		if (verbose) {
-			System.out.println("Chroma 1:");
-			for (float f : chromaVector1) {
-				System.out.print(f + " ");
-			}
-			System.out.println();
-		}
-		if (verbose) {
-			System.out.println("Chroma 2:");
-			for (float f : chromaVector2) {
-				System.out.print(f + " ");
-			}
-			System.out.println();
-		}
+		if (verbose) AudioAnalysisHelper.logHarmony(rootHarmony2, "Root Harmony 2");
+
+		if (verbose) AudioAnalysisHelper.logChromaFloatArray(chroma1.values, "Chroma 1");
+		if (verbose) AudioAnalysisHelper.logChromaFloatArray(chroma2.values, "Chroma 2");
+
 		return getChromaComplexitySimple(new Chroma(chromaVector1), new Chroma(chromaVector2));
 	}
 }
