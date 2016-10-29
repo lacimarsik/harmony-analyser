@@ -35,7 +35,8 @@ class SegmentationDrawPanel extends DrawPanel {
 		int i = 0;
 		timestampsCopy.remove(0); // Skip first timestamp
 		for (float timestamp : timestampsCopy) {
-			relativeToneName = visualizationData.getLabels().get(i).substring(0, Math.min(visualizationData.getLabels().get(i).length(), 2));
+			String label = visualizationData.getLabels().get(i);
+			relativeToneName = label.substring(0, Math.min(label.length(), 2));
 			segmentSize = ((timestamp - previousTimestamp) / maximalTimestamp);
 			drawSegment(g, segmentSize, getColorForTone(relativeToneName));
 			previousTimestamp = timestamp;
