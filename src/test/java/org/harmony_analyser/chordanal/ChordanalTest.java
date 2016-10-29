@@ -60,6 +60,11 @@ public class ChordanalTest {
 	}
 
 	@Test
+	public void shouldGetFifthIntervalFromHarmony() {
+		assertEquals(Chordanal.getFifthIntervalFromHarmony(Chordanal.createHarmonyFromTones("E4 G4 C5")).getToneNamesMapped(), "C G");
+	}
+
+	@Test
 	public void shouldGetRootTone() {
 		assertEquals(Chordanal.getRootTone(Chordanal.createHarmonyFromTones("E4 G4 C5")).getNameMapped(), "C");
 	}

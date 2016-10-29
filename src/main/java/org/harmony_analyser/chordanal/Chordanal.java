@@ -654,6 +654,10 @@ public class Chordanal {
 		}
 	}
 
+	static Harmony getFifthIntervalFromHarmony(Harmony harmony) {
+		return null;
+	}
+
 	/* Analyzing and naming functions */
 
 	static String getFunctionName(int functionSign) {
