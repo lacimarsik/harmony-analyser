@@ -43,7 +43,7 @@ public class AnalysisPluginFactory {
 				case "nnls-chroma:chordino":
 					plugin = new ChordinoPlugin();
 					break;
-				case "harmanal:transition_complexity":
+				case "chordanal:harmonic_complexity":
 					plugin = new HarmonicComplexityPlugin();
 					break;
 				case "chromanal:chroma_complexity_simple":
