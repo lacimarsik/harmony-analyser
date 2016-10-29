@@ -1,11 +1,8 @@
 package org.harmony_analyser.plugins.chromanal_plugins;
 
-import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.application.services.AudioAnalysisHelper;
-import org.harmony_analyser.application.visualizations.VisualizationData;
 import org.harmony_analyser.chromanal.Chroma;
-import org.harmony_analyser.plugins.AnalysisPlugin;
-import org.vamp_plugins.PluginLoader;
+import org.harmony_analyser.plugins.LineChartPlugin;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -22,7 +19,7 @@ import java.util.List;
 
 @SuppressWarnings("SameParameterValue")
 
-abstract class ChromaComplexityPlugin extends AnalysisPlugin {
+abstract class ChromaComplexityPlugin extends LineChartPlugin {
 	/**
 	 * Analyzes the song: converts chroma information to chroma complexity descriptors
 	 *
@@ -72,30 +69,6 @@ abstract class ChromaComplexityPlugin extends AnalysisPlugin {
 		out.close();
 
 		return result;
-	}
-
-	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, AnalysisPlugin.ParseOutputError, PluginLoader.LoadFailedException {
-		VisualizationData data = super.getDataFromOutput(outputFile);
-		List<Float> timestamps = new ArrayList<>();
-		List<Float> values = new ArrayList<>();
-		List<String> linesList = readOutputFile(outputFile);
-
-		float timestamp, value;
-
-		/* Plugin-specific parsing of the result */
-		try {
-			for (String line : linesList) {
-				timestamp = AudioAnalysisHelper.getTimestampFromLine(line);
-				value = Float.parseFloat(AudioAnalysisHelper.getLabelFromLine(line));
-				timestamps.add(timestamp);
-				values.add(value);
-			}
-		} catch (NumberFormatException e) {
-			throw new ParseOutputError("Output did not have the required fields");
-		}
-		data.setTimestamps(timestamps);
-		data.setValues(values);
-		return data;
 	}
 
 	protected abstract float getChromaComplexity(Chroma previousChroma, Chroma chroma) throws Chroma.WrongChromaSize;

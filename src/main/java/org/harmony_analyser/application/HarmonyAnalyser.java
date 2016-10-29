@@ -305,7 +305,7 @@ class HarmonyAnalyser extends JFrame {
 
 		buttonComplexity.addActionListener(actionEvent -> {
 			try {
-				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("harmanal:transition_complexity"));
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("chordanal:harmonic_complexity"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
@@ -344,7 +344,7 @@ class HarmonyAnalyser extends JFrame {
 		analyzeComplexityButton.addActionListener(actionEvent -> {
 			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
 			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino");
-			analyzeFolder(consoleTextPane, inputFolderTextField, "harmanal:transition_complexity");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "chordanal:harmonic_complexity");
 		});
 
 		chromaTransitionsSimpleButton.addActionListener(actionEvent -> {

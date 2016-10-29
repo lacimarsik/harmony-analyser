@@ -1,69 +1,29 @@
 package org.harmony_analyser.plugins.chordanal_plugins;
 
-import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.application.services.AudioAnalysisHelper;
-import org.harmony_analyser.application.visualizations.VisualizationData;
-import org.harmony_analyser.chromanal.Chroma;
-import org.harmony_analyser.plugins.*;
 import org.harmony_analyser.chordanal.*;
-import org.vamp_plugins.PluginLoader;
+import org.harmony_analyser.chromanal.Chroma;
+import org.harmony_analyser.plugins.LineChartPlugin;
 
-import java.io.*;
-import java.nio.charset.*;
-import java.nio.file.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Plugin for high-level audio analysis using chroma / chord transcription input, based on Chordanal model
- */
-
-/*
- * TransitionComplexityPlugin
- *
- * - requires: chroma, segmentation
- * - Averages chroma in each segment
- * - Selects the tones with the biggest activation, based on audibleThreshold
- * - Names the chord using Chordanal
- * - derives transition complexities for each tuple of subsequent chords
- * - calculates average transition complexity, average chord complexity, and relative transition complexity
- *
- * parameters
- * - threshold for audible tones (< 0.05 yields 4+ tones in each chord, > 0.1 yields to 2 and less tones in each chord)
- * -- preferred: 0.07
- * - maximum number of chord tones - used to simplify computation which is exponential to the number of chord tones
- * -- preferred: 4.0
- * - maximal complexity - is assigned when transition complexity cannot be found, as a penalization constant
- * -- preferred: 7.0
+ * Abstract class for chordanal plugins
  */
 
 @SuppressWarnings("SameParameterValue")
 
-public class TransitionComplexityPlugin extends AnalysisPlugin {
+abstract class ChordanalPlugin extends LineChartPlugin {
 	private static float audibleThreshold = (float) 0.07; // used to filter chroma activations that we consider not audible
 	private static int maximumNumberOfChordTones = 4; // used to limit number of tones we work with in chord
 	private static int maximalComplexity = 7; // used to assign a maximal value for 2 chords that have no common root
-
-	private final static int NUMBER_OUTPUTS = 3;
-
-	public TransitionComplexityPlugin() {
-		pluginKey = "harmanal:transition_complexity";
-		pluginName = "Transition Complexity";
-
-		inputFileSuffixes = new ArrayList<>();
-		inputFileSuffixes.add("-chromas");
-		inputFileSuffixes.add("-segmentation");
-		inputFileExtension = ".txt";
-
-		outputFileSuffix = "-report";
-
-		parameters = new HashMap<>();
-		parameters.put("audibleThreshold", (float) 0.07);
-		parameters.put("maximumNumberOfChordTones", (float) 4.0);
-		parameters.put("maximalComplexity", (float) 7.0);
-
-		setParameters();
-	}
 
 	/**
 	 * Analyzes the song: converts chroma + segmentation information to harmony complexity descriptors
@@ -227,53 +187,24 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 				if (verbose) {
 					outVerbose.write("transition complexity: " + transitionComplexity + "\n\n");
 				}
-				out.write(timestamp + ": " + transitionComplexity + "\n");
+				result += this.getTransitionOutput(timestamp, transitionComplexity);
 			}
 
 			// Set previous chord
 			previousChord = chord.clone();
 		}
 
-		float atc = (float) sumTransitionComplexities  / (float) transitionComplexityList.size();
-		float ahc = (float) sumChordComplexities  / (float) chordComplexityList.size();
-		float rtc = (float) sumTransitionComplexities / (float) sumOfAllTones;
+		float hc = (float) sumTransitionComplexities  / (float) transitionComplexityList.size();
+		float acc = (float) sumChordComplexities  / (float) chordComplexityList.size();
+		float rtd = (float) sumTransitionComplexities / (float) sumOfAllTones;
 
-		String results = "Average Transition Complexity (ATC): " + atc + "\n" +
-		"Average Chord Complexity (ACC): " + ahc + "\n" +
-		"Relative Transition Complexity (RTC): " + rtc + "\n";
+		result += this.getFinalResult(hc, acc, rtd);
+		out.write(result);
 
-		if (verbose) {
-			outVerbose.write(results);
-		}
-		result += results;
 		out.close();
 		outVerbose.close();
 
 		return result;
-	}
-
-	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, ParseOutputError, PluginLoader.LoadFailedException {
-		VisualizationData data = super.getDataFromOutput(outputFile);
-		List<Float> values = new ArrayList<>();
-		List<String> labels = new ArrayList<>();
-		List<String> linesList = readOutputFile(outputFile);
-
-		/* Plugin-specific parsing of the result */
-		// get last NUMBER_OUTPUTS lines
-		List<String> tail = linesList.subList(Math.max(linesList.size() - NUMBER_OUTPUTS, 0), linesList.size());
-		for (String line : tail) {
-			Scanner sc = new Scanner(line).useDelimiter("\\s*:\\s*");
-			labels.add(sc.next());
-			if (sc.hasNextFloat()) {
-				values.add(sc.nextFloat());
-			} else {
-				throw new ParseOutputError("Output did not have the required fields");
-			}
-			sc.close();
-		}
-		data.setValues(values);
-		data.setLabels(labels);
-		return data;
 	}
 
 	protected void setParameters() {
@@ -281,4 +212,8 @@ public class TransitionComplexityPlugin extends AnalysisPlugin {
 		maximumNumberOfChordTones = Math.round(parameters.get("maximumNumberOfChordTones"));
 		maximalComplexity = Math.round(parameters.get("maximalComplexity"));
 	}
+
+	protected abstract String getTransitionOutput(float timestamp, int transitionComplexity);
+
+	protected abstract String getFinalResult(float hc, float acc, float rtd);
 }

@@ -1,6 +1,6 @@
 package org.harmony_analyser.plugins;
 
-import org.harmony_analyser.plugins.chordanal_plugins.TransitionComplexityPlugin;
+import org.harmony_analyser.plugins.chordanal_plugins.HarmonicComplexityPlugin;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,11 +28,11 @@ public class AnalysisPluginFactoryTest {
 
 	@Test
 	public void shouldCreateAnalysisPlugin() throws Exception {
-		TransitionComplexityPlugin transitionComplexityPlugin = mock(TransitionComplexityPlugin.class);
-		whenNew(TransitionComplexityPlugin.class).withNoArguments().thenReturn(transitionComplexityPlugin);
+		HarmonicComplexityPlugin transitionComplexityPlugin = mock(HarmonicComplexityPlugin.class);
+		whenNew(HarmonicComplexityPlugin.class).withNoArguments().thenReturn(transitionComplexityPlugin);
 
-		AnalysisPlugin analysisPlugin = analysisPluginFactory.createPlugin("harmanal:transition_complexity");
+		AnalysisPlugin analysisPlugin = analysisPluginFactory.createPlugin("chordanal:harmonic_complexity");
 
-		verifyNew(TransitionComplexityPlugin.class).withNoArguments();
+		verifyNew(HarmonicComplexityPlugin.class).withNoArguments();
 	}
 }

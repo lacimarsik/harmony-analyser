@@ -25,14 +25,14 @@ public class TransitionComplexityPluginTest {
 	public void setUp() {
 		ClassLoader classLoader = getClass().getClassLoader();
 		testWavFile = new File(classLoader.getResource("test.wav").getFile());
-		testReportFixture = new File(classLoader.getResource("test-reportFixture.txt").getFile());
+		testReportFixture = new File(classLoader.getResource("test-tonalDistanceFixture.txt").getFile());
 	}
 
 	@Test
 	public void shouldCreateReport() throws IOException, AnalysisPlugin.IncorrectInputException, PluginLoader.LoadFailedException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		new NNLSPlugin().analyse(testWavFile.toString(), true, false);
 		new ChordinoPlugin().analyse(testWavFile.toString(), true, false);
-		new TransitionComplexityPlugin().analyse(testWavFile.toString(), true, false);
+		new HarmonicComplexityPlugin().analyse(testWavFile.toString(), true, false);
 		BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-report.txt"));
 		BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
 		StringBuilder reportString = new StringBuilder();

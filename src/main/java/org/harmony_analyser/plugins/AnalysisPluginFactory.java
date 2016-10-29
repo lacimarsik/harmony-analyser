@@ -14,7 +14,7 @@ public class AnalysisPluginFactory {
 	private final String[] AVAILABLE_PLUGINS = new String[] {
 		"nnls-chroma:nnls-chroma",
 		"nnls-chroma:chordino",
-		"harmanal:transition_complexity",
+		"chordanal:harmonic_complexity",
 		"chromanal:chroma_complexity_simple",
 		"chromanal:chroma_complexity_tonal",
 		"chord_palette"
@@ -44,7 +44,7 @@ public class AnalysisPluginFactory {
 					plugin = new ChordinoPlugin();
 					break;
 				case "harmanal:transition_complexity":
-					plugin = new TransitionComplexityPlugin();
+					plugin = new HarmonicComplexityPlugin();
 					break;
 				case "chromanal:chroma_complexity_simple":
 					plugin = new ChromaComplexitySimplePlugin();

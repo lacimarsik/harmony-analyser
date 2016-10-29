@@ -10,7 +10,7 @@ public class DrawPanelFactory {
 	private final String[] ALL_VISUALIZATIONS = new String[] {
 		// Visual plugins
 		"nnls-chroma:chordino",
-		"harmanal:transition_complexity",
+		"chordanal:harmonic_complexity",
 		"chromanal:chroma_complexity_simple",
 		"chromanal:chroma_complexity_tonal",
 		// Static visualizations

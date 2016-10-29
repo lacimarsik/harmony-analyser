@@ -35,7 +35,7 @@ public class AudioAnalyserTest {
 	public void shouldThrowExceptionOnWrongFile() throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		AnalysisPluginFactory analysisPluginFactory = new AnalysisPluginFactory();
 		audioAnalyser = new AudioAnalyser(analysisPluginFactory, drawPanelFactory);
-		audioAnalyser.runAnalysis(wrongInputFile, "harmanal:transition_complexity", true, false);
+		audioAnalyser.runAnalysis(wrongInputFile, "chordanal:harmonic_complexity", true, false);
 	}
 
 	@Test
@@ -75,6 +75,6 @@ public class AudioAnalyserTest {
 		};
 		audioAnalyser = new AudioAnalyser(analysisPluginFactory, drawPanelFactory);
 
-		assertEquals("Done!", audioAnalyser.runAnalysis(testWavFile.toString(), "harmanal:transition_complexity", true, false));
+		assertEquals("Done!", audioAnalyser.runAnalysis(testWavFile.toString(), "chordanal:harmonic_complexity", true, false));
 	}
 }
