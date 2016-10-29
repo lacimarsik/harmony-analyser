@@ -654,8 +654,21 @@ public class Chordanal {
 		}
 	}
 
-	static Harmony getFifthIntervalFromHarmony(Harmony harmony) {
-		return null;
+	static Tone getFifthToneFromHarmony(Harmony harmony) {
+		Tone root = getRootTone(harmony);
+		Tone fifthUp = root.duplicate();
+		fifthUp.fifthUp();
+
+		Tone fifthDown = root.duplicate();
+		fifthDown.fifthDown();
+
+		for (Tone tone : harmony.tones) {
+			System.out.println(tone.getNumber());
+			if (tone.getNumberMapped() == fifthUp.getNumberMapped()) return fifthUp;
+			if (tone.getNumberMapped() == fifthDown.getNumberMapped()) return fifthDown;
+		}
+
+		return Tone.EMPTY_TONE;
 	}
 
 	/* Analyzing and naming functions */

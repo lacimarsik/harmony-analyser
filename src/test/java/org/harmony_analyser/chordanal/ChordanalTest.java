@@ -61,7 +61,7 @@ public class ChordanalTest {
 
 	@Test
 	public void shouldGetFifthIntervalFromHarmony() {
-		assertEquals(Chordanal.getFifthIntervalFromHarmony(Chordanal.createHarmonyFromTones("E4 G4 C5")).getToneNamesMapped(), "C G");
+		assertEquals(Chordanal.getFifthToneFromHarmony(Chordanal.createHarmonyFromTones("E4 G4 C5")).getNameMapped(), "G");
 	}
 
 	@Test

@@ -45,11 +45,23 @@ public class Tone {
 		this.number--;
 	}
 
+	void fifthUp() {
+		this.number += 7;
+	}
+
+	void fifthDown() {
+		this.number -= 7;
+	}
+
 	String getName() {
 		return Chordanal.getToneName(this);
 	}
 
 	public String getNameMapped() {
 		return Chordanal.getToneNameMapped(this);
+	}
+
+	Tone duplicate() {
+		return new Tone(this.number, this.volume);
 	}
 }
