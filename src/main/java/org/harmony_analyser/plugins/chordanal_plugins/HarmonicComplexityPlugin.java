@@ -44,7 +44,7 @@ public class HarmonicComplexityPlugin extends ChordanalPlugin {
 		inputFileSuffixes.add("-segmentation");
 		inputFileExtension = ".txt";
 
-		outputFileSuffix = "-report";
+		outputFileSuffix = "-harmonic-complexity";
 
 		parameters = new HashMap<>();
 		parameters.put("audibleThreshold", (float) 0.07);

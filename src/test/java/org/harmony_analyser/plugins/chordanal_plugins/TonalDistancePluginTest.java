@@ -3,21 +3,25 @@ package org.harmony_analyser.plugins.chordanal_plugins;
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.AnalysisPlugin;
 import org.harmony_analyser.plugins.vamp_plugins.*;
-import org.vamp_plugins.*;
+import org.junit.Before;
+import org.junit.Test;
+import org.vamp_plugins.PluginLoader;
 
-import org.junit.*;
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
 /**
- * Unit tests for HarmonicComplexityPlugin class
+ * Unit tests for TonalDistancePlugin class
  */
 
 @SuppressWarnings("ConstantConditions")
 
-public class HarmonicComplexityPluginTest {
+public class TonalDistancePluginTest {
 	private File testWavFile, testReportFixture;
 	private List<String> inputFilesVamp, inputFilesComplexity;
 
@@ -25,15 +29,15 @@ public class HarmonicComplexityPluginTest {
 	public void setUp() {
 		ClassLoader classLoader = getClass().getClassLoader();
 		testWavFile = new File(classLoader.getResource("test.wav").getFile());
-		testReportFixture = new File(classLoader.getResource("test-harmonicComplexityFixture.txt").getFile());
+		testReportFixture = new File(classLoader.getResource("test-tonalDistanceFixture.txt").getFile());
 	}
 
 	@Test
 	public void shouldCreateReport() throws IOException, AnalysisPlugin.IncorrectInputException, PluginLoader.LoadFailedException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		new NNLSPlugin().analyse(testWavFile.toString(), true, false);
 		new ChordinoPlugin().analyse(testWavFile.toString(), true, false);
-		new HarmonicComplexityPlugin().analyse(testWavFile.toString(), true, false);
-		BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-harmonic-complexity.txt"));
+		new TonalDistancePlugin().analyse(testWavFile.toString(), true, false);
+		BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-tonal-distance.txt"));
 		BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
 		StringBuilder reportString = new StringBuilder();
 		StringBuilder fixtureString = new StringBuilder();

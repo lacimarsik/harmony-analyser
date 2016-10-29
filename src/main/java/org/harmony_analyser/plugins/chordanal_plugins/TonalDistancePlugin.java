@@ -26,8 +26,8 @@ import java.util.*;
 
 @SuppressWarnings("SameParameterValue")
 
-public class TonalDistancePlugin extends ChordanalPlugin {
-	public TonalDistancePlugin() {
+class TonalDistancePlugin extends ChordanalPlugin {
+	TonalDistancePlugin() {
 		pluginKey = "harmanal:tonal_distance";
 		pluginName = "Tonal Distance";
 
@@ -36,7 +36,7 @@ public class TonalDistancePlugin extends ChordanalPlugin {
 		inputFileSuffixes.add("-segmentation");
 		inputFileExtension = ".txt";
 
-		outputFileSuffix = "-report";
+		outputFileSuffix = "-tonal-distance";
 
 		parameters = new HashMap<>();
 		parameters.put("audibleThreshold", (float) 0.07);
