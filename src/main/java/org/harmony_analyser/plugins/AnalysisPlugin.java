@@ -74,7 +74,7 @@ public abstract class AnalysisPlugin {
 	}
 
 	protected List<String> readOutputFile(String outputFile) throws OutputNotReady, IOException {
-		File file = new File(outputFile + outputFileSuffix);
+		File file = new File(outputFile + outputFileSuffix + ".txt");
 		if (!file.exists() || file.isDirectory()) {
 			throw new OutputNotReady("Output is not ready yet");
 		}
