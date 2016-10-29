@@ -187,7 +187,7 @@ abstract class ChordanalPlugin extends LineChartPlugin {
 				if (verbose) {
 					outVerbose.write("transition complexity: " + transitionComplexity + "\n\n");
 				}
-				result += this.getTransitionOutput(timestamp, transitionComplexity);
+				out.write(this.getTransitionOutput(timestamp, transitionComplexity));
 			}
 
 			// Set previous chord
@@ -198,8 +198,9 @@ abstract class ChordanalPlugin extends LineChartPlugin {
 		float acc = (float) sumChordComplexities  / (float) chordComplexityList.size();
 		float rtd = (float) sumTransitionComplexities / (float) sumOfAllTones;
 
-		result += this.getFinalResult(hc, acc, rtd);
-		out.write(result);
+		String analysisResult = this.getFinalResult(hc, acc, rtd);
+		result += analysisResult;
+		out.write(analysisResult);
 
 		out.close();
 		outVerbose.close();

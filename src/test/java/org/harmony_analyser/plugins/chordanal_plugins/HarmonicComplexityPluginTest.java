@@ -25,7 +25,7 @@ public class HarmonicComplexityPluginTest {
 	public void setUp() {
 		ClassLoader classLoader = getClass().getClassLoader();
 		testWavFile = new File(classLoader.getResource("test.wav").getFile());
-		testReportFixture = new File(classLoader.getResource("test-tonalDistanceFixture.txt").getFile());
+		testReportFixture = new File(classLoader.getResource("test-harmonicComplexityFixture.txt").getFile());
 	}
 
 	@Test
