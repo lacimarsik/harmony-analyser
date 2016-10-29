@@ -58,7 +58,7 @@ public class ChordinoPlugin extends SegmentationVampPlugin {
 		inputFileSuffixes.add(""); // Plugin handles raw WAV files
 		inputFileExtension = ""; // Plugin handles raw WAV files
 
-		outputFileSuffix = "-segmentation";
+		outputFileSuffix = "-chordino";
 
 		parameters = new HashMap<>();
 		parameters.put("useNNLS", (float) 1.0);
