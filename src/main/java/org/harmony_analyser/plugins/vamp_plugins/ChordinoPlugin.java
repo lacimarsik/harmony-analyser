@@ -82,7 +82,7 @@ public class ChordinoPlugin extends VampPlugin {
 	}
 
 	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, PluginLoader.LoadFailedException, ParseOutputError {
-		VisualizationData data = super.getDataFromOutput(outputFile);
+		VisualizationData data = super.prepareVisualizationData(outputFile);
 		List<Float> timestamps = new ArrayList<>();
 		List<String> labels = new ArrayList<>();
 		List<String> linesList = readOutputFile(outputFile);

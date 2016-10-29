@@ -120,11 +120,13 @@ public abstract class AnalysisPlugin {
 		return result;
 	}
 
-	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, OutputNotReady, ParseOutputError, PluginLoader.LoadFailedException {
+	protected VisualizationData prepareVisualizationData(String outputFile) {
 		VisualizationData visualizationData = new VisualizationData();
 		visualizationData.setPluginName(pluginName);
 		return visualizationData;
 	}
+
+	public abstract VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, OutputNotReady, ParseOutputError, PluginLoader.LoadFailedException;
 
 	/* Helpers */
 

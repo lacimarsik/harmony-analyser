@@ -16,7 +16,7 @@ import java.util.List;
 
 public abstract class LineChartPlugin extends AnalysisPlugin {
 	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, AnalysisPlugin.ParseOutputError, PluginLoader.LoadFailedException {
-		VisualizationData data = super.getDataFromOutput(outputFile);
+		VisualizationData data = super.prepareVisualizationData(outputFile);
 		List<Float> timestamps = new ArrayList<>();
 		List<Float> values = new ArrayList<>();
 		List<String> linesList = readOutputFile(outputFile);

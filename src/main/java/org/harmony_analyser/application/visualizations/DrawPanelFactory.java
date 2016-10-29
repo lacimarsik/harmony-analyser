@@ -27,7 +27,7 @@ public class DrawPanelFactory {
 				return new SegmentationDrawPanel(visualizationData);
 			case "chord_palette":
 				return new PaletteDrawPanel(visualizationData);
-			case "harmanal:transition_complexity":
+			case "chordanal:harmonic_complexity":
 				return new ComplexityChartDrawPanel(visualizationData);
 			case "chromanal:chroma_complexity_simple":
 			case "chromanal:chroma_complexity_tonal":
