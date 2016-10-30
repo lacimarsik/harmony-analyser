@@ -1,5 +1,7 @@
 package org.harmony_analyser.chordanal;
 
+import org.harmony_analyser.application.services.AudioAnalysisHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +94,14 @@ class TonalPitchSpace {
 		System.out.println();
 	}
 
+	private static Harmony getNonCommonHarmonyOnLevel(Harmony levelHarmony1, Harmony levelHarmony2) {
+		List<Tone> nonCommonTones = new ArrayList<>();
+		nonCommonTones.addAll(levelHarmony1.subtractTones(levelHarmony2));
+		nonCommonTones.addAll(levelHarmony2.subtractTones(levelHarmony1));
+
+		return new Harmony(nonCommonTones);
+	}
+
 	/* Static methods */
 
 	/**
@@ -119,9 +129,25 @@ class TonalPitchSpace {
 		TonalPitchSpace tps2 = new TonalPitchSpace(harmony2, commonKey);
 		if (verbose) tps2.plot();
 
+		// level-by-level finding out the non-common pitch classes
+		Harmony nonCommonHarmonyOctaveLevel = getNonCommonHarmonyOnLevel(tps1.octaveLevel, tps2.octaveLevel);
+		Harmony nonCommonHarmonyFifthsLevel = getNonCommonHarmonyOnLevel(tps1.fifthsLevel, tps2.fifthsLevel);
+		Harmony nonCommonHarmonyTriadicLevel = getNonCommonHarmonyOnLevel(tps1.triadicLevel, tps2.triadicLevel);
+		Harmony nonCommonHarmonyDiatonicLevel = getNonCommonHarmonyOnLevel(tps1.diatonicLevel, tps2.diatonicLevel);
 
+		if (verbose) {
+			AudioAnalysisHelper.logHarmony(nonCommonHarmonyOctaveLevel, "Non-common tones Octave Level");
+			AudioAnalysisHelper.logHarmony(nonCommonHarmonyFifthsLevel, "Non-common tones Fifths Level");
+			AudioAnalysisHelper.logHarmony(nonCommonHarmonyTriadicLevel, "Non-common tones Triadic Level");
+			AudioAnalysisHelper.logHarmony(nonCommonHarmonyDiatonicLevel, "Non-common tones Diatonic Level");
+		}
+		int countNonCommonTones = 0;
+		countNonCommonTones += nonCommonHarmonyOctaveLevel.tones.size();
+		countNonCommonTones += nonCommonHarmonyFifthsLevel.tones.size();
+		countNonCommonTones += nonCommonHarmonyTriadicLevel.tones.size();
+		countNonCommonTones += nonCommonHarmonyDiatonicLevel.tones.size();
 
-		return 0;
+		return (float) countNonCommonTones / 2;
 	}
 
 	/**
