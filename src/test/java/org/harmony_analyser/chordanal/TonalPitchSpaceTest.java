@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TonalPitchSpaceTest {
 	private TonalPitchSpace tps;
-	private Key key12, key34, keyX1, keyX2;
+	private Key key12, key2, key34, keyX1, keyX2;
 	private Tone root1, root2, root3, root4, toneX1, toneX2, toneX3, toneX4;
 	private Harmony harmony1, harmony2, harmony3, harmony4, octaveLevel, fifthsLevel, triadicLevel, diatonicLevel;
 
@@ -26,6 +26,8 @@ public class TonalPitchSpaceTest {
 
 		harmony2 = Chordanal.createHarmonyFromRelativeTones("G B D F"); // G7 chord
 		root2 = Chordanal.getRootTone(harmony2); // G
+
+		key2 = Chordanal.createKeyFromName("G major");
 
 		key34 = Chordanal.createKeyFromName("D major"); // D major key
 		harmony3 = Chordanal.createHarmonyFromRelativeTones("D F# A"); // D major chord
@@ -71,7 +73,17 @@ public class TonalPitchSpaceTest {
 
 	@Test
 	public void shouldGetNonCommonPitchClassesDistance() {
-		assertEquals(4.5f, TonalPitchSpace.getNonCommonPitchClassesDistance(harmony1, harmony2, key12, true), 0.01);
-		assertEquals(1.5f, TonalPitchSpace.getNonCommonPitchClassesDistance(harmony3, harmony4, key34, true), 0.01);
+		assertEquals(9f, TonalPitchSpace.getNonCommonPitchClassesDistance(harmony1, harmony2, key12, true), 0.01);
+		assertEquals(3f, TonalPitchSpace.getNonCommonPitchClassesDistance(harmony3, harmony4, key34, true), 0.01);
+	}
+
+	@Test
+	public void shouldGetTPSDistance() {
+		assertEquals(10f, TonalPitchSpace.getTPSDistance(harmony1, root1, key12, harmony2, root2, key12), 0.01);
+		assertEquals(3f, TonalPitchSpace.getTPSDistance(harmony3, root3, key34, harmony4, root4, key34), 0.01);
+
+		// Symmetry test
+		assertEquals(11.5f, TonalPitchSpace.getTPSDistance(harmony1, root1, key12, harmony2, root2, key2), 0.01);
+		assertEquals(11.5f, TonalPitchSpace.getTPSDistance(harmony2, root2, key2, harmony1, root1, key12), 0.01);
 	}
 }
