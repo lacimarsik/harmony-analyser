@@ -113,11 +113,13 @@ class TonalPitchSpace {
 	 * - basic space of harmony is its space on levels (a) - (d) in TPS
 	 * - commonKey sets the (d) level for comparison in TPS
 	 */
-	static float getNonCommonPitchClassesDistance(Harmony harmony1, Harmony harmony2, Key commonKey) {
+	static float getNonCommonPitchClassesDistance(Harmony harmony1, Harmony harmony2, Key commonKey, boolean verbose) {
 		TonalPitchSpace tps1 = new TonalPitchSpace(harmony1, commonKey);
-		tps1.plot();
+		if (verbose) tps1.plot();
 		TonalPitchSpace tps2 = new TonalPitchSpace(harmony2, commonKey);
-		tps2.plot();
+		if (verbose) tps2.plot();
+
+
 
 		return 0;
 	}
@@ -131,6 +133,6 @@ class TonalPitchSpace {
 	 * - roots are chord labels without maj/min mode, and need to be provided by a chord-estimation algorithm
 	 */
 	public static float getTPSDistance(Harmony harmony1, Tone root1, Key key1, Harmony harmony2, Tone root2, Key key2) {
-		return getKeyDistance(key1, key2) + getRootDistance(root1, root2) + getNonCommonPitchClassesDistance(harmony1, harmony2, key1);
+		return getKeyDistance(key1, key2) + getRootDistance(root1, root2) + getNonCommonPitchClassesDistance(harmony1, harmony2, key1, false);
 	}
 }

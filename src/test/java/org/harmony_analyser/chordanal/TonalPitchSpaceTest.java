@@ -71,7 +71,7 @@ public class TonalPitchSpaceTest {
 
 	@Test
 	public void shouldGetNonCommonPitchClassesDistance() {
-		assertEquals(4.5f, TonalPitchSpace.getNonCommonPitchClassesDistance(harmony1, harmony2, key12), 0.01);
-		assertEquals(1.5f, TonalPitchSpace.getNonCommonPitchClassesDistance(harmony3, harmony4, key34), 0.01);
+		assertEquals(4.5f, TonalPitchSpace.getNonCommonPitchClassesDistance(harmony1, harmony2, key12, true), 0.01);
+		assertEquals(1.5f, TonalPitchSpace.getNonCommonPitchClassesDistance(harmony3, harmony4, key34, true), 0.01);
 	}
 }
