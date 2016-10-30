@@ -28,7 +28,7 @@ import java.util.*;
 
 public class TonalDistancePlugin extends ChordanalPlugin {
 	public TonalDistancePlugin() {
-		pluginKey = "harmanal:tonal_distance";
+		pluginKey = "chordanal:tonal_distance";
 		pluginName = "Tonal Distance";
 
 		inputFileSuffixes = new ArrayList<>();
