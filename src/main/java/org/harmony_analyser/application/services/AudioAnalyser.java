@@ -12,6 +12,7 @@ import java.util.*;
  * Class to direct all levels of audio analysis, using available plugins and visualizations
  */
 
+@SuppressWarnings("SameParameterValue")
 public class AudioAnalyser {
 	private final AnalysisPluginFactory analysisPluginFactory;
 	private final DrawPanelFactory drawPanelFactory;
@@ -90,7 +91,7 @@ public class AudioAnalyser {
 		return analysisPluginFactory.createPlugin(pluginKey).analyse(inputFile, force, verbose);
 	}
 
-	public DrawPanel createDrawPanel(String inputFile, String pluginKey) throws LoadFailedException, AnalysisPlugin.OutputNotReady, AnalysisPlugin.ParseOutputError, PluginLoader.LoadFailedException, IOException {
+	public DrawPanel createDrawPanel(String inputFile, String pluginKey) throws LoadFailedException, AnalysisPlugin.OutputNotReady, AnalysisPlugin.ParseOutputError, IOException {
 		return drawPanelFactory.createDrawPanel(pluginKey, analysisPluginFactory.createPlugin(pluginKey).getDataFromOutput(inputFile));
 	}
 }

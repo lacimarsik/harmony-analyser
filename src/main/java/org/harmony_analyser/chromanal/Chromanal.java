@@ -1,6 +1,5 @@
 package org.harmony_analyser.chromanal;
 
-import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.application.services.AudioAnalysisHelper;
 import org.harmony_analyser.chordanal.*;
 

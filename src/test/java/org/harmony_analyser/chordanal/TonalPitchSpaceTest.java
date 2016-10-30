@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
  * Unit tests for TonalPitchSpace class
  */
 
-@SuppressWarnings("ConstantConditions")
+@SuppressWarnings({"ConstantConditions", "FieldCanBeLocal"})
 
 public class TonalPitchSpaceTest {
 	private TonalPitchSpace tps;

@@ -5,7 +5,6 @@ import org.harmony_analyser.application.visualizations.*;
 import org.harmony_analyser.chordanal.*;
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.*;
-import org.vamp_plugins.PluginLoader;
 
 import javax.sound.midi.*;
 import javax.swing.*;
@@ -497,7 +496,7 @@ class HarmonyAnalyser extends JFrame {
 
 	/* Visualization Tool - Handling methods */
 
-	private void performSelectedVisualization(JComboBox comboBox, JPanel parentPanel, String inputFile, JTextPane consoleTextPane) throws AudioAnalyser.LoadFailedException, AudioAnalyser.IncorrectInputException, AnalysisPlugin.OutputNotReady, IOException, PluginLoader.LoadFailedException, Chroma.WrongChromaSize, AnalysisPlugin.ParseOutputError {
+	private void performSelectedVisualization(JComboBox comboBox, JPanel parentPanel, String inputFile, JTextPane consoleTextPane) throws AudioAnalyser.LoadFailedException, AudioAnalyser.IncorrectInputException, AnalysisPlugin.OutputNotReady, IOException, Chroma.WrongChromaSize, AnalysisPlugin.ParseOutputError {
 		String pluginKey = comboBox.getSelectedItem().toString();
 
 		try {
@@ -508,7 +507,7 @@ class HarmonyAnalyser extends JFrame {
 		createGraph(parentPanel, inputFile, pluginKey);
 	}
 
-	private void createGraph(JPanel parentPanel, String inputFile, String pluginKey) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException, PluginLoader.LoadFailedException, AnalysisPlugin.ParseOutputError {
+	private void createGraph(JPanel parentPanel, String inputFile, String pluginKey) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException, AnalysisPlugin.ParseOutputError {
 		parentPanel.removeAll();
 		parentPanel.setLayout(new GridLayout());
 		DrawPanel drawPanel = audioAnalyser.createDrawPanel(inputFile, pluginKey);

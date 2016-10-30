@@ -31,7 +31,6 @@ abstract class ChromaComplexityPlugin extends LineChartPlugin {
 	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
 		String result = super.analyse(inputFileWav, force, verbose);
 		String outputFile = inputFileWav + outputFileSuffix + ".txt";
-		String outputFileVerbose = inputFileWav + outputFileSuffix + ".txt";
 		List<String> inputFiles = new ArrayList<>();
 		for (String suffix : inputFileSuffixes) {
 			String inputFileName = inputFileWav + suffix + inputFileExtension;

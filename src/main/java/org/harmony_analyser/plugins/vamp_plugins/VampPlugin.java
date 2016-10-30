@@ -152,7 +152,6 @@ abstract class VampPlugin extends AnalysisPlugin {
 	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
 		String result = super.analyse(inputFileWav, force, verbose);
 		String outputFile = inputFileWav + outputFileSuffix + ".txt";
-		String outputFileVerbose = inputFileWav + outputFileSuffix + ".txt";
 		List<String> inputFiles = new ArrayList<>();
 		for (String suffix : inputFileSuffixes) {
 			String inputFileName = inputFileWav + suffix + inputFileExtension;
@@ -160,7 +159,7 @@ abstract class VampPlugin extends AnalysisPlugin {
 		}
 
 		try {
-			File f = new File(inputFileWav);
+			File f = new File(inputFiles.get(0));
 			AudioInputStream stream = AudioSystem.getAudioInputStream(f);
 			AudioFormat format = stream.getFormat();
 

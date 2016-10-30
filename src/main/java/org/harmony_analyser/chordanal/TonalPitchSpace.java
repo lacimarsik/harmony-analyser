@@ -15,7 +15,7 @@ class TonalPitchSpace {
 	private Harmony fifthsLevel;
 	private Harmony triadicLevel;
 	private Harmony diatonicLevel;
-	private Harmony chromaticLevel;
+	private final Harmony chromaticLevel;
 
 	private TonalPitchSpace() {
 		this.chromaticLevel = new Key(0, Chordanal.CHROMATIC).getScaleHarmony();

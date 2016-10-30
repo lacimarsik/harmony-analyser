@@ -52,7 +52,6 @@ public class TPSDistancePlugin extends LineChartPlugin {
 	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
 		String result = super.analyse(inputFileWav, force, verbose);
 		String outputFile = inputFileWav + outputFileSuffix + ".txt";
-		String outputFileVerbose = inputFileWav + outputFileSuffix + ".txt";
 		List<String> inputFiles = new ArrayList<>();
 		for (String suffix : inputFileSuffixes) {
 			String inputFileName = inputFileWav + suffix + inputFileExtension;
@@ -66,7 +65,7 @@ public class TPSDistancePlugin extends LineChartPlugin {
 
 		// 1. Get timestamps from the chords and keys file
 		chordsTimestampList.addAll(chordsLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
-		keysTimestampList.addAll(chordsLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
+		keysTimestampList.addAll(keysLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
 
 		int chordIndex = 0;
 		float chordTimestamp;
@@ -77,7 +76,7 @@ public class TPSDistancePlugin extends LineChartPlugin {
 
 		// 2. Iterate over chords, deriving TPS distnaces
 		for (String line : chordsLinesList) {
-			chordTimestamp = AudioAnalysisHelper.getTimestampFromLine(line);
+			chordTimestamp = chordsTimestampList.get(chordIndex);
 
 			if (keyTimestamp > chordTimestamp) {
 				// Go to the next key timestamp
@@ -90,6 +89,8 @@ public class TPSDistancePlugin extends LineChartPlugin {
 
 			// Get chord from the current line
 			chord = AudioAnalysisHelper.getLabelFromLine(line);
+			System.out.println(chord);
+			chordIndex++;
 		}
 
 		BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));

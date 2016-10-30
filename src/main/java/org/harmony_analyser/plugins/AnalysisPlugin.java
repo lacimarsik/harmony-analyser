@@ -3,7 +3,6 @@ package org.harmony_analyser.plugins;
 import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.application.visualizations.VisualizationData;
 import org.harmony_analyser.chromanal.Chroma;
-import org.vamp_plugins.PluginLoader;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -114,11 +113,11 @@ public abstract class AnalysisPlugin {
 		return result;
 	}
 
-	protected VisualizationData prepareVisualizationData(String outputFile) {
+	protected VisualizationData prepareVisualizationData() {
 		VisualizationData visualizationData = new VisualizationData();
 		visualizationData.setPluginName(pluginName);
 		return visualizationData;
 	}
 
-	public abstract VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, OutputNotReady, ParseOutputError, PluginLoader.LoadFailedException;
+	public abstract VisualizationData getDataFromOutput(String outputFile) throws IOException, OutputNotReady, ParseOutputError;
 }
