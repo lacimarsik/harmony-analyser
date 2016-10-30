@@ -12,7 +12,7 @@ class TonalPitchSpace {
 	 * Calculates the distance between the chord roots on the Circle of Fifths (without maj/min mode)
 	 */
 	static int getRootDistance(Tone root1, Tone root2) {
-		return 0;
+		return Chordanal.getDistanceOnCircleOfFifths(root1, root2);
 	}
 
 	/**

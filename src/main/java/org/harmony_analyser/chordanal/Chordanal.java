@@ -39,6 +39,8 @@ public class Chordanal {
 	final private static DatabaseTable tetraCharacter; // triad of distances | character
 	final private static DatabaseTable tetraNameTable; // list of abbreviations | list of names
 
+	final private static DatabaseTable circleOfFifths; // Circle of fifth root tones | index
+
 	static {
 		/* Initialization */
 
@@ -186,6 +188,20 @@ public class Chordanal {
 		tetraNameTable.add("6-5;six-five chord");
 		tetraNameTable.add("4-3;four-three chord");
 		tetraNameTable.add("2;second chord");
+
+		circleOfFifths = new DatabaseTable();
+		circleOfFifths.add("C,H#;0");
+		circleOfFifths.add("G;1");
+		circleOfFifths.add("D;2");
+		circleOfFifths.add("A;3");
+		circleOfFifths.add("E,Fb;4");
+		circleOfFifths.add("B,Cb;5");
+		circleOfFifths.add("F#,Gb;6");
+		circleOfFifths.add("C#,Db;7");
+		circleOfFifths.add("G#,Ab;8");
+		circleOfFifths.add("D#,Eb;9");
+		circleOfFifths.add("A#,Bb;10");
+		circleOfFifths.add("E#;F;11");
 	}
 
 	/* Factory methods */
@@ -321,6 +337,13 @@ public class Chordanal {
 		}
 		int note = tone.getNumber() % 12;
 		return tonesNames.getFirstInValue(Integer.toString(note));
+	}
+
+	static int getDistanceOnCircleOfFifths(Tone tone1, Tone tone2) {
+		int tone1Index = Integer.parseInt(circleOfFifths.getFirstInValue(tone1.getNameMapped()));
+		int tone2Index = Integer.parseInt(circleOfFifths.getFirstInValue(tone2.getNameMapped()));
+		// return smaller of the two distances (delta), 12 - (delta), to achieve circular distance
+		return Math.min(Math.abs(tone1Index - tone2Index), 12 - Math.abs(tone1Index - tone2Index));
 	}
 
 	/* Analyzing and naming Harmonies */
