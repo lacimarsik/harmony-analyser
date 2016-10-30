@@ -26,12 +26,6 @@ public abstract class AnalysisPlugin {
 
 	/* Exceptions */
 
-	public class IncorrectInputException extends Exception {
-		public IncorrectInputException(String message) {
-			super(message);
-		}
-	}
-
 	public class OutputAlreadyExists extends Exception {
 		public OutputAlreadyExists(String message) {
 			super(message);
@@ -55,7 +49,7 @@ public abstract class AnalysisPlugin {
 
 	@SuppressWarnings("WeakerAccess")
 
-	protected void checkInputFiles(String inputFileWav, boolean force) throws IncorrectInputException, OutputAlreadyExists {
+	protected void checkInputFiles(String inputFileWav, boolean force) throws AudioAnalyser.IncorrectInputException, OutputAlreadyExists {
 		File file = new File(inputFileWav + outputFileSuffix + ".txt");
 		if (file.exists() && !file.isDirectory() && !force) {
 			throw new OutputAlreadyExists("Output already exists");
@@ -64,7 +58,7 @@ public abstract class AnalysisPlugin {
 			String fileName = inputFileWav + suffix + inputFileExtension;
 			File fileInput = new File(fileName);
 			if (!fileInput.exists() || fileInput.isDirectory()) {
-				throw new IncorrectInputException("Input file " + fileName + " does not exist");
+				throw new AudioAnalyser.IncorrectInputException("Input file " + fileName + " does not exist");
 			}
 		}
 	}
@@ -103,7 +97,7 @@ public abstract class AnalysisPlugin {
 
 	protected abstract void setParameters();
 
-	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
+	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
 		String result = "";
 		checkInputFiles(inputFileWav, force);
 		result += "\nBeginning analysis: " + pluginKey + "\n";
@@ -127,34 +121,4 @@ public abstract class AnalysisPlugin {
 	}
 
 	public abstract VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, OutputNotReady, ParseOutputError, PluginLoader.LoadFailedException;
-
-	/* Helpers */
-	// TODO: Move to helper class
-
-	// Read chroma information from the line of String
-	protected float[] getChromaFromLine(String line) throws IncorrectInputException {
-		float[] result = new float[12];
-		Scanner sc = new Scanner(line);
-		sc.next(); // skip timestamp
-		for (int i = 0; i < 12; i++) {
-			if (sc.hasNextFloat()) {
-				result[i] = sc.nextFloat();
-			} else {
-				throw new IncorrectInputException("Chroma information is invalid.");
-			}
-		}
-		return result;
-	}
-
-	// Shifts chroma a step semitones up
-	protected float[] shiftChroma(float[] chroma, int step) {
-		float[] result = new float[12];
-		if (step < 0) {
-			step = 12 - step;
-		}
-		for (int i = 0; i < 12; i++) {
-			result[i] = chroma[(i + step) % 12];
-		}
-		return result;
-	}
 }

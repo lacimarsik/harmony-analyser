@@ -1,5 +1,6 @@
 package org.harmony_analyser.plugins.chordanal_plugins;
 
+import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.AnalysisPlugin;
 import org.harmony_analyser.plugins.vamp_plugins.*;
@@ -29,7 +30,7 @@ public class HarmonicComplexityPluginTest {
 	}
 
 	@Test
-	public void shouldCreateReport() throws IOException, AnalysisPlugin.IncorrectInputException, PluginLoader.LoadFailedException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
+	public void shouldCreateReport() throws IOException, AudioAnalyser.IncorrectInputException, PluginLoader.LoadFailedException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		new NNLSPlugin().analyse(testWavFile.toString(), true, false);
 		new ChordinoPlugin().analyse(testWavFile.toString(), true, false);
 		new HarmonicComplexityPlugin().analyse(testWavFile.toString(), true, false);

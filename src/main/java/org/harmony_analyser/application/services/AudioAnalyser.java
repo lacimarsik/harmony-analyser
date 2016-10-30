@@ -16,6 +16,12 @@ public class AudioAnalyser {
 	private final AnalysisPluginFactory analysisPluginFactory;
 	private final DrawPanelFactory drawPanelFactory;
 
+	public static class IncorrectInputException extends Exception {
+		public IncorrectInputException(String message) {
+			super(message);
+		}
+	}
+
 	public static class LoadFailedException extends Exception {
 		public LoadFailedException(String message) {
 			super(message);
@@ -80,7 +86,7 @@ public class AudioAnalyser {
 		return analysisPluginFactory.createPlugin(pluginKey).printParameters();
 	}
 
-	public String runAnalysis(String inputFile, String pluginKey, boolean force, boolean verbose) throws AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, IOException, LoadFailedException, Chroma.WrongChromaSize {
+	public String runAnalysis(String inputFile, String pluginKey, boolean force, boolean verbose) throws AudioAnalyser.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, IOException, LoadFailedException, Chroma.WrongChromaSize {
 		return analysisPluginFactory.createPlugin(pluginKey).analyse(inputFile, force, verbose);
 	}
 

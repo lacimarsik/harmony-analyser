@@ -408,7 +408,7 @@ class HarmonyAnalyser extends JFrame {
 				performSelectedVisualization(comboBoxOne, drawPanel1, file.toString(), visualizationConsoleTextPane);
 				performSelectedVisualization(comboBoxTwo, drawPanel2, file.toString(), visualizationConsoleTextPane);
 				performSelectedVisualization(comboBoxThree, drawPanel3, file.toString(), visualizationConsoleTextPane);
-			} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException | AnalysisPlugin.OutputNotReady | IOException e) {
+			} catch (AudioAnalyser.IncorrectInputException | AudioAnalyser.LoadFailedException | AnalysisPlugin.OutputNotReady | IOException e) {
 				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nERROR: " + e.getMessage());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -476,7 +476,7 @@ class HarmonyAnalyser extends JFrame {
 						try {
 							String analysisResult = audioAnalyser.runAnalysis(file.toString(), pluginKey, true, false);
 							consolePane.setText(consolePane.getText() + "\n" + analysisResult);
-						} catch (AnalysisPlugin.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
+						} catch (AudioAnalyser.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
 							consolePane.setText(consolePane.getText() + "\nERROR: " + e.getMessage());
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -497,7 +497,7 @@ class HarmonyAnalyser extends JFrame {
 
 	/* Visualization Tool - Handling methods */
 
-	private void performSelectedVisualization(JComboBox comboBox, JPanel parentPanel, String inputFile, JTextPane consoleTextPane) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputNotReady, IOException, PluginLoader.LoadFailedException, Chroma.WrongChromaSize, AnalysisPlugin.ParseOutputError {
+	private void performSelectedVisualization(JComboBox comboBox, JPanel parentPanel, String inputFile, JTextPane consoleTextPane) throws AudioAnalyser.LoadFailedException, AudioAnalyser.IncorrectInputException, AnalysisPlugin.OutputNotReady, IOException, PluginLoader.LoadFailedException, Chroma.WrongChromaSize, AnalysisPlugin.ParseOutputError {
 		String pluginKey = comboBox.getSelectedItem().toString();
 
 		try {

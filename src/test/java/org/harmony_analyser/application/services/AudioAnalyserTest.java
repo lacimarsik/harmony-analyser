@@ -31,8 +31,8 @@ public class AudioAnalyserTest {
 		testReportFixture = new File(classLoader.getResource("test-printPluginsFixture.txt").getFile());
 	}
 
-	@Test(expected = AnalysisPlugin.IncorrectInputException.class)
-	public void shouldThrowExceptionOnWrongFile() throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
+	@Test(expected = AudioAnalyser.IncorrectInputException.class)
+	public void shouldThrowExceptionOnWrongFile() throws IOException, AudioAnalyser.LoadFailedException, AudioAnalyser.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		AnalysisPluginFactory analysisPluginFactory = new AnalysisPluginFactory();
 		audioAnalyser = new AudioAnalyser(analysisPluginFactory, drawPanelFactory);
 		audioAnalyser.runAnalysis(wrongInputFile, "chordanal:harmonic_complexity", true, false);
@@ -64,7 +64,7 @@ public class AudioAnalyserTest {
 	}
 
 	@Test
-	public void shouldCallPluginAnalyse() throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
+	public void shouldCallPluginAnalyse() throws IOException, AudioAnalyser.LoadFailedException, AudioAnalyser.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		AnalysisPlugin analysisPlugin = mock(AnalysisPlugin.class);
 		when(analysisPlugin.analyse(testWavFile.toString(), true, false)).thenReturn("Done!");
 

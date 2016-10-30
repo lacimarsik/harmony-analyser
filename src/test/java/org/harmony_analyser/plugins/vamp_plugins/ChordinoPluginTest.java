@@ -1,5 +1,6 @@
 package org.harmony_analyser.plugins.vamp_plugins;
 
+import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.*;
 import org.junit.*;
@@ -27,7 +28,7 @@ public class ChordinoPluginTest {
 	}
 
 	@Test
-	public void shouldExtractChords() throws IOException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
+	public void shouldExtractChords() throws IOException, AudioAnalyser.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		chordino.analyse(testWavFile.toString(), true, false);
 		BufferedReader reader = new BufferedReader(new FileReader(testWavFile.toString() + "-chordino.txt"));
 		String line = reader.readLine();

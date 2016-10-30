@@ -1,6 +1,6 @@
 package org.harmony_analyser.plugins.chromanal_plugins;
 
-import org.harmony_analyser.application.services.AudioAnalysisHelper;
+import org.harmony_analyser.application.services.*;
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.LineChartPlugin;
 
@@ -28,7 +28,7 @@ abstract class ChromaComplexityPlugin extends LineChartPlugin {
 	 *    - chromaFile: name of the file containing chroma information (suffix: -chromas.txt)
 	 */
 
-	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
+	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
 		String result = super.analyse(inputFileWav, force, verbose);
 		String outputFile = inputFileWav + outputFileSuffix + ".txt";
 		String outputFileVerbose = inputFileWav + outputFileSuffix + ".txt";
@@ -49,12 +49,12 @@ abstract class ChromaComplexityPlugin extends LineChartPlugin {
 		// 1. Iterate over chromas, deriving complexities
 		for (String line : chromaLinesList) {
 			// Get chroma from the current line
-			chromaArray = getChromaFromLine(line);
+			chromaArray = AudioAnalysisHelper.getChromaFromLine(line);
 			timestamp = AudioAnalysisHelper.getTimestampFromLine(line);
 
 			// Shift chroma for proper alignment for analysis
 			// XXX: chromas from NNLS Chroma Vamp plugin start from A, chroma for Chordanal are starting from C)
-			chromaArray = shiftChroma(chromaArray, 3);
+			chromaArray = AudioAnalysisHelper.shiftChroma(chromaArray, 3);
 			chroma = new Chroma(chromaArray);
 
 			if (previousChroma.equals(Chroma.EMPTY_CHROMA)) {

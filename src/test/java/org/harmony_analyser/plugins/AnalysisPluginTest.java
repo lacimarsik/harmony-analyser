@@ -1,5 +1,6 @@
 package org.harmony_analyser.plugins;
 
+import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.plugins.vamp_plugins.*;
 
 import org.junit.*;
@@ -18,8 +19,8 @@ public class AnalysisPluginTest {
 		inputFile = "test.mp3";
 	}
 
-	@Test(expected = AnalysisPlugin.IncorrectInputException.class)
-	public void shouldThrowForIncorrectInputFiles() throws AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists {
+	@Test(expected = AudioAnalyser.IncorrectInputException.class)
+	public void shouldThrowForIncorrectInputFiles() throws AudioAnalyser.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists {
 		chordino.checkInputFiles(inputFile, true);
 	}
 }

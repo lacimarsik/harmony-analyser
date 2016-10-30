@@ -3,6 +3,7 @@ package org.harmony_analyser.application.services;
 import org.harmony_analyser.chordanal.*;
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 /**
  * Class to contain all relevant helper functions for audio analysis
@@ -79,6 +80,33 @@ public class AudioAnalysisHelper {
 	// gets String label for the line, after ':'
 	public static String getLabelFromLine(String line) {
 		return line.substring(line.lastIndexOf(':') + 2);
+	}
+
+	// gets chroma information from the line of String
+	public static float[] getChromaFromLine(String line) throws AudioAnalyser.IncorrectInputException {
+		float[] result = new float[12];
+		Scanner sc = new Scanner(line);
+		sc.next(); // skip timestamp
+		for (int i = 0; i < 12; i++) {
+			if (sc.hasNextFloat()) {
+				result[i] = sc.nextFloat();
+			} else {
+				throw new AudioAnalyser.IncorrectInputException("Chroma information is invalid.");
+			}
+		}
+		return result;
+	}
+
+	// shifts chroma given number of semitones up
+	public static float[] shiftChroma(float[] chroma, int step) {
+		float[] result = new float[12];
+		if (step < 0) {
+			step = 12 - step;
+		}
+		for (int i = 0; i < 12; i++) {
+			result[i] = chroma[(i + step) % 12];
+		}
+		return result;
 	}
 
 	/* LOGGING */

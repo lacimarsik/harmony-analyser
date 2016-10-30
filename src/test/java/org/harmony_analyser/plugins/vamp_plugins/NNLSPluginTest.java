@@ -1,6 +1,6 @@
 package org.harmony_analyser.plugins.vamp_plugins;
 
-import org.harmony_analyser.application.services.AudioAnalysisHelper;
+import org.harmony_analyser.application.services.*;
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.*;
 import org.junit.*;
@@ -29,7 +29,7 @@ public class NNLSPluginTest {
 	}
 
 	@Test
-	public void shouldExtractChromas() throws IOException, AnalysisPlugin.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
+	public void shouldExtractChromas() throws IOException, AudioAnalyser.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		nnls.analyse(testWavFile.toString(), true, false);
 		BufferedReader reader = new BufferedReader(new FileReader(testWavFile.toString() + "-chromas.txt"));
 		String line = reader.readLine();

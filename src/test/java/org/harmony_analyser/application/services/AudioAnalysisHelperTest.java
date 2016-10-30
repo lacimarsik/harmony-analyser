@@ -65,4 +65,21 @@ public class AudioAnalysisHelperTest {
 
 		assertEquals("Cm", AudioAnalysisHelper.getLabelFromLine(line));
 	}
+
+	@Test
+	public void shouldGetChromaFromLine() throws AudioAnalyser.IncorrectInputException {
+		chromaExpected = new float[]{ 0.12f, 1.23f, 0.56f, 0f, 0f, 0f, 1.22f, 2.3f, 5.64f, 9.1f, 3.51f, 0.12f };
+		line = "0.0123: 0.12 1.23 0.56 0.0 0.0 0.0 1.22 2.30 5.64 9.10 3.51 0.12";
+
+		chromaCalculated = AudioAnalysisHelper.getChromaFromLine(line);
+		assertArrayEquals(chromaCalculated, chromaExpected, (float) 0);
+	}
+
+	@Test
+	public void shouldShiftChroma() {
+		chromaExpected = new float[]{ 0.3f, 0f, 0f, 1f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f };
+
+		chromaCalculated = AudioAnalysisHelper.shiftChroma(chroma, 1);
+		assertArrayEquals(chromaCalculated, chromaExpected, (float) 0);
+	}
 }
