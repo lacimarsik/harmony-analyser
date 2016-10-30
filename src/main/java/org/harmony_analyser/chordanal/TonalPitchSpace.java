@@ -5,20 +5,20 @@ package org.harmony_analyser.chordanal;
  * for more information on TPS: http://www.oupcanada.com/catalog/9780195178296.html
  */
 
-public class TonalPitchSpace {
+class TonalPitchSpace {
 	/* Public / Package methods */
-
-	/**
-	 * Calculates the distance between the context keys on the Circle of Fifths (without maj/min mode)
-	 */
-	private int getKeyDistance(Key key1, Key key2) {
-		return 0;
-	}
 
 	/**
 	 * Calculates the distance between the chord roots on the Circle of Fifths (without maj/min mode)
 	 */
-	private int getRootDistance(Tone root1, Tone root2) {
+	static int getRootDistance(Tone root1, Tone root2) {
+		return 0;
+	}
+
+	/**
+	 * Calculates the distance between the context keys on the Circle of Fifths (without maj/min mode)
+	 */
+	static int getKeyDistance(Key key1, Key key2) {
 		return 0;
 	}
 
@@ -27,7 +27,7 @@ public class TonalPitchSpace {
 	 * - basic space of harmony is its space on levels (a) - (d) in TPS
 	 * - commonKey sets the (d) level for comparison in TPS
 	 */
-	private int getNonCommonPitchClassesDistance(Harmony harmony1, Harmony harmony2, Key commonKey) {
+	static float getNonCommonPitchClassesDistance(Harmony harmony1, Harmony harmony2, Key commonKey) {
 		return 0;
 	}
 
@@ -39,7 +39,7 @@ public class TonalPitchSpace {
 	 * - keys are 'context' keys, and need to be provided by a key-finding algorithm
 	 * - roots are chord labels without maj/min mode, and need to be provided by a chord-estimation algorithm
 	 */
-	public int getTPSDistance(Harmony harmony1, Tone root1, Key key1, Harmony harmony2, Tone root2, Key key2) {
+	public static float getTPSDistance(Harmony harmony1, Tone root1, Key key1, Harmony harmony2, Tone root2, Key key2) {
 		return getKeyDistance(key1, key2) + getRootDistance(root1, root2) + getNonCommonPitchClassesDistance(harmony1, harmony2, key1);
 	}
 }
