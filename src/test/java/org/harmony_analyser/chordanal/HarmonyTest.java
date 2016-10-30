@@ -61,4 +61,10 @@ public class HarmonyTest {
 	public void shouldGetCommonTones() {
 		assertEquals(harmony3.getCommonTones(harmony6).getToneNamesMapped(), "C ");
 	}
+
+	@Test
+	public void shouldAddTone() {
+		harmony3.addTone(Chordanal.createToneFromRelativeName("A"));
+		assertEquals(harmony3.getToneNamesMapped(), "C E G A ");
+	}
 }

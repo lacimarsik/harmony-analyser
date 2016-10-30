@@ -12,28 +12,42 @@ import static org.junit.Assert.assertEquals;
 @SuppressWarnings("ConstantConditions")
 
 public class TonalPitchSpaceTest {
-	private Key key1, key2, keyX1, keyX2;
-	private Tone root1, root2, toneX1, toneX2, toneX3, toneX4;
-	private Harmony harmony1, harmony2;
+	private TonalPitchSpace tps;
+	private Key key12, key34, keyX1, keyX2;
+	private Tone root1, root2, root3, root4, toneX1, toneX2, toneX3, toneX4;
+	private Harmony harmony1, harmony2, harmony3, harmony4, octaveLevel, fifthsLevel, triadicLevel, diatonicLevel;
 
 	@Before
 	public void setUp() {
 		// Test triplets for final TPS distance
-		key1 = new Key(0, Chordanal.MAJOR); // C major key
-		harmony1 = Chordanal.createHarmonyFromTones("C4 E4 G4"); // C major chord
+		key12 = Chordanal.createKeyFromName("C major"); // C major key
+		harmony1 = Chordanal.createHarmonyFromRelativeTones("C E G"); // C major chord
 		root1 = Chordanal.getRootTone(harmony1); // C
 
-		key2 = new Key(0, Chordanal.MAJOR); // C major key
-		harmony2 = Chordanal.createHarmonyFromTones("G4 B4 D5 F5"); // G7 chord
+		harmony2 = Chordanal.createHarmonyFromRelativeTones("G B D F"); // G7 chord
 		root2 = Chordanal.getRootTone(harmony2); // G
 
+		key34 = Chordanal.createKeyFromName("D major"); // D major key
+		harmony3 = Chordanal.createHarmonyFromRelativeTones("D F# A"); // D major chord
+		root3 = Chordanal.getRootTone(harmony3); // D
+
+		harmony4 = Chordanal.createHarmonyFromRelativeTones("D F A"); // D minor chord
+		root4 = Chordanal.getRootTone(harmony4); // D
+
 		// Additional test data
-		keyX1 = new Key(7, Chordanal.MAJOR); // G major key
-		keyX2 = new Key(6, Chordanal.MINOR); // Gb minor key
+		keyX1 = Chordanal.createKeyFromName("G major"); // G major key
+		keyX2 = Chordanal.createKeyFromName("Gb minor"); // Gb minor key
 		toneX1 = Chordanal.createToneFromRelativeName("G");
 		toneX2 = Chordanal.createToneFromRelativeName("Eb");
 		toneX3 = Chordanal.createToneFromRelativeName("H#");
 		toneX4 = Chordanal.createToneFromRelativeName("Cb");
+
+		octaveLevel = Chordanal.createHarmonyFromRelativeTones("C"); // C
+		fifthsLevel = Chordanal.createHarmonyFromRelativeTones("C G"); // C G
+		triadicLevel = Chordanal.createHarmonyFromRelativeTones("C E G"); // C major chord
+		diatonicLevel = Chordanal.createKeyFromName("C major").getScaleHarmony(); // C major scale
+		// Tonal Pitch Space
+		tps = new TonalPitchSpace(octaveLevel, fifthsLevel, triadicLevel, diatonicLevel);
 	}
 
 	@Test
@@ -45,13 +59,19 @@ public class TonalPitchSpaceTest {
 
 	@Test
 	public void shouldGetKeyDistance() {
-		assertEquals(1, TonalPitchSpace.getKeyDistance(key1, keyX1));
-		assertEquals(6, TonalPitchSpace.getKeyDistance(key1, keyX2));
+		assertEquals(1, TonalPitchSpace.getKeyDistance(key12, keyX1));
+		assertEquals(6, TonalPitchSpace.getKeyDistance(key12, keyX2));
 		assertEquals(5, TonalPitchSpace.getKeyDistance(keyX1, keyX2));
 	}
 
 	@Test
+	public void shouldPlotTonalPitchSpace() {
+		tps.plot();
+	}
+
+	@Test
 	public void shouldGetNonCommonPitchClassesDistance() {
-		assertEquals(4.5f, TonalPitchSpace.getNonCommonPitchClassesDistance(harmony1, harmony2, key1), 0.01);
+		assertEquals(4.5f, TonalPitchSpace.getNonCommonPitchClassesDistance(harmony1, harmony2, key12), 0.01);
+		assertEquals(1.5f, TonalPitchSpace.getNonCommonPitchClassesDistance(harmony3, harmony4, key34), 0.01);
 	}
 }

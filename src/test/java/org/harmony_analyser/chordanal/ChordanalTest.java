@@ -15,7 +15,7 @@ public class ChordanalTest {
 	@Before
 	public void setUp() {
 		key1 = new Key(0, Chordanal.MAJOR);
-		key2 = new Key(0,Chordanal.MINOR);
+		key2 = new Key(0, Chordanal.MINOR);
 	}
 
 	@Test

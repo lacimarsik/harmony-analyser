@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class Chordanal {
 	final static int MAJOR = 0;
 	final static int MINOR = 1;
+	final static int CHROMATIC = 2;
 
 	final static int TONIC = 0;
 	final static int SUBDOMINANT = 1;
@@ -72,10 +73,12 @@ public class Chordanal {
 		scaleTable = new DatabaseTable();
 		scaleTable.add("2,4,5,7,9,11;0");
 		scaleTable.add("2,3,5,7,8,10;1");
+		scaleTable.add("0,1,2,3,4,5,6,7,8,9,10,11;2");
 
 		scaleNameTable = new DatabaseTable();
 		scaleNameTable.add("0;major");
 		scaleNameTable.add("1;minor");
+		scaleNameTable.add("2;chromatic");
 
 		intervalTable = new DatabaseTable();
 		intervalTable.add("0;P1,d2");
@@ -686,7 +689,6 @@ public class Chordanal {
 		fifthDown.fifthDown();
 
 		for (Tone tone : harmony.tones) {
-			System.out.println(tone.getNumber());
 			if (tone.getNumberMapped() == fifthUp.getNumberMapped()) return fifthUp;
 			if (tone.getNumberMapped() == fifthDown.getNumberMapped()) return fifthDown;
 		}

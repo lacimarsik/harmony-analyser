@@ -167,4 +167,8 @@ public class Harmony {
 		}
 		return true;
 	}
+
+	void addTone(Tone tone) {
+		this.tones.add(tone);
+	}
 }
