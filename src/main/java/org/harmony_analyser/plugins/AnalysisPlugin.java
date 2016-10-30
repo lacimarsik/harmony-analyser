@@ -129,6 +129,7 @@ public abstract class AnalysisPlugin {
 	public abstract VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, OutputNotReady, ParseOutputError, PluginLoader.LoadFailedException;
 
 	/* Helpers */
+	// TODO: Move to helper class
 
 	// Read chroma information from the line of String
 	protected float[] getChromaFromLine(String line) throws IncorrectInputException {
