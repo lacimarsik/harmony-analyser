@@ -15,7 +15,7 @@ public class ChordanalTest {
 	@Before
 	public void setUp() {
 		key1 = new Key(0, Chordanal.MAJOR);
-		key2 = new Key(0,Chordanal.MINOR);
+		key2 = new Key(0, Chordanal.MINOR);
 	}
 
 	@Test
@@ -57,6 +57,11 @@ public class ChordanalTest {
 	@Test
 	public void shouldGetCharacter() {
 		assertEquals(Chordanal.getHarmonyCharacter(Chordanal.createHarmonyFromTones("C4 E4 G4")), "consonant");
+	}
+
+	@Test
+	public void shouldGetFifthIntervalFromHarmony() {
+		assertEquals(Chordanal.getFifthToneFromHarmony(Chordanal.createHarmonyFromTones("E4 G4 C5")).getNameMapped(), "G");
 	}
 
 	@Test

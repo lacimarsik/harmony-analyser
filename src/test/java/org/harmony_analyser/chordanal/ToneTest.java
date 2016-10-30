@@ -29,4 +29,12 @@ public class ToneTest {
 		tone.chromatizeDown();
 		assertEquals(tone.getNumber(), 70);
 	}
+
+	@Test
+	public void fifthUpDownShouldAlterTone() {
+		tone.fifthUp();
+		assertEquals(tone.getNumber(), 77);
+		tone.fifthDown();
+		assertEquals(tone.getNumber(), 70);
+	}
 }

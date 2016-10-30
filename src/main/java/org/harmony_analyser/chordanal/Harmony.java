@@ -37,10 +37,10 @@ public class Harmony {
 	}
 
 	/**
-	 * Creates Harmony from integer array. Can also be unsorted and with duplicities.
+	 * Creates Harmony from tones collection. Should be without duplicities.
 	 */
 
-	private Harmony(List<Tone> tones) {
+	Harmony(List<Tone> tones) {
 		this.tones = tones;
 	}
 
@@ -166,5 +166,9 @@ public class Harmony {
 			}
 		}
 		return true;
+	}
+
+	void addTone(Tone tone) {
+		this.tones.add(tone);
 	}
 }

@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class Chordanal {
 	final static int MAJOR = 0;
 	final static int MINOR = 1;
+	final static int CHROMATIC = 2;
 
 	final static int TONIC = 0;
 	final static int SUBDOMINANT = 1;
@@ -38,6 +39,8 @@ public class Chordanal {
 	final private static DatabaseTable tetraTable; // triad of distances | list of abbreviations
 	final private static DatabaseTable tetraCharacter; // triad of distances | character
 	final private static DatabaseTable tetraNameTable; // list of abbreviations | list of names
+
+	final private static DatabaseTable circleOfFifths; // Circle of fifth root tones | index
 
 	static {
 		/* Initialization */
@@ -70,10 +73,12 @@ public class Chordanal {
 		scaleTable = new DatabaseTable();
 		scaleTable.add("2,4,5,7,9,11;0");
 		scaleTable.add("2,3,5,7,8,10;1");
+		scaleTable.add("0,1,2,3,4,5,6,7,8,9,10,11;2");
 
 		scaleNameTable = new DatabaseTable();
 		scaleNameTable.add("0;major");
 		scaleNameTable.add("1;minor");
+		scaleNameTable.add("2;chromatic");
 
 		intervalTable = new DatabaseTable();
 		intervalTable.add("0;P1,d2");
@@ -186,6 +191,20 @@ public class Chordanal {
 		tetraNameTable.add("6-5;six-five chord");
 		tetraNameTable.add("4-3;four-three chord");
 		tetraNameTable.add("2;second chord");
+
+		circleOfFifths = new DatabaseTable();
+		circleOfFifths.add("C,H#;0");
+		circleOfFifths.add("G;1");
+		circleOfFifths.add("D;2");
+		circleOfFifths.add("A;3");
+		circleOfFifths.add("E,Fb;4");
+		circleOfFifths.add("B,Cb;5");
+		circleOfFifths.add("F#,Gb;6");
+		circleOfFifths.add("C#,Db;7");
+		circleOfFifths.add("G#,Ab;8");
+		circleOfFifths.add("D#,Eb;9");
+		circleOfFifths.add("A#,Bb;10");
+		circleOfFifths.add("E#;F;11");
 	}
 
 	/* Factory methods */
@@ -321,6 +340,13 @@ public class Chordanal {
 		}
 		int note = tone.getNumber() % 12;
 		return tonesNames.getFirstInValue(Integer.toString(note));
+	}
+
+	static int getDistanceOnCircleOfFifths(Tone tone1, Tone tone2) {
+		int tone1Index = Integer.parseInt(circleOfFifths.getFirstInValue(tone1.getNameMapped()));
+		int tone2Index = Integer.parseInt(circleOfFifths.getFirstInValue(tone2.getNameMapped()));
+		// return smaller of the two distances (delta), 12 - (delta), to achieve circular distance
+		return Math.min(Math.abs(tone1Index - tone2Index), 12 - Math.abs(tone1Index - tone2Index));
 	}
 
 	/* Analyzing and naming Harmonies */
@@ -652,6 +678,22 @@ public class Chordanal {
 		} else {
 			return harmony.tones.get(0);
 		}
+	}
+
+	static Tone getFifthToneFromHarmony(Harmony harmony) {
+		Tone root = getRootTone(harmony);
+		Tone fifthUp = root.duplicate();
+		fifthUp.fifthUp();
+
+		Tone fifthDown = root.duplicate();
+		fifthDown.fifthDown();
+
+		for (Tone tone : harmony.tones) {
+			if (tone.getNumberMapped() == fifthUp.getNumberMapped()) return fifthUp;
+			if (tone.getNumberMapped() == fifthDown.getNumberMapped()) return fifthDown;
+		}
+
+		return Tone.EMPTY_TONE;
 	}
 
 	/* Analyzing and naming functions */

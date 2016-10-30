@@ -20,7 +20,12 @@ public class Key {
 	/* Public / Package methods */
 
 	public int[] getScale() {
-		int[] result = new int[7];
+		int[] result;
+		if (keyType == Chordanal.CHROMATIC) {
+			result = new int[13];
+		} else {
+			result = new int[7];
+		}
 		List<String> scaleIntervals = Chordanal.getScaleIntervals(keyType);
 
 		int tone = 0;
@@ -63,5 +68,9 @@ public class Key {
 		dominant[1] = getScale()[4];
 		dominant[2] = getScale()[6];
 		return new Harmony(dominant);
+	}
+
+	Tone getRoot() {
+		return new Tone(this.root);
 	}
 }
