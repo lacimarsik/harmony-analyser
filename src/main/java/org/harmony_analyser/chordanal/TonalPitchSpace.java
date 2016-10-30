@@ -19,7 +19,7 @@ class TonalPitchSpace {
 	 * Calculates the distance between the context keys on the Circle of Fifths (without maj/min mode)
 	 */
 	static int getKeyDistance(Key key1, Key key2) {
-		return 0;
+		return Chordanal.getDistanceOnCircleOfFifths(key1.getRoot(), key2.getRoot());
 	}
 
 	/**

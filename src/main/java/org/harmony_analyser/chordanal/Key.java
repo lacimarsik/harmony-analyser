@@ -64,4 +64,8 @@ public class Key {
 		dominant[2] = getScale()[6];
 		return new Harmony(dominant);
 	}
+
+	Tone getRoot() {
+		return new Tone(this.root);
+	}
 }

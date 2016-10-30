@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 @SuppressWarnings("ConstantConditions")
 
 public class TonalPitchSpaceTest {
-	private Key key1, key2, keyX1;
+	private Key key1, key2, keyX1, keyX2;
 	private Tone root1, root2, toneX1, toneX2, toneX3, toneX4;
 	private Harmony harmony1, harmony2;
 
@@ -29,6 +29,7 @@ public class TonalPitchSpaceTest {
 
 		// Additional test data
 		keyX1 = new Key(7, Chordanal.MAJOR); // G major key
+		keyX2 = new Key(6, Chordanal.MINOR); // Gb minor key
 		toneX1 = Chordanal.createToneFromRelativeName("G");
 		toneX2 = Chordanal.createToneFromRelativeName("Eb");
 		toneX3 = Chordanal.createToneFromRelativeName("H#");
@@ -45,6 +46,8 @@ public class TonalPitchSpaceTest {
 	@Test
 	public void shouldGetKeyDistance() {
 		assertEquals(1, TonalPitchSpace.getKeyDistance(key1, keyX1));
+		assertEquals(6, TonalPitchSpace.getKeyDistance(key1, keyX2));
+		assertEquals(5, TonalPitchSpace.getKeyDistance(keyX1, keyX2));
 	}
 
 	@Test
