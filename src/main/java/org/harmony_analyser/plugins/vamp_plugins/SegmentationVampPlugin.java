@@ -13,8 +13,8 @@ import java.util.List;
  */
 
 abstract class SegmentationVampPlugin extends VampPlugin {
-	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, OutputNotReady, PluginLoader.LoadFailedException, ParseOutputError {
-		VisualizationData data = super.prepareVisualizationData(outputFile);
+	public VisualizationData getDataFromOutput(String outputFile) throws IOException, OutputNotReady, ParseOutputError {
+		VisualizationData data = super.prepareVisualizationData();
 		List<Float> timestamps = new ArrayList<>();
 		List<String> labels = new ArrayList<>();
 		List<String> linesList = readOutputFile(outputFile);

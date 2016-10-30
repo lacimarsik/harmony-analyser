@@ -15,8 +15,8 @@ import java.util.List;
 @SuppressWarnings("SameParameterValue")
 
 public abstract class LineChartPlugin extends AnalysisPlugin {
-	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, AnalysisPlugin.ParseOutputError, PluginLoader.LoadFailedException {
-		VisualizationData data = super.prepareVisualizationData(outputFile);
+	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AnalysisPlugin.OutputNotReady, AnalysisPlugin.ParseOutputError {
+		VisualizationData data = super.prepareVisualizationData();
 		List<Float> timestamps = new ArrayList<>();
 		List<Float> values = new ArrayList<>();
 		List<String> linesList = readOutputFile(outputFile);

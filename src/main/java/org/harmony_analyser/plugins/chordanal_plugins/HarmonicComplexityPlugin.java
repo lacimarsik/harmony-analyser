@@ -55,8 +55,8 @@ public class HarmonicComplexityPlugin extends ChordanalPlugin {
 	}
 
 	@Override
-	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.LoadFailedException, OutputNotReady, ParseOutputError, PluginLoader.LoadFailedException {
-		VisualizationData data = super.prepareVisualizationData(outputFile);
+	public VisualizationData getDataFromOutput(String outputFile) throws IOException, OutputNotReady, ParseOutputError {
+		VisualizationData data = super.prepareVisualizationData();
 		List<Float> values = new ArrayList<>();
 		List<String> labels = new ArrayList<>();
 		List<String> linesList = readOutputFile(outputFile);
