@@ -204,7 +204,7 @@ public class Chordanal {
 		circleOfFifths.add("G#,Ab;8");
 		circleOfFifths.add("D#,Eb;9");
 		circleOfFifths.add("A#,Bb;10");
-		circleOfFifths.add("E#;F;11");
+		circleOfFifths.add("E#,F;11");
 	}
 
 	/* Factory methods */
