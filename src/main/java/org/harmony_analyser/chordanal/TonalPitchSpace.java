@@ -10,7 +10,7 @@ import java.util.List;
  * for more information on TPS: http://www.oupcanada.com/catalog/9780195178296.html
  */
 
-class TonalPitchSpace {
+public class TonalPitchSpace {
 	private Harmony octaveLevel;
 	private Harmony fifthsLevel;
 	private Harmony triadicLevel;
@@ -158,7 +158,7 @@ class TonalPitchSpace {
 	 * - keys are 'context' keys, and need to be provided by a key-finding algorithm
 	 * - roots are chord labels without maj/min mode, and need to be provided by a chord-estimation algorithm
 	 */
-	static float getTPSDistance(Harmony harmony1, Tone root1, Key key1, Harmony harmony2, Tone root2, Key key2) {
+	public static float getTPSDistance(Harmony harmony1, Tone root1, Key key1, Harmony harmony2, Tone root2, Key key2) {
 		// XXX: Use symmetric version inspired by:
 		// De Haas et al.: TONAL PITCH STEP DISTANCE: A SIMILARITY MEASURE FOR CHORD PROGRESSIONS
 		// Rocher et al.: A SURVEY OF CHORD DISTANCES WITH COMPARISON FOR CHORD ANALYSIS
