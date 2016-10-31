@@ -128,6 +128,12 @@ public class TPSDistancePlugin extends LineChartPlugin {
 
 		// 2. Iterate over both chord label and chord array, checking respective keys, and deriving TPS distnaces
 		for (String label : chordLabelList) {
+			if ((chordIndex > chordLabelTimestampList.size() - 1) || (chordIndex > chordLabelList.size() - 1)) {
+				break;
+			}
+			if ((chordIndex > chordTimestampList.size() - 1) || (chordIndex > chordList.size() - 1)) {
+				break;
+			}
 			chordLabelTimestamp = chordLabelTimestampList.get(chordIndex);
 			chordTimestamp = chordTimestampList.get(chordIndex);
 			if (chordLabelTimestamp != chordTimestamp) {
