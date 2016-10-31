@@ -155,6 +155,7 @@ public class TPSDistancePlugin extends LineChartPlugin {
 					// Get TPS Distance of the two chords
 					float tpsDistance = TonalPitchSpace.getTPSDistance(chord, chordRoot, key, previousChord, previousChordRoot, previousKey, verbose);
 					if (verbose) outVerbose.write("chord: " + chordLabel + ", previousChord: " + previousChordLabel + ", distance: " + tpsDistance + "\n\n");
+					out.write(chordLabelTimestamp + ": " + tpsDistance + "\n");
 				}
 				previousChord = chord;
 				previousChordRoot = chordRoot;
