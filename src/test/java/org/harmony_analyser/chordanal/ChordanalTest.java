@@ -70,6 +70,14 @@ public class ChordanalTest {
 	}
 
 	@Test
+	public void shouldGetRootToneFromChordLabel() {
+		assertEquals(Chordanal.getRootToneFromChordLabel("Cmi").getNameMapped(), "C");
+		assertEquals(Chordanal.getRootToneFromChordLabel("Am7").getNameMapped(), "A");
+		assertEquals(Chordanal.getRootToneFromChordLabel("E7/G#").getNameMapped(), "E");
+		assertEquals(Chordanal.getRootToneFromChordLabel("Baug").getNameMapped(), "B");
+	}
+
+	@Test
 	public void shouldGetScaleFromKey() {
 		assertEquals(Chordanal.getKeyScale(key1), "C D E F G A B ");
 		assertEquals(Chordanal.getKeyScale(key2), "C D D# F G G# A# ");

@@ -264,7 +264,7 @@ public class Chordanal {
 		}
 	}
 
-	public static Tone createToneFromRelativeName(String relativeName) {
+	static Tone createToneFromRelativeName(String relativeName) {
 		return createToneFromName(relativeName + "3");
 	}
 
@@ -694,6 +694,15 @@ public class Chordanal {
 		}
 
 		return Tone.EMPTY_TONE;
+	}
+
+	public static Tone getRootToneFromChordLabel(String label) {
+		String relativeToneName = label.substring(0, Math.min(label.length(), 2));
+		String notAllowedCharacters = "mda/";
+		if ((relativeToneName.length() == 2) && ((Character.isDigit(relativeToneName.charAt(1)) || (notAllowedCharacters.contains(relativeToneName.substring(1, 1)))))) {
+			relativeToneName = relativeToneName.substring(0, 1);
+		}
+		return Chordanal.createToneFromRelativeName(relativeToneName);
 	}
 
 	/* Analyzing and naming functions */

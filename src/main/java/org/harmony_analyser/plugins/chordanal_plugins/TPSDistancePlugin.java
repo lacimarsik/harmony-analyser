@@ -58,12 +58,11 @@ public class TPSDistancePlugin extends LineChartPlugin {
 			inputFiles.add(inputFileName);
 		}
 
+		// 1. Get timestamps from the chords and keys file
 		List<String> chordsLinesList = Files.readAllLines(new File(inputFiles.get(0)).toPath(), Charset.defaultCharset());
 		List<Float> chordsTimestampList = new ArrayList<>();
 		List<String> keysLinesList = Files.readAllLines(new File(inputFiles.get(1)).toPath(), Charset.defaultCharset());
 		List<Float> keysTimestampList = new ArrayList<>();
-
-		// 1. Get timestamps from the chords and keys file
 		chordsTimestampList.addAll(chordsLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
 		keysTimestampList.addAll(keysLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
 

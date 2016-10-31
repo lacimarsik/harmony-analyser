@@ -36,9 +36,8 @@ class SegmentationDrawPanel extends DrawPanel {
 		timestampsCopy.remove(0); // Skip first timestamp
 		for (float timestamp : timestampsCopy) {
 			String label = visualizationData.getLabels().get(i);
-			relativeToneName = label.substring(0, Math.min(label.length(), 2));
 			segmentSize = ((timestamp - previousTimestamp) / maximalTimestamp);
-			drawSegment(g, segmentSize, getColorForTone(relativeToneName));
+			drawSegment(g, segmentSize, getColorForChord(label));
 			previousTimestamp = timestamp;
 			i++;
 		}
@@ -47,13 +46,9 @@ class SegmentationDrawPanel extends DrawPanel {
 
 	/* Analysis components */
 
-	private Color getColorForTone(String relativeToneName) {
-		String notAllowedCharacters = "mda/";
-		if ((relativeToneName.length() == 2) && ((Character.isDigit(relativeToneName.charAt(1)) || (notAllowedCharacters.contains(relativeToneName.substring(1, 1)))))) {
-			relativeToneName = relativeToneName.substring(0,1);
-		}
+	private Color getColorForChord(String label) {
+		Tone tone = Chordanal.getRootToneFromChordLabel(label);
 
-		Tone tone = Chordanal.createToneFromRelativeName(relativeToneName);
 		if (tone.equals(Tone.EMPTY_TONE)) {
 			return palette.get(12);
 		} else {
