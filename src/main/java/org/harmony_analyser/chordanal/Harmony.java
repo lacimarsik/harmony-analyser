@@ -40,7 +40,7 @@ public class Harmony {
 	 * Creates Harmony from tones collection. Should be without duplicities.
 	 */
 
-	Harmony(List<Tone> tones) {
+	public Harmony(List<Tone> tones) {
 		this.tones = tones;
 	}
 
@@ -168,7 +168,7 @@ public class Harmony {
 		return true;
 	}
 
-	void addTone(Tone tone) {
+	public void addTone(Tone tone) {
 		this.tones.add(tone);
 	}
 }

@@ -57,6 +57,9 @@ public class AnalysisPluginFactory {
 				case "chordanal:tonal_distance":
 					plugin = new TonalDistancePlugin();
 					break;
+				case "chordanal:tps_distance":
+					plugin = new TPSDistancePlugin();
+					break;
 				case "chromanal:chroma_complexity_simple":
 					plugin = new ChromaComplexitySimplePlugin();
 					break;

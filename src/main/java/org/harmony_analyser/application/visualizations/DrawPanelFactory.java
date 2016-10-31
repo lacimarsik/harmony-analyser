@@ -14,6 +14,7 @@ public class DrawPanelFactory {
 		"qm-vamp-plugins:qm-keydetector",
 		"chordanal:harmonic_complexity",
 		"chordanal:tonal_distance",
+		"chordanal:tps_distance",
 		"chromanal:chroma_complexity_simple",
 		"chromanal:chroma_complexity_tonal",
 		// Static visualizations
@@ -38,6 +39,8 @@ public class DrawPanelFactory {
 			case "chromanal:chroma_complexity_simple":
 			case "chromanal:chroma_complexity_tonal":
 				return new LineChartDrawPanel(visualizationData);
+			case "chordanal:tps_distance":
+				return new EmptyDrawPanel(VisualizationData.EMPTY_VISUALIZATION_DATA);
 			default:
 				return new EmptyDrawPanel(VisualizationData.EMPTY_VISUALIZATION_DATA);
 		}

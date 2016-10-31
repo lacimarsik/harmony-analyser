@@ -89,7 +89,7 @@ public class AudioAnalysisHelper {
 	}
 
 	// gets float from the line, after ':'
-	static float getFloatFromLine(String line) { return Float.parseFloat(line.substring(line.lastIndexOf(':') + 2)); }
+	public static float getFloatFromLine(String line) { return Float.parseFloat(line.substring(line.lastIndexOf(':') + 2)); }
 
 	// gets chroma information from the line of String
 	public static float[] getChromaFromLine(String line) throws AudioAnalyser.IncorrectInputException {
