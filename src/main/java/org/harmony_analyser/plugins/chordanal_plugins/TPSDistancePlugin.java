@@ -87,7 +87,6 @@ public class TPSDistancePlugin extends LineChartPlugin {
 			} else {
 				chordList.add(harmony);
 				chordTimestampList.add(previousTimestamp);
-				out.write(previousTimestamp + ": " + harmony.getToneNamesMapped() + "\n");
 				harmony = new Harmony(new ArrayList<>());
 			}
 			previousTimestamp = timestamp;
