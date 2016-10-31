@@ -79,11 +79,11 @@ public class TonalPitchSpaceTest {
 
 	@Test
 	public void shouldGetTPSDistance() {
-		assertEquals(10f, TonalPitchSpace.getTPSDistance(harmony1, root1, key12, harmony2, root2, key12), 0.01);
-		assertEquals(3f, TonalPitchSpace.getTPSDistance(harmony3, root3, key34, harmony4, root4, key34), 0.01);
+		assertEquals(10f, TonalPitchSpace.getTPSDistance(harmony1, root1, key12, harmony2, root2, key12, true), 0.01);
+		assertEquals(3f, TonalPitchSpace.getTPSDistance(harmony3, root3, key34, harmony4, root4, key34, true), 0.01);
 
 		// Symmetry test
-		assertEquals(11.5f, TonalPitchSpace.getTPSDistance(harmony1, root1, key12, harmony2, root2, key2), 0.01);
-		assertEquals(11.5f, TonalPitchSpace.getTPSDistance(harmony2, root2, key2, harmony1, root1, key12), 0.01);
+		assertEquals(11.5f, TonalPitchSpace.getTPSDistance(harmony1, root1, key12, harmony2, root2, key2, true), 0.01);
+		assertEquals(11.5f, TonalPitchSpace.getTPSDistance(harmony2, root2, key2, harmony1, root1, key12, true), 0.01);
 	}
 }

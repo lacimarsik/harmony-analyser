@@ -1,6 +1,7 @@
 package org.harmony_analyser.plugins.chordanal_plugins;
 
 import org.harmony_analyser.application.services.*;
+import org.harmony_analyser.chordanal.*;
 import org.harmony_analyser.chromanal.Chroma;
 import org.harmony_analyser.plugins.LineChartPlugin;
 
@@ -34,11 +35,12 @@ import java.util.stream.Collectors;
 
 public class TPSDistancePlugin extends LineChartPlugin {
 	public TPSDistancePlugin() {
-		pluginKey = "chordanal:tonal_distance";
+		pluginKey = "chordanal:tps_distance";
 		pluginName = "TPS Distance";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chordino-labels");
+		inputFileSuffixes.add("-chordino-tones");
 		inputFileSuffixes.add("-key");
 		inputFileExtension = ".txt";
 
@@ -52,50 +54,118 @@ public class TPSDistancePlugin extends LineChartPlugin {
 	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
 		String result = super.analyse(inputFileWav, force, verbose);
 		String outputFile = inputFileWav + outputFileSuffix + ".txt";
+		String outputFileVerbose = inputFileWav + outputFileSuffix + ".txt";
 		List<String> inputFiles = new ArrayList<>();
 		for (String suffix : inputFileSuffixes) {
 			String inputFileName = inputFileWav + suffix + inputFileExtension;
 			inputFiles.add(inputFileName);
 		}
 
-		// 1. Get timestamps from the chords and keys file
-		List<String> chordsLinesList = Files.readAllLines(new File(inputFiles.get(0)).toPath(), Charset.defaultCharset());
-		List<Float> chordsTimestampList = new ArrayList<>();
-		List<String> keysLinesList = Files.readAllLines(new File(inputFiles.get(1)).toPath(), Charset.defaultCharset());
-		List<Float> keysTimestampList = new ArrayList<>();
-		chordsTimestampList.addAll(chordsLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
-		keysTimestampList.addAll(keysLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
+		BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
+		BufferedWriter outVerbose = new BufferedWriter(new FileWriter(outputFileVerbose));
+
+		// 0. Pre-process Chordino chord tones output so it contains only 1 timestamp and relative chord tone names
+		// prepares:
+		// chordList (list of Harmony models)
+		// chordTimestampList (timestamps related to chordList)
+		List<String> preProcessLinesList = Files.readAllLines(new File(inputFiles.get(1)).toPath(), Charset.defaultCharset());
+		List<Float> preProcessTimestampList = new ArrayList<>();
+		preProcessTimestampList.addAll(preProcessLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLineContainingTimestampAndLength).collect(Collectors.toList()));
+		List<Float> preProcessTonesList = new ArrayList<>();
+		preProcessTonesList.addAll(preProcessLinesList.stream().map(AudioAnalysisHelper::getFloatFromLine).collect(Collectors.toList()));
+		List<Harmony> chordList = new ArrayList<>();
+		List<Float> chordTimestampList = new ArrayList<>();
+
+		int lineIndex = 0;
+		float previousTimestamp = preProcessTimestampList.get(0);
+		Harmony harmony = new Harmony(new ArrayList<>());
+		// iterate over all timestamps and while it is the same, add tones to a newly created chord
+		for (float timestamp : preProcessTimestampList) {
+			if (timestamp == previousTimestamp) {
+				Tone tone = new Tone(Math.round(preProcessTonesList.get(lineIndex)));
+				harmony.addTone(tone);
+			} else {
+				chordList.add(harmony);
+				chordTimestampList.add(previousTimestamp);
+				out.write(previousTimestamp + ": " + harmony.getToneNamesMapped() + "\n");
+				harmony = new Harmony(new ArrayList<>());
+			}
+			previousTimestamp = timestamp;
+			lineIndex++;
+		}
+
+		// 1. Get timestamps from the chord labels and keys file
+		// prepares:
+		// chordLabelList (list of chord labels)
+		// chordLabelTimestampList (timestamps related to chordList)
+		// keyList (list of keys)
+		// keyTimestampList (timestamps related to keyList)
+		List<String> chordLabelLinesList = Files.readAllLines(new File(inputFiles.get(0)).toPath(), Charset.defaultCharset());
+		List<String> chordLabelList = new ArrayList<>();
+		List<Float> chordLabelTimestampList = new ArrayList<>();
+		List<String> keyLinesList = Files.readAllLines(new File(inputFiles.get(2)).toPath(), Charset.defaultCharset());
+		List<String> keyList = new ArrayList<>();
+		List<Float> keyTimestampList = new ArrayList<>();
+		chordLabelList.addAll(chordLabelLinesList.stream().map(AudioAnalysisHelper::getLabelFromLine).collect(Collectors.toList()));
+		chordLabelTimestampList.addAll(chordLabelLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
+		keyList.addAll(keyLinesList.stream().map(AudioAnalysisHelper::getLabelFromLine).collect(Collectors.toList()));
+		keyTimestampList.addAll(keyLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
 
 		int chordIndex = 0;
+		float chordLabelTimestamp;
 		float chordTimestamp;
 		int keyIndex = 0;
 		float keyTimestamp;
-		String chord;
-		keyTimestamp = keysTimestampList.get(0);
+		String chordLabel;
+		Harmony chord;
+		Tone chordRoot;
+		Key key;
+		keyTimestamp = keyTimestampList.get(0);
+		String previousChordLabel = "";
+		Tone previousChordRoot = Tone.EMPTY_TONE;
+		Harmony previousChord = Harmony.EMPTY_HARMONY;
+		Key previousKey = Key.EMPTY_KEY;
 
-		// 2. Iterate over chords, deriving TPS distnaces
-		for (String line : chordsLinesList) {
-			chordTimestamp = chordsTimestampList.get(chordIndex);
-
-			if (keyTimestamp > chordTimestamp) {
-				// Go to the next key timestamp
-				keyIndex++;
-				if (keyIndex > keysTimestampList.size()-1) {
-					break;
+		// 2. Iterate over both chord label and chord array, checking respective keys, and deriving TPS distnaces
+		for (String label : chordLabelList) {
+			chordLabelTimestamp = chordLabelTimestampList.get(chordIndex);
+			chordTimestamp = chordTimestampList.get(chordIndex);
+			if (chordLabelTimestamp != chordTimestamp) {
+				if (verbose) outVerbose.write("SKIP: Timestamp of chord and chord label did not match\n");
+			} else {
+				if (keyTimestamp > chordLabelTimestamp) {
+					// Go to the next key timestamp
+					if (verbose) outVerbose.write("KEY CHANGE: Moving to next key label\n");
+					keyIndex++;
+					if (keyIndex > keyTimestampList.size() - 1) {
+						break;
+					}
+					keyTimestamp = keyTimestampList.get(keyIndex);
 				}
-				keyTimestamp = keysTimestampList.get(keyIndex);
-			}
 
-			// Get chord from the current line
-			chord = AudioAnalysisHelper.getLabelFromLine(line);
-			System.out.println(chord);
+				// Get chord root from chord label and chord
+				chordLabel = chordLabelList.get(chordIndex);
+				chordRoot = Chordanal.getRootToneFromChordLabel(chordLabel);
+				chord = chordList.get(chordIndex);
+				key = Chordanal.createKeyFromName(keyList.get(keyIndex));
+
+				if ((chordRoot == Tone.EMPTY_TONE) || (previousChordRoot == Tone.EMPTY_TONE) || (chord == Harmony.EMPTY_HARMONY) || (previousChord == Harmony.EMPTY_HARMONY) || (key == Key.EMPTY_KEY) || (previousKey == Key.EMPTY_KEY)) {
+					if (verbose) outVerbose.write("SKIP (one or both chords were not assigned)\n\n");
+				} else {
+					// Get TPS Distance of the two chords
+					float tpsDistance = TonalPitchSpace.getTPSDistance(chord, chordRoot, key, previousChord, previousChordRoot, previousKey, verbose);
+					if (verbose) outVerbose.write("chord: " + chordLabel + ", previousChord: " + previousChordLabel + ", distance: " + tpsDistance + "\n\n");
+				}
+				previousChord = chord;
+				previousChordRoot = chordRoot;
+				previousChordLabel = chordLabel;
+				previousKey = key;
+			}
 			chordIndex++;
 		}
 
-		BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
-
-		out.write("DONE");
 		out.close();
+		outVerbose.close();
 
 		return result;
 	}

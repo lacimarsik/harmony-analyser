@@ -158,12 +158,13 @@ public class TonalPitchSpace {
 	 * - keys are 'context' keys, and need to be provided by a key-finding algorithm
 	 * - roots are chord labels without maj/min mode, and need to be provided by a chord-estimation algorithm
 	 */
-	public static float getTPSDistance(Harmony harmony1, Tone root1, Key key1, Harmony harmony2, Tone root2, Key key2) {
+	public static float getTPSDistance(Harmony harmony1, Tone root1, Key key1, Harmony harmony2, Tone root2, Key key2, boolean verbose) {
 		// XXX: Use symmetric version inspired by:
 		// De Haas et al.: TONAL PITCH STEP DISTANCE: A SIMILARITY MEASURE FOR CHORD PROGRESSIONS
 		// Rocher et al.: A SURVEY OF CHORD DISTANCES WITH COMPARISON FOR CHORD ANALYSIS
-		float distanceXY = getKeyDistance(key1, key2) + getRootDistance(root1, root2) + getNonCommonPitchClassesDistance(harmony1, harmony2, key1, false);
-		float distanceYX = getKeyDistance(key2, key1) + getRootDistance(root2, root1) + getNonCommonPitchClassesDistance(harmony2, harmony1, key2, false);
+		float distanceXY = getKeyDistance(key1, key2) + getRootDistance(root1, root2) + getNonCommonPitchClassesDistance(harmony1, harmony2, key1, verbose);
+		float distanceYX = getKeyDistance(key2, key1) + getRootDistance(root2, root1) + getNonCommonPitchClassesDistance(harmony2, harmony1, key2, verbose);
+		if (verbose) System.out.println("distanceXY: " + distanceXY + ", distanceYX: " + distanceYX + ", (distanceXY + distanceYX / 2): " + (distanceXY + distanceYX) / 2);
 		return (distanceXY + distanceYX) / 2;
 	}
 }
