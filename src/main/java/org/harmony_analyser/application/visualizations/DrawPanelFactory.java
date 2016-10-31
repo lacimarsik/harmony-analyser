@@ -38,9 +38,8 @@ public class DrawPanelFactory {
 			case "chordanal:tonal_distance":
 			case "chromanal:chroma_complexity_simple":
 			case "chromanal:chroma_complexity_tonal":
-				return new LineChartDrawPanel(visualizationData);
 			case "chordanal:tps_distance":
-				return new EmptyDrawPanel(VisualizationData.EMPTY_VISUALIZATION_DATA);
+				return new LineChartDrawPanel(visualizationData);
 			default:
 				return new EmptyDrawPanel(VisualizationData.EMPTY_VISUALIZATION_DATA);
 		}
