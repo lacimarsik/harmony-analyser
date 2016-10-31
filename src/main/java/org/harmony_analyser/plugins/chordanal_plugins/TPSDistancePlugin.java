@@ -64,6 +64,8 @@ public class TPSDistancePlugin extends LineChartPlugin {
 		BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
 		BufferedWriter outVerbose = new BufferedWriter(new FileWriter(outputFileVerbose));
 
+		if (verbose) outVerbose.write("Preparing chords from Chordino analysis ...\n");
+
 		// 0. Pre-process Chordino chord tones output so it contains only 1 timestamp and relative chord tone names
 		// prepares:
 		// chordList (list of Harmony models)
@@ -93,6 +95,10 @@ public class TPSDistancePlugin extends LineChartPlugin {
 			lineIndex++;
 		}
 
+		if (verbose) outVerbose.write(chordList.size() + " chords prepared\n\n");
+
+		if (verbose) outVerbose.write("Reading Chord labels and keys  ...\n");
+
 		// 1. Get timestamps from the chord labels and keys file
 		// prepares:
 		// chordLabelList (list of chord labels)
@@ -110,7 +116,9 @@ public class TPSDistancePlugin extends LineChartPlugin {
 		keyList.addAll(keyLinesList.stream().map(AudioAnalysisHelper::getLabelFromLine).collect(Collectors.toList()));
 		keyTimestampList.addAll(keyLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
 
-		int chordIndex = 0;
+		if (verbose) outVerbose.write(chordLabelList.size() + " chord labels and " + keyList.size() + " keys successfully read\n\n");
+
+		int chordIndex = 0, chordLabelIndex = 0;
 		float chordLabelTimestamp;
 		float chordTimestamp;
 		int keyIndex = 0;
@@ -119,7 +127,6 @@ public class TPSDistancePlugin extends LineChartPlugin {
 		Harmony chord;
 		Tone chordRoot;
 		Key key;
-		keyTimestamp = keyTimestampList.get(0);
 		String previousChordLabel = "";
 		Tone previousChordRoot = Tone.EMPTY_TONE;
 		Harmony previousChord = Harmony.EMPTY_HARMONY;
@@ -127,29 +134,27 @@ public class TPSDistancePlugin extends LineChartPlugin {
 
 		// 2. Iterate over both chord label and chord array, checking respective keys, and deriving TPS distnaces
 		for (String label : chordLabelList) {
-			if ((chordIndex > chordLabelTimestampList.size() - 1) || (chordIndex > chordLabelList.size() - 1)) {
+			if ((chordLabelIndex > chordLabelTimestampList.size() - 1) || (chordLabelIndex > chordLabelList.size() - 1)) {
 				break;
 			}
 			if ((chordIndex > chordTimestampList.size() - 1) || (chordIndex > chordList.size() - 1)) {
 				break;
 			}
-			chordLabelTimestamp = chordLabelTimestampList.get(chordIndex);
+			chordLabelTimestamp = chordLabelTimestampList.get(chordLabelIndex);
 			chordTimestamp = chordTimestampList.get(chordIndex);
 			if (chordLabelTimestamp != chordTimestamp) {
-				if (verbose) outVerbose.write("SKIP: Timestamp of chord and chord label did not match\n");
+				if (verbose) outVerbose.write("SKIP: Timestamp of chord and chord label did not match " + chordLabelTimestamp + " and " +  chordTimestamp + "\n");
+				chordIndex--; // do not move chordIndex this iteration
 			} else {
-				if (keyTimestamp > chordLabelTimestamp) {
-					// Go to the next key timestamp
+				// if next key timestamp is lower than currently examined chord timestamp
+				if (((keyIndex + 1) < keyTimestampList.size()) && (keyTimestampList.get(keyIndex + 1) <= chordLabelTimestamp)) {
+					// => go to the next key timestamp
 					if (verbose) outVerbose.write("KEY CHANGE: Moving to next key label\n");
 					keyIndex++;
-					if (keyIndex > keyTimestampList.size() - 1) {
-						break;
-					}
-					keyTimestamp = keyTimestampList.get(keyIndex);
 				}
 
 				// Get chord root from chord label and chord
-				chordLabel = chordLabelList.get(chordIndex);
+				chordLabel = chordLabelList.get(chordLabelIndex);
 				chordRoot = Chordanal.getRootToneFromChordLabel(chordLabel);
 				chord = chordList.get(chordIndex);
 				key = Chordanal.createKeyFromName(keyList.get(keyIndex));
@@ -168,6 +173,7 @@ public class TPSDistancePlugin extends LineChartPlugin {
 				previousKey = key;
 			}
 			chordIndex++;
+			chordLabelIndex++;
 		}
 
 		out.close();
