@@ -10,12 +10,12 @@ import org.junit.*;
  */
 
 public class AnalysisPluginTest {
-	private ChordinoPlugin chordino;
+	private ChordinoLabelsPlugin chordino;
 	private String inputFile;
 
 	@Before
 	public void setUp() throws Exception {
-		chordino = new ChordinoPlugin();
+		chordino = new ChordinoLabelsPlugin();
 		inputFile = "test.mp3";
 	}
 

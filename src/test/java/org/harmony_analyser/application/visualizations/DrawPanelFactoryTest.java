@@ -32,7 +32,7 @@ public class DrawPanelFactoryTest {
 		SegmentationDrawPanel segmentationDrawPanel = mock(SegmentationDrawPanel.class);
 		whenNew(SegmentationDrawPanel.class).withArguments(visualizationData).thenReturn(segmentationDrawPanel);
 
-		DrawPanel drawPanel = drawPanelFactory.createDrawPanel("nnls-chroma:chordino", visualizationData);
+		DrawPanel drawPanel = drawPanelFactory.createDrawPanel("nnls-chroma:chordino-labels", visualizationData);
 
 		verifyNew(SegmentationDrawPanel.class).withArguments(visualizationData);
 	}

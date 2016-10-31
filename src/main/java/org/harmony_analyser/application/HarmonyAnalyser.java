@@ -48,7 +48,7 @@ class HarmonyAnalyser extends JFrame {
 	private JCheckBox captureMIDICheckBoxTwo;
 	private JButton browseButton;
 	private JButton extractChromasButton;
-	private JButton segmentTrackButton;
+	private JButton extractChordLabelsButton;
 	private JButton analyzeComplexityButton;
 	private JButton buttonNNLS;
 	private JButton buttonChordino;
@@ -119,6 +119,7 @@ class HarmonyAnalyser extends JFrame {
 	private JButton buttonKeyDetector;
 	private JButton extractKeyButton;
 	private JLabel keyDetectorVampLabel;
+	private JButton extractChordTonesFromButton;
 	private JFileChooser fileChooser;
 
 	private Harmony harmony1, harmony2 = Harmony.EMPTY_HARMONY;
@@ -299,7 +300,7 @@ class HarmonyAnalyser extends JFrame {
 
 		buttonChordino.addActionListener(actionEvent -> {
 			try {
-				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("nnls-chroma:chordino"));
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("nnls-chroma:chordino-labels"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
@@ -349,13 +350,15 @@ class HarmonyAnalyser extends JFrame {
 
 		extractChromasButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma"));
 
-		segmentTrackButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino"));
+		extractChordLabelsButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-labels"));
+
+		extractChordTonesFromButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-tones"));
 
 		extractKeyButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "qm-vamp-plugins:qm-keydetector"));
 
 		analyzeComplexityButton.addActionListener(actionEvent -> {
 			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
-			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-labels");
 			analyzeFolder(consoleTextPane, inputFolderTextField, "chordanal:harmonic_complexity");
 		});
 

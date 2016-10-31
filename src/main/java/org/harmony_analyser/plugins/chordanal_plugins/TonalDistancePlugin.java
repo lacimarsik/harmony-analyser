@@ -33,7 +33,7 @@ public class TonalDistancePlugin extends ChordanalPlugin {
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas");
-		inputFileSuffixes.add("-chordino");
+		inputFileSuffixes.add("-chordino-labels");
 		inputFileExtension = ".txt";
 
 		outputFileSuffix = "-tonal-distance";

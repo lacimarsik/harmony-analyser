@@ -490,7 +490,7 @@
               </hspacer>
             </children>
           </grid>
-          <grid id="f6178" binding="audioAnalysisPanel" layout-manager="GridLayoutManager" row-count="26" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="f6178" binding="audioAnalysisPanel" layout-manager="GridLayoutManager" row-count="27" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="15" left="15" bottom="15" right="15"/>
             <constraints>
               <tabbedpane title="Audio Analysis Tool"/>
@@ -618,7 +618,7 @@
               </component>
               <component id="2cfda" class="javax.swing.JButton" binding="analyzeComplexityButton" default-binding="true">
                 <constraints>
-                  <grid row="23" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="24" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Extract Chord Transitions"/>
@@ -642,7 +642,7 @@
               </component>
               <component id="d4740" class="javax.swing.JLabel" binding="highLevelAnalysisLabel">
                 <constraints>
-                  <grid row="22" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="23" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Higher-level analysis"/>
@@ -666,7 +666,7 @@
               </component>
               <hspacer id="873fd">
                 <constraints>
-                  <grid row="21" column="1" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="22" column="1" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </hspacer>
               <hspacer id="c02ed">
@@ -676,7 +676,7 @@
               </hspacer>
               <component id="61029" class="javax.swing.JLabel" binding="transitionComplexityAudioLabel">
                 <constraints>
-                  <grid row="23" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="24" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Transition Complexity"/>
@@ -700,7 +700,7 @@
               </component>
               <component id="2ef7c" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="24" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                  <grid row="25" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
                     <preferred-size width="187" height="30"/>
                   </grid>
                 </constraints>
@@ -710,7 +710,7 @@
               </component>
               <component id="2ebd1" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="25" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                  <grid row="26" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
                     <preferred-size width="180" height="35"/>
                   </grid>
                 </constraints>
@@ -728,7 +728,7 @@
               </component>
               <component id="e3243" class="javax.swing.JButton" binding="chromaTransitionsSimpleButton">
                 <constraints>
-                  <grid row="24" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="25" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Extract Chroma Transitions - Simple"/>
@@ -736,7 +736,7 @@
               </component>
               <component id="cce0e" class="javax.swing.JButton" binding="chromaTransitionsTonalButton">
                 <constraints>
-                  <grid row="25" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="26" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Extract Chroma Transitions - Tonal"/>
@@ -750,12 +750,12 @@
                   <text value="Key Detector"/>
                 </properties>
               </component>
-              <component id="d58ef" class="javax.swing.JButton" binding="segmentTrackButton">
+              <component id="d58ef" class="javax.swing.JButton" binding="extractChordLabelsButton">
                 <constraints>
                   <grid row="19" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Extract Chords from WAV"/>
+                  <text value="Extract Chord Labels from WAV"/>
                 </properties>
               </component>
               <component id="4728f" class="javax.swing.JLabel" binding="chordinoVampLabel">
@@ -768,7 +768,7 @@
               </component>
               <component id="94238" class="javax.swing.JButton" binding="extractKeyButton">
                 <constraints>
-                  <grid row="20" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="21" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Extract Key from WAV"/>
@@ -776,10 +776,18 @@
               </component>
               <component id="b7591" class="javax.swing.JLabel" binding="keyDetectorVampLabel">
                 <constraints>
-                  <grid row="20" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="21" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Key Detector (VAMP)"/>
+                </properties>
+              </component>
+              <component id="45477" class="javax.swing.JButton" binding="extractChordTonesFromButton" default-binding="true">
+                <constraints>
+                  <grid row="20" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Extract Chord Tones from WAV"/>
                 </properties>
               </component>
             </children>

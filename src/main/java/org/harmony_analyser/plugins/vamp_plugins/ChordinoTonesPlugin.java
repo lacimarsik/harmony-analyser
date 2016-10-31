@@ -1,8 +1,9 @@
 package org.harmony_analyser.plugins.vamp_plugins;
 
-import org.vamp_plugins.*;
+import org.vamp_plugins.PluginLoader;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Wrapper for Chordino Vamp plugin http://www.isophonics.net/nnls-chroma
@@ -46,11 +47,11 @@ import java.util.*;
  * 3: loglikelihood - Log likelihood of harmonic change
  */
 
-public class ChordinoPlugin extends SegmentationVampPlugin {
-	public ChordinoPlugin() throws PluginLoader.LoadFailedException {
+public class ChordinoTonesPlugin extends SegmentationVampPlugin {
+	public ChordinoTonesPlugin() throws PluginLoader.LoadFailedException {
 		pluginKey = "nnls-chroma:chordino";
 		pluginName = "Chordino";
-		outputNumber = 0;
+		outputNumber = 1;
 		outputType = OutputType.VALUE_AND_LABEL;
 		blockSize = 16384;
 
@@ -58,7 +59,7 @@ public class ChordinoPlugin extends SegmentationVampPlugin {
 		inputFileSuffixes.add(""); // Plugin handles raw WAV files
 		inputFileExtension = ""; // Plugin handles raw WAV files
 
-		outputFileSuffix = "-chordino";
+		outputFileSuffix = "-chordino-tones";
 
 		parameters = new HashMap<>();
 		parameters.put("useNNLS", (float) 1.0);

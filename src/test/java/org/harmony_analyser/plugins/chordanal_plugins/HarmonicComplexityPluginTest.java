@@ -32,7 +32,7 @@ public class HarmonicComplexityPluginTest {
 	@Test
 	public void shouldCreateReport() throws IOException, AudioAnalyser.IncorrectInputException, PluginLoader.LoadFailedException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		new NNLSPlugin().analyse(testWavFile.toString(), true, false);
-		new ChordinoPlugin().analyse(testWavFile.toString(), true, false);
+		new ChordinoLabelsPlugin().analyse(testWavFile.toString(), true, false);
 		new HarmonicComplexityPlugin().analyse(testWavFile.toString(), true, false);
 		BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-harmonic-complexity.txt"));
 		BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));

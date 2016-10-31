@@ -13,7 +13,8 @@ import org.vamp_plugins.PluginLoader;
 public class AnalysisPluginFactory {
 	private final String[] AVAILABLE_PLUGINS = new String[] {
 		"nnls-chroma:nnls-chroma",
-		"nnls-chroma:chordino",
+		"nnls-chroma:chordino-labels",
+		"nnls-chroma:chordino-tones",
 		"chordanal:harmonic_complexity",
 		"chromanal:chroma_complexity_simple",
 		"chromanal:chroma_complexity_tonal",
@@ -22,7 +23,8 @@ public class AnalysisPluginFactory {
 
 	private final String[] WRAPPED_VAMP_PLUGINS = new String[] {
 		"nnls-chroma:nnls-chroma",
-		"nnls-chroma:chordino"
+		"nnls-chroma:chordino-labels",
+		"nnls-chroma:chordino-tones"
 	};
 
 	public String[] getAvailablePlugins() {
@@ -40,8 +42,11 @@ public class AnalysisPluginFactory {
 				case "nnls-chroma:nnls-chroma":
 					plugin = new NNLSPlugin();
 					break;
-				case "nnls-chroma:chordino":
-					plugin = new ChordinoPlugin();
+				case "nnls-chroma:chordino-labels":
+					plugin = new ChordinoLabelsPlugin();
+					break;
+				case "nnls-chroma:chordino-tones":
+					plugin = new ChordinoTonesPlugin();
 					break;
 				case "qm-vamp-plugins:qm-keydetector":
 					plugin = new KeyDetectorPlugin();

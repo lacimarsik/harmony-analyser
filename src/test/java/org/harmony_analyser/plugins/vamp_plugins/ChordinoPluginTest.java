@@ -10,19 +10,19 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Unit tests for ChordinoPlugin class
+ * Unit tests for ChordinoLabelsPlugin class
  */
 
 @SuppressWarnings("ConstantConditions")
 
 public class ChordinoPluginTest {
-	private ChordinoPlugin chordino;
+	private ChordinoLabelsPlugin chordino;
 	private File testWavFile;
 	private List<String> inputFiles;
 
 	@Before
 	public void setUp() throws Exception {
-		chordino = new ChordinoPlugin();
+		chordino = new ChordinoLabelsPlugin();
 		ClassLoader classLoader = getClass().getClassLoader();
 		testWavFile = new File(classLoader.getResource("test.wav").getPath());
 	}

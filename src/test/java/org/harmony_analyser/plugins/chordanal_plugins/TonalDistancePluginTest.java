@@ -36,7 +36,7 @@ public class TonalDistancePluginTest {
 	@Test
 	public void shouldCreateReport() throws IOException, AudioAnalyser.IncorrectInputException, PluginLoader.LoadFailedException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		new NNLSPlugin().analyse(testWavFile.toString(), true, false);
-		new ChordinoPlugin().analyse(testWavFile.toString(), true, false);
+		new ChordinoLabelsPlugin().analyse(testWavFile.toString(), true, false);
 		new TonalDistancePlugin().analyse(testWavFile.toString(), true, false);
 		BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-tonal-distance.txt"));
 		BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));

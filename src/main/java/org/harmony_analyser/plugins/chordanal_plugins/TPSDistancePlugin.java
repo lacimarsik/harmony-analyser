@@ -38,7 +38,7 @@ public class TPSDistancePlugin extends LineChartPlugin {
 		pluginName = "TPS Distance";
 
 		inputFileSuffixes = new ArrayList<>();
-		inputFileSuffixes.add("-chordino");
+		inputFileSuffixes.add("-chordino-labels");
 		inputFileSuffixes.add("-key");
 		inputFileExtension = ".txt";
 
