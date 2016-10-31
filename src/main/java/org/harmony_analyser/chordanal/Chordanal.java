@@ -315,7 +315,7 @@ public class Chordanal {
 		return result;
 	}
 
-	static Key createKeyFromName(String name) {
+	public static Key createKeyFromName(String name) {
 		String[] keyParts = name.split(" ");
 
 		return new Key(Integer.parseInt(tonesNames.getFirstInKey(keyParts[0])), Integer.parseInt(scaleNameTable.getFirstInKey(keyParts[1])));

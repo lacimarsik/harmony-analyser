@@ -12,6 +12,8 @@ public class Key {
 	int root;
 	int keyType;
 
+	public static final Key EMPTY_KEY = new Key(0, 0);
+
 	Key(int root, int keyType) {
 		this.root = root;
 		this.keyType = keyType;
