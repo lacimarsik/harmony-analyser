@@ -77,10 +77,19 @@ public class AudioAnalysisHelper {
 		return Float.parseFloat(stringTimestamp);
 	}
 
-	// gets String label for the line, after ':'
+	// gets timestamp from the first word in the line, before ',' (if line is formatted as "timestamp, length: label")
+	public static float getTimestampFromLineContainingTimestampAndLength(String line) {
+		String stringTimestamp = line.substring(0, line.lastIndexOf(','));
+		return Float.parseFloat(stringTimestamp);
+	}
+
+	// gets String label from the line, after ':'
 	public static String getLabelFromLine(String line) {
 		return line.substring(line.lastIndexOf(':') + 2);
 	}
+
+	// gets float from the line, after ':'
+	static float getFloatFromLine(String line) { return Float.parseFloat(line.substring(line.lastIndexOf(':') + 2)); }
 
 	// gets chroma information from the line of String
 	public static float[] getChromaFromLine(String line) throws AudioAnalyser.IncorrectInputException {

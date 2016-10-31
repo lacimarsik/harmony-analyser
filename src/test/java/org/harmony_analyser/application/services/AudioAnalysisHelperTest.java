@@ -60,6 +60,13 @@ public class AudioAnalysisHelperTest {
 	}
 
 	@Test
+	public void shouldGetTimestampFromLineContainingTimestampAndLength() {
+		line = "0.0123, 0.112: Cm";
+
+		assertEquals((float) 0.0123, AudioAnalysisHelper.getTimestampFromLineContainingTimestampAndLength(line), 0);
+	}
+
+	@Test
 	public void shouldGetLabelFromLine() {
 		line = "0.0123: Cm";
 
@@ -73,6 +80,13 @@ public class AudioAnalysisHelperTest {
 
 		chromaCalculated = AudioAnalysisHelper.getChromaFromLine(line);
 		assertArrayEquals(chromaCalculated, chromaExpected, (float) 0);
+	}
+
+	@Test
+	public void shouldGetFloatFromLine() {
+		line = "0.0123: 0.12";
+
+		assertEquals(0.12f, AudioAnalysisHelper.getFloatFromLine(line), (float) 0);
 	}
 
 	@Test
