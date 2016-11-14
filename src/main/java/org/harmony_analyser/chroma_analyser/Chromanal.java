@@ -41,21 +41,21 @@ public class Chromanal {
 		// create chords using Chordanal
 		String currentChordTones = Chordanal.getStringOfTones(harmony2);
 		String previousChordTones = Chordanal.getStringOfTones(harmony1);
-		Harmony harmony_1 = Chordanal.createHarmonyFromRelativeTones(previousChordTones);
-		Harmony harmony_2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
+		Chord chord_1 = Chordanal.createHarmonyFromRelativeTones(previousChordTones);
+		Chord chord_2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
 
 		// get common roots for both harmonies
-		DatabaseTable commonRoots = Harmanal.getCommonRoots(harmony_1, harmony_2);
+		DatabaseTable commonRoots = Harmanal.getCommonRoots(chord_1, chord_2);
 		if (!commonRoots.equals(DatabaseTable.EMPTY_RESULT) && !commonRoots.isEmpty()) {
 			String rootTones = commonRoots.getAllKeys().get(0).get(commonRoots.getAllKeys().get(0).size() - 1);
-			Harmony commonRootHarmony = Chordanal.createHarmonyFromRelativeTones(rootTones);
-			for (Tone tone : commonRootHarmony.tones) {
+			Chord commonRootChord = Chordanal.createHarmonyFromRelativeTones(rootTones);
+			for (Tone tone : commonRootChord.tones) {
 				chromaVector1[tone.getNumberMapped()] = 0;
 			}
-			for (Tone tone : commonRootHarmony.tones) {
+			for (Tone tone : commonRootChord.tones) {
 				chromaVector2[tone.getNumberMapped()] = 0;
 			}
-			if (verbose) AudioAnalysisHelper.logHarmony(commonRootHarmony, "Common Root Harmony");
+			if (verbose) AudioAnalysisHelper.logHarmony(commonRootChord, "Common Root Chord");
 		}
 
 		if (verbose) AudioAnalysisHelper.logChromaFloatArray(chroma1.values, "Final Chroma 1");

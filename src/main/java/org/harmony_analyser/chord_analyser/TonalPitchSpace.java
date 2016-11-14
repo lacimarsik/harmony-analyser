@@ -11,17 +11,17 @@ import java.util.List;
  */
 
 public class TonalPitchSpace {
-	private Harmony octaveLevel;
-	private Harmony fifthsLevel;
-	private Harmony triadicLevel;
-	private Harmony diatonicLevel;
-	private final Harmony chromaticLevel;
+	private Chord octaveLevel;
+	private Chord fifthsLevel;
+	private Chord triadicLevel;
+	private Chord diatonicLevel;
+	private final Chord chromaticLevel;
 
 	private TonalPitchSpace() {
 		this.chromaticLevel = new Key(0, Chordanal.CHROMATIC).getScaleHarmony();
 	}
 
-	TonalPitchSpace(Harmony octaveLevel, Harmony fifthsLevel, Harmony triadicLevel, Harmony diatonicLevel) {
+	TonalPitchSpace(Chord octaveLevel, Chord fifthsLevel, Chord triadicLevel, Chord diatonicLevel) {
 		this();
 		this.octaveLevel = octaveLevel;
 		this.fifthsLevel = fifthsLevel;
@@ -29,17 +29,17 @@ public class TonalPitchSpace {
 		this.diatonicLevel = diatonicLevel;
 	}
 
-	private TonalPitchSpace(Harmony harmony, Key contextKey) {
+	private TonalPitchSpace(Chord chord, Key contextKey) {
 		this();
 
 		// Set octave level to the harmony1 root
-		this.octaveLevel = Chordanal.createHarmonyFromRelativeTones(Chordanal.getRootTone(harmony).getNameMapped());
+		this.octaveLevel = Chordanal.createHarmonyFromRelativeTones(Chordanal.getRootTone(chord).getNameMapped());
 
 		// Set fifths level to the harmony1 root and fifth (if present)
-		this.fifthsLevel = Chordanal.createHarmonyFromRelativeTones(Chordanal.getRootTone(harmony).getNameMapped() + " " + Chordanal.getFifthToneFromHarmony(harmony).getNameMapped());
+		this.fifthsLevel = Chordanal.createHarmonyFromRelativeTones(Chordanal.getRootTone(chord).getNameMapped() + " " + Chordanal.getFifthToneFromHarmony(chord).getNameMapped());
 
-		// Set triadic level to the harmony itself
-		this.triadicLevel = harmony;
+		// Set triadic level to the chord itself
+		this.triadicLevel = chord;
 
 		// Set diatonic level to the common Key + any of the above level
 		this.diatonicLevel = contextKey.getScaleHarmony();
@@ -68,7 +68,7 @@ public class TonalPitchSpace {
 		plotLevel(chromaticLevel);
 	}
 
-	private void plotLevel(Harmony level) {
+	private void plotLevel(Chord level) {
 		for (int i = 0; i < 12; i++ ) {
 			boolean found = false;
 			for (Tone tone : level.tones) {
@@ -94,12 +94,12 @@ public class TonalPitchSpace {
 		System.out.println();
 	}
 
-	private static Harmony getNonCommonHarmonyOnLevel(Harmony levelHarmony1, Harmony levelHarmony2) {
+	private static Chord getNonCommonHarmonyOnLevel(Chord levelChord1, Chord levelChord2) {
 		List<Tone> nonCommonTones = new ArrayList<>();
-		nonCommonTones.addAll(levelHarmony1.subtractTones(levelHarmony2));
-		nonCommonTones.addAll(levelHarmony2.subtractTones(levelHarmony1));
+		nonCommonTones.addAll(levelChord1.subtractTones(levelChord2));
+		nonCommonTones.addAll(levelChord2.subtractTones(levelChord1));
 
-		return new Harmony(nonCommonTones);
+		return new Chord(nonCommonTones);
 	}
 
 	/* Static methods */
@@ -119,51 +119,51 @@ public class TonalPitchSpace {
 	}
 
 	/**
-	 * Calculates the number of non-common pitch classes between the basic space of harmony1 and basic space of harmony2
+	 * Calculates the number of non-common pitch classes between the basic space of chord1 and basic space of chord2
 	 * - basic space of harmony is its space on levels (a) - (d) in TPS
 	 * - commonKey sets the (d) level for comparison in TPS
 	 */
-	static float getNonCommonPitchClassesDistance(Harmony harmony1, Harmony harmony2, Key commonKey, boolean verbose) {
-		TonalPitchSpace tps1 = new TonalPitchSpace(harmony1, commonKey);
+	static float getNonCommonPitchClassesDistance(Chord chord1, Chord chord2, Key commonKey, boolean verbose) {
+		TonalPitchSpace tps1 = new TonalPitchSpace(chord1, commonKey);
 		if (verbose) tps1.plot();
-		TonalPitchSpace tps2 = new TonalPitchSpace(harmony2, commonKey);
+		TonalPitchSpace tps2 = new TonalPitchSpace(chord2, commonKey);
 		if (verbose) tps2.plot();
 
 		// level-by-level finding out the non-common pitch classes
-		Harmony nonCommonHarmonyOctaveLevel = getNonCommonHarmonyOnLevel(tps1.octaveLevel, tps2.octaveLevel);
-		Harmony nonCommonHarmonyFifthsLevel = getNonCommonHarmonyOnLevel(tps1.fifthsLevel, tps2.fifthsLevel);
-		Harmony nonCommonHarmonyTriadicLevel = getNonCommonHarmonyOnLevel(tps1.triadicLevel, tps2.triadicLevel);
-		Harmony nonCommonHarmonyDiatonicLevel = getNonCommonHarmonyOnLevel(tps1.diatonicLevel, tps2.diatonicLevel);
+		Chord nonCommonChordOctaveLevel = getNonCommonHarmonyOnLevel(tps1.octaveLevel, tps2.octaveLevel);
+		Chord nonCommonChordFifthsLevel = getNonCommonHarmonyOnLevel(tps1.fifthsLevel, tps2.fifthsLevel);
+		Chord nonCommonChordTriadicLevel = getNonCommonHarmonyOnLevel(tps1.triadicLevel, tps2.triadicLevel);
+		Chord nonCommonChordDiatonicLevel = getNonCommonHarmonyOnLevel(tps1.diatonicLevel, tps2.diatonicLevel);
 
 		if (verbose) {
-			AudioAnalysisHelper.logHarmony(nonCommonHarmonyOctaveLevel, "Non-common tones Octave Level");
-			AudioAnalysisHelper.logHarmony(nonCommonHarmonyFifthsLevel, "Non-common tones Fifths Level");
-			AudioAnalysisHelper.logHarmony(nonCommonHarmonyTriadicLevel, "Non-common tones Triadic Level");
-			AudioAnalysisHelper.logHarmony(nonCommonHarmonyDiatonicLevel, "Non-common tones Diatonic Level");
+			AudioAnalysisHelper.logHarmony(nonCommonChordOctaveLevel, "Non-common tones Octave Level");
+			AudioAnalysisHelper.logHarmony(nonCommonChordFifthsLevel, "Non-common tones Fifths Level");
+			AudioAnalysisHelper.logHarmony(nonCommonChordTriadicLevel, "Non-common tones Triadic Level");
+			AudioAnalysisHelper.logHarmony(nonCommonChordDiatonicLevel, "Non-common tones Diatonic Level");
 		}
 		int countNonCommonTones = 0;
-		countNonCommonTones += nonCommonHarmonyOctaveLevel.tones.size();
-		countNonCommonTones += nonCommonHarmonyFifthsLevel.tones.size();
-		countNonCommonTones += nonCommonHarmonyTriadicLevel.tones.size();
-		countNonCommonTones += nonCommonHarmonyDiatonicLevel.tones.size();
+		countNonCommonTones += nonCommonChordOctaveLevel.tones.size();
+		countNonCommonTones += nonCommonChordFifthsLevel.tones.size();
+		countNonCommonTones += nonCommonChordTriadicLevel.tones.size();
+		countNonCommonTones += nonCommonChordDiatonicLevel.tones.size();
 
 		return (float) countNonCommonTones;
 	}
 
 	/**
 	 * Calculates the TPS distance between
-	 * harmony1 (with the root tone root1, in the context of key key1)
+	 * chord1 (with the root tone root1, in the context of key key1)
 	 * and
-	 * harmony2 (with the root tone root2, in the context of key key2)
+	 * chord2 (with the root tone root2, in the context of key key2)
 	 * - keys are 'context' keys, and need to be provided by a key-finding algorithm
 	 * - roots are chord labels without maj/min mode, and need to be provided by a chord-estimation algorithm
 	 */
-	public static float getTPSDistance(Harmony harmony1, Tone root1, Key key1, Harmony harmony2, Tone root2, Key key2, boolean verbose) {
+	public static float getTPSDistance(Chord chord1, Tone root1, Key key1, Chord chord2, Tone root2, Key key2, boolean verbose) {
 		// XXX: Use symmetric version inspired by:
 		// De Haas et al.: TONAL PITCH STEP DISTANCE: A SIMILARITY MEASURE FOR CHORD PROGRESSIONS
 		// Rocher et al.: A SURVEY OF CHORD DISTANCES WITH COMPARISON FOR CHORD ANALYSIS
-		float distanceXY = getKeyDistance(key1, key2) + getRootDistance(root1, root2) + getNonCommonPitchClassesDistance(harmony1, harmony2, key1, verbose);
-		float distanceYX = getKeyDistance(key2, key1) + getRootDistance(root2, root1) + getNonCommonPitchClassesDistance(harmony2, harmony1, key2, verbose);
+		float distanceXY = getKeyDistance(key1, key2) + getRootDistance(root1, root2) + getNonCommonPitchClassesDistance(chord1, chord2, key1, verbose);
+		float distanceYX = getKeyDistance(key2, key1) + getRootDistance(root2, root1) + getNonCommonPitchClassesDistance(chord2, chord1, key2, verbose);
 		if (verbose) System.out.println("distanceXY: " + distanceXY + ", distanceYX: " + distanceYX + ", (distanceXY + distanceYX / 2): " + (distanceXY + distanceYX) / 2);
 		return (distanceXY + distanceYX) / 2;
 	}

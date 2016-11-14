@@ -248,10 +248,10 @@ public class MidiHandler {
 		}
 	}
 
-	public Harmony getBufferHarmony() {
+	public Chord getBufferHarmony() {
 		String buffer = decoder.getBuffer();
 		if (buffer.equals("")) {
-			return Harmony.EMPTY_HARMONY;
+			return Chord.EMPTY_CHORD;
 		}
 		String[] stringArray = buffer.split(" ");
 		int[] intArray = new int[stringArray.length];
@@ -259,7 +259,7 @@ public class MidiHandler {
 			intArray[i] = Integer.parseInt(stringArray[i]);
 		}
 
-		return new Harmony(intArray);
+		return new Chord(intArray);
 	}
 
 	public void openInputDevice() throws MidiUnavailableException {
@@ -274,9 +274,9 @@ public class MidiHandler {
 		this.decoder.close();
 	}
 
-	public void play(Harmony harmony) {
+	public void play(Chord chord) {
 		synthesizer.loadInstrument(instruments[instrument]);
-		harmony.tones.forEach(this::play);
+		chord.tones.forEach(this::play);
 	}
 
 	void play(Key key) {

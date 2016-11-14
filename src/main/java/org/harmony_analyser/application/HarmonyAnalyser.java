@@ -133,7 +133,7 @@ class HarmonyAnalyser extends JFrame {
 	private JButton analyseTPSButton;
 	private JFileChooser fileChooser;
 
-	private Harmony harmony1, harmony2 = Harmony.EMPTY_HARMONY;
+	private Chord chord1, chord2 = Chord.EMPTY_CHORD;
 	private final MidiHandler midiHandler;
 	private final AudioAnalyser audioAnalyser;
 
@@ -160,7 +160,7 @@ class HarmonyAnalyser extends JFrame {
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
-		setTitle("Harmony Analyser 1.2-beta");
+		setTitle("Chord Analyser 1.2-beta");
 
 		/* Services and Visualizations - Initialization */
 
@@ -206,10 +206,10 @@ class HarmonyAnalyser extends JFrame {
 					captureMIDICheckBoxTwo.setEnabled(false);
 				} else {
 					midiHandler.closeInputDevice();
-					harmony1 = midiHandler.getBufferHarmony();
-					analyzeHarmony(harmony1, relativeInputPaneOne, absoluteInputPaneOne, nameOnePane, structureOnePane, functionOnePane, chordComplexityPaneOne);
+					chord1 = midiHandler.getBufferHarmony();
+					analyzeHarmony(chord1, relativeInputPaneOne, absoluteInputPaneOne, nameOnePane, structureOnePane, functionOnePane, chordComplexityPaneOne);
 					playButtonOne.setEnabled(true);
-					analyzeTransition(harmony1,harmony2, transitionPane, chordComplexityDistancePane);
+					analyzeTransition(chord1, chord2, transitionPane, chordComplexityDistancePane);
 					midiHandler.closeDecoder();
 					midiHandler.openInputDevice();
 					midiHandler.connectInputSynthesizer();
@@ -227,10 +227,10 @@ class HarmonyAnalyser extends JFrame {
 					captureMIDICheckBoxOne.setEnabled(false);
 				} else {
 					midiHandler.closeInputDevice();
-					harmony2 = midiHandler.getBufferHarmony();
-					analyzeHarmony(harmony2, relativeInputPaneTwo, absoluteInputPaneTwo, nameTwoPane, structureTwoPane, functionTwoPane, chordComplexityPaneTwo);
+					chord2 = midiHandler.getBufferHarmony();
+					analyzeHarmony(chord2, relativeInputPaneTwo, absoluteInputPaneTwo, nameTwoPane, structureTwoPane, functionTwoPane, chordComplexityPaneTwo);
 					playButtonTwo.setEnabled(true);
-					analyzeTransition(harmony1, harmony2, transitionPane, chordComplexityDistancePane);
+					analyzeTransition(chord1, chord2, transitionPane, chordComplexityDistancePane);
 					midiHandler.closeDecoder();
 					midiHandler.openInputDevice();
 					midiHandler.connectInputSynthesizer();
@@ -245,10 +245,10 @@ class HarmonyAnalyser extends JFrame {
 			@Override
 			public void focusLost(FocusEvent e) {
 				super.focusLost(e);
-				harmony1 = Chordanal.createHarmonyFromRelativeTones(relativeInputPaneOne.getText());
-				analyzeHarmony(harmony1, relativeInputPaneOne, absoluteInputPaneOne, nameOnePane, structureOnePane, functionOnePane, chordComplexityPaneOne);
+				chord1 = Chordanal.createHarmonyFromRelativeTones(relativeInputPaneOne.getText());
+				analyzeHarmony(chord1, relativeInputPaneOne, absoluteInputPaneOne, nameOnePane, structureOnePane, functionOnePane, chordComplexityPaneOne);
 				playButtonOne.setEnabled(true);
-					analyzeTransition(harmony1, harmony2, transitionPane, chordComplexityDistancePane);
+					analyzeTransition(chord1, chord2, transitionPane, chordComplexityDistancePane);
 			}
 		});
 
@@ -256,10 +256,10 @@ class HarmonyAnalyser extends JFrame {
 			@Override
 			public void focusLost(FocusEvent e) {
 				super.focusLost(e);
-				harmony1 = Chordanal.createHarmonyFromTones(absoluteInputPaneOne.getText());
-				analyzeHarmony(harmony1, relativeInputPaneOne, absoluteInputPaneOne, nameOnePane, structureOnePane, functionOnePane, chordComplexityPaneOne);
+				chord1 = Chordanal.createHarmonyFromTones(absoluteInputPaneOne.getText());
+				analyzeHarmony(chord1, relativeInputPaneOne, absoluteInputPaneOne, nameOnePane, structureOnePane, functionOnePane, chordComplexityPaneOne);
 				playButtonOne.setEnabled(true);
-				analyzeTransition(harmony1,harmony2, transitionPane, chordComplexityDistancePane);
+				analyzeTransition(chord1, chord2, transitionPane, chordComplexityDistancePane);
 			}
 		});
 
@@ -267,10 +267,10 @@ class HarmonyAnalyser extends JFrame {
 			@Override
 			public void focusLost(FocusEvent e) {
 				super.focusLost(e);
-				harmony2 = Chordanal.createHarmonyFromRelativeTones(relativeInputPaneTwo.getText());
-				analyzeHarmony(harmony2, relativeInputPaneTwo, absoluteInputPaneTwo, nameTwoPane, structureTwoPane, functionTwoPane, chordComplexityPaneTwo);
+				chord2 = Chordanal.createHarmonyFromRelativeTones(relativeInputPaneTwo.getText());
+				analyzeHarmony(chord2, relativeInputPaneTwo, absoluteInputPaneTwo, nameTwoPane, structureTwoPane, functionTwoPane, chordComplexityPaneTwo);
 				playButtonTwo.setEnabled(true);
-				analyzeTransition(harmony1, harmony2, transitionPane, chordComplexityDistancePane);
+				analyzeTransition(chord1, chord2, transitionPane, chordComplexityDistancePane);
 			}
 		});
 
@@ -278,16 +278,16 @@ class HarmonyAnalyser extends JFrame {
 			@Override
 			public void focusLost(FocusEvent e) {
 				super.focusLost(e);
-				harmony2 = Chordanal.createHarmonyFromTones(absoluteInputPaneTwo.getText());
-				analyzeHarmony(harmony2, relativeInputPaneTwo, absoluteInputPaneTwo, nameTwoPane, structureTwoPane, functionTwoPane, chordComplexityPaneTwo);
+				chord2 = Chordanal.createHarmonyFromTones(absoluteInputPaneTwo.getText());
+				analyzeHarmony(chord2, relativeInputPaneTwo, absoluteInputPaneTwo, nameTwoPane, structureTwoPane, functionTwoPane, chordComplexityPaneTwo);
 				playButtonTwo.setEnabled(true);
-				analyzeTransition(harmony1, harmony2, transitionPane, chordComplexityDistancePane);
+				analyzeTransition(chord1, chord2, transitionPane, chordComplexityDistancePane);
 			}
 		});
 
-		playButtonOne.addActionListener(actionEvent -> midiHandler.play(harmony1));
+		playButtonOne.addActionListener(actionEvent -> midiHandler.play(chord1));
 
-		playButtonTwo.addActionListener(actionEvent -> midiHandler.play(harmony2));
+		playButtonTwo.addActionListener(actionEvent -> midiHandler.play(chord2));
 
 		/* Audio Analysis Tool - Initialization */
 
@@ -471,25 +471,25 @@ class HarmonyAnalyser extends JFrame {
 		midiList.setListData(inputDevices);
 	}
 
-	private void analyzeHarmony(Harmony harmony, JTextPane txtRelative, JTextPane txtAbsolute, JTextPane txtName, JTextPane txtStructure, JTextPane txtFunction, JTextPane txtComplexity) {
-		txtRelative.setText(harmony.getToneNamesMapped());
+	private void analyzeHarmony(Chord chord, JTextPane txtRelative, JTextPane txtAbsolute, JTextPane txtName, JTextPane txtStructure, JTextPane txtFunction, JTextPane txtComplexity) {
+		txtRelative.setText(chord.getToneNamesMapped());
 		txtRelative.setCaretPosition(0);
-		txtAbsolute.setText(harmony.getToneNames());
+		txtAbsolute.setText(chord.getToneNames());
 		txtAbsolute.setCaretPosition(0);
-		txtName.setText(Chordanal.getHarmonyAbbreviation(harmony));
+		txtName.setText(Chordanal.getHarmonyAbbreviation(chord));
 		txtName.setCaretPosition(0);
-		txtStructure.setText(listToString(Chordanal.getHarmonyNamesRelative(harmony)));
+		txtStructure.setText(listToString(Chordanal.getHarmonyNamesRelative(chord)));
 		txtStructure.setCaretPosition(0);
-		txtFunction.setText(listToString(Harmanal.getRootsFormatted(harmony)));
+		txtFunction.setText(listToString(Harmanal.getRootsFormatted(chord)));
 		txtFunction.setCaretPosition(0);
-		txtComplexity.setText(Integer.toString(Harmanal.getHarmonyComplexity(harmony)));
+		txtComplexity.setText(Integer.toString(Harmanal.getHarmonyComplexity(chord)));
 		txtComplexity.setCaretPosition(0);
 	}
 
-	private void analyzeTransition(Harmony harmony1, Harmony harmony2, JTextPane txtTransition, JTextPane txtTransitionComplexity) {
-		txtTransition.setText(listToString(Harmanal.getTransitionsFormatted(harmony1,harmony2)));
+	private void analyzeTransition(Chord chord1, Chord chord2, JTextPane txtTransition, JTextPane txtTransitionComplexity) {
+		txtTransition.setText(listToString(Harmanal.getTransitionsFormatted(chord1, chord2)));
 		txtTransition.setCaretPosition(0);
-		txtTransitionComplexity.setText(Integer.toString(Harmanal.getTransitionComplexity(harmony1, harmony2)));
+		txtTransitionComplexity.setText(Integer.toString(Harmanal.getTransitionComplexity(chord1, chord2)));
 	}
 
 	/* Audio Analysis Tool - Handling methods */

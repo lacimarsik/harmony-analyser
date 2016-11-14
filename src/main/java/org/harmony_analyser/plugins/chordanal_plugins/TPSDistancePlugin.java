@@ -68,19 +68,19 @@ public class TPSDistancePlugin extends LineChartPlugin {
 
 		// 0. Pre-process Chordino chord tones output so it contains only 1 timestamp and relative chord tone names
 		// prepares:
-		// chordList (list of Harmony models)
+		// chordList (list of Chord models)
 		// chordTimestampList (timestamps related to chordList)
 		List<String> preProcessLinesList = Files.readAllLines(new File(inputFiles.get(1)).toPath(), Charset.defaultCharset());
 		List<Float> preProcessTimestampList = new ArrayList<>();
 		preProcessTimestampList.addAll(preProcessLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLineContainingTimestampAndLength).collect(Collectors.toList()));
 		List<Float> preProcessTonesList = new ArrayList<>();
 		preProcessTonesList.addAll(preProcessLinesList.stream().map(AudioAnalysisHelper::getFloatFromLine).collect(Collectors.toList()));
-		List<Harmony> chordList = new ArrayList<>();
+		List<Chord> chordList = new ArrayList<>();
 		List<Float> chordTimestampList = new ArrayList<>();
 
 		int lineIndex = 0;
 		float previousTimestamp = preProcessTimestampList.get(0);
-		Harmony harmony = new Harmony(new ArrayList<>());
+		Chord harmony = new Chord(new ArrayList<>());
 		// iterate over all timestamps and while it is the same, add tones to a newly created chord
 		for (float timestamp : preProcessTimestampList) {
 			if (timestamp == previousTimestamp) {
@@ -89,7 +89,7 @@ public class TPSDistancePlugin extends LineChartPlugin {
 			} else {
 				chordList.add(harmony);
 				chordTimestampList.add(previousTimestamp);
-				harmony = new Harmony(new ArrayList<>());
+				harmony = new Chord(new ArrayList<>());
 			}
 			previousTimestamp = timestamp;
 			lineIndex++;
@@ -124,12 +124,12 @@ public class TPSDistancePlugin extends LineChartPlugin {
 		int keyIndex = 0;
 		float keyTimestamp;
 		String chordLabel;
-		Harmony chord;
+		Chord chord;
 		Tone chordRoot;
 		Key key;
 		String previousChordLabel = "";
 		Tone previousChordRoot = Tone.EMPTY_TONE;
-		Harmony previousChord = Harmony.EMPTY_HARMONY;
+		Chord previousChord = Chord.EMPTY_CHORD;
 		Key previousKey = Key.EMPTY_KEY;
 
 		// 2. Iterate over both chord label and chord array, checking respective keys, and deriving TPS distnaces
@@ -159,7 +159,7 @@ public class TPSDistancePlugin extends LineChartPlugin {
 				chord = chordList.get(chordIndex);
 				key = Chordanal.createKeyFromName(keyList.get(keyIndex));
 
-				if ((chordRoot == Tone.EMPTY_TONE) || (previousChordRoot == Tone.EMPTY_TONE) || (chord == Harmony.EMPTY_HARMONY) || (previousChord == Harmony.EMPTY_HARMONY) || (key == Key.EMPTY_KEY) || (previousKey == Key.EMPTY_KEY)) {
+				if ((chordRoot == Tone.EMPTY_TONE) || (previousChordRoot == Tone.EMPTY_TONE) || (chord == Chord.EMPTY_CHORD) || (previousChord == Chord.EMPTY_CHORD) || (key == Key.EMPTY_KEY) || (previousKey == Key.EMPTY_KEY)) {
 					if (verbose) outVerbose.write("SKIP (one or both chords were not assigned)\n\n");
 				} else {
 					// Get TPS Distance of the two chords

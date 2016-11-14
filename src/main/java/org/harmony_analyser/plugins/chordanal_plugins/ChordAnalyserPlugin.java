@@ -131,17 +131,17 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 			// create chords using Chordanal
 			String currentChordTones = Chordanal.getStringOfTones(chord);
 			String previousChordTones = Chordanal.getStringOfTones(previousChord);
-			Harmony harmony1 = Chordanal.createHarmonyFromRelativeTones(previousChordTones);
-			Harmony harmony2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
+			Chord chord1 = Chordanal.createHarmonyFromRelativeTones(previousChordTones);
+			Chord chord2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
 
-			if (harmony1.equals(Harmony.EMPTY_HARMONY) || harmony2.equals(Harmony.EMPTY_HARMONY)) {
+			if (chord1.equals(Chord.EMPTY_CHORD) || chord2.equals(Chord.EMPTY_CHORD)) {
 				if (verbose) {
 					outVerbose.write("SKIP (one or both chords were not assigned)\n\n");
 				}
 			} else {
 				// Print chord names to output
-				String harmonyName1 = Chordanal.getHarmonyName(harmony1);
-				String harmonyName2 = Chordanal.getHarmonyName(harmony2);
+				String harmonyName1 = Chordanal.getHarmonyName(chord1);
+				String harmonyName2 = Chordanal.getHarmonyName(chord2);
 
 				if (verbose) {
 					outVerbose.write(previousChordTones + "-> " + currentChordTones + "\n");
@@ -149,14 +149,14 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 				}
 
 				// Get transition complexity using Harmanal
-				int transitionComplexity = Harmanal.getTransitionComplexity(harmony1, harmony2);
+				int transitionComplexity = Harmanal.getTransitionComplexity(chord1, chord2);
 				if (transitionComplexity == -1) {
 					if (verbose) {
 						outVerbose.write("transition: NO COMMON ROOTS (maximal complexity: " + maximalComplexity + ")\n");
 					}
 					transitionComplexity = maximalComplexity;
 				} else {
-					List<String> transitionsFormatted = Harmanal.getTransitionsFormatted(harmony1, harmony2);
+					List<String> transitionsFormatted = Harmanal.getTransitionsFormatted(chord1, chord2);
 					String transitionFormatted;
 					if (transitionsFormatted.size() == 0) {
 						transitionFormatted = "(not found)";
@@ -170,7 +170,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 				transitionComplexityList.add(transitionComplexity);
 
 				// Get and store chord complexity using Harmanal
-				int chordComplexity = Harmanal.getHarmonyComplexity(harmony2);
+				int chordComplexity = Harmanal.getHarmonyComplexity(chord2);
 				chordComplexityList.add(chordComplexity);
 
 				// Sum up complexities for averages

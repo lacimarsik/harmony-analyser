@@ -40,36 +40,36 @@ public class Key {
 		return result;
 	}
 
-	Harmony getScaleHarmony() {
+	Chord getScaleHarmony() {
 		int[] tones = getScale();
 		for (int i = 0; i < tones.length; i++) {
 			tones[i] = tones[i] + 60;
 		}
-		return new Harmony(tones);
+		return new Chord(tones);
 	}
 
-	Harmony getTonic() {
+	Chord getTonic() {
 		int[] tonic = new int[3];
 		tonic[0] = getScale()[0];
 		tonic[1] = getScale()[2];
 		tonic[2] = getScale()[4];
-		return new Harmony(tonic);
+		return new Chord(tonic);
 	}
 
-	Harmony getSubdominant() {
+	Chord getSubdominant() {
 		int[] subdominant = new int[3];
 		subdominant[0] = getScale()[0];
 		subdominant[1] = getScale()[3];
 		subdominant[2] = getScale()[5];
-		return new Harmony(subdominant);
+		return new Chord(subdominant);
 	}
 
-	Harmony getDominant() {
+	Chord getDominant() {
 		int[] dominant = new int[3];
 		dominant[0] = getScale()[1];
 		dominant[1] = getScale()[4];
 		dominant[2] = getScale()[6];
-		return new Harmony(dominant);
+		return new Chord(dominant);
 	}
 
 	Tone getRoot() {

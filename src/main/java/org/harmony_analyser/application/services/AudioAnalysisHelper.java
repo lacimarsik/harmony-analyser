@@ -129,10 +129,10 @@ public class AudioAnalysisHelper {
 		System.out.println();
 	}
 
-	// logs Harmony to System.out with a given title
-	public static void logHarmony(Harmony harmony, String title) {
+	// logs Chord to System.out with a given title
+	public static void logHarmony(Chord chord, String title) {
 		System.out.println(title);
-		for (Tone tone : harmony.tones) {
+		for (Tone tone : chord.tones) {
 			System.out.print(tone.getNameMapped() + " ");
 		}
 		System.out.println();

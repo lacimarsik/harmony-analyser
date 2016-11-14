@@ -25,7 +25,7 @@ class PaletteDrawPanel extends DrawPanel {
 		for (Color color : palette) {
 			drawSegment(g, 0.077, color);
 		}
-		Harmony chromaticScale = Chordanal.createHarmonyFromRelativeTones("C C# D D# E F F# G G# A A# B");
+		Chord chromaticScale = Chordanal.createHarmonyFromRelativeTones("C C# D D# E F F# G G# A A# B");
 		cursor.setLocation(0, 0);
 		int i = 0;
 		for (Color color : palette) {
