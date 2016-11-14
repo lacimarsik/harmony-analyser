@@ -12,13 +12,13 @@ public class DrawPanelFactory {
 		"nnls-chroma:chordino-labels",
 		"nnls-chroma:chordino-tones",
 		"qm-vamp-plugins:qm-keydetector",
-		"chordanal:harmonic_complexity",
-		"chordanal:tonal_distance",
-		"chordanal:tps_distance",
-		"chromanal:chroma_complexity_simple",
-		"chromanal:chroma_complexity_tonal",
+		"chord_analyser:average_chord_complexity_distance",
+		"chord_analyser:chord_complexity_distance",
+		"chord_analyser:tps_distance",
+		"chroma_analyser:simple_difference",
+		"chroma_analyser:tonal_difference",
 		// Static visualizations
-		"chord_palette"
+		"chord_analyser:chord_palette"
 	};
 
 	public String[] getAllVisualizations() {
@@ -31,14 +31,14 @@ public class DrawPanelFactory {
 			case "nnls-chroma:chordino-tones":
 			case "qm-vamp-plugins:qm-keydetector":
 				return new SegmentationDrawPanel(visualizationData);
-			case "chord_palette":
+			case "chord_analyser:chord_palette":
 				return new PaletteDrawPanel(visualizationData);
-			case "chordanal:harmonic_complexity":
+			case "chord_analyser:harmonic_complexity":
 				return new ComplexityChartDrawPanel(visualizationData);
-			case "chordanal:tonal_distance":
-			case "chromanal:chroma_complexity_simple":
-			case "chromanal:chroma_complexity_tonal":
-			case "chordanal:tps_distance":
+			case "chord_analyser:chord_complexity_distance":
+			case "chroma_analyser:chroma_complexity_simple":
+			case "chroma_analyser:chroma_complexity_tonal":
+			case "chord_analyser:tps_distance":
 				return new LineChartDrawPanel(visualizationData);
 			default:
 				return new EmptyDrawPanel(VisualizationData.EMPTY_VISUALIZATION_DATA);

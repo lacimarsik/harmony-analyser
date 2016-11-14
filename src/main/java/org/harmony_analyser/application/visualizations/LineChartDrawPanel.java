@@ -41,7 +41,7 @@ class LineChartDrawPanel extends DrawPanel {
 	 */
 	private void drawLineChart(Graphics g, String chartTitle, String xAxisTitle, String yAxisTitle, Color gridLinePaint) {
 		XYSeriesCollection dataset = new XYSeriesCollection();
-		XYSeries complexityInTime = new XYSeries("Complexity");
+		XYSeries complexityInTime = new XYSeries("Distance");
 		for (int i = 0; i < visualizationData.getValues().size(); i++) {
 			complexityInTime.add(visualizationData.getTimestamps().get(i), visualizationData.getValues().get(i));
 		}

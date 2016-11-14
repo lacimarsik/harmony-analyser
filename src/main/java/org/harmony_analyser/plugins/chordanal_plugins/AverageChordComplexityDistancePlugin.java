@@ -1,8 +1,6 @@
 package org.harmony_analyser.plugins.chordanal_plugins;
 
-import org.harmony_analyser.application.services.AudioAnalyser;
 import org.harmony_analyser.application.visualizations.VisualizationData;
-import org.vamp_plugins.PluginLoader;
 
 import java.io.*;
 import java.util.*;
@@ -12,7 +10,7 @@ import java.util.*;
  */
 
 /*
- * HarmonicComplexityPlugin
+ * AverageChordComplexityDistancePlugin
  *
  * - requires: chroma, segmentation
  * - Averages chroma in each segment
@@ -32,12 +30,12 @@ import java.util.*;
 
 @SuppressWarnings("SameParameterValue")
 
-public class HarmonicComplexityPlugin extends ChordanalPlugin {
+public class AverageChordComplexityDistancePlugin extends ChordAnalyserPlugin {
 	private final static int NUMBER_OUTPUTS = 3;
 
-	public HarmonicComplexityPlugin() {
-		pluginKey = "chordanal:harmonic_complexity";
-		pluginName = "Harmonic Complexity";
+	public AverageChordComplexityDistancePlugin() {
+		pluginKey = "chord_analyser:average_chord_complexity_distance";
+		pluginName = "Average Chord Complexity Distance";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas");

@@ -19,7 +19,7 @@ import java.util.List;
 
 @SuppressWarnings("SameParameterValue")
 
-abstract class ChromaComplexityPlugin extends LineChartPlugin {
+abstract class ChromaAnalyserPlugin extends LineChartPlugin {
 	/**
 	 * Analyzes the song: converts chroma information to chroma complexity descriptors
 	 *

@@ -7,7 +7,7 @@ import java.util.*;
  */
 
 /*
- * TonalDistancePlugin
+ * ChordComplexityDistancePlugin
  *
  * - requires: chroma, segmentation
  * - Averages chroma in each segment
@@ -26,10 +26,10 @@ import java.util.*;
 
 @SuppressWarnings("SameParameterValue")
 
-public class TonalDistancePlugin extends ChordanalPlugin {
-	public TonalDistancePlugin() {
-		pluginKey = "chordanal:tonal_distance";
-		pluginName = "Tonal Distance";
+public class ChordComplexityDistancePlugin extends ChordAnalyserPlugin {
+	public ChordComplexityDistancePlugin() {
+		pluginKey = "chord_analyser:chord_complexity_distance";
+		pluginName = "Chord Complexity Distance";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas");

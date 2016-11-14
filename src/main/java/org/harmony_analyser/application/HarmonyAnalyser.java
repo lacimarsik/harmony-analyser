@@ -316,7 +316,7 @@ class HarmonyAnalyser extends JFrame {
 
 		buttonComplexity.addActionListener(actionEvent -> {
 			try {
-				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("chordanal:harmonic_complexity"));
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("chord_analyser:average_chord_complexity_distance"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
@@ -324,7 +324,7 @@ class HarmonyAnalyser extends JFrame {
 
 		chromaSimpleButton.addActionListener(actionEvent -> {
 			try {
-				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("chromanal:chroma_complexity_simple"));
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("chroma_analyser:chroma_complexity_simple"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
@@ -332,7 +332,7 @@ class HarmonyAnalyser extends JFrame {
 
 		chromaTonalButton.addActionListener(actionEvent -> {
 			try {
-				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("chromanal:chroma_complexity_tonal"));
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("chroma_analyser:tonal_difference"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
@@ -359,17 +359,17 @@ class HarmonyAnalyser extends JFrame {
 		analyzeComplexityButton.addActionListener(actionEvent -> {
 			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
 			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-labels");
-			analyzeFolder(consoleTextPane, inputFolderTextField, "chordanal:harmonic_complexity");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "chord_analyser:average_chord_complexity_distance");
 		});
 
 		chromaTransitionsSimpleButton.addActionListener(actionEvent -> {
 			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
-			analyzeFolder(consoleTextPane, inputFolderTextField, "chromanal:chroma_complexity_simple");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "chroma_analyser:simple_difference");
 		});
 
 		chromaTransitionsTonalButton.addActionListener(actionEvent -> {
 			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
-			analyzeFolder(consoleTextPane, inputFolderTextField, "chromanal:chroma_complexity_tonal");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "chroma_analyser:tonal_difference");
 		});
 
 		/* Visualization Tool - Initialization */

@@ -1,6 +1,6 @@
 package org.harmony_analyser.plugins;
 
-import org.harmony_analyser.plugins.chordanal_plugins.HarmonicComplexityPlugin;
+import org.harmony_analyser.plugins.chordanal_plugins.AverageChordComplexityDistancePlugin;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,11 +28,11 @@ public class AnalysisPluginFactoryTest {
 
 	@Test
 	public void shouldCreateAnalysisPlugin() throws Exception {
-		HarmonicComplexityPlugin transitionComplexityPlugin = mock(HarmonicComplexityPlugin.class);
-		whenNew(HarmonicComplexityPlugin.class).withNoArguments().thenReturn(transitionComplexityPlugin);
+		AverageChordComplexityDistancePlugin transitionComplexityPlugin = mock(AverageChordComplexityDistancePlugin.class);
+		whenNew(AverageChordComplexityDistancePlugin.class).withNoArguments().thenReturn(transitionComplexityPlugin);
 
-		AnalysisPlugin analysisPlugin = analysisPluginFactory.createPlugin("chordanal:harmonic_complexity");
+		AnalysisPlugin analysisPlugin = analysisPluginFactory.createPlugin("chord_analyser:average_chord_complexity_distance");
 
-		verifyNew(HarmonicComplexityPlugin.class).withNoArguments();
+		verifyNew(AverageChordComplexityDistancePlugin.class).withNoArguments();
 	}
 }

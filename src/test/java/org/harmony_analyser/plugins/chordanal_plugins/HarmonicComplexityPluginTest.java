@@ -13,7 +13,7 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Unit tests for HarmonicComplexityPlugin class
+ * Unit tests for AverageChordComplexityDistancePlugin class
  */
 
 @SuppressWarnings("ConstantConditions")
@@ -33,7 +33,7 @@ public class HarmonicComplexityPluginTest {
 	public void shouldCreateReport() throws IOException, AudioAnalyser.IncorrectInputException, PluginLoader.LoadFailedException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		new NNLSPlugin().analyse(testWavFile.toString(), true, false);
 		new ChordinoLabelsPlugin().analyse(testWavFile.toString(), true, false);
-		new HarmonicComplexityPlugin().analyse(testWavFile.toString(), true, false);
+		new AverageChordComplexityDistancePlugin().analyse(testWavFile.toString(), true, false);
 		BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-harmonic-complexity.txt"));
 		BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
 		StringBuilder reportString = new StringBuilder();

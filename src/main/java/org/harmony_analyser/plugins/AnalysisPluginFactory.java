@@ -15,10 +15,10 @@ public class AnalysisPluginFactory {
 		"nnls-chroma:nnls-chroma",
 		"nnls-chroma:chordino-labels",
 		"nnls-chroma:chordino-tones",
-		"chordanal:harmonic_complexity",
-		"chromanal:chroma_complexity_simple",
-		"chromanal:chroma_complexity_tonal",
-		"chord_palette"
+		"chord_analyser:average_chord_complexity_distance",
+		"chroma_analyser:simple_difference",
+		"chroma_analyser:tonal_difference",
+		"chord_analyser:chord_palette"
 	};
 
 	private final String[] WRAPPED_VAMP_PLUGINS = new String[] {
@@ -51,20 +51,20 @@ public class AnalysisPluginFactory {
 				case "qm-vamp-plugins:qm-keydetector":
 					plugin = new KeyDetectorPlugin();
 					break;
-				case "chordanal:harmonic_complexity":
-					plugin = new HarmonicComplexityPlugin();
+				case "chord_analyser:harmonic_complexity":
+					plugin = new AverageChordComplexityDistancePlugin();
 					break;
-				case "chordanal:tonal_distance":
-					plugin = new TonalDistancePlugin();
+				case "chord_analyser:chord_complexity_distance":
+					plugin = new ChordComplexityDistancePlugin();
 					break;
-				case "chordanal:tps_distance":
+				case "chord_analyser:tps_distance":
 					plugin = new TPSDistancePlugin();
 					break;
-				case "chromanal:chroma_complexity_simple":
-					plugin = new ChromaComplexitySimplePlugin();
+				case "chroma_analyser:chroma_complexity_simple":
+					plugin = new SimpleDifferencePlugin();
 					break;
-				case "chromanal:chroma_complexity_tonal":
-					plugin = new ChromaComplexityTonalPlugin();
+				case "chroma_analyser:chroma_complexity_tonal":
+					plugin = new TonalDifferencePlugin();
 					break;
 				case "chord_palette":
 					plugin = new EmptyPlugin();

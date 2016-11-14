@@ -17,7 +17,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Unit tests for TonalDistancePlugin class
+ * Unit tests for ChordComplexityDistancePlugin class
  */
 
 @SuppressWarnings("ConstantConditions")
@@ -37,7 +37,7 @@ public class TonalDistancePluginTest {
 	public void shouldCreateReport() throws IOException, AudioAnalyser.IncorrectInputException, PluginLoader.LoadFailedException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
 		new NNLSPlugin().analyse(testWavFile.toString(), true, false);
 		new ChordinoLabelsPlugin().analyse(testWavFile.toString(), true, false);
-		new TonalDistancePlugin().analyse(testWavFile.toString(), true, false);
+		new ChordComplexityDistancePlugin().analyse(testWavFile.toString(), true, false);
 		BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-tonal-distance.txt"));
 		BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
 		StringBuilder reportString = new StringBuilder();
