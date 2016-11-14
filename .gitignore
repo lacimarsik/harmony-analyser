@@ -7,4 +7,5 @@ test
 !src/test
 target/*
 !target/*.jar
+!target/*.tgz
 harmony-analyser.iml
