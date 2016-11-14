@@ -40,7 +40,7 @@ class HarmonyAnalyser extends JFrame {
 	private JTextPane absoluteInputPaneTwo;
 	private JTextPane chordComplexityPaneOne;
 	private JTextPane chordComplexityPaneTwo;
-	private JTextPane transitionComplexityPane;
+	private JTextPane chordComplexityDistancePane;
 	private JTextPane consoleTextPane;
 	private JTextField inputFolderTextField;
 	private JPanel rootPanel;
@@ -49,7 +49,7 @@ class HarmonyAnalyser extends JFrame {
 	private JButton browseButton;
 	private JButton extractChromasButton;
 	private JButton extractChordLabelsButton;
-	private JButton analyzeComplexityButton;
+	private JButton analyzeACCDButton;
 	private JButton buttonNNLS;
 	private JButton buttonChordino;
 	private JScrollPane midiListScrollPane;
@@ -72,7 +72,7 @@ class HarmonyAnalyser extends JFrame {
 	private JScrollPane functionOneScrollPane;
 	private JScrollPane functionTwoScrollPane;
 	private JLabel resultsLabel;
-	private JLabel transitionComplexityLabel;
+	private JLabel chordComplexityDistanceLabel;
 	private JScrollPane transitionScrollPane;
 	private JLabel transitionLabel;
 	private JScrollPane midiSelectionScrollPane;
@@ -85,12 +85,12 @@ class HarmonyAnalyser extends JFrame {
 	private JScrollPane transitionComplexityScrollPane;
 	private JPanel audioAnalysisPanel;
 	private JLabel inputFolderLabel;
-	private JLabel lowLevelAnalysisLabel;
-	private JLabel highLevelAnalysisLabel;
+	private JLabel vampBatchLabel;
+	private JLabel chordBatchLabel;
 	private JLabel consoleOutputLabel;
 	private JScrollPane consoleScrollPane;
 	private JLabel batchProcessingLabel;
-	private JButton buttonComplexity;
+	private JButton accdButton;
 	private JLabel pluginSettingsLabel;
 	private JPanel visualizationPanel;
 	private JLabel nnlsChromaVampLabel;
@@ -120,6 +120,17 @@ class HarmonyAnalyser extends JFrame {
 	private JButton extractKeyButton;
 	private JLabel keyDetectorVampLabel;
 	private JButton extractChordTonesFromButton;
+	private JButton ccdButton;
+	private JButton tpsButton;
+	private JLabel chromaSimpleLabel;
+	private JLabel chromaTonalLabel;
+	private JLabel chordAnalyserLabel;
+	private JLabel chromaAnalyserLabel;
+	private JLabel ccdLabel;
+	private JButton analyseCCDButton;
+	private JLabel chromaBatchLabel;
+	private JLabel tpsLabel;
+	private JButton analyseTPSButton;
 	private JFileChooser fileChooser;
 
 	private Harmony harmony1, harmony2 = Harmony.EMPTY_HARMONY;
@@ -198,7 +209,7 @@ class HarmonyAnalyser extends JFrame {
 					harmony1 = midiHandler.getBufferHarmony();
 					analyzeHarmony(harmony1, relativeInputPaneOne, absoluteInputPaneOne, nameOnePane, structureOnePane, functionOnePane, chordComplexityPaneOne);
 					playButtonOne.setEnabled(true);
-					analyzeTransition(harmony1,harmony2, transitionPane, transitionComplexityPane);
+					analyzeTransition(harmony1,harmony2, transitionPane, chordComplexityDistancePane);
 					midiHandler.closeDecoder();
 					midiHandler.openInputDevice();
 					midiHandler.connectInputSynthesizer();
@@ -219,7 +230,7 @@ class HarmonyAnalyser extends JFrame {
 					harmony2 = midiHandler.getBufferHarmony();
 					analyzeHarmony(harmony2, relativeInputPaneTwo, absoluteInputPaneTwo, nameTwoPane, structureTwoPane, functionTwoPane, chordComplexityPaneTwo);
 					playButtonTwo.setEnabled(true);
-					analyzeTransition(harmony1, harmony2, transitionPane, transitionComplexityPane);
+					analyzeTransition(harmony1, harmony2, transitionPane, chordComplexityDistancePane);
 					midiHandler.closeDecoder();
 					midiHandler.openInputDevice();
 					midiHandler.connectInputSynthesizer();
@@ -237,7 +248,7 @@ class HarmonyAnalyser extends JFrame {
 				harmony1 = Chordanal.createHarmonyFromRelativeTones(relativeInputPaneOne.getText());
 				analyzeHarmony(harmony1, relativeInputPaneOne, absoluteInputPaneOne, nameOnePane, structureOnePane, functionOnePane, chordComplexityPaneOne);
 				playButtonOne.setEnabled(true);
-					analyzeTransition(harmony1, harmony2, transitionPane, transitionComplexityPane);
+					analyzeTransition(harmony1, harmony2, transitionPane, chordComplexityDistancePane);
 			}
 		});
 
@@ -248,7 +259,7 @@ class HarmonyAnalyser extends JFrame {
 				harmony1 = Chordanal.createHarmonyFromTones(absoluteInputPaneOne.getText());
 				analyzeHarmony(harmony1, relativeInputPaneOne, absoluteInputPaneOne, nameOnePane, structureOnePane, functionOnePane, chordComplexityPaneOne);
 				playButtonOne.setEnabled(true);
-				analyzeTransition(harmony1,harmony2, transitionPane, transitionComplexityPane);
+				analyzeTransition(harmony1,harmony2, transitionPane, chordComplexityDistancePane);
 			}
 		});
 
@@ -259,7 +270,7 @@ class HarmonyAnalyser extends JFrame {
 				harmony2 = Chordanal.createHarmonyFromRelativeTones(relativeInputPaneTwo.getText());
 				analyzeHarmony(harmony2, relativeInputPaneTwo, absoluteInputPaneTwo, nameTwoPane, structureTwoPane, functionTwoPane, chordComplexityPaneTwo);
 				playButtonTwo.setEnabled(true);
-				analyzeTransition(harmony1, harmony2, transitionPane, transitionComplexityPane);
+				analyzeTransition(harmony1, harmony2, transitionPane, chordComplexityDistancePane);
 			}
 		});
 
@@ -270,7 +281,7 @@ class HarmonyAnalyser extends JFrame {
 				harmony2 = Chordanal.createHarmonyFromTones(absoluteInputPaneTwo.getText());
 				analyzeHarmony(harmony2, relativeInputPaneTwo, absoluteInputPaneTwo, nameTwoPane, structureTwoPane, functionTwoPane, chordComplexityPaneTwo);
 				playButtonTwo.setEnabled(true);
-				analyzeTransition(harmony1, harmony2, transitionPane, transitionComplexityPane);
+				analyzeTransition(harmony1, harmony2, transitionPane, chordComplexityDistancePane);
 			}
 		});
 
@@ -314,9 +325,25 @@ class HarmonyAnalyser extends JFrame {
 			}
 		});
 
-		buttonComplexity.addActionListener(actionEvent -> {
+		ccdButton.addActionListener(actionEvent -> {
+			try {
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("chord_analyser:chord_complexity_distance"));
+			} catch (AudioAnalyser.LoadFailedException e) {
+				e.printStackTrace();
+			}
+		});
+
+		accdButton.addActionListener(actionEvent -> {
 			try {
 				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("chord_analyser:average_chord_complexity_distance"));
+			} catch (AudioAnalyser.LoadFailedException e) {
+				e.printStackTrace();
+			}
+		});
+
+		tpsButton.addActionListener(actionEvent -> {
+			try {
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("chord_analyser:tps_distance"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
@@ -356,10 +383,22 @@ class HarmonyAnalyser extends JFrame {
 
 		extractKeyButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "qm-vamp-plugins:qm-keydetector"));
 
-		analyzeComplexityButton.addActionListener(actionEvent -> {
+		analyseCCDButton.addActionListener(actionEvent -> {
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-labels");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "chord_analyser:chord_complexity_distance");
+		});
+
+		analyzeACCDButton.addActionListener(actionEvent -> {
 			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
 			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-labels");
 			analyzeFolder(consoleTextPane, inputFolderTextField, "chord_analyser:average_chord_complexity_distance");
+		});
+
+		analyseTPSButton.addActionListener(actionEvent -> {
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-tones");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "chord_analyser:tps_distance");
 		});
 
 		chromaTransitionsSimpleButton.addActionListener(actionEvent -> {
