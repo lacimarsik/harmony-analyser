@@ -1,4 +1,4 @@
-package org.harmony_analyser.chordanal;
+package org.harmony_analyser.chord_analyser;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -121,7 +121,7 @@ public class Harmanal {
 		return result;
 	}
 
-	public static Harmony getRootHarmony(Harmony harmony) {
+	static Harmony getRootHarmony(Harmony harmony) {
 		DatabaseTable roots = Harmanal.getRoots(harmony);
 		if (roots.equals(DatabaseTable.EMPTY_RESULT) || (roots.isEmpty())) {
 			return Harmony.EMPTY_HARMONY;

@@ -1,4 +1,4 @@
-package org.harmony_analyser.chordanal;
+package org.harmony_analyser.chord_analyser;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package org.harmony_analyser.application.visualizations;
 
-import org.harmony_analyser.chordanal.*;
+import org.harmony_analyser.chord_analyser.*;
 
 import java.awt.*;
 import java.util.*;

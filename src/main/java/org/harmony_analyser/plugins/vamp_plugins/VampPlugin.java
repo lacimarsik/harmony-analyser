@@ -1,7 +1,7 @@
 package org.harmony_analyser.plugins.vamp_plugins;
 
 import org.harmony_analyser.application.services.AudioAnalyser;
-import org.harmony_analyser.chromanal.Chroma;
+import org.harmony_analyser.chroma_analyser.Chroma;
 import org.harmony_analyser.plugins.*;
 import org.vamp_plugins.*;
 
@@ -277,12 +277,12 @@ abstract class VampPlugin extends AnalysisPlugin {
 				out.print("," + f.duration);
 			}
 			out.print(":");
-			if (Arrays.asList(new String[] { OutputType.VALUE_ONLY, OutputType.VALUE_AND_LABEL }).contains(this.outputType)) {
+			if (Arrays.asList(OutputType.VALUE_ONLY, OutputType.VALUE_AND_LABEL).contains(this.outputType)) {
 				for (float v : f.values) {
 					out.print(" " + v);
 				}
 			}
-			if (Arrays.asList(new String[] { OutputType.LABEL_ONLY, OutputType.VALUE_AND_LABEL}).contains(this.outputType)) {
+			if (Arrays.asList(OutputType.LABEL_ONLY, OutputType.VALUE_AND_LABEL).contains(this.outputType)) {
 				out.print(" " + f.label);
 			}
 			out.println("");

@@ -2,8 +2,8 @@ package org.harmony_analyser.application;
 
 import org.harmony_analyser.application.services.*;
 import org.harmony_analyser.application.visualizations.*;
-import org.harmony_analyser.chordanal.*;
-import org.harmony_analyser.chromanal.Chroma;
+import org.harmony_analyser.chord_analyser.*;
+import org.harmony_analyser.chroma_analyser.Chroma;
 import org.harmony_analyser.plugins.*;
 
 import javax.sound.midi.*;

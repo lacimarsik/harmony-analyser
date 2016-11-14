@@ -1,6 +1,6 @@
 package org.harmony_analyser.plugins.chromanal_plugins;
 
-import org.harmony_analyser.chromanal.*;
+import org.harmony_analyser.chroma_analyser.*;
 import java.util.*;
 
 /**

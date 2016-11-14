@@ -1,7 +1,7 @@
 package org.harmony_analyser.plugins.chromanal_plugins;
 
 import org.harmony_analyser.application.services.*;
-import org.harmony_analyser.chromanal.Chroma;
+import org.harmony_analyser.chroma_analyser.Chroma;
 import org.harmony_analyser.plugins.LineChartPlugin;
 
 import java.io.BufferedWriter;

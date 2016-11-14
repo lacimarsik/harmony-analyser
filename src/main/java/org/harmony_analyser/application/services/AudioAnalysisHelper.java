@@ -1,6 +1,6 @@
 package org.harmony_analyser.application.services;
 
-import org.harmony_analyser.chordanal.*;
+import org.harmony_analyser.chord_analyser.*;
 
 import java.util.Arrays;
 import java.util.Scanner;

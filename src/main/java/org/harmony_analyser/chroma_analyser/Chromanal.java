@@ -1,7 +1,7 @@
-package org.harmony_analyser.chromanal;
+package org.harmony_analyser.chroma_analyser;
 
 import org.harmony_analyser.application.services.AudioAnalysisHelper;
-import org.harmony_analyser.chordanal.*;
+import org.harmony_analyser.chord_analyser.*;
 
 @SuppressWarnings("FieldCanBeLocal")
 

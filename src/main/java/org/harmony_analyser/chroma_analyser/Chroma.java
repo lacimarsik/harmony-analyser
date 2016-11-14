@@ -1,4 +1,4 @@
-package org.harmony_analyser.chromanal;
+package org.harmony_analyser.chroma_analyser;
 
 /**
  * Class to encapsulate Chromas

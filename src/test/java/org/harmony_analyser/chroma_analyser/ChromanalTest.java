@@ -1,4 +1,4 @@
-package org.harmony_analyser.chromanal;
+package org.harmony_analyser.chroma_analyser;
 
 import org.junit.Before;
 import org.junit.Test;

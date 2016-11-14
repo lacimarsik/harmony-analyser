@@ -1,8 +1,8 @@
 package org.harmony_analyser.plugins.chordanal_plugins;
 
 import org.harmony_analyser.application.services.*;
-import org.harmony_analyser.chordanal.*;
-import org.harmony_analyser.chromanal.Chroma;
+import org.harmony_analyser.chord_analyser.*;
+import org.harmony_analyser.chroma_analyser.Chroma;
 import org.harmony_analyser.plugins.LineChartPlugin;
 
 import java.io.BufferedWriter;
@@ -15,7 +15,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Abstract class for chordanal plugins
+ * Abstract class for chord_analyser plugins
  */
 
 @SuppressWarnings("SameParameterValue")

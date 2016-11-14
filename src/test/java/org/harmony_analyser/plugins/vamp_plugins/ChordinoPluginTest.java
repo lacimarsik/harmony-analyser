@@ -1,7 +1,7 @@
 package org.harmony_analyser.plugins.vamp_plugins;
 
 import org.harmony_analyser.application.services.AudioAnalyser;
-import org.harmony_analyser.chromanal.Chroma;
+import org.harmony_analyser.chroma_analyser.Chroma;
 import org.harmony_analyser.plugins.*;
 import org.junit.*;
 import java.io.*;
