@@ -1,10 +1,10 @@
 package org.harmony_analyser.application;
 
-import org.harmony_analyser.application.services.*;
+import org.harmony_analyser.jharmonyanalyser.services.*;
 import org.harmony_analyser.application.visualizations.*;
-import org.harmony_analyser.chord_analyser.*;
-import org.harmony_analyser.chroma_analyser.Chroma;
-import org.harmony_analyser.plugins.*;
+import org.harmony_analyser.jharmonyanalyser.chord_analyser.*;
+import org.harmony_analyser.jharmonyanalyser.chroma_analyser.Chroma;
+import org.harmony_analyser.jharmonyanalyser.plugins.*;
 
 import javax.sound.midi.*;
 import javax.swing.*;
