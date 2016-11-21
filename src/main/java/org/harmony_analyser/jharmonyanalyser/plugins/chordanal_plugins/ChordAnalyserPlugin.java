@@ -34,7 +34,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 	 *    - segmentationFile: name of the file containing segmentation information (suffix: -segmentation.txt)
 	 */
 
-	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
+	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
 		String result = super.analyse(inputFileWav, force, verbose);
 		String outputFile = inputFileWav + outputFileSuffix + ".txt";
 		String outputFileVerbose = inputFileWav + outputFileSuffix + "-verbose" + ".txt";

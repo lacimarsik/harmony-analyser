@@ -23,35 +23,14 @@ public abstract class AnalysisPlugin {
 	protected String pluginName;
 	protected Map<String, Float> parameters;
 
-	/* Exceptions */
-
-	public class OutputAlreadyExists extends Exception {
-		public OutputAlreadyExists(String message) {
-			super(message);
-		}
-	}
-
-	public class OutputNotReady extends Exception {
-		OutputNotReady(String message) {
-			super(message);
-		}
-	}
-
-	public class ParseOutputError extends Exception {
-		public ParseOutputError(String message) {
-			super(message);
-		}
-	}
-
-
 	/* Public / Package methods */
 
 	@SuppressWarnings("WeakerAccess")
 
-	protected void checkInputFiles(String inputFileWav, boolean force) throws AudioAnalyser.IncorrectInputException, OutputAlreadyExists {
+	protected void checkInputFiles(String inputFileWav, boolean force) throws AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists {
 		File file = new File(inputFileWav + outputFileSuffix + ".txt");
 		if (file.exists() && !file.isDirectory() && !force) {
-			throw new OutputAlreadyExists("Output already exists");
+			throw new AudioAnalyser.OutputAlreadyExists("Output already exists");
 		}
 		for (String suffix : inputFileSuffixes) {
 			String fileName = inputFileWav + suffix + inputFileExtension;
@@ -66,10 +45,10 @@ public abstract class AnalysisPlugin {
 		return inputFileSuffixes;
 	}
 
-	protected List<String> readOutputFile(String outputFile) throws OutputNotReady, IOException {
+	protected List<String> readOutputFile(String outputFile) throws AudioAnalyser.OutputNotReady, IOException {
 		File file = new File(outputFile + outputFileSuffix + ".txt");
 		if (!file.exists() || file.isDirectory()) {
-			throw new OutputNotReady("Output is not ready yet");
+			throw new AudioAnalyser.OutputNotReady("Output is not ready yet");
 		}
 		return Files.readAllLines(file.toPath(), Charset.defaultCharset());
 	}
@@ -96,7 +75,7 @@ public abstract class AnalysisPlugin {
 
 	protected abstract void setParameters();
 
-	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, OutputAlreadyExists, Chroma.WrongChromaSize {
+	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
 		String result = "";
 		checkInputFiles(inputFileWav, force);
 		result += "\nBeginning analysis: " + pluginKey + "\n";
@@ -119,5 +98,5 @@ public abstract class AnalysisPlugin {
 		return visualizationData;
 	}
 
-	public abstract VisualizationData getDataFromOutput(String outputFile) throws IOException, OutputNotReady, ParseOutputError;
+	public abstract VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError;
 }

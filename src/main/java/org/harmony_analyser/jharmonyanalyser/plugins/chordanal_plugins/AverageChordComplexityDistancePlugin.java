@@ -1,6 +1,7 @@
 package org.harmony_analyser.jharmonyanalyser.plugins.chordanal_plugins;
 
 import org.harmony_analyser.application.visualizations.VisualizationData;
+import org.harmony_analyser.jharmonyanalyser.services.AudioAnalyser;
 
 import java.io.*;
 import java.util.*;
@@ -53,7 +54,7 @@ public class AverageChordComplexityDistancePlugin extends ChordAnalyserPlugin {
 	}
 
 	@Override
-	public VisualizationData getDataFromOutput(String outputFile) throws IOException, OutputNotReady, ParseOutputError {
+	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError {
 		VisualizationData data = super.prepareVisualizationData();
 		List<Float> values = new ArrayList<>();
 		List<String> labels = new ArrayList<>();
@@ -68,7 +69,7 @@ public class AverageChordComplexityDistancePlugin extends ChordAnalyserPlugin {
 			if (sc.hasNextFloat()) {
 				values.add(sc.nextFloat());
 			} else {
-				throw new ParseOutputError("Output did not have the required fields");
+				throw new AudioAnalyser.ParseOutputError("Output did not have the required fields");
 			}
 			sc.close();
 		}

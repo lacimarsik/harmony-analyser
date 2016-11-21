@@ -14,7 +14,7 @@ import java.util.List;
 @SuppressWarnings("SameParameterValue")
 
 public abstract class LineChartPlugin extends AnalysisPlugin {
-	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AnalysisPlugin.OutputNotReady, AnalysisPlugin.ParseOutputError {
+	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError {
 		VisualizationData data = super.prepareVisualizationData();
 		List<Float> timestamps = new ArrayList<>();
 		List<Float> values = new ArrayList<>();
@@ -31,7 +31,7 @@ public abstract class LineChartPlugin extends AnalysisPlugin {
 				values.add(value);
 			}
 		} catch (NumberFormatException e) {
-			throw new ParseOutputError("Output did not have the required fields");
+			throw new AudioAnalyser.ParseOutputError("Output did not have the required fields");
 		}
 		data.setTimestamps(timestamps);
 		data.setValues(values);

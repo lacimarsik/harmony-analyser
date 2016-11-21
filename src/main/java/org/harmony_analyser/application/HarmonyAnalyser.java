@@ -449,7 +449,7 @@ class HarmonyAnalyser extends JFrame {
 				performSelectedVisualization(comboBoxOne, drawPanel1, file.toString(), visualizationConsoleTextPane);
 				performSelectedVisualization(comboBoxTwo, drawPanel2, file.toString(), visualizationConsoleTextPane);
 				performSelectedVisualization(comboBoxThree, drawPanel3, file.toString(), visualizationConsoleTextPane);
-			} catch (AudioAnalyser.IncorrectInputException | AudioAnalyser.LoadFailedException | AnalysisPlugin.OutputNotReady | IOException e) {
+			} catch (AudioAnalyser.IncorrectInputException | AudioAnalyser.LoadFailedException | AudioAnalyser.OutputNotReady | IOException e) {
 				visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\nERROR: " + e.getMessage());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -538,18 +538,18 @@ class HarmonyAnalyser extends JFrame {
 
 	/* Visualization Tool - Handling methods */
 
-	private void performSelectedVisualization(JComboBox comboBox, JPanel parentPanel, String inputFile, JTextPane consoleTextPane) throws AudioAnalyser.LoadFailedException, AudioAnalyser.IncorrectInputException, AnalysisPlugin.OutputNotReady, IOException, Chroma.WrongChromaSize, AnalysisPlugin.ParseOutputError {
+	private void performSelectedVisualization(JComboBox comboBox, JPanel parentPanel, String inputFile, JTextPane consoleTextPane) throws AudioAnalyser.LoadFailedException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputNotReady, IOException, Chroma.WrongChromaSize, AudioAnalyser.ParseOutputError {
 		String pluginKey = comboBox.getSelectedItem().toString();
 
 		try {
 			consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.runAnalysis(inputFile, pluginKey, false, false));
-		} catch (AnalysisPlugin.OutputAlreadyExists e) {
+		} catch (AudioAnalyser.OutputAlreadyExists e) {
 			consoleTextPane.setText(consoleTextPane.getText() + "\nINFO: " + e.getMessage());
 		}
 		createGraph(parentPanel, inputFile, pluginKey);
 	}
 
-	private void createGraph(JPanel parentPanel, String inputFile, String pluginKey) throws AudioAnalyser.LoadFailedException, AnalysisPlugin.OutputNotReady, IOException, AnalysisPlugin.ParseOutputError {
+	private void createGraph(JPanel parentPanel, String inputFile, String pluginKey) throws AudioAnalyser.LoadFailedException, AudioAnalyser.OutputNotReady, IOException, AudioAnalyser.ParseOutputError {
 		parentPanel.removeAll();
 		parentPanel.setLayout(new GridLayout());
 		DrawPanel drawPanel = audioAnalyser.createDrawPanel(inputFile, pluginKey);

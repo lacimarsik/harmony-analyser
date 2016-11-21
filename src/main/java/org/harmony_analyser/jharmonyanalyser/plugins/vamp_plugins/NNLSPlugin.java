@@ -1,6 +1,7 @@
 package org.harmony_analyser.jharmonyanalyser.plugins.vamp_plugins;
 
 import org.harmony_analyser.application.visualizations.VisualizationData;
+import org.harmony_analyser.jharmonyanalyser.services.AudioAnalyser;
 import org.vamp_plugins.*;
 
 import java.io.IOException;
@@ -71,7 +72,7 @@ public class NNLSPlugin extends VampPlugin {
 		setParameters();
 	}
 
-	public VisualizationData getDataFromOutput(String outputFile) throws IOException, OutputNotReady, ParseOutputError {
+	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError {
 		return VisualizationData.EMPTY_VISUALIZATION_DATA;
 	}
 }

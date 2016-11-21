@@ -30,7 +30,7 @@ public class HarmonicComplexityPluginTest {
 	}
 
 	@Test
-	public void shouldCreateReport() throws IOException, AudioAnalyser.IncorrectInputException, PluginLoader.LoadFailedException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
+	public void shouldCreateReport() throws IOException, AudioAnalyser.IncorrectInputException, PluginLoader.LoadFailedException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
 		new NNLSPlugin().analyse(testWavFile.toString(), true, false);
 		new ChordinoLabelsPlugin().analyse(testWavFile.toString(), true, false);
 		new AverageChordComplexityDistancePlugin().analyse(testWavFile.toString(), true, false);

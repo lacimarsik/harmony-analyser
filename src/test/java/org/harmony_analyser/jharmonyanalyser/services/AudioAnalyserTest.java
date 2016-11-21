@@ -32,7 +32,7 @@ public class AudioAnalyserTest {
 	}
 
 	@Test(expected = AudioAnalyser.IncorrectInputException.class)
-	public void shouldThrowExceptionOnWrongFile() throws IOException, AudioAnalyser.LoadFailedException, AudioAnalyser.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
+	public void shouldThrowExceptionOnWrongFile() throws IOException, AudioAnalyser.LoadFailedException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
 		AnalysisPluginFactory analysisPluginFactory = new AnalysisPluginFactory();
 		audioAnalyser = new AudioAnalyser(analysisPluginFactory, drawPanelFactory);
 		audioAnalyser.runAnalysis(wrongInputFile, "chord_analyser:average_chord_complexity_distance", true, false);
@@ -64,7 +64,7 @@ public class AudioAnalyserTest {
 	}
 
 	@Test
-	public void shouldCallPluginAnalyse() throws IOException, AudioAnalyser.LoadFailedException, AudioAnalyser.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
+	public void shouldCallPluginAnalyse() throws IOException, AudioAnalyser.LoadFailedException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
 		AnalysisPlugin analysisPlugin = mock(AnalysisPlugin.class);
 		when(analysisPlugin.analyse(testWavFile.toString(), true, false)).thenReturn("Done!");
 

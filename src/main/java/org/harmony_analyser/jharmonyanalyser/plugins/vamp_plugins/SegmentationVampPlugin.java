@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 abstract class SegmentationVampPlugin extends VampPlugin {
-	public VisualizationData getDataFromOutput(String outputFile) throws IOException, OutputNotReady, ParseOutputError {
+	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError {
 		VisualizationData data = super.prepareVisualizationData();
 		List<Float> timestamps = new ArrayList<>();
 		List<String> labels = new ArrayList<>();
@@ -27,13 +27,13 @@ abstract class SegmentationVampPlugin extends VampPlugin {
 				timestamp = AudioAnalysisHelper.getTimestampFromLine(line);
 				label = AudioAnalysisHelper.getLabelFromLine(line);
 				if (label.equals("")) {
-					throw new ParseOutputError("Output did not have the required fields");
+					throw new AudioAnalyser.ParseOutputError("Output did not have the required fields");
 				}
 				timestamps.add(timestamp);
 				labels.add(label);
 			}
 		} catch (NumberFormatException e) {
-			throw new ParseOutputError("Output did not have the required fields");
+			throw new AudioAnalyser.ParseOutputError("Output did not have the required fields");
 		}
 		data.setTimestamps(timestamps);
 		data.setLabels(labels);

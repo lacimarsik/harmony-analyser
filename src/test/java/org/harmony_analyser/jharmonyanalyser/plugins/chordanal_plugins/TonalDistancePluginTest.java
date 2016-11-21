@@ -34,7 +34,7 @@ public class TonalDistancePluginTest {
 	}
 
 	@Test
-	public void shouldCreateReport() throws IOException, AudioAnalyser.IncorrectInputException, PluginLoader.LoadFailedException, AnalysisPlugin.OutputAlreadyExists, Chroma.WrongChromaSize {
+	public void shouldCreateReport() throws IOException, AudioAnalyser.IncorrectInputException, PluginLoader.LoadFailedException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
 		new NNLSPlugin().analyse(testWavFile.toString(), true, false);
 		new ChordinoLabelsPlugin().analyse(testWavFile.toString(), true, false);
 		new ChordComplexityDistancePlugin().analyse(testWavFile.toString(), true, false);

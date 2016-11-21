@@ -29,6 +29,25 @@ public class AudioAnalyser {
 		}
 	}
 
+	public static class OutputAlreadyExists extends Exception {
+		public OutputAlreadyExists(String message) {
+			super(message);
+		}
+	}
+
+	public static class OutputNotReady extends Exception {
+		public OutputNotReady(String message) {
+			super(message);
+		}
+	}
+
+	public static class ParseOutputError extends Exception {
+		public ParseOutputError(String message) {
+			super(message);
+		}
+	}
+
+
 	// Dependency injection: AnalysisPluginFactory, DrawPanelFactory
 	public AudioAnalyser(AnalysisPluginFactory analysisPluginFactory, DrawPanelFactory drawPanelFactory) {
 		this.analysisPluginFactory = analysisPluginFactory;
@@ -87,11 +106,11 @@ public class AudioAnalyser {
 		return analysisPluginFactory.createPlugin(pluginKey).printParameters();
 	}
 
-	public String runAnalysis(String inputFile, String pluginKey, boolean force, boolean verbose) throws AudioAnalyser.IncorrectInputException, AnalysisPlugin.OutputAlreadyExists, IOException, LoadFailedException, Chroma.WrongChromaSize {
+	public String runAnalysis(String inputFile, String pluginKey, boolean force, boolean verbose) throws AudioAnalyser.IncorrectInputException, OutputAlreadyExists, IOException, LoadFailedException, Chroma.WrongChromaSize {
 		return analysisPluginFactory.createPlugin(pluginKey).analyse(inputFile, force, verbose);
 	}
 
-	public DrawPanel createDrawPanel(String inputFile, String pluginKey) throws LoadFailedException, AnalysisPlugin.OutputNotReady, AnalysisPlugin.ParseOutputError, IOException {
+	public DrawPanel createDrawPanel(String inputFile, String pluginKey) throws LoadFailedException, OutputNotReady, ParseOutputError, IOException {
 		return drawPanelFactory.createDrawPanel(pluginKey, analysisPluginFactory.createPlugin(pluginKey).getDataFromOutput(inputFile));
 	}
 }
