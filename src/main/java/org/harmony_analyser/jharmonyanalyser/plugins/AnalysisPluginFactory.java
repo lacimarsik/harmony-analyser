@@ -15,6 +15,7 @@ public class AnalysisPluginFactory {
 		"nnls-chroma:nnls-chroma",
 		"nnls-chroma:chordino-labels",
 		"nnls-chroma:chordino-tones",
+		"chord_analyser:chord_complexity_distance",
 		"chord_analyser:average_chord_complexity_distance",
 		"chroma_analyser:simple_difference",
 		"chroma_analyser:tonal_difference",
@@ -51,7 +52,7 @@ public class AnalysisPluginFactory {
 				case "qm-vamp-plugins:qm-keydetector":
 					plugin = new KeyDetectorPlugin();
 					break;
-				case "chord_analyser:harmonic_complexity":
+				case "chord_analyser:average_chord_complexity_distance":
 					plugin = new AverageChordComplexityDistancePlugin();
 					break;
 				case "chord_analyser:chord_complexity_distance":
@@ -60,10 +61,10 @@ public class AnalysisPluginFactory {
 				case "chord_analyser:tps_distance":
 					plugin = new TPSDistancePlugin();
 					break;
-				case "chroma_analyser:chroma_complexity_simple":
+				case "chroma_analyser:simple_difference":
 					plugin = new SimpleDifferencePlugin();
 					break;
-				case "chroma_analyser:chroma_complexity_tonal":
+				case "chroma_analyser:tonal_difference":
 					plugin = new TonalDifferencePlugin();
 					break;
 				case "chord_palette":
