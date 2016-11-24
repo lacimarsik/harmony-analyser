@@ -51,8 +51,6 @@ public class Chromanal {
 			Chord commonRootChord = Chordanal.createHarmonyFromRelativeTones(rootTones);
 			for (Tone tone : commonRootChord.tones) {
 				chromaVector1[tone.getNumberMapped()] = 0;
-			}
-			for (Tone tone : commonRootChord.tones) {
 				chromaVector2[tone.getNumberMapped()] = 0;
 			}
 			if (verbose) AudioAnalysisHelper.logHarmony(commonRootChord, "Common Root Chord");
