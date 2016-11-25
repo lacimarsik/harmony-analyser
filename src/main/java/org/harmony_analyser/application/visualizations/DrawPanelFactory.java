@@ -36,8 +36,8 @@ public class DrawPanelFactory {
 			case "chord_analyser:harmonic_complexity":
 				return new ComplexityChartDrawPanel(visualizationData);
 			case "chord_analyser:chord_complexity_distance":
-			case "chroma_analyser:chroma_complexity_simple":
-			case "chroma_analyser:chroma_complexity_tonal":
+			case "chroma_analyser:simple_difference":
+			case "chroma_analyser:tonal_difference":
 			case "chord_analyser:tps_distance":
 				return new LineChartDrawPanel(visualizationData);
 			default:
