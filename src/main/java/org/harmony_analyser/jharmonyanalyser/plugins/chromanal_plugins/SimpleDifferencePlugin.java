@@ -25,7 +25,7 @@ public class SimpleDifferencePlugin extends ChromaAnalyserPlugin {
 		inputFileSuffixes.add("-chromas");
 		inputFileExtension = ".txt";
 
-		outputFileSuffix = "-chroma-complexity-simple";
+		outputFileSuffix = "-chroma-simple-difference";
 
 		parameters = new HashMap<>();
 

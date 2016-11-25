@@ -359,7 +359,7 @@ class HarmonyAnalyser extends JFrame {
 
 		chromaTonalButton.addActionListener(actionEvent -> {
 			try {
-				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("chroma_analyser:tonal_difference"));
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("chroma_analyser:complexity_difference"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
@@ -408,7 +408,7 @@ class HarmonyAnalyser extends JFrame {
 
 		chromaTransitionsTonalButton.addActionListener(actionEvent -> {
 			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
-			analyzeFolder(consoleTextPane, inputFolderTextField, "chroma_analyser:tonal_difference");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "chroma_analyser:complexity_difference");
 		});
 
 		/* Visualization Tool - Initialization */
