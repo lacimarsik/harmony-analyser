@@ -490,7 +490,7 @@
               </hspacer>
             </children>
           </grid>
-          <grid id="f6178" binding="audioAnalysisPanel" layout-manager="GridLayoutManager" row-count="33" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="f6178" binding="audioAnalysisPanel" layout-manager="GridLayoutManager" row-count="35" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="15" left="15" bottom="15" right="15"/>
             <constraints>
               <tabbedpane title="Audio Analysis Tool"/>
@@ -852,6 +852,32 @@
                 </constraints>
                 <properties>
                   <text value="Extract TPS"/>
+                </properties>
+              </component>
+              <component id="87388" class="javax.swing.JLabel" binding="filtersLabel">
+                <constraints>
+                  <grid row="33" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Filters"/>
+                </properties>
+              </component>
+              <component id="c4fd1" class="javax.swing.JLabel" binding="timeSeriesFilterLabel">
+                <constraints>
+                  <grid row="34" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                    <preferred-size width="180" height="35"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <text value="Time Series Filter"/>
+                </properties>
+              </component>
+              <component id="918a6" class="javax.swing.JButton" binding="timeSeriesFilterButton">
+                <constraints>
+                  <grid row="34" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Use Time Series Filter"/>
                 </properties>
               </component>
             </children>

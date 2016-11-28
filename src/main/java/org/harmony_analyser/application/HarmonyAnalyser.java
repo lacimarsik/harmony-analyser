@@ -131,6 +131,9 @@ class HarmonyAnalyser extends JFrame {
 	private JLabel chromaBatchLabel;
 	private JLabel tpsLabel;
 	private JButton analyseTPSButton;
+	private JButton timeSeriesFilterButton;
+	private JLabel timeSeriesFilterLabel;
+	private JLabel filtersLabel;
 	private JFileChooser fileChooser;
 
 	private Chord chord1, chord2 = Chord.EMPTY_CHORD;
@@ -410,6 +413,8 @@ class HarmonyAnalyser extends JFrame {
 			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
 			analyzeFolder(consoleTextPane, inputFolderTextField, "chroma_analyser:complexity_difference");
 		});
+
+		timeSeriesFilterButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "filters:time_series"));
 
 		/* Visualization Tool - Initialization */
 
