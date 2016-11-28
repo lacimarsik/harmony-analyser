@@ -18,7 +18,7 @@ public class AnalysisPluginFactory {
 		"chord_analyser:chord_complexity_distance",
 		"chord_analyser:average_chord_complexity_distance",
 		"chroma_analyser:simple_difference",
-		"chroma_analyser:tonal_difference",
+		"chroma_analyser:complexity_difference",
 		"chord_analyser:chord_palette"
 	};
 
@@ -64,8 +64,8 @@ public class AnalysisPluginFactory {
 				case "chroma_analyser:simple_difference":
 					plugin = new SimpleDifferencePlugin();
 					break;
-				case "chroma_analyser:tonal_difference":
-					plugin = new TonalDifferencePlugin();
+				case "chroma_analyser:complexity_difference":
+					plugin = new ComplexityDifferencePlugin();
 					break;
 				case "chord_palette":
 					plugin = new EmptyPlugin();

@@ -8,7 +8,7 @@ import java.util.*;
  */
 
 /*
- * TonalDifferencePlugin
+ * ComplexityDifferencePlugin
  *
  * - requires: chroma
  * - complexity of transition = sum of absolute value of changes
@@ -16,16 +16,16 @@ import java.util.*;
 
 @SuppressWarnings("SameParameterValue")
 
-public class TonalDifferencePlugin extends ChromaAnalyserPlugin {
-	public TonalDifferencePlugin() {
-		pluginKey = "chroma_analyser:tonal_difference";
-		pluginName = "Tonal Difference";
+public class ComplexityDifferencePlugin extends ChromaAnalyserPlugin {
+	public ComplexityDifferencePlugin() {
+		pluginKey = "chroma_analyser:complexity_difference";
+		pluginName = "Complexity Difference";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas");
 		inputFileExtension = ".txt";
 
-		outputFileSuffix = "-chroma-complexity-tonal";
+		outputFileSuffix = "-chroma-complexity-difference";
 
 		parameters = new HashMap<>();
 
