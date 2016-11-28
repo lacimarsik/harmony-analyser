@@ -14,7 +14,7 @@ import java.io.*;
 public abstract class AnalysisPlugin extends Analysis {
 	protected VisualizationData prepareVisualizationData() {
 		VisualizationData visualizationData = new VisualizationData();
-		visualizationData.setPluginName(pluginName);
+		visualizationData.setPluginName(name);
 		return visualizationData;
 	}
 

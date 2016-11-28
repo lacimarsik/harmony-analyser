@@ -35,8 +35,8 @@ public class AverageChordComplexityDistancePlugin extends ChordAnalyserPlugin {
 	private final static int NUMBER_OUTPUTS = 3;
 
 	public AverageChordComplexityDistancePlugin() {
-		pluginKey = "chord_analyser:average_chord_complexity_distance";
-		pluginName = "Average Chord Complexity Distance";
+		key = "chord_analyser:average_chord_complexity_distance";
+		name = "Average Chord Complexity Distance";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas");

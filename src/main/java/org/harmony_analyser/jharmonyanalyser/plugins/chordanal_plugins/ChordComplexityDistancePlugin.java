@@ -28,8 +28,8 @@ import java.util.*;
 
 public class ChordComplexityDistancePlugin extends ChordAnalyserPlugin {
 	public ChordComplexityDistancePlugin() {
-		pluginKey = "chord_analyser:chord_complexity_distance";
-		pluginName = "Chord Complexity Distance";
+		key = "chord_analyser:chord_complexity_distance";
+		name = "Chord Complexity Distance";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas");

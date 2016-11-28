@@ -48,8 +48,8 @@ import java.util.*;
 
 public class ChordinoLabelsPlugin extends SegmentationVampPlugin {
 	public ChordinoLabelsPlugin() throws PluginLoader.LoadFailedException {
-		pluginKey = "nnls-chroma:chordino";
-		pluginName = "Chordino";
+		key = "nnls-chroma:chordino";
+		name = "Chordino";
 		outputNumber = 0;
 		outputType = OutputType.VALUE_AND_LABEL;
 		blockSize = 16384;
@@ -69,7 +69,7 @@ public class ChordinoLabelsPlugin extends SegmentationVampPlugin {
 		parameters.put("boostn", (float) 0.1);
 		parameters.put("usehartesyntax", (float) 0.0);
 
-		p = loader.loadPlugin(pluginKey, defaultRate, adapterFlag);
+		p = loader.loadPlugin(key, defaultRate, adapterFlag);
 		setParameters();
 	}
 }

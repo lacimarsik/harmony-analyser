@@ -31,8 +31,8 @@ public class TimeSeriesFilter extends AnalysisFilter {
 	private float samplingRate;
 
 	public TimeSeriesFilter() {
-		pluginKey = "filters:time_series";
-		pluginName = "Timestamp to fixed-rate time series filter";
+		key = "filters:time_series";
+		name = "Timestamp to fixed-rate time series filter";
 
 		parameters = new HashMap<>();
 		parameters.put("samplingRate", (float) 100);

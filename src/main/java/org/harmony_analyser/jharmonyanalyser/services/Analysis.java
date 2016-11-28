@@ -19,8 +19,8 @@ public abstract class Analysis {
 	protected static List<String> inputFileSuffixes;
 	protected String inputFileExtension;
 	protected static String outputFileSuffix;
-	protected String pluginKey;
-	protected String pluginName;
+	protected String key;
+	protected String name;
 	protected Map<String, Float> parameters;
 
 	/* Public / Package methods */
@@ -56,8 +56,8 @@ public abstract class Analysis {
 	public String printParameters() {
 		String result = "";
 
-		result += "\n> Parameters for " + pluginName + "\n";
-		result += "identifier: " + pluginKey + "\n\n";
+		result += "\n> Parameters for " + name + "\n";
+		result += "identifier: " + key + "\n\n";
 		result += "number of inputs: " + inputFileSuffixes.size() + "\n";
 		result += "expected extensions:\n";
 		for (String suffix : inputFileSuffixes) {
@@ -78,7 +78,7 @@ public abstract class Analysis {
 	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
 		String result = "";
 		checkInputFiles(inputFile, force);
-		result += "\nBeginning analysis: " + pluginKey + "\n";
+		result += "\nBeginning analysis: " + key + "\n";
 
 		result += "Input file(s):\n";
 		for (String suffix : inputFileSuffixes) {

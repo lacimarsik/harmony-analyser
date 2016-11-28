@@ -49,8 +49,8 @@ import java.util.HashMap;
 
 public class ChordinoTonesPlugin extends SegmentationVampPlugin {
 	public ChordinoTonesPlugin() throws PluginLoader.LoadFailedException {
-		pluginKey = "nnls-chroma:chordino";
-		pluginName = "Chordino";
+		key = "nnls-chroma:chordino";
+		name = "Chordino";
 		outputNumber = 1;
 		outputType = OutputType.VALUE_AND_LABEL;
 		blockSize = 16384;
@@ -70,7 +70,7 @@ public class ChordinoTonesPlugin extends SegmentationVampPlugin {
 		parameters.put("boostn", (float) 0.1);
 		parameters.put("usehartesyntax", (float) 0.0);
 
-		p = loader.loadPlugin(pluginKey, defaultRate, adapterFlag);
+		p = loader.loadPlugin(key, defaultRate, adapterFlag);
 		setParameters();
 	}
 }

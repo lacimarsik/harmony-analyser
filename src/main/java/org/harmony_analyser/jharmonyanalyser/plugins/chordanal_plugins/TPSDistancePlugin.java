@@ -35,8 +35,8 @@ import java.util.stream.Collectors;
 
 public class TPSDistancePlugin extends LineChartPlugin {
 	public TPSDistancePlugin() {
-		pluginKey = "chord_analyser:tps_distance";
-		pluginName = "TPS Distance";
+		key = "chord_analyser:tps_distance";
+		name = "TPS Distance";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chordino-labels");

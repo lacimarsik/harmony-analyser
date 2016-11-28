@@ -181,7 +181,7 @@ abstract class VampPlugin extends AnalysisPlugin {
 			result += "Bytes per frame: " + bytesPerFrame + "\n";
 			result += "Output: " + this.p.getOutputDescriptors()[outputNumber].name + "\n";
 
-			p = loader.loadPlugin(pluginKey, rate, adapterFlag);
+			p = loader.loadPlugin(key, rate, adapterFlag);
 			setParameters();
 
 			boolean b = p.initialise(channels, blockSize, blockSize);
