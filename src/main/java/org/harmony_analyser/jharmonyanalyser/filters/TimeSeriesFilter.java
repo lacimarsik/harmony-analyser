@@ -1,5 +1,6 @@
 package org.harmony_analyser.jharmonyanalyser.filters;
 
+import org.harmony_analyser.jharmonyanalyser.chroma_analyser.Chroma;
 import org.harmony_analyser.jharmonyanalyser.services.*;
 
 import java.io.BufferedWriter;
@@ -26,12 +27,12 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("SameParameterValue")
 
-public class TimeSeriesFilter extends TextFileFilter {
+public class TimeSeriesFilter extends AnalysisFilter {
 	private float samplingRate;
 
 	public TimeSeriesFilter() {
-		filterKey = "filters:time_series";
-		filterName = "Timestamp to fixed-rate time series filter";
+		pluginKey = "filters:time_series";
+		pluginName = "Timestamp to fixed-rate time series filter";
 
 		parameters = new HashMap<>();
 		parameters.put("samplingRate", (float) 100);
@@ -43,10 +44,10 @@ public class TimeSeriesFilter extends TextFileFilter {
 	 * Filters the result text file, creating a fixed sampling rate time series
 	 */
 
-	public String filter(String inputTextFile) throws IOException, AudioAnalyser.IncorrectInputException {
-		String result = super.filter(inputTextFile);
+	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, Chroma.WrongChromaSize, AudioAnalyser.OutputAlreadyExists {
+		String result = super.analyse(inputFileWav, force, verbose);
 
-		List<String> inputFileLinesList = Files.readAllLines(new File(inputTextFile).toPath(), Charset.defaultCharset());
+		List<String> inputFileLinesList = Files.readAllLines(new File(inputFileWav).toPath(), Charset.defaultCharset());
 		List<Float> inputFileTimestampList = new ArrayList<>();
 		List<Float> inputFileValuesList = new ArrayList<>();
 
@@ -80,7 +81,7 @@ public class TimeSeriesFilter extends TextFileFilter {
 		}
 
 		// 4. Rewrite input file using new timestamps and values
-		BufferedWriter out = new BufferedWriter(new FileWriter(inputTextFile));
+		BufferedWriter out = new BufferedWriter(new FileWriter(inputFileWav));
 		for (Float value : outputValuesList) {
 			timestamp = outputTimestampList.get(index);
 			out.write(timestamp + ": " + value + "\n");

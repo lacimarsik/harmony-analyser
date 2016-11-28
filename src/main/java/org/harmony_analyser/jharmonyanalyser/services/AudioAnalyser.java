@@ -106,8 +106,8 @@ public class AudioAnalyser {
 		return analysisPluginFactory.createPlugin(pluginKey).printParameters();
 	}
 
-	public String runAnalysis(String inputFile, String pluginKey, boolean force, boolean verbose) throws AudioAnalyser.IncorrectInputException, OutputAlreadyExists, IOException, LoadFailedException, Chroma.WrongChromaSize {
-		return analysisPluginFactory.createPlugin(pluginKey).analyse(inputFile, force, verbose);
+	public String runAnalysis(String inputFile, String analysisKey, boolean force, boolean verbose) throws AudioAnalyser.IncorrectInputException, OutputAlreadyExists, IOException, LoadFailedException, Chroma.WrongChromaSize {
+		return analysisPluginFactory.createPlugin(analysisKey).analyse(inputFile, force, verbose);
 	}
 
 	public DrawPanel createDrawPanel(String inputFile, String pluginKey) throws LoadFailedException, OutputNotReady, ParseOutputError, IOException {
