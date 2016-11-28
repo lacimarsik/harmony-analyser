@@ -27,13 +27,13 @@ public abstract class Analysis {
 
 	@SuppressWarnings("WeakerAccess")
 
-	protected void checkInputFiles(String inputFileWav, boolean force) throws AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists {
-		File file = new File(inputFileWav + outputFileSuffix + ".txt");
+	protected void checkInputFiles(String inputFile, boolean force) throws AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists {
+		File file = new File(inputFile + outputFileSuffix + ".txt");
 		if (file.exists() && !file.isDirectory() && !force) {
 			throw new AudioAnalyser.OutputAlreadyExists("Output already exists");
 		}
 		for (String suffix : inputFileSuffixes) {
-			String fileName = inputFileWav + suffix + inputFileExtension;
+			String fileName = inputFile + suffix + inputFileExtension;
 			File fileInput = new File(fileName);
 			if (!fileInput.exists() || fileInput.isDirectory()) {
 				throw new AudioAnalyser.IncorrectInputException("Input file " + fileName + " does not exist");
@@ -75,19 +75,19 @@ public abstract class Analysis {
 
 	protected abstract void setParameters();
 
-	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
+	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
 		String result = "";
-		checkInputFiles(inputFileWav, force);
+		checkInputFiles(inputFile, force);
 		result += "\nBeginning analysis: " + pluginKey + "\n";
 
 		result += "Input file(s):\n";
 		for (String suffix : inputFileSuffixes) {
-			String inputFileName = inputFileWav + suffix + inputFileExtension;
+			String inputFileName = inputFile + suffix + inputFileExtension;
 			result += inputFileName + "\n";
 		}
-		result += "\nOutput file:\n" + inputFileWav + outputFileSuffix + ".txt" + "\n";
+		result += "\nOutput file:\n" + inputFile + outputFileSuffix + ".txt" + "\n";
 		if (verbose) {
-			result += "Verbose Output:\n" +inputFileWav + outputFileSuffix + ".txt" + "\n";
+			result += "Verbose Output:\n" +inputFile + outputFileSuffix + ".txt" + "\n";
 		}
 		return result;
 	}

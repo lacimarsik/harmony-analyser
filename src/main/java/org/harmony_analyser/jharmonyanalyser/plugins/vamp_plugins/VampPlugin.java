@@ -146,15 +146,15 @@ abstract class VampPlugin extends AnalysisPlugin {
 	/**
 	 * Analyze audio using Vamp plugin. Courtesy of https://code.soundsoftware.ac.uk/projects/jvamp/repository/entry/host/host.java
 	 *
-	 * @param inputFileWav [String] name of the WAV audio file
+	 * @param inputFile [String] name of the WAV audio file
 	 */
 
-	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
-		String result = super.analyse(inputFileWav, force, verbose);
-		String outputFile = inputFileWav + outputFileSuffix + ".txt";
+	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
+		String result = super.analyse(inputFile, force, verbose);
+		String outputFile = inputFile + outputFileSuffix + ".txt";
 		List<String> inputFiles = new ArrayList<>();
 		for (String suffix : inputFileSuffixes) {
-			String inputFileName = inputFileWav + suffix + inputFileExtension;
+			String inputFileName = inputFile + suffix + inputFileExtension;
 			inputFiles.add(inputFileName);
 		}
 

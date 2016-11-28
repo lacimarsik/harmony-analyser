@@ -44,10 +44,10 @@ public class TimeSeriesFilter extends AnalysisFilter {
 	 * Filters the result text file, creating a fixed sampling rate time series
 	 */
 
-	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, Chroma.WrongChromaSize, AudioAnalyser.OutputAlreadyExists {
-		String result = super.analyse(inputFileWav, force, verbose);
+	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, Chroma.WrongChromaSize, AudioAnalyser.OutputAlreadyExists {
+		String result = super.analyse(inputFile, force, verbose);
 
-		List<String> inputFileLinesList = Files.readAllLines(new File(inputFileWav).toPath(), Charset.defaultCharset());
+		List<String> inputFileLinesList = Files.readAllLines(new File(inputFile).toPath(), Charset.defaultCharset());
 		List<Float> inputFileTimestampList = new ArrayList<>();
 		List<Float> inputFileValuesList = new ArrayList<>();
 
@@ -81,7 +81,7 @@ public class TimeSeriesFilter extends AnalysisFilter {
 		}
 
 		// 4. Rewrite input file using new timestamps and values
-		BufferedWriter out = new BufferedWriter(new FileWriter(inputFileWav));
+		BufferedWriter out = new BufferedWriter(new FileWriter(inputFile));
 		for (Float value : outputValuesList) {
 			timestamp = outputTimestampList.get(index);
 			out.write(timestamp + ": " + value + "\n");

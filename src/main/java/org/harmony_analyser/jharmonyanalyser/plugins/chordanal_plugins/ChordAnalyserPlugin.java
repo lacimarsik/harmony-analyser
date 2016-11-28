@@ -28,19 +28,19 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 	/**
 	 * Analyzes the song: converts chroma + segmentation information to harmony complexity descriptors
 	 *
-	 * @param inputFileWav [String] name of the WAV audio file
+	 * @param inputFile [String] name of the WAV audio file
 	 *    These additional files are expected in the folder
 	 *    - chromaFile: name of the file containing chroma information (suffix: -chromas.txt)
 	 *    - segmentationFile: name of the file containing segmentation information (suffix: -segmentation.txt)
 	 */
 
-	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
-		String result = super.analyse(inputFileWav, force, verbose);
-		String outputFile = inputFileWav + outputFileSuffix + ".txt";
-		String outputFileVerbose = inputFileWav + outputFileSuffix + "-verbose" + ".txt";
+	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
+		String result = super.analyse(inputFile, force, verbose);
+		String outputFile = inputFile + outputFileSuffix + ".txt";
+		String outputFileVerbose = inputFile + outputFileSuffix + "-verbose" + ".txt";
 		List<String> inputFiles = new ArrayList<>();
 		for (String suffix : inputFileSuffixes) {
-			String inputFileName = inputFileWav + suffix + inputFileExtension;
+			String inputFileName = inputFile + suffix + inputFileExtension;
 			inputFiles.add(inputFileName);
 		}
 
