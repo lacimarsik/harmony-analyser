@@ -34,6 +34,12 @@ public class TimeSeriesFilter extends AnalysisFilter {
 		key = "filters:time_series";
 		name = "Timestamp to fixed-rate time series filter";
 
+		inputFileSuffixes = new ArrayList<>();
+		inputFileSuffixes.add(""); // no suffix, arbitrary input file is allowed
+		inputFileExtension = ".txt";
+
+		outputFileSuffix = "-time-series";
+
 		parameters = new HashMap<>();
 		parameters.put("samplingRate", (float) 100);
 
