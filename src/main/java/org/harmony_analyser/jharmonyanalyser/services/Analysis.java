@@ -26,8 +26,7 @@ public abstract class Analysis {
 	/* Public / Package methods */
 
 	@SuppressWarnings("WeakerAccess")
-
-	protected void checkInputFiles(String inputFile, boolean force) throws AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists {
+	public void checkInputFiles(String inputFile, boolean force) throws AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists {
 		File file = new File(inputFile + outputFileSuffix + ".txt");
 		if (file.exists() && !file.isDirectory() && !force) {
 			throw new AudioAnalyser.OutputAlreadyExists("Output already exists");
