@@ -13,7 +13,7 @@ import java.util.*;
 
 @SuppressWarnings("SameParameterValue")
 public class AudioAnalyser {
-	private final AnalysisPluginFactory analysisPluginFactory;
+	private final AnalysisFactory analysisFactory;
 	private final DrawPanelFactory drawPanelFactory;
 
 	public static class IncorrectInputException extends Exception {
@@ -47,9 +47,9 @@ public class AudioAnalyser {
 	}
 
 
-	// Dependency injection: AnalysisPluginFactory, DrawPanelFactory
-	public AudioAnalyser(AnalysisPluginFactory analysisPluginFactory, DrawPanelFactory drawPanelFactory) {
-		this.analysisPluginFactory = analysisPluginFactory;
+	// Dependency injection: AnalysisFactory, DrawPanelFactory
+	public AudioAnalyser(AnalysisFactory analysisFactory, DrawPanelFactory drawPanelFactory) {
+		this.analysisFactory = analysisFactory;
 		this.drawPanelFactory = drawPanelFactory;
 	}
 
@@ -61,9 +61,9 @@ public class AudioAnalyser {
 
 	public String printPlugins() {
 		String result = "";
-		result += "\n> Available plugins (" + analysisPluginFactory.getAvailablePlugins().length + "):\n";
+		result += "\n> Available plugins (" + analysisFactory.getAvailablePlugins().length + "):\n";
 
-		for (String availablePluginKey : analysisPluginFactory.getAvailablePlugins()) {
+		for (String availablePluginKey : analysisFactory.getAvailablePlugins()) {
 			result += availablePluginKey + "\n";
 		}
 
@@ -88,7 +88,7 @@ public class AudioAnalyser {
 
 		List<String> wrappedPlugins = new ArrayList<>();
 		for (int i = 0; i < plugins.length; ++i) {
-			for (String wrapped_plugin : analysisPluginFactory.getWrappedVampPlugins()) {
+			for (String wrapped_plugin : analysisFactory.getWrappedVampPlugins()) {
 				if (plugins[i].equals(wrapped_plugin)) {
 					wrappedPlugins.add(i + ": " + plugins[i] + "\n");
 				}
@@ -102,14 +102,14 @@ public class AudioAnalyser {
 	}
 
 	public String printParameters(String pluginKey) throws LoadFailedException {
-		return analysisPluginFactory.createPlugin(pluginKey).printParameters();
+		return analysisFactory.createPlugin(pluginKey).printParameters();
 	}
 
 	public String runAnalysis(String inputFile, String analysisKey, boolean force, boolean verbose) throws AudioAnalyser.IncorrectInputException, OutputAlreadyExists, IOException, LoadFailedException, Chroma.WrongChromaSize {
-		return analysisPluginFactory.createPlugin(analysisKey).analyse(inputFile, force, verbose);
+		return analysisFactory.createPlugin(analysisKey).analyse(inputFile, force, verbose);
 	}
 
 	public DrawPanel createDrawPanel(String inputFile, String pluginKey) throws LoadFailedException, OutputNotReady, ParseOutputError, IOException {
-		return drawPanelFactory.createDrawPanel(pluginKey, analysisPluginFactory.createPlugin(pluginKey).getDataFromOutput(inputFile));
+		return drawPanelFactory.createDrawPanel(pluginKey, analysisFactory.createPlugin(pluginKey).getDataFromOutput(inputFile));
 	}
 }

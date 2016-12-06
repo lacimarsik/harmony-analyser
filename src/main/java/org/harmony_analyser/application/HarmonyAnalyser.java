@@ -166,9 +166,9 @@ class HarmonyAnalyser extends JFrame {
 
 		/* Services and Visualizations - Initialization */
 
-		AnalysisPluginFactory analysisPluginFactory = new AnalysisPluginFactory();
+		AnalysisFactory analysisFactory = new AnalysisFactory();
 		DrawPanelFactory drawPanelFactory = new DrawPanelFactory();
-		audioAnalyser = new AudioAnalyser(analysisPluginFactory, drawPanelFactory);
+		audioAnalyser = new AudioAnalyser(analysisFactory, drawPanelFactory);
 		midiHandler = new MidiHandler();
 
 		/* Chord Transition Tool - Initialization */

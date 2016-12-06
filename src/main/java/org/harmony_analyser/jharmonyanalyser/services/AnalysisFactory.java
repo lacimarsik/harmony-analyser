@@ -11,7 +11,7 @@ import org.vamp_plugins.PluginLoader;
  * Factory to create Analysis plugins on demand
  */
 
-public class AnalysisPluginFactory {
+public class AnalysisFactory {
 	private final String[] AVAILABLE_PLUGINS = new String[] {
 		"nnls-chroma:nnls-chroma",
 		"nnls-chroma:chordino-labels",
