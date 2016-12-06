@@ -1,7 +1,7 @@
 package org.harmony_analyser.jharmonyanalyser.plugins;
 
 import org.harmony_analyser.jharmonyanalyser.plugins.chordanal_plugins.AverageChordComplexityDistancePlugin;
-import org.harmony_analyser.jharmonyanalyser.services.Analysis;
+import org.harmony_analyser.jharmonyanalyser.services.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

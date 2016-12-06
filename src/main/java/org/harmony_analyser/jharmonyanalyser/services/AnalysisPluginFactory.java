@@ -1,6 +1,6 @@
-package org.harmony_analyser.jharmonyanalyser.plugins;
+package org.harmony_analyser.jharmonyanalyser.services;
 
-import org.harmony_analyser.jharmonyanalyser.services.*;
+import org.harmony_analyser.jharmonyanalyser.plugins.EmptyPlugin;
 import org.harmony_analyser.jharmonyanalyser.plugins.chordanal_plugins.*;
 import org.harmony_analyser.jharmonyanalyser.plugins.chromanal_plugins.*;
 import org.harmony_analyser.jharmonyanalyser.plugins.vamp_plugins.*;
@@ -30,11 +30,11 @@ public class AnalysisPluginFactory {
 		"nnls-chroma:chordino-tones"
 	};
 
-	public String[] getAvailablePlugins() {
+	String[] getAvailablePlugins() {
 		return AVAILABLE_PLUGINS;
 	}
 
-	public String[] getWrappedVampPlugins() {
+	String[] getWrappedVampPlugins() {
 		return WRAPPED_VAMP_PLUGINS;
 	}
 

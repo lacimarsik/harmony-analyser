@@ -2,7 +2,6 @@ package org.harmony_analyser.jharmonyanalyser.services;
 
 import org.harmony_analyser.application.visualizations.*;
 import org.harmony_analyser.jharmonyanalyser.chroma_analyser.Chroma;
-import org.harmony_analyser.jharmonyanalyser.plugins.*;
 import org.vamp_plugins.PluginLoader;
 
 import java.io.*;
@@ -36,7 +35,7 @@ public class AudioAnalyser {
 	}
 
 	public static class OutputNotReady extends Exception {
-		public OutputNotReady(String message) {
+		OutputNotReady(String message) {
 			super(message);
 		}
 	}

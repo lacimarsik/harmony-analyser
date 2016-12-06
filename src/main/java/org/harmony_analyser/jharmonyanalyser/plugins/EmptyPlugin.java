@@ -2,7 +2,7 @@ package org.harmony_analyser.jharmonyanalyser.plugins;
 
 import org.harmony_analyser.application.visualizations.VisualizationData;
 
-class EmptyPlugin extends AnalysisPlugin {
+public class EmptyPlugin extends AnalysisPlugin {
 	protected void setParameters() { /* Do nothing */ }
 
 	@Override
