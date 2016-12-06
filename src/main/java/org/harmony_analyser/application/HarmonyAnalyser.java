@@ -413,7 +413,7 @@ class HarmonyAnalyser extends JFrame {
 			analyzeFolder(consoleTextPane, inputFolderTextField, "chroma_analyser:complexity_difference", ".wav");
 		});
 
-		timeSeriesFilterButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "filters:time_series", "-tonal-distance.txt"));
+		timeSeriesFilterButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "filters:time_series", "-cc-distance.txt"));
 
 		/* Visualization Tool - Initialization */
 

@@ -38,7 +38,7 @@ public class TonalDistancePluginTest {
 		new NNLSPlugin().analyse(testWavFile.toString(), true, false);
 		new ChordinoLabelsPlugin().analyse(testWavFile.toString(), true, false);
 		new ChordComplexityDistancePlugin().analyse(testWavFile.toString(), true, false);
-		BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-tonal-distance.txt"));
+		BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-cc-distance.txt"));
 		BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
 		StringBuilder reportString = new StringBuilder();
 		StringBuilder fixtureString = new StringBuilder();

@@ -36,7 +36,7 @@ public class ChordComplexityDistancePlugin extends ChordAnalyserPlugin {
 		inputFileSuffixes.add("-chordino-labels");
 		inputFileExtension = ".txt";
 
-		outputFileSuffix = "-tonal-distance";
+		outputFileSuffix = "-cc-distance";
 
 		parameters = new HashMap<>();
 		parameters.put("audibleThreshold", (float) 0.07);
