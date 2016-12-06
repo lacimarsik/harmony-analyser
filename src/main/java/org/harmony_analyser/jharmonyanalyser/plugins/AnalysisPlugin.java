@@ -3,8 +3,6 @@ package org.harmony_analyser.jharmonyanalyser.plugins;
 import org.harmony_analyser.jharmonyanalyser.services.*;
 import org.harmony_analyser.application.visualizations.VisualizationData;
 
-import java.io.*;
-
 /**
  * Abstract class for low and high-level audio analysis plugin
  */
@@ -17,6 +15,4 @@ public abstract class AnalysisPlugin extends Analysis {
 		visualizationData.setPluginName(name);
 		return visualizationData;
 	}
-
-	public abstract VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError;
 }

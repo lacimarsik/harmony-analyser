@@ -1,5 +1,6 @@
 package org.harmony_analyser.jharmonyanalyser.filters;
 
+import org.harmony_analyser.application.visualizations.VisualizationData;
 import org.harmony_analyser.jharmonyanalyser.chroma_analyser.Chroma;
 import org.harmony_analyser.jharmonyanalyser.services.*;
 
@@ -36,9 +37,9 @@ public class TimeSeriesFilter extends AnalysisFilter {
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add(""); // no suffix, arbitrary input file is allowed
-		inputFileExtension = ".txt";
+		inputFileExtension = ""; // no extension, arbitrary input file is allowed
 
-		outputFileSuffix = "-time-series";
+		outputFileSuffix = ""; // no suffix, will replace the input file
 
 		parameters = new HashMap<>();
 		parameters.put("samplingRate", (float) 100);
@@ -87,10 +88,12 @@ public class TimeSeriesFilter extends AnalysisFilter {
 		}
 
 		// 4. Rewrite input file using new timestamps and values
+		index = 0;
 		BufferedWriter out = new BufferedWriter(new FileWriter(inputFile));
 		for (Float value : outputValuesList) {
 			timestamp = outputTimestampList.get(index);
 			out.write(timestamp + ": " + value + "\n");
+			index++;
 		}
 		out.close();
 
@@ -99,5 +102,9 @@ public class TimeSeriesFilter extends AnalysisFilter {
 
 	protected void setParameters() {
 		samplingRate = parameters.get("samplingRate");
+	}
+
+	public VisualizationData getDataFromOutput(String outputFile) {
+		return VisualizationData.EMPTY_VISUALIZATION_DATA; // Return null object
 	}
 }

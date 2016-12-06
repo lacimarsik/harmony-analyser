@@ -1,5 +1,6 @@
 package org.harmony_analyser.jharmonyanalyser.services;
 
+import org.harmony_analyser.application.visualizations.VisualizationData;
 import org.harmony_analyser.jharmonyanalyser.chroma_analyser.Chroma;
 
 import java.io.File;
@@ -90,4 +91,6 @@ public abstract class Analysis {
 		}
 		return result;
 	}
+
+	public abstract VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError;
 }
