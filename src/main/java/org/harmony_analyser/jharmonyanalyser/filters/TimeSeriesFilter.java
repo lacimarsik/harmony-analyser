@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Plugin for high-level audio analysis using chroma / chord transcription input, based on Chordanal model
+ * Filter to convert outputs: create a time series from timestamp-based text file
  */
 
 /*
