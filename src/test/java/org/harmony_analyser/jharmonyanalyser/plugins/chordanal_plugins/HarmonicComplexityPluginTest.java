@@ -34,7 +34,7 @@ public class HarmonicComplexityPluginTest {
 		new NNLSPlugin().analyse(testWavFile.toString(), true, false);
 		new ChordinoLabelsPlugin().analyse(testWavFile.toString(), true, false);
 		new AverageChordComplexityDistancePlugin().analyse(testWavFile.toString(), true, false);
-		BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-harmonic-complexity.txt"));
+		BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-average-cc-distance.txt"));
 		BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
 		StringBuilder reportString = new StringBuilder();
 		StringBuilder fixtureString = new StringBuilder();

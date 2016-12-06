@@ -43,7 +43,7 @@ public class AverageChordComplexityDistancePlugin extends ChordAnalyserPlugin {
 		inputFileSuffixes.add("-chordino-labels");
 		inputFileExtension = ".txt";
 
-		outputFileSuffix = "-harmonic-complexity";
+		outputFileSuffix = "-average-cc-distance";
 
 		parameters = new HashMap<>();
 		parameters.put("audibleThreshold", (float) 0.07);
