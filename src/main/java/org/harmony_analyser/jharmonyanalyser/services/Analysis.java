@@ -56,7 +56,7 @@ public abstract class Analysis {
 	public String printParameters() {
 		String result = "";
 
-		result += "\n> Parameters for " + name + "\n";
+		result += "\n> Parameters for Analysis: " + name + "\n";
 		result += "identifier: " + key + "\n\n";
 		result += "number of inputs: " + inputFileSuffixes.size() + "\n";
 		result += "expected extensions:\n";
@@ -65,7 +65,7 @@ public abstract class Analysis {
 		}
 		result += "\n";
 
-		result += "Plugin has " + parameters.size() + " parameters\n";
+		result += "Analysis has " + parameters.size() + " parameters\n";
 		for (Map.Entry<String, Float> entry : parameters.entrySet()) {
 			result += entry.getKey() + " SET TO: " + entry.getValue() + "\n";
 		}

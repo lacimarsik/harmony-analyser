@@ -133,6 +133,8 @@ class HarmonyAnalyser extends JFrame {
 	private JButton timeSeriesFilterButton;
 	private JLabel timeSeriesFilterLabel;
 	private JLabel filtersLabel;
+	private JLabel filtersSettingsLabel;
+	private JButton timeSeriesFilterSettingsButton;
 	private JFileChooser fileChooser;
 
 	private Chord chord1, chord2 = Chord.EMPTY_CHORD;
@@ -362,6 +364,14 @@ class HarmonyAnalyser extends JFrame {
 		chromaTonalButton.addActionListener(actionEvent -> {
 			try {
 				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("chroma_analyser:complexity_difference"));
+			} catch (AudioAnalyser.LoadFailedException e) {
+				e.printStackTrace();
+			}
+		});
+
+		timeSeriesFilterSettingsButton.addActionListener(actionEvent -> {
+			try {
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("filters:time_series"));
 			} catch (AudioAnalyser.LoadFailedException e) {
 				e.printStackTrace();
 			}
