@@ -54,6 +54,9 @@ public class TimeSeriesFilter extends AnalysisFilter {
 	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, Chroma.WrongChromaSize, AudioAnalyser.OutputAlreadyExists {
 		String result = super.analyse(inputFile, force, verbose);
 
+		String outputFileVerbose = inputFile + outputFileSuffix + "-verbose" + ".txt";
+		BufferedWriter outVerbose = new BufferedWriter(new FileWriter(outputFileVerbose));
+
 		List<String> inputFileLinesList = Files.readAllLines(new File(inputFile).toPath(), Charset.defaultCharset());
 		List<Float> inputFileTimestampList = new ArrayList<>();
 		List<Float> inputFileValuesList = new ArrayList<>();
@@ -70,6 +73,7 @@ public class TimeSeriesFilter extends AnalysisFilter {
 		float previousTimestamp, previousValue, timestamp;
 		previousTimestamp = inputFileTimestampList.get(0);
 		previousValue = inputFileValuesList.get(0);
+		float sampleLength = 1 / samplingRate;
 		int index = 0;
 		for (Float value : inputFileValuesList) {
 			if (index == 0) {
@@ -78,13 +82,36 @@ public class TimeSeriesFilter extends AnalysisFilter {
 			}
 			timestamp = inputFileTimestampList.get(index);
 
-			// TODO: Change
-			outputTimestampList.add(timestamp);
-			outputValuesList.add(value);
+			// Find out difference between timestamps and values
+			float timestampDifference = timestamp - previousTimestamp;
+			float valueDifference = value - previousValue;
+			outVerbose.write("timestampDifference: " + timestampDifference + "\n");
+			outVerbose.write("valueDifference: " + valueDifference + "\n");
+			if (timestampDifference > sampleLength) {
+				// CASE 1: Timestamp difference greater than sample length
+				float newTimestamp = previousTimestamp;
+				float newValue;
+				outVerbose.write("STARTING WITH timestamp: " + newTimestamp + "\n");
+				int sampleIndex = 0;
+				float ratio = sampleLength / timestampDifference;
+				// iteratively create samples from the slope defined by successive points
+				while (newTimestamp < timestamp) {
+					newTimestamp += sampleLength;
+					sampleIndex++;
+					newValue = previousValue + (sampleIndex * ratio * valueDifference);
+					outputTimestampList.add(newTimestamp);
+					outputValuesList.add(newValue);
+				}
 
-			previousTimestamp = timestamp;
-			previousValue = value;
-			index++;
+				// bump previous timestamp-value and continue
+				previousTimestamp = timestamp;
+				previousValue = value;
+				index++;
+			} else {
+				// CASE 2: Timestamp difference lower than sample length
+				// Omit the current timestamp-value pair and continue with the next one, leavuing previous timestamp-value pair
+				index++;
+			}
 		}
 
 		// 4. Rewrite input file using new timestamps and values
@@ -96,6 +123,7 @@ public class TimeSeriesFilter extends AnalysisFilter {
 			index++;
 		}
 		out.close();
+		outVerbose.close();
 
 		return result;
 	}
