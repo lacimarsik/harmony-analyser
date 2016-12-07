@@ -135,6 +135,8 @@ class HarmonyAnalyser extends JFrame {
 	private JLabel filtersLabel;
 	private JLabel filtersSettingsLabel;
 	private JButton timeSeriesFilterSettingsButton;
+	private JLabel extensionToFilterLabel;
+	private JTextField extensionToFilterTextField;
 	private JFileChooser fileChooser;
 
 	private Chord chord1, chord2 = Chord.EMPTY_CHORD;
@@ -423,7 +425,14 @@ class HarmonyAnalyser extends JFrame {
 			analyzeFolder(consoleTextPane, inputFolderTextField, "chroma_analyser:complexity_difference", ".wav");
 		});
 
-		timeSeriesFilterButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "filters:time_series", "-cc-distance.txt"));
+		timeSeriesFilterButton.addActionListener(actionEvent -> {
+			String extension = extensionToFilterTextField.getText();
+			if (extension.equals("")) {
+				consoleTextPane.setText(consoleTextPane.getText() + "\n\n> Extension for filtering not specified. Please enter extension.");
+			} else {
+				analyzeFolder(consoleTextPane, inputFolderTextField, "filters:time_series", extension);
+			}
+		});
 
 		/* Visualization Tool - Initialization */
 
