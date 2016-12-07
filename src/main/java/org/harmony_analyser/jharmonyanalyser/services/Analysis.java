@@ -87,7 +87,7 @@ public abstract class Analysis {
 		}
 		result += "\nOutput file:\n" + inputFile + outputFileSuffix + ".txt" + "\n";
 		if (verbose) {
-			result += "Verbose Output:\n" + inputFile + outputFileSuffix + "-verbose.txt" + "\n";
+			result += "Verbose Output:\n" + inputFile + outputFileSuffix + "-verbose" + ".txt" + "\n";
 		}
 		return result;
 	}
