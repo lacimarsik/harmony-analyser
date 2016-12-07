@@ -28,15 +28,15 @@ import java.util.*;
 
 public class ChordComplexityDistancePlugin extends ChordAnalyserPlugin {
 	public ChordComplexityDistancePlugin() {
-		pluginKey = "chord_analyser:chord_complexity_distance";
-		pluginName = "Chord Complexity Distance";
+		key = "chord_analyser:chord_complexity_distance";
+		name = "Chord Complexity Distance";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas");
 		inputFileSuffixes.add("-chordino-labels");
 		inputFileExtension = ".txt";
 
-		outputFileSuffix = "-tonal-distance";
+		outputFileSuffix = "-cc-distance";
 
 		parameters = new HashMap<>();
 		parameters.put("audibleThreshold", (float) 0.07);

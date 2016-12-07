@@ -1,6 +1,7 @@
 package org.harmony_analyser.jharmonyanalyser.plugins;
 
 import org.harmony_analyser.jharmonyanalyser.plugins.chordanal_plugins.AverageChordComplexityDistancePlugin;
+import org.harmony_analyser.jharmonyanalyser.services.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,18 +13,18 @@ import static org.powermock.api.mockito.PowerMockito.verifyNew;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 /**
- * Unit tests for AnalysisPluginFactory class
+ * Unit tests for AnalysisFactory class
  */
 
 @SuppressWarnings("UnusedAssignment")
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(AnalysisPluginFactory.class)
-public class AnalysisPluginFactoryTest {
-	private AnalysisPluginFactory analysisPluginFactory;
+@PrepareForTest(AnalysisFactory.class)
+public class AnalysisFactoryTest {
+	private AnalysisFactory analysisFactory;
 
 	@Before
 	public void setUp() {
-		analysisPluginFactory = new AnalysisPluginFactory();
+		analysisFactory = new AnalysisFactory();
 	}
 
 	@Test
@@ -31,7 +32,7 @@ public class AnalysisPluginFactoryTest {
 		AverageChordComplexityDistancePlugin transitionComplexityPlugin = mock(AverageChordComplexityDistancePlugin.class);
 		whenNew(AverageChordComplexityDistancePlugin.class).withNoArguments().thenReturn(transitionComplexityPlugin);
 
-		AnalysisPlugin analysisPlugin = analysisPluginFactory.createPlugin("chord_analyser:average_chord_complexity_distance");
+		Analysis analysisPlugin = analysisFactory.createPlugin("chord_analyser:average_chord_complexity_distance");
 
 		verifyNew(AverageChordComplexityDistancePlugin.class).withNoArguments();
 	}

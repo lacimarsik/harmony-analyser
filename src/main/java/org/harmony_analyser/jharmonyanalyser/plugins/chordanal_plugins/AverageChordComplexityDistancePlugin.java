@@ -18,7 +18,7 @@ import java.util.*;
  * - Selects the tones with the biggest activation, based on audibleThreshold
  * - Names the chord using Chordanal
  * - derives tonal distance for each tuple of subsequent chords
- * - calculates average tonal distance (= harmonic complexity), average chord complexity, and relative tonal distance
+ * - calculates average chord complexity distance, average chord complexity and relative chord complexity distance
  *
  * parameters
  * - threshold for audible tones (< 0.05 yields 4+ tones in each chord, > 0.1 yields to 2 and less tones in each chord)
@@ -35,15 +35,15 @@ public class AverageChordComplexityDistancePlugin extends ChordAnalyserPlugin {
 	private final static int NUMBER_OUTPUTS = 3;
 
 	public AverageChordComplexityDistancePlugin() {
-		pluginKey = "chord_analyser:average_chord_complexity_distance";
-		pluginName = "Average Chord Complexity Distance";
+		key = "chord_analyser:average_chord_complexity_distance";
+		name = "Average Chord Complexity Distance";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas");
 		inputFileSuffixes.add("-chordino-labels");
 		inputFileExtension = ".txt";
 
-		outputFileSuffix = "-harmonic-complexity";
+		outputFileSuffix = "-average-cc-distance";
 
 		parameters = new HashMap<>();
 		parameters.put("audibleThreshold", (float) 0.07);
@@ -83,8 +83,8 @@ public class AverageChordComplexityDistancePlugin extends ChordAnalyserPlugin {
 	}
 
 	protected String getFinalResult(float hc, float acc, float rtd) {
-		return "Harmonic Complexity (HC) = Average Tonal Distance (ATD): " + hc + "\n" +
+		return "Average Chord Complexity Distance (ACCD): " + hc + "\n" +
 			"Average Chord Complexity (ACC): " + acc + "\n" +
-			"Relative Tonal Distance (RTD): " + rtd + "\n";
+			"Relative Chord Complexity Distance (RCCD): " + rtd + "\n";
 	}
 }

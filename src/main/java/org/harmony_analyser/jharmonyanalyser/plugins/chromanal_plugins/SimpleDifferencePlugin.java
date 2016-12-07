@@ -18,8 +18,8 @@ import java.util.*;
 
 public class SimpleDifferencePlugin extends ChromaAnalyserPlugin {
 	public SimpleDifferencePlugin() {
-		pluginKey = "chroma_analyser:simple_difference";
-		pluginName = "Simple Difference";
+		key = "chroma_analyser:simple_difference";
+		name = "Simple Difference";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas");

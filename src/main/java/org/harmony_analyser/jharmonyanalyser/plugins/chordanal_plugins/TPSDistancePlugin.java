@@ -35,8 +35,8 @@ import java.util.stream.Collectors;
 
 public class TPSDistancePlugin extends LineChartPlugin {
 	public TPSDistancePlugin() {
-		pluginKey = "chord_analyser:tps_distance";
-		pluginName = "TPS Distance";
+		key = "chord_analyser:tps_distance";
+		name = "TPS Distance";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chordino-labels");
@@ -51,13 +51,13 @@ public class TPSDistancePlugin extends LineChartPlugin {
 		setParameters();
 	}
 
-	public String analyse(String inputFileWav, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
-		String result = super.analyse(inputFileWav, force, verbose);
-		String outputFile = inputFileWav + outputFileSuffix + ".txt";
-		String outputFileVerbose = inputFileWav + outputFileSuffix + "-verbose" + ".txt";
+	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
+		String result = super.analyse(inputFile, force, verbose);
+		String outputFile = inputFile + outputFileSuffix + ".txt";
+		String outputFileVerbose = inputFile + outputFileSuffix + "-verbose" + ".txt";
 		List<String> inputFiles = new ArrayList<>();
 		for (String suffix : inputFileSuffixes) {
-			String inputFileName = inputFileWav + suffix + inputFileExtension;
+			String inputFileName = inputFile + suffix + inputFileExtension;
 			inputFiles.add(inputFileName);
 		}
 

@@ -1,16 +1,17 @@
-package org.harmony_analyser.jharmonyanalyser.plugins;
+package org.harmony_analyser.jharmonyanalyser.services;
 
-import org.harmony_analyser.jharmonyanalyser.services.AudioAnalyser;
+import org.harmony_analyser.jharmonyanalyser.plugins.EmptyPlugin;
 import org.harmony_analyser.jharmonyanalyser.plugins.chordanal_plugins.*;
 import org.harmony_analyser.jharmonyanalyser.plugins.chromanal_plugins.*;
 import org.harmony_analyser.jharmonyanalyser.plugins.vamp_plugins.*;
+import org.harmony_analyser.jharmonyanalyser.filters.TimeSeriesFilter;
 import org.vamp_plugins.PluginLoader;
 
 /**
  * Factory to create Analysis plugins on demand
  */
 
-public class AnalysisPluginFactory {
+public class AnalysisFactory {
 	private final String[] AVAILABLE_PLUGINS = new String[] {
 		"nnls-chroma:nnls-chroma",
 		"nnls-chroma:chordino-labels",
@@ -19,7 +20,8 @@ public class AnalysisPluginFactory {
 		"chord_analyser:average_chord_complexity_distance",
 		"chroma_analyser:simple_difference",
 		"chroma_analyser:complexity_difference",
-		"chord_analyser:chord_palette"
+		"chord_analyser:chord_palette",
+		"filters:time_series"
 	};
 
 	private final String[] WRAPPED_VAMP_PLUGINS = new String[] {
@@ -28,16 +30,16 @@ public class AnalysisPluginFactory {
 		"nnls-chroma:chordino-tones"
 	};
 
-	public String[] getAvailablePlugins() {
+	String[] getAvailablePlugins() {
 		return AVAILABLE_PLUGINS;
 	}
 
-	public String[] getWrappedVampPlugins() {
+	String[] getWrappedVampPlugins() {
 		return WRAPPED_VAMP_PLUGINS;
 	}
 
-	public AnalysisPlugin createPlugin(String pluginKey) throws AudioAnalyser.LoadFailedException {
-		AnalysisPlugin plugin;
+	public Analysis createPlugin(String pluginKey) throws AudioAnalyser.LoadFailedException {
+		Analysis plugin;
 		try {
 			switch (pluginKey) {
 				case "nnls-chroma:nnls-chroma":
@@ -69,6 +71,9 @@ public class AnalysisPluginFactory {
 					break;
 				case "chord_palette":
 					plugin = new EmptyPlugin();
+					break;
+				case "filters:time_series":
+					plugin = new TimeSeriesFilter();
 					break;
 				default:
 					throw new AudioAnalyser.LoadFailedException("Plugin with key " + pluginKey + " is not available");

@@ -4,7 +4,6 @@ import org.harmony_analyser.jharmonyanalyser.services.*;
 import org.harmony_analyser.application.visualizations.*;
 import org.harmony_analyser.jharmonyanalyser.chord_analyser.*;
 import org.harmony_analyser.jharmonyanalyser.chroma_analyser.Chroma;
-import org.harmony_analyser.jharmonyanalyser.plugins.*;
 
 import javax.sound.midi.*;
 import javax.swing.*;
@@ -131,6 +130,13 @@ class HarmonyAnalyser extends JFrame {
 	private JLabel chromaBatchLabel;
 	private JLabel tpsLabel;
 	private JButton analyseTPSButton;
+	private JButton timeSeriesFilterButton;
+	private JLabel timeSeriesFilterLabel;
+	private JLabel filtersLabel;
+	private JLabel filtersSettingsLabel;
+	private JButton timeSeriesFilterSettingsButton;
+	private JLabel extensionToFilterLabel;
+	private JTextField extensionToFilterTextField;
 	private JFileChooser fileChooser;
 
 	private Chord chord1, chord2 = Chord.EMPTY_CHORD;
@@ -164,9 +170,9 @@ class HarmonyAnalyser extends JFrame {
 
 		/* Services and Visualizations - Initialization */
 
-		AnalysisPluginFactory analysisPluginFactory = new AnalysisPluginFactory();
+		AnalysisFactory analysisFactory = new AnalysisFactory();
 		DrawPanelFactory drawPanelFactory = new DrawPanelFactory();
-		audioAnalyser = new AudioAnalyser(analysisPluginFactory, drawPanelFactory);
+		audioAnalyser = new AudioAnalyser(analysisFactory, drawPanelFactory);
 		midiHandler = new MidiHandler();
 
 		/* Chord Transition Tool - Initialization */
@@ -365,6 +371,14 @@ class HarmonyAnalyser extends JFrame {
 			}
 		});
 
+		timeSeriesFilterSettingsButton.addActionListener(actionEvent -> {
+			try {
+				consoleTextPane.setText(consoleTextPane.getText() + audioAnalyser.printParameters("filters:time_series"));
+			} catch (AudioAnalyser.LoadFailedException e) {
+				e.printStackTrace();
+			}
+		});
+
 		browseButton.addActionListener(actionEvent -> {
 			fileChooser = new JFileChooser();
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -375,40 +389,49 @@ class HarmonyAnalyser extends JFrame {
 			}
 		});
 
-		extractChromasButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma"));
+		extractChromasButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma", ".wav"));
 
-		extractChordLabelsButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-labels"));
+		extractChordLabelsButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-labels", ".wav"));
 
-		extractChordTonesFromButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-tones"));
+		extractChordTonesFromButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-tones", ".wav"));
 
-		extractKeyButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "qm-vamp-plugins:qm-keydetector"));
+		extractKeyButton.addActionListener(actionEvent -> analyzeFolder(consoleTextPane, inputFolderTextField, "qm-vamp-plugins:qm-keydetector", ".wav"));
 
 		analyseCCDButton.addActionListener(actionEvent -> {
-			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
-			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-labels");
-			analyzeFolder(consoleTextPane, inputFolderTextField, "chord_analyser:chord_complexity_distance");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma", ".wav");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-labels", ".wav");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "chord_analyser:chord_complexity_distance", ".wav");
 		});
 
 		analyzeACCDButton.addActionListener(actionEvent -> {
-			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
-			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-labels");
-			analyzeFolder(consoleTextPane, inputFolderTextField, "chord_analyser:average_chord_complexity_distance");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma", ".wav");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-labels", ".wav");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "chord_analyser:average_chord_complexity_distance", ".wav");
 		});
 
 		analyseTPSButton.addActionListener(actionEvent -> {
-			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
-			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-tones");
-			analyzeFolder(consoleTextPane, inputFolderTextField, "chord_analyser:tps_distance");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma", ".wav");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:chordino-tones", ".wav");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "chord_analyser:tps_distance", ".wav");
 		});
 
 		chromaTransitionsSimpleButton.addActionListener(actionEvent -> {
-			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
-			analyzeFolder(consoleTextPane, inputFolderTextField, "chroma_analyser:simple_difference");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma", ".wav");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "chroma_analyser:simple_difference", ".wav");
 		});
 
 		chromaTransitionsTonalButton.addActionListener(actionEvent -> {
-			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma");
-			analyzeFolder(consoleTextPane, inputFolderTextField, "chroma_analyser:complexity_difference");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "nnls-chroma:nnls-chroma", ".wav");
+			analyzeFolder(consoleTextPane, inputFolderTextField, "chroma_analyser:complexity_difference", ".wav");
+		});
+
+		timeSeriesFilterButton.addActionListener(actionEvent -> {
+			String extension = extensionToFilterTextField.getText();
+			if (extension.equals("")) {
+				consoleTextPane.setText(consoleTextPane.getText() + "\n\n> Extension for filtering not specified. Please enter extension.");
+			} else {
+				analyzeFolder(consoleTextPane, inputFolderTextField, "filters:time_series", extension);
+			}
 		});
 
 		/* Visualization Tool - Initialization */
@@ -494,7 +517,7 @@ class HarmonyAnalyser extends JFrame {
 
 	/* Audio Analysis Tool - Handling methods */
 
-	private void analyzeFolder(JTextPane consolePane, JTextField inputFolderTextField, String pluginKey) {
+	private void analyzeFolder(JTextPane consolePane, JTextField inputFolderTextField, String pluginKey, String suffixAndExtension) {
 		try {
 			consolePane.setText(consolePane.getText() + "\n\n> Analyzing input folder using plugin: " + pluginKey);
 			if (inputFolderTextField.getText().equals("")) {
@@ -511,7 +534,7 @@ class HarmonyAnalyser extends JFrame {
 
 				@Override
 				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-					if (file.toString().endsWith(".wav")) {
+					if (file.toString().endsWith(suffixAndExtension)) {
 						consolePane.setText(consolePane.getText() + "\nProcessing: " + file.toString() + "\n");
 
 						try {

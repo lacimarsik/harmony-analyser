@@ -18,8 +18,8 @@ import java.util.*;
 
 public class ComplexityDifferencePlugin extends ChromaAnalyserPlugin {
 	public ComplexityDifferencePlugin() {
-		pluginKey = "chroma_analyser:complexity_difference";
-		pluginName = "Complexity Difference";
+		key = "chroma_analyser:complexity_difference";
+		name = "Complexity Difference";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas");

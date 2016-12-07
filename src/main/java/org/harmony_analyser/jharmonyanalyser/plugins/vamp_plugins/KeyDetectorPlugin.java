@@ -37,8 +37,8 @@ import java.util.HashMap;
 
 public class KeyDetectorPlugin extends SegmentationVampPlugin {
 	public KeyDetectorPlugin() throws PluginLoader.LoadFailedException {
-		pluginKey = "qm-vamp-plugins:qm-keydetector";
-		pluginName = "Key Detector";
+		key = "qm-vamp-plugins:qm-keydetector";
+		name = "Key Detector";
 		outputNumber = 2;
 		outputType = OutputType.LABEL_ONLY;
 		blockSize = 16384;
@@ -53,7 +53,7 @@ public class KeyDetectorPlugin extends SegmentationVampPlugin {
 		parameters.put("tuning", (float) 440.0);
 		parameters.put("length", (float) 10.0);
 
-		p = loader.loadPlugin(pluginKey, defaultRate, adapterFlag);
+		p = loader.loadPlugin(key, defaultRate, adapterFlag);
 		setParameters();
 	}
 }

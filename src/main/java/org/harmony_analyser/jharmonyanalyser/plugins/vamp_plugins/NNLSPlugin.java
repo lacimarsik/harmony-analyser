@@ -48,8 +48,8 @@ import java.util.*;
 
 public class NNLSPlugin extends VampPlugin {
 	public NNLSPlugin() throws PluginLoader.LoadFailedException {
-		pluginKey = "nnls-chroma:nnls-chroma";
-		pluginName = "NNLS Chroma";
+		key = "nnls-chroma:nnls-chroma";
+		name = "NNLS Chroma";
 		outputNumber = 3;
 		outputType = OutputType.VALUE_AND_LABEL;
 		blockSize = 16384;
@@ -68,7 +68,7 @@ public class NNLSPlugin extends VampPlugin {
 		parameters.put("s", (float) 0.7);
 		parameters.put("chromanormalize", (float) 0);
 
-		p = loader.loadPlugin(pluginKey, defaultRate, adapterFlag);
+		p = loader.loadPlugin(key, defaultRate, adapterFlag);
 		setParameters();
 	}
 
