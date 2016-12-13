@@ -198,9 +198,9 @@ class HarmonyAnalyser extends JFrame {
 				Scene visualizationToolScene = new Scene(visualizationToolRoot);
 				Scene postProcessingToolScene = new Scene(postProcessingToolRoot);
 				chordTransitionToolJFXPanel.setScene(chordTransitionToolScene);
-				audioAnalysisToolJFXPanel.setScene(chordTransitionToolScene);
-				visualizationToolJFXPanel.setScene(chordTransitionToolScene);
-				postProcessingToolJFXPanel.setScene(chordTransitionToolScene);
+				audioAnalysisToolJFXPanel.setScene(audioAnalysisToolScene);
+				visualizationToolJFXPanel.setScene(visualizationToolScene);
+				postProcessingToolJFXPanel.setScene(postProcessingToolScene);
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
