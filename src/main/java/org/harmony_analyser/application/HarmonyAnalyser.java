@@ -1,5 +1,8 @@
 package org.harmony_analyser.application;
 
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.*;
 import org.harmony_analyser.jharmonyanalyser.services.*;
 import org.harmony_analyser.application.visualizations.*;
 import org.harmony_analyser.jharmonyanalyser.chord_analyser.*;
@@ -13,11 +16,13 @@ import java.io.*;
 import java.nio.file.*;
 import java.nio.file.attribute.*;
 import java.util.List;
+import javafx.embed.swing.*;
 
 /**
  * GUI for HarmonyAnalyser
  */
 
+@SuppressWarnings("ConstantConditions")
 class HarmonyAnalyser extends JFrame {
 	private JTabbedPane tabbedPane;
 	private JButton selectMidiButton;
@@ -137,7 +142,15 @@ class HarmonyAnalyser extends JFrame {
 	private JButton timeSeriesFilterSettingsButton;
 	private JLabel extensionToFilterLabel;
 	private JTextField extensionToFilterTextField;
+	private JPanel chordTransitionTool;
+	private JPanel audioAnalysisTool;
+	private JPanel visualizationTool;
+	private JPanel postProcessingTool;
 	private JFileChooser fileChooser;
+	private JFXPanel chordTransitionToolJFXPanel;
+	private JFXPanel audioAnalysisToolJFXPanel;
+	private JFXPanel visualizationToolJFXPanel;
+	private JFXPanel postProcessingToolJFXPanel;
 
 	private Chord chord1, chord2 = Chord.EMPTY_CHORD;
 	private final MidiHandler midiHandler;
@@ -163,10 +176,55 @@ class HarmonyAnalyser extends JFrame {
 		/* GUI - Initialization */
 
 		setContentPane(rootPanel);
-		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
 		setTitle("Chord Analyser 1.2-beta");
+		pack();
+		setVisible(true);
+
+		chordTransitionToolJFXPanel = new JFXPanel();
+		audioAnalysisToolJFXPanel = new JFXPanel();
+		visualizationToolJFXPanel = new JFXPanel();
+		postProcessingToolJFXPanel = new JFXPanel();
+		Platform.runLater(() -> {
+			Parent chordTransitionToolRoot, audioAnalysisToolRoot, visualizationToolRoot, postProcessingToolRoot;
+			try {
+				ClassLoader classLoader = getClass().getClassLoader();
+				chordTransitionToolRoot = FXMLLoader.load(classLoader.getResource("ChordTransitionTool.fxml"));
+				audioAnalysisToolRoot = FXMLLoader.load(classLoader.getResource("AudioAnalysisTool.fxml"));
+				visualizationToolRoot = FXMLLoader.load(classLoader.getResource("VisualizationTool.fxml"));
+				postProcessingToolRoot = FXMLLoader.load(classLoader.getResource("PostProcessingTool.fxml"));
+				Scene chordTransitionToolScene = new Scene(chordTransitionToolRoot);
+				Scene audioAnalysisToolScene = new Scene(audioAnalysisToolRoot);
+				Scene visualizationToolScene = new Scene(visualizationToolRoot);
+				Scene postProcessingToolScene = new Scene(postProcessingToolRoot);
+				chordTransitionToolJFXPanel.setScene(chordTransitionToolScene);
+				audioAnalysisToolJFXPanel.setScene(chordTransitionToolScene);
+				visualizationToolJFXPanel.setScene(chordTransitionToolScene);
+				postProcessingToolJFXPanel.setScene(chordTransitionToolScene);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});
+
+		chordTransitionTool.removeAll();
+		chordTransitionTool.setLayout(new GridLayout());
+		chordTransitionTool.add(chordTransitionToolJFXPanel);
+		chordTransitionTool.revalidate();
+
+		audioAnalysisTool.removeAll();
+		audioAnalysisTool.setLayout(new GridLayout());
+		audioAnalysisTool.add(audioAnalysisToolJFXPanel);
+		audioAnalysisTool.revalidate();
+
+		visualizationTool.removeAll();
+		visualizationTool.setLayout(new GridLayout());
+		visualizationTool.add(visualizationToolJFXPanel);
+		visualizationTool.revalidate();
+
+		postProcessingTool.removeAll();
+		postProcessingTool.setLayout(new GridLayout());
+		postProcessingTool.add(postProcessingToolJFXPanel);
+		postProcessingTool.revalidate();
 
 		/* Services and Visualizations - Initialization */
 
