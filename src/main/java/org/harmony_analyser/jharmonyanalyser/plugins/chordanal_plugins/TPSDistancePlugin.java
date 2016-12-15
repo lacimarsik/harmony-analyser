@@ -122,7 +122,6 @@ public class TPSDistancePlugin extends LineChartPlugin {
 		float chordLabelTimestamp;
 		float chordTimestamp;
 		int keyIndex = 0;
-		float keyTimestamp;
 		String chordLabel;
 		Chord chord;
 		Tone chordRoot;

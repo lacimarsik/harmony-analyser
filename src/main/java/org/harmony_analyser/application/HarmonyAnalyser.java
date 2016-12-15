@@ -147,10 +147,10 @@ class HarmonyAnalyser extends JFrame {
 	private JPanel visualizationTool;
 	private JPanel postProcessingTool;
 	private JFileChooser fileChooser;
-	private JFXPanel chordTransitionToolJFXPanel;
-	private JFXPanel audioAnalysisToolJFXPanel;
-	private JFXPanel visualizationToolJFXPanel;
-	private JFXPanel postProcessingToolJFXPanel;
+	private final JFXPanel chordTransitionToolJFXPanel;
+	private final JFXPanel audioAnalysisToolJFXPanel;
+	private final JFXPanel visualizationToolJFXPanel;
+	private final JFXPanel postProcessingToolJFXPanel;
 
 	private Chord chord1, chord2 = Chord.EMPTY_CHORD;
 	private final MidiHandler midiHandler;
@@ -185,6 +185,7 @@ class HarmonyAnalyser extends JFrame {
 		audioAnalysisToolJFXPanel = new JFXPanel();
 		visualizationToolJFXPanel = new JFXPanel();
 		postProcessingToolJFXPanel = new JFXPanel();
+		System.setProperty( "javafx.userAgentStylesheetUrl", "CASPIAN" );
 		Platform.runLater(() -> {
 			Parent chordTransitionToolRoot, audioAnalysisToolRoot, visualizationToolRoot, postProcessingToolRoot;
 			try {

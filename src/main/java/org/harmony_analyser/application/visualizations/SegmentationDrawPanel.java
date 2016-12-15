@@ -31,7 +31,6 @@ class SegmentationDrawPanel extends DrawPanel {
 		cursor.setLocation(0, 0);
 		float previousTimestamp = timestampsCopy.get(0);
 		float segmentSize;
-		String relativeToneName;
 		int i = 0;
 		timestampsCopy.remove(0); // Skip first timestamp
 		for (float timestamp : timestampsCopy) {
