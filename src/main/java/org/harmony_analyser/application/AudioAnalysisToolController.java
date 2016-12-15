@@ -1,14 +1,16 @@
 package org.harmony_analyser.application;
 
-import javafx.fxml.FXML;
+import javafx.fxml.*;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Controller for Audio Analysis Tool Events
  */
 
-public class AudioAnalysisToolController {
+public class AudioAnalysisToolController implements Initializable {
 	@FXML
 	private TreeView<?> browse;
 
@@ -74,4 +76,9 @@ public class AudioAnalysisToolController {
 
 	@FXML
 	private Button ppAnalyse;
+
+	@Override // This method is called by the FXMLLoader when initialization is complete
+	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
+
+	}
 }

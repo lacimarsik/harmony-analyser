@@ -1,14 +1,15 @@
 package org.harmony_analyser.application;
 
-
-import javafx.fxml.FXML;
+import javafx.fxml.*;
 import javafx.scene.control.*;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Controller for Visualization Tool Events
  */
 
-public class VisualizationToolController {
+public class VisualizationToolController implements Initializable {
 	@FXML
 	private TreeView<?> browse;
 
@@ -23,4 +24,9 @@ public class VisualizationToolController {
 
 	@FXML
 	private Button analyse;
+
+	@Override // This method is called by the FXMLLoader when initialization is complete
+	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
+
+	}
 }

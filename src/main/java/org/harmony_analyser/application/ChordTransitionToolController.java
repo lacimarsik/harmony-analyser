@@ -1,13 +1,15 @@
 package org.harmony_analyser.application;
 
-import javafx.fxml.FXML;
+import javafx.fxml.*;
 import javafx.scene.control.*;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Controller for Chord Transition Tool Events
  */
 
-public class ChordTransitionToolController {
+public class ChordTransitionToolController implements Initializable {
 	@FXML
 	private Button midiListRefresh;
 
@@ -79,5 +81,10 @@ public class ChordTransitionToolController {
 
 	@FXML
 	private TextArea tonnetz;
+
+	@Override // This method is called by the FXMLLoader when initialization is complete
+	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
+
+	}
 }
 
