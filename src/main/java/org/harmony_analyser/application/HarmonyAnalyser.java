@@ -145,12 +145,10 @@ class HarmonyAnalyser extends JFrame {
 	private JPanel chordTransitionTool;
 	private JPanel audioAnalysisTool;
 	private JPanel visualizationTool;
-	private JPanel postProcessingTool;
 	private JFileChooser fileChooser;
 	private final JFXPanel chordTransitionToolJFXPanel;
 	private final JFXPanel audioAnalysisToolJFXPanel;
 	private final JFXPanel visualizationToolJFXPanel;
-	private final JFXPanel postProcessingToolJFXPanel;
 
 	private Chord chord1, chord2 = Chord.EMPTY_CHORD;
 	private final MidiHandler midiHandler;
@@ -184,24 +182,20 @@ class HarmonyAnalyser extends JFrame {
 		chordTransitionToolJFXPanel = new JFXPanel();
 		audioAnalysisToolJFXPanel = new JFXPanel();
 		visualizationToolJFXPanel = new JFXPanel();
-		postProcessingToolJFXPanel = new JFXPanel();
 		System.setProperty( "javafx.userAgentStylesheetUrl", "CASPIAN" );
 		Platform.runLater(() -> {
-			Parent chordTransitionToolRoot, audioAnalysisToolRoot, visualizationToolRoot, postProcessingToolRoot;
+			Parent chordTransitionToolRoot, audioAnalysisToolRoot, visualizationToolRoot;
 			try {
 				ClassLoader classLoader = getClass().getClassLoader();
 				chordTransitionToolRoot = FXMLLoader.load(classLoader.getResource("ChordTransitionTool.fxml"));
 				audioAnalysisToolRoot = FXMLLoader.load(classLoader.getResource("AudioAnalysisTool.fxml"));
 				visualizationToolRoot = FXMLLoader.load(classLoader.getResource("VisualizationTool.fxml"));
-				postProcessingToolRoot = FXMLLoader.load(classLoader.getResource("PostProcessingTool.fxml"));
 				Scene chordTransitionToolScene = new Scene(chordTransitionToolRoot);
 				Scene audioAnalysisToolScene = new Scene(audioAnalysisToolRoot);
 				Scene visualizationToolScene = new Scene(visualizationToolRoot);
-				Scene postProcessingToolScene = new Scene(postProcessingToolRoot);
 				chordTransitionToolJFXPanel.setScene(chordTransitionToolScene);
 				audioAnalysisToolJFXPanel.setScene(audioAnalysisToolScene);
 				visualizationToolJFXPanel.setScene(visualizationToolScene);
-				postProcessingToolJFXPanel.setScene(postProcessingToolScene);
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
@@ -221,11 +215,6 @@ class HarmonyAnalyser extends JFrame {
 		visualizationTool.setLayout(new GridLayout());
 		visualizationTool.add(visualizationToolJFXPanel);
 		visualizationTool.revalidate();
-
-		postProcessingTool.removeAll();
-		postProcessingTool.setLayout(new GridLayout());
-		postProcessingTool.add(postProcessingToolJFXPanel);
-		postProcessingTool.revalidate();
 
 		/* Services and Visualizations - Initialization */
 

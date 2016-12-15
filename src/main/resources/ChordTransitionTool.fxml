@@ -14,7 +14,8 @@
 <?import javafx.scene.text.Font?>
 
 <!--suppress JavaFxDefaultTag, XmlUnusedNamespaceDeclaration -->
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="923.0" prefWidth="908.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="924.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="239.0" fitWidth="792.0" layoutX="58.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
          <image>
