@@ -1,5 +1,6 @@
 package org.harmony_analyser.application;
 
+import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 /**
@@ -7,28 +8,76 @@ import javafx.scene.control.*;
  */
 
 public class ChordTransitionToolController {
-	public Button play1;
-	public Button midiListRefresh;
-	public ToggleButton chordMode;
-	public ToggleButton chromaMode;
-	public Slider keyboardSensitivity;
-	public TextField SensitivityValue;
-	public Button record1;
-	public Button record2;
-	public Button play2;
-	public TextArea name1;
-	public TextArea name2;
-	public TextField pitchesRelative1;
-	public TextField pitchesRelative2;
-	public TextField pitchesAbsolute1;
-	public TextField pitchesAbsolute2;
-	public TextArea functions1;
-	public TextArea structure1;
-	public TextArea structure2;
-	public TextArea ccdList;
-	public TextArea functions2;
-	public TextArea midiList;
-	public TextArea ccd;
-	public TextArea tps;
-	public TextArea tonnetz;
+	@FXML
+	private Button midiListRefresh;
+
+	@FXML
+	private ToggleButton chordMode;
+
+	@FXML
+	private ToggleButton chromaMode;
+
+	@FXML
+	private Slider keyboardSensitivity;
+
+	@FXML
+	private TextField SensitivityValue;
+
+	@FXML
+	private Button record1;
+
+	@FXML
+	private Button play1;
+
+	@FXML
+	private Button record2;
+
+	@FXML
+	private Button play2;
+
+	@FXML
+	private TextArea name1;
+
+	@FXML
+	private TextArea name2;
+
+	@FXML
+	private TextField pitchesRelative1;
+
+	@FXML
+	private TextField pitchesRelative2;
+
+	@FXML
+	private TextField pitchesAbsolute1;
+
+	@FXML
+	private TextField pitchesAbsolute2;
+
+	@FXML
+	private TextArea functions1;
+
+	@FXML
+	private TextArea structure1;
+
+	@FXML
+	private TextArea structure2;
+
+	@FXML
+	private TextArea ccdList;
+
+	@FXML
+	private TextArea functions2;
+
+	@FXML
+	private TextArea midiList;
+
+	@FXML
+	private TextArea ccd;
+
+	@FXML
+	private TextArea tps;
+
+	@FXML
+	private TextArea tonnetz;
 }
+

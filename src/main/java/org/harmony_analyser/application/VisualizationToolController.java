@@ -1,17 +1,26 @@
 package org.harmony_analyser.application;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TreeView;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 
 /**
  * Controller for Visualization Tool Events
  */
 
 public class VisualizationToolController {
-	public TreeView browse;
-	public ChoiceBox plugin1;
-	public ChoiceBox plugin2;
-	public ChoiceBox plugin3;
-	public Button analyse;
+	@FXML
+	private TreeView<?> browse;
+
+	@FXML
+	private ChoiceBox<?> plugin1;
+
+	@FXML
+	private ChoiceBox<?> plugin2;
+
+	@FXML
+	private ChoiceBox<?> plugin3;
+
+	@FXML
+	private Button analyse;
 }

@@ -1,9 +1,7 @@
 package org.harmony_analyser.application;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TreeView;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -11,26 +9,69 @@ import javafx.scene.layout.AnchorPane;
  */
 
 public class AudioAnalysisToolController {
-	public TreeView browse;
-	public TextArea console;
-	public AnchorPane vampAvailable;
-	public Label vampTitle;
-	public Label vampDescription;
-	public Button vampSettings;
-	public Button vampAnalyse;
-	public AnchorPane caAvailable;
-	public Label caTitle;
-	public Label caDescription;
-	public Button caSettings;
-	public Button caAnalyse;
-	public AnchorPane chrAvailable;
-	public Label chrTitle;
-	public Label chrDescription;
-	public Button chrSettings;
-	public Button chrAnalyse;
-	public AnchorPane ppAvailable;
-	public Label ppTitle;
-	public Label ppDescription;
-	public Button ppSettings;
-	public Button ppAnalyse;
+	@FXML
+	private TreeView<?> browse;
+
+	@FXML
+	private TextArea console;
+
+	@FXML
+	private AnchorPane vampAvailable;
+
+	@FXML
+	private Label vampTitle;
+
+	@FXML
+	private Label vampDescription;
+
+	@FXML
+	private Button vampSettings;
+
+	@FXML
+	private Button vampAnalyse;
+
+	@FXML
+	private AnchorPane caAvailable;
+
+	@FXML
+	private Label caTitle;
+
+	@FXML
+	private Label caDescription;
+
+	@FXML
+	private Button caSettings;
+
+	@FXML
+	private Button caAnalyse;
+
+	@FXML
+	private AnchorPane chrAvailable;
+
+	@FXML
+	private Label chrTitle;
+
+	@FXML
+	private Label chrDescription;
+
+	@FXML
+	private Button chrSettings;
+
+	@FXML
+	private Button chrAnalyse;
+
+	@FXML
+	private AnchorPane ppAvailable;
+
+	@FXML
+	private Label ppTitle;
+
+	@FXML
+	private Label ppDescription;
+
+	@FXML
+	private Button ppSettings;
+
+	@FXML
+	private Button ppAnalyse;
 }
