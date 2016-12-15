@@ -22,7 +22,7 @@
             <Image url="@keyboard.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="455.0" layoutY="243.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="393.0" text="MIDI Input Devices">
+      <Button fx:id="midiListRefresh" layoutX="455.0" layoutY="243.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="393.0" text="MIDI Input Devices">
          <graphic>
             <ImageView fitHeight="34.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -30,8 +30,8 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <ToggleButton layoutX="58.0" layoutY="273.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="58.0" selected="true" text="On" />
-      <ToggleButton layoutX="58.0" layoutY="312.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="58.0" text="Off" />
+      <ToggleButton fx:id="chordMode" layoutX="58.0" layoutY="273.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="58.0" selected="true" text="On" />
+      <ToggleButton fx:id="chromaMode" layoutX="58.0" layoutY="312.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="58.0" text="Off" />
       <Label layoutX="125.0" layoutY="273.0" prefHeight="39.0" prefWidth="319.0" text="Chord Mode">
          <font>
             <Font size="15.0" />
@@ -41,10 +41,10 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Slider layoutX="278.0" layoutY="298.0" value="50.0" />
+      <Slider fx:id="keyboardSensitivity" layoutX="278.0" layoutY="298.0" value="50.0" />
       <Label layoutX="278.0" layoutY="278.0" text="Keyboard sensitivity" />
-      <TextField layoutX="321.0" layoutY="324.0" prefHeight="21.0" prefWidth="46.0" text="50" />
-      <Button layoutX="172.0" layoutY="402.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" text="Record">
+      <TextField fx:id="SensitivityValue" layoutX="321.0" layoutY="324.0" prefHeight="21.0" prefWidth="46.0" text="50" />
+      <Button fx:id="record1" layoutX="172.0" layoutY="402.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" text="Record">
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -53,7 +53,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="312.0" layoutY="402.0" mnemonicParsing="false" text="Play">
+      <Button fx:id="play1" layoutX="312.0" layoutY="402.0" mnemonicParsing="false" text="Play">
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -62,7 +62,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="571.0" layoutY="402.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" text="Record">
+      <Button fx:id="record2" layoutX="571.0" layoutY="402.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" text="Record">
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -71,7 +71,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="711.0" layoutY="402.0" mnemonicParsing="false" text="Play">
+      <Button fx:id="play2" layoutX="711.0" layoutY="402.0" mnemonicParsing="false" text="Play">
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -81,15 +81,15 @@
          </graphic>
       </Button>
       <Label layoutX="58.0" layoutY="454.0" text="Name" />
-      <TextArea layoutX="137.0" layoutY="454.0" prefHeight="48.0" prefWidth="288.0" text="Cmaj5" />
+      <TextArea fx:id="name1" layoutX="137.0" layoutY="454.0" prefHeight="48.0" prefWidth="288.0" text="Cmaj5" />
       <Label layoutX="454.0" layoutY="454.0" text="Name" />
-      <TextArea layoutX="533.0" layoutY="454.0" prefHeight="48.0" prefWidth="288.0" text="Gdom4-3" />
+      <TextArea fx:id="name2" layoutX="533.0" layoutY="454.0" prefHeight="48.0" prefWidth="288.0" text="Gdom4-3" />
       <Label layoutX="58.0" layoutY="502.0" text="Pitches" />
       <Label layoutX="454.0" layoutY="502.0" text="Pitches" />
-      <TextField layoutX="137.0" layoutY="497.0" prefHeight="26.0" prefWidth="288.0" text="C E G" />
-      <TextField layoutX="533.0" layoutY="497.0" prefHeight="26.0" prefWidth="288.0" text="D F G B" />
-      <TextField layoutX="137.0" layoutY="523.0" prefHeight="26.0" prefWidth="288.0" text="C3 E3 G3" />
-      <TextField layoutX="533.0" layoutY="523.0" prefHeight="26.0" prefWidth="288.0" text="D3 F3 G3 B3" />
+      <TextField fx:id="pitchesRelative1" layoutX="137.0" layoutY="497.0" prefHeight="26.0" prefWidth="288.0" text="C E G" />
+      <TextField fx:id="pitchesRelative2" layoutX="533.0" layoutY="497.0" prefHeight="26.0" prefWidth="288.0" text="D F G B" />
+      <TextField fx:id="pitchesAbsolute1" layoutX="137.0" layoutY="523.0" prefHeight="26.0" prefWidth="288.0" text="C3 E3 G3" />
+      <TextField fx:id="pitchesAbsolute2" layoutX="533.0" layoutY="523.0" prefHeight="26.0" prefWidth="288.0" text="D3 F3 G3 B3" />
       <Label layoutX="58.0" layoutY="549.0" text="Structure" />
       <Label layoutX="454.0" layoutY="549.0" text="Structure" />
       <Label layoutX="57.0" layoutY="610.0" text="List of Functions / Chord Complexity" />
@@ -97,7 +97,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="73.0" prefWidth="222.0">
                <children>
-                  <TextArea layoutY="-2.0" prefHeight="175.0" prefWidth="281.0" text="C major (Tonic)&#10;root: C E G  steps: 0&#10;F major (Dominant)&#10;root: C E G  steps: 0&#10;" />
+                  <TextArea fx:id="functions1" layoutY="-2.0" prefHeight="175.0" prefWidth="281.0" text="C major (Tonic)&#10;root: C E G  steps: 0&#10;F major (Dominant)&#10;root: C E G  steps: 0&#10;" />
                </children>
             </AnchorPane>
         </content>
@@ -106,7 +106,7 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="146.0" prefWidth="253.0">
                <children>
-                  <TextArea prefHeight="54.0" prefWidth="257.0" text="major triad&#10;major third, perfect fifth" />
+                  <TextArea fx:id="structure1" prefHeight="54.0" prefWidth="257.0" text="major triad&#10;major third, perfect fifth" />
                </children>
             </AnchorPane>
          </content>
@@ -115,7 +115,7 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="147.0" prefWidth="251.0">
                <children>
-                  <TextArea prefHeight="61.0" prefWidth="252.0" text="dominant four-three chord&#10;minor third, perfect fourth, major sixth" />
+                  <TextArea fx:id="structure2" prefHeight="61.0" prefWidth="252.0" text="dominant four-three chord&#10;minor third, perfect fourth, major sixth" />
                </children>
             </AnchorPane>
          </content>
@@ -125,7 +125,7 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="149.0" prefWidth="222.0">
                <children>
-                  <TextArea prefHeight="200.0" prefWidth="326.0" text="C major: Tonic-&gt;Dominant  steps: 1&#10;G major: Subdominant -&gt; Tonic  steps: 2&#10;A minor: Dominant -&gt; Subdominant  steps: 3&#10;E minor: Dominant -&gt; Subdominant  steps: 3" />
+                  <TextArea fx:id="ccdList" prefHeight="200.0" prefWidth="326.0" text="C major: Tonic-&gt;Dominant  steps: 1&#10;G major: Subdominant -&gt; Tonic  steps: 2&#10;A minor: Dominant -&gt; Subdominant  steps: 3&#10;E minor: Dominant -&gt; Subdominant  steps: 3" />
                </children>
             </AnchorPane>
          </content>
@@ -134,7 +134,7 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="75.0" prefWidth="222.0">
                <children>
-                  <TextArea prefHeight="80.0" prefWidth="282.0" text="C major (Dominant)&#10;root: D G B  steps: 1&#10;D major (Subdominant)&#10;root: D G B  steps: 2" />
+                  <TextArea fx:id="functions2" prefHeight="80.0" prefWidth="282.0" text="C major (Dominant)&#10;root: D G B  steps: 1&#10;D major (Subdominant)&#10;root: D G B  steps: 2" />
                </children>
             </AnchorPane>
          </content>
@@ -158,7 +158,7 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="131.0" prefWidth="253.0">
                <children>
-                  <TextArea prefHeight="122.0" prefWidth="370.0" text="USB Uno MIDI Interface 1-1&#10;USB Uno MIDI Interface 1-2" />
+                  <TextArea fx:id="midiList" prefHeight="122.0" prefWidth="370.0" text="USB Uno MIDI Interface 1-1&#10;USB Uno MIDI Interface 1-2" />
                </children>
             </AnchorPane>
          </content>
@@ -173,17 +173,17 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </TextArea>
-      <TextArea layoutX="410.0" layoutY="759.0" prefHeight="39.0" prefWidth="57.0" text="1">
+      <TextArea fx:id="ccd" layoutX="410.0" layoutY="759.0" prefHeight="39.0" prefWidth="57.0" text="1">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </TextArea>
-      <TextArea layoutX="522.0" layoutY="759.0" prefHeight="39.0" prefWidth="57.0" text="5.5">
+      <TextArea fx:id="tps" layoutX="522.0" layoutY="759.0" prefHeight="39.0" prefWidth="57.0" text="5.5">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </TextArea>
-      <TextArea layoutX="708.0" layoutY="759.0" prefHeight="39.0" prefWidth="57.0" text="1">
+      <TextArea fx:id="tonnetz" layoutX="708.0" layoutY="759.0" prefHeight="39.0" prefWidth="57.0" text="1">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
