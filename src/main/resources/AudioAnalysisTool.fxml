@@ -13,7 +13,7 @@
 
 <!--suppress JavaFxDefaultTag, XmlUnusedNamespaceDeclaration -->
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="924.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:controller="org.harmony_analyser.application.AudioAnalysisToolController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="924.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TreeView fx:id="browse" layoutX="14.0" layoutY="25.0" prefHeight="503.0" prefWidth="446.0" />
       <TextArea fx:id="console" layoutX="468.0" layoutY="25.0" prefHeight="503.0" prefWidth="430.0" />

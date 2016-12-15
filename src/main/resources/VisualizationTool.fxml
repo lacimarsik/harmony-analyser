@@ -8,7 +8,7 @@
 
 <!--suppress JavaFxDefaultTag, XmlUnusedNamespaceDeclaration -->
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="924.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:controller="org.harmony_analyser.application.VisualizationToolController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="924.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TreeView fx:id="browse" layoutX="14.0" layoutY="14.0" prefHeight="127.0" prefWidth="365.0" />
       <ChoiceBox fx:id="plugin1" layoutX="465.0" layoutY="14.0" prefHeight="15.0" prefWidth="148.0" />
