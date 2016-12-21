@@ -175,7 +175,7 @@ class HarmonyAnalyser extends JFrame {
 
 		setContentPane(rootPanel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Chord Analyser 1.2-beta");
+		setTitle("Harmony Analyser 1.2-beta");
 		pack();
 		setVisible(true);
 
