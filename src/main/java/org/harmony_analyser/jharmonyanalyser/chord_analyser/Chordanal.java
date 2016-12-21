@@ -617,7 +617,7 @@ public class Chordanal {
 		}
 	}
 
-	static Tone getRootTone(Chord chord) {
+	public static Tone getRootTone(Chord chord) {
 		String harmonyStructure;
 		if (chord.tones.size() == 0) {
 			return Tone.EMPTY_TONE;
