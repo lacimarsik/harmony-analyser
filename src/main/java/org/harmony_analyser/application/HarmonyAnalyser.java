@@ -222,6 +222,13 @@ class HarmonyAnalyser extends JFrame {
 		DrawPanelFactory drawPanelFactory = new DrawPanelFactory();
 		audioAnalyser = new AudioAnalyser(analysisFactory, drawPanelFactory);
 		midiHandler = new MidiHandler();
+		midiHandler.initialize(
+			MidiHandler.EMPTY_SEQUENCER,
+			MidiHandler.EMPTY_SYNTHESIZER,
+			MidiHandler.EMPTY_MIDI_DEVICE,
+			MidiHandler.EMPTY_MIDI_DEVICE,
+			MidiHandler.EMPTY_MIDI_DECODER
+		);
 
 		/* Chord Transition Tool - Initialization */
 
