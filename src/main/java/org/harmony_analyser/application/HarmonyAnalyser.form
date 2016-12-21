@@ -29,28 +29,10 @@
             <border type="none"/>
             <children/>
           </grid>
-          <grid id="c791d" binding="audioAnalysisTool" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <tabbedpane title="Audio Analysis Tool"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children/>
-          </grid>
-          <grid id="95dd9" binding="visualizationTool" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <tabbedpane title="Visualization Tool"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children/>
-          </grid>
           <grid id="3ecf3" binding="chordTransitionToolPanel" layout-manager="GridLayoutManager" row-count="18" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="15" left="15" bottom="15" right="15"/>
             <constraints>
-              <tabbedpane title="CTT"/>
+              <tabbedpane title="*"/>
             </constraints>
             <properties>
               <minimumSize width="6" height="24"/>
@@ -517,10 +499,19 @@
               </hspacer>
             </children>
           </grid>
+          <grid id="c791d" binding="audioAnalysisTool" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="Audio Analysis Tool"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
           <grid id="f6178" binding="audioAnalysisPanel" layout-manager="GridLayoutManager" row-count="37" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="15" left="15" bottom="15" right="15"/>
             <constraints>
-              <tabbedpane title="AAT"/>
+              <tabbedpane title="*"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -939,10 +930,19 @@
               </component>
             </children>
           </grid>
+          <grid id="95dd9" binding="visualizationTool" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="Visualization Tool"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
           <grid id="a3206" binding="visualizationPanel" layout-manager="GridLayoutManager" row-count="9" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="15" left="15" bottom="15" right="15"/>
             <constraints>
-              <tabbedpane title="VT"/>
+              <tabbedpane title="*"/>
             </constraints>
             <properties/>
             <border type="none"/>
