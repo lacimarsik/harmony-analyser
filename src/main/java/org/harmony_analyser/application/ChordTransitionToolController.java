@@ -8,12 +8,11 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.input.MouseEvent;
+import javax.sound.midi.*;
 
 import org.harmony_analyser.jharmonyanalyser.chord_analyser.Chord;
 import org.harmony_analyser.jharmonyanalyser.services.*;
 import org.harmony_analyser.jharmonyanalyser.chord_analyser.*;
-import javax.sound.midi.MidiDevice;
-import javax.sound.midi.MidiUnavailableException;
 
 /**
  * Controller for Chord Transition Tool Events
