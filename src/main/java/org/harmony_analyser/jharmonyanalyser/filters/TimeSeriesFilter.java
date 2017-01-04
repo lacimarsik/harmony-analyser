@@ -33,7 +33,8 @@ public class TimeSeriesFilter extends AnalysisFilter {
 
 	public TimeSeriesFilter() {
 		key = "filters:time_series";
-		name = "Timestamp to fixed-rate time series filter";
+		name = "Timestamp to time series filter";
+		description = "Takes timestamp: value input rows, and transforms into rows of values with fixed sampling rate";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add(""); // no suffix, arbitrary input file is allowed
