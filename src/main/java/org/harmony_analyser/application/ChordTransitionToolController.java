@@ -241,12 +241,13 @@ public class ChordTransitionToolController implements Initializable {
 		tpsDistance.setText(Float.toString(TonalPitchSpace.getTPSDistance(chord1, root1, key1, chord2, root2, key2, false)));
 	}
 
+	// TODO: Move to some helpers class
 	/* Helpers */
 
 	private String listToString(List<String> list) {
 		String result = "";
 		for (int i = 0; i < list.size(); i++) {
-			if (i < list.size()-1) {
+			if (i < list.size() - 1) {
 				result += list.get(i) + "\n";
 			} else {
 				result += list.get(i);
