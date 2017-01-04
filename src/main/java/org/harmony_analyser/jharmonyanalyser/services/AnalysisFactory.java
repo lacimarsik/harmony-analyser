@@ -7,31 +7,53 @@ import org.harmony_analyser.jharmonyanalyser.plugins.vamp_plugins.*;
 import org.harmony_analyser.jharmonyanalyser.filters.TimeSeriesFilter;
 import org.vamp_plugins.PluginLoader;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 /**
  * Factory to create Analysis plugins on demand
  */
 
 public class AnalysisFactory {
-	private final String[] AVAILABLE_PLUGINS = new String[] {
-		"nnls-chroma:nnls-chroma",
-		"nnls-chroma:chordino-labels",
-		"nnls-chroma:chordino-tones",
+	private final String[] CHORD_ANALYSER_PLUGINS = new String[] {
 		"chord_analyser:chord_complexity_distance",
-		"chord_analyser:average_chord_complexity_distance",
+		"chord_analyser:average_chord_complexity_distance"
+	};
+
+	private final String[] CHROMA_ANALYSER_PLUGINS = new String[] {
 		"chroma_analyser:simple_difference",
-		"chroma_analyser:complexity_difference",
-		"chord_analyser:chord_palette",
+		"chroma_analyser:complexity_difference"
+	};
+
+	private final String[] POST_PROCESSING_FILTERS = new String[] {
 		"filters:time_series"
 	};
 
 	private final String[] WRAPPED_VAMP_PLUGINS = new String[] {
 		"nnls-chroma:nnls-chroma",
 		"nnls-chroma:chordino-labels",
-		"nnls-chroma:chordino-tones"
+		"nnls-chroma:chordino-tones",
+		"qm-vamp-plugins:qm-keydetector"
 	};
 
+	//TODO: Array concat HAS TO has better solution...
 	String[] getAvailablePlugins() {
-		return AVAILABLE_PLUGINS;
+		return Stream.concat(
+			Stream.concat(Arrays.stream(CHORD_ANALYSER_PLUGINS), Arrays.stream(CHROMA_ANALYSER_PLUGINS)),
+			Stream.concat(Arrays.stream(WRAPPED_VAMP_PLUGINS), Arrays.stream(POST_PROCESSING_FILTERS))
+		).toArray(String[]::new);
+	}
+
+	String[] getChordAnalyserPlugins() {
+		return CHORD_ANALYSER_PLUGINS;
+	}
+
+	String[] getChromaAnalyserPlugins() {
+		return CHROMA_ANALYSER_PLUGINS;
+	}
+
+	String[] getPostProcessingFilters() {
+		return POST_PROCESSING_FILTERS;
 	}
 
 	String[] getWrappedVampPlugins() {

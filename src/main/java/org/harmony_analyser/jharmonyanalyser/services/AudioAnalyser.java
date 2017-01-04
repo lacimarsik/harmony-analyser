@@ -46,7 +46,6 @@ public class AudioAnalyser {
 		}
 	}
 
-
 	// Dependency injection: AnalysisFactory, DrawPanelFactory
 	public AudioAnalyser(AnalysisFactory analysisFactory, DrawPanelFactory drawPanelFactory) {
 		this.analysisFactory = analysisFactory;
@@ -54,6 +53,14 @@ public class AudioAnalyser {
 	}
 
 	/* Public / Package methods */
+
+	public String[] getAllWrappedVampPlugins() { return analysisFactory.getWrappedVampPlugins(); }
+
+	public String[] getAllChordAnalyserPlugins() { return analysisFactory.getChordAnalyserPlugins(); }
+
+	public String[] getAllChromaAnalyserPlugins() { return analysisFactory.getChromaAnalyserPlugins(); }
+
+	public String[] getAllPostProcessingFilters() { return analysisFactory.getPostProcessingFilters(); }
 
 	public String[] getAllVisualizations() {
 		return drawPanelFactory.getAllVisualizations();
@@ -99,6 +106,14 @@ public class AudioAnalyser {
 			result += s;
 		}
 		return result;
+	}
+
+	public String getPluginName(String pluginKey) throws LoadFailedException {
+		return analysisFactory.createPlugin(pluginKey).name;
+	}
+
+	public String getPluginDescription(String pluginKey) throws LoadFailedException {
+		return analysisFactory.createPlugin(pluginKey).description;
 	}
 
 	public String printParameters(String pluginKey) throws LoadFailedException {
