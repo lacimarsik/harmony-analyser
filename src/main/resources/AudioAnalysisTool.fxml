@@ -2,21 +2,23 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <!--suppress JavaFxDefaultTag, XmlUnusedNamespaceDeclaration -->
 
-<Pane fx:controller="org.harmony_analyser.application.AudioAnalysisToolController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="924.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="924.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.harmony_analyser.application.AudioAnalysisToolController">
    <children>
-      <TreeView fx:id="browse" layoutX="14.0" layoutY="25.0" prefHeight="503.0" prefWidth="446.0" />
-      <TextArea fx:id="console" layoutX="468.0" layoutY="25.0" prefHeight="503.0" prefWidth="430.0" />
+      <TextArea fx:id="console" layoutX="467.0" layoutY="92.0" prefHeight="401.0" prefWidth="430.0" />
       <TabPane layoutX="14.0" layoutY="537.0" prefHeight="368.0" prefWidth="882.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Vamp">
@@ -25,7 +27,10 @@
                      <children>
                         <ScrollPane layoutX="14.0" layoutY="43.0" prefHeight="278.0" prefWidth="350.0">
                           <content>
-                            <AnchorPane fx:id="vampAvailable" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="272.0" prefWidth="342.0">
+                                 <children>
+                                    <ListView fx:id="vampAvailable" prefHeight="275.0" prefWidth="343.0" />
+                                 </children></AnchorPane>
                           </content>
                         </ScrollPane>
                         <Label layoutX="14.0" layoutY="20.0" text="Available Plugins" />
@@ -34,9 +39,9 @@
                               <Font size="28.0" />
                            </font>
                         </Label>
-                        <Label fx:id="vampDescription" layoutX="395.0" layoutY="86.0" text="Chordino VAMP Plugin" />
-                        <Button fx:id="vampSettings" layoutX="395.0" layoutY="119.0" mnemonicParsing="false" text="Settings" />
-                        <Button fx:id="vampAnalyse" layoutX="477.0" layoutY="119.0" mnemonicParsing="false" text="Analyse" />
+                        <Label fx:id="vampDescription" layoutX="395.0" layoutY="86.0" prefHeight="45.0" prefWidth="460.0" text="Chordino VAMP Plugin" wrapText="true" />
+                        <Button fx:id="vampSettings" layoutX="395.0" layoutY="142.0" mnemonicParsing="false" onAction="#printVampSettings" text="Settings" />
+                        <Button fx:id="vampAnalyse" layoutX="477.0" layoutY="142.0" mnemonicParsing="false" onAction="#runVampAnalysis" text="Analyse" />
                      </children>
                   </AnchorPane>
             </content>
@@ -47,7 +52,10 @@
                      <children>
                         <ScrollPane layoutX="14.0" layoutY="43.0" prefHeight="278.0" prefWidth="350.0">
                            <content>
-                              <AnchorPane fx:id="caAvailable" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <ListView fx:id="caAvailable" prefHeight="275.0" prefWidth="349.0" />
+                                 </children></AnchorPane>
                            </content>
                         </ScrollPane>
                         <Label layoutX="14.0" layoutY="20.0" text="Available Plugins" />
@@ -56,9 +64,9 @@
                               <Font size="28.0" />
                            </font>
                         </Label>
-                        <Label fx:id="caDescription" layoutX="395.0" layoutY="86.0" text="Chordino VAMP Plugin" />
-                        <Button fx:id="caSettings" layoutX="395.0" layoutY="119.0" mnemonicParsing="false" text="Settings" />
-                        <Button fx:id="caAnalyse" layoutX="477.0" layoutY="119.0" mnemonicParsing="false" text="Analyse" />
+                        <Label fx:id="caDescription" layoutX="395.0" layoutY="86.0" prefHeight="47.0" prefWidth="469.0" text="Chordino VAMP Plugin" wrapText="true" />
+                        <Button fx:id="caSettings" layoutX="395.0" layoutY="142.0" mnemonicParsing="false" onAction="#printChordAnalyserSettings" text="Settings" />
+                        <Button fx:id="caAnalyse" layoutX="477.0" layoutY="142.0" mnemonicParsing="false" onAction="#runChordAnalyserAnalysis" text="Analyse" />
                      </children>
                   </AnchorPane>
                </content>
@@ -69,7 +77,10 @@
                      <children>
                         <ScrollPane layoutX="14.0" layoutY="43.0" prefHeight="278.0" prefWidth="350.0">
                            <content>
-                              <AnchorPane fx:id="chrAvailable" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <ListView fx:id="chrAvailable" prefHeight="276.0" prefWidth="348.0" />
+                                 </children></AnchorPane>
                            </content>
                         </ScrollPane>
                         <Label layoutX="14.0" layoutY="20.0" text="Available Plugins" />
@@ -78,9 +89,9 @@
                               <Font size="28.0" />
                            </font>
                         </Label>
-                        <Label fx:id="chrDescription" layoutX="395.0" layoutY="86.0" text="Chordino VAMP Plugin" />
-                        <Button fx:id="chrSettings" layoutX="395.0" layoutY="119.0" mnemonicParsing="false" text="Settings" />
-                        <Button fx:id="chrAnalyse" layoutX="477.0" layoutY="119.0" mnemonicParsing="false" text="Analyse" />
+                        <Label fx:id="chrDescription" layoutX="395.0" layoutY="86.0" prefHeight="45.0" prefWidth="470.0" text="Chordino VAMP Plugin" wrapText="true" />
+                        <Button fx:id="chrSettings" layoutX="395.0" layoutY="142.0" mnemonicParsing="false" onAction="#printChromaAnalyserSettings" text="Settings" />
+                        <Button fx:id="chrAnalyse" layoutX="477.0" layoutY="142.0" mnemonicParsing="false" onAction="#runChromaAnalyserAnalysis" text="Analyse" />
                      </children>
                   </AnchorPane>
                </content>
@@ -89,25 +100,40 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ScrollPane layoutX="14.0" layoutY="43.0" prefHeight="278.0" prefWidth="350.0">
+                        <ScrollPane layoutX="14.0" layoutY="43.0" prefHeight="220.0" prefWidth="350.0">
                            <content>
-                              <AnchorPane fx:id="ppAvailable" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <ListView fx:id="ppAvailable" prefHeight="217.0" prefWidth="349.0" />
+                                 </children></AnchorPane>
                            </content>
                         </ScrollPane>
-                        <Label layoutX="14.0" layoutY="20.0" text="Available Plugins" />
+                        <Label layoutX="14.0" layoutY="20.0" text="Available FIlters" />
                         <Label fx:id="ppTitle" layoutX="395.0" layoutY="43.0" text="Chordino">
                            <font>
                               <Font size="28.0" />
                            </font>
                         </Label>
-                        <Label fx:id="ppDescription" layoutX="395.0" layoutY="86.0" text="Chordino VAMP Plugin" />
-                        <Button fx:id="ppSettings" layoutX="395.0" layoutY="119.0" mnemonicParsing="false" text="Settings" />
-                        <Button fx:id="ppAnalyse" layoutX="477.0" layoutY="119.0" mnemonicParsing="false" text="Analyze" />
+                        <Label fx:id="ppDescription" layoutX="395.0" layoutY="86.0" prefHeight="48.0" prefWidth="472.0" text="Chordino VAMP Plugin" wrapText="true" />
+                        <Button fx:id="ppSettings" layoutX="395.0" layoutY="142.0" mnemonicParsing="false" onAction="#printPostProcessingSettings" text="Settings" />
+                        <Button fx:id="ppAnalyse" layoutX="477.0" layoutY="142.0" mnemonicParsing="false" onAction="#runPostProcessingAnalysis" text="Analyze" />
+                        <TextField fx:id="ppExtension" layoutX="14.0" layoutY="295.0" prefHeight="26.0" prefWidth="351.0" />
+                        <Label layoutX="14.0" layoutY="272.0" prefHeight="16.0" prefWidth="87.0" text="Extension" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
         </tabs>
       </TabPane>
+      <Label layoutX="326.0" layoutY="39.0" prefHeight="34.0" prefWidth="264.0" text="Audio Analysis Tool">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <StackPane fx:id="browsePane" layoutX="14.0" layoutY="93.0" prefHeight="401.0" prefWidth="423.0">
+         <children>
+            <TreeView fx:id="browse" prefHeight="321.0" prefWidth="392.0" />
+         </children>
+      </StackPane>
    </children>
 </Pane>
