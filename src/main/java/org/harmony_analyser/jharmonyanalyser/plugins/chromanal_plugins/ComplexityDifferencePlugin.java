@@ -20,6 +20,7 @@ public class ComplexityDifferencePlugin extends ChromaAnalyserPlugin {
 	public ComplexityDifferencePlugin() {
 		key = "chroma_analyser:complexity_difference";
 		name = "Complexity Difference";
+		description = "Derives complexity differences from the subsequent chroma vectors";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas");

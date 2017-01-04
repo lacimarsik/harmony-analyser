@@ -20,6 +20,7 @@ public class SimpleDifferencePlugin extends ChromaAnalyserPlugin {
 	public SimpleDifferencePlugin() {
 		key = "chroma_analyser:simple_difference";
 		name = "Simple Difference";
+		description = "Derives simple differences from the subsequent chroma vectors";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas");

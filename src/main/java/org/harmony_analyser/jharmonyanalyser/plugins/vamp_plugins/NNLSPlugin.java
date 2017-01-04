@@ -50,6 +50,7 @@ public class NNLSPlugin extends VampPlugin {
 	public NNLSPlugin() throws PluginLoader.LoadFailedException {
 		key = "nnls-chroma:nnls-chroma";
 		name = "NNLS Chroma";
+		description = "NNLS Chroma VAMP Plugin";
 		outputNumber = 3;
 		outputType = OutputType.VALUE_AND_LABEL;
 		blockSize = 16384;
