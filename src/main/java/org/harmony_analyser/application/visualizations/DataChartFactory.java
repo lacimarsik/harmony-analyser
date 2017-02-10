@@ -26,7 +26,7 @@ public class DataChartFactory {
 			case "nnls-chroma:chordino-tones":
 			case "qm-vamp-plugins:qm-keydetector":
 				return new SegmentationDataChart(visualizationData);
-			case "chord_analyser:harmonic_complexity":
+			case "chord_analyser:average_chord_complexity_distance":
 				return new AveragesDataChart(visualizationData);
 			case "chord_analyser:chord_complexity_distance":
 			case "chroma_analyser:simple_difference":
