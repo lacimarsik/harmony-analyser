@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.AreaChart?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -32,12 +34,12 @@
             <Font size="27.0" />
          </font>
       </Label>
-      <Button fx:id="analyse2" layoutX="778.0" layoutY="128.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" text="Analyse" />
-      <Button fx:id="analyse3" layoutX="778.0" layoutY="162.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" text="Analyse" />
-      <Button fx:id="analyseAll" layoutX="778.0" layoutY="202.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" text="Analyse all" />
+      <Button fx:id="analyse2" layoutX="778.0" layoutY="128.0" mnemonicParsing="false" onAction="#analyse2Clicked" prefHeight="26.0" prefWidth="117.0" text="Analyse" />
+      <Button fx:id="analyse3" layoutX="778.0" layoutY="162.0" mnemonicParsing="false" onAction="#analyse3Clicked" prefHeight="26.0" prefWidth="117.0" text="Analyse" />
+      <Button fx:id="analyseAll" layoutX="778.0" layoutY="202.0" mnemonicParsing="false" onAction="#analyseAllClicked" prefHeight="26.0" prefWidth="117.0" text="Analyse all" />
       <Pane fx:id="pane1" layoutX="14.0" layoutY="262.0" prefHeight="217.0" prefWidth="879.0">
          <children>
-            <BarChart fx:id="barChart" layoutX="-4.0" layoutY="-1.0" prefHeight="200.0" prefWidth="887.0">
+            <BarChart fx:id="barChart1" layoutX="4.0" layoutY="-1.0" prefHeight="200.0" prefWidth="879.0">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
@@ -45,6 +47,78 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </BarChart>
+            <LineChart fx:id="lineChart1" layoutX="1.0" layoutY="-3.0" prefHeight="200.0" prefWidth="870.0" visible="false">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <AreaChart fx:id="areaChart1" layoutX="4.0" layoutY="3.0" prefHeight="190.0" prefWidth="879.0" visible="false">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </AreaChart>
+         </children>
+      </Pane>
+      <Pane fx:id="pane2" layoutX="14.0" layoutY="479.0" prefHeight="217.0" prefWidth="879.0">
+         <children>
+            <BarChart fx:id="barChart2" layoutX="4.0" layoutY="-1.0" prefHeight="200.0" prefWidth="879.0">
+               <xAxis>
+                  <CategoryAxis side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis side="LEFT" />
+               </yAxis>
+            </BarChart>
+            <LineChart fx:id="lineChart2" layoutX="1.0" layoutY="-3.0" prefHeight="200.0" prefWidth="870.0" visible="false">
+               <xAxis>
+                  <CategoryAxis side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis side="LEFT" />
+               </yAxis>
+            </LineChart>
+            <AreaChart fx:id="areaChart2" layoutX="4.0" layoutY="3.0" prefHeight="190.0" prefWidth="879.0" visible="false">
+               <xAxis>
+                  <CategoryAxis side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis side="LEFT" />
+               </yAxis>
+            </AreaChart>
+         </children>
+      </Pane>
+      <Pane fx:id="pane3" layoutX="14.0" layoutY="696.0" prefHeight="217.0" prefWidth="879.0">
+         <children>
+            <BarChart fx:id="barChart3" layoutX="4.0" layoutY="-1.0" prefHeight="200.0" prefWidth="879.0">
+               <xAxis>
+                  <CategoryAxis side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis side="LEFT" />
+               </yAxis>
+            </BarChart>
+            <LineChart fx:id="lineChart3" layoutX="1.0" layoutY="-3.0" prefHeight="200.0" prefWidth="870.0" visible="false">
+               <xAxis>
+                  <CategoryAxis side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis side="LEFT" />
+               </yAxis>
+            </LineChart>
+            <AreaChart fx:id="areaChart3" layoutX="4.0" layoutY="3.0" prefHeight="190.0" prefWidth="879.0" visible="false">
+               <xAxis>
+                  <CategoryAxis side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis side="LEFT" />
+               </yAxis>
+            </AreaChart>
          </children>
       </Pane>
    </children>
