@@ -1,6 +1,8 @@
 package org.harmony_analyser.application.visualizations;
 
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.Chart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
@@ -10,10 +12,16 @@ import java.util.ArrayList;
 
 public class DataChart {
 	final VisualizationData visualizationData;
+	public final XYChart.Series series1;
+	public final XYChart.Series series2;
+	public final XYChart.Series series3;
+	public String title;
+	public String xLabel;
+	public String yLabel;
 
 	static final java.util.List<Color> palette;
 	private static final int paletteStepCount = 2; // how many steps in one color space (R / G / B)
-	public Chart chart;
+	public BarChart<String, Number> barChart;
 
 	static {
 		palette = new ArrayList<>();
@@ -30,5 +38,8 @@ public class DataChart {
 
 	DataChart(VisualizationData visualizationData) {
 		this.visualizationData = visualizationData;
+		this.series1 = new XYChart.Series();
+		this.series2 = new XYChart.Series();
+		this.series3 = new XYChart.Series();
 	}
 }
