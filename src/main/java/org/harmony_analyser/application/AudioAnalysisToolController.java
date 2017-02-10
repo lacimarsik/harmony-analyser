@@ -4,7 +4,6 @@ import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.control.*;
-import javafx.scene.image.*;
 import javafx.scene.layout.StackPane;
 import java.io.*;
 import java.net.URL;
@@ -101,7 +100,7 @@ public class AudioAnalysisToolController implements Initializable {
 		DrawPanelFactory drawPanelFactory = new DrawPanelFactory();
 		audioAnalyser = new AudioAnalyser(analysisFactory, drawPanelFactory);
 
-		//create the tree view
+		// create the tree view
 		// TODO: Check unchecked assignments
 		browse = TreeViewBuilder.buildFileSystemBrowser();
 		browsePane.getChildren().add(browse);

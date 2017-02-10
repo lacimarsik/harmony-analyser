@@ -5,18 +5,29 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
 <!--suppress JavaFxDefaultTag, XmlUnusedNamespaceDeclaration -->
 
-<Pane fx:controller="org.harmony_analyser.application.VisualizationToolController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="924.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="924.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.harmony_analyser.application.VisualizationToolController">
    <children>
-      <TreeView fx:id="browse" layoutX="14.0" layoutY="14.0" prefHeight="127.0" prefWidth="365.0" />
-      <ChoiceBox fx:id="plugin1" layoutX="465.0" layoutY="14.0" prefHeight="15.0" prefWidth="148.0" />
-      <ChoiceBox fx:id="plugin2" layoutX="465.0" layoutY="64.0" prefHeight="15.0" prefWidth="148.0" />
-      <ChoiceBox fx:id="plugin3" layoutX="465.0" layoutY="115.0" prefHeight="15.0" prefWidth="148.0" />
-      <Label layoutX="394.0" layoutY="19.0" text="Plugin 1" />
-      <Label layoutX="394.0" layoutY="69.0" text="Plugin 2" />
-      <Label layoutX="394.0" layoutY="120.0" text="Plugin 3" />
-      <Button fx:id="analyse" layoutX="631.0" layoutY="14.0" mnemonicParsing="false" text="Analyse" />
+      <ChoiceBox fx:id="plugin1" layoutX="465.0" layoutY="94.0" prefHeight="15.0" prefWidth="148.0" />
+      <ChoiceBox fx:id="plugin2" layoutX="465.0" layoutY="144.0" prefHeight="15.0" prefWidth="148.0" />
+      <ChoiceBox fx:id="plugin3" layoutX="465.0" layoutY="195.0" prefHeight="15.0" prefWidth="148.0" />
+      <Label layoutX="394.0" layoutY="99.0" text="Plugin 1" />
+      <Label layoutX="394.0" layoutY="149.0" text="Plugin 2" />
+      <Label layoutX="394.0" layoutY="200.0" text="Plugin 3" />
+      <Button fx:id="analyse" layoutX="631.0" layoutY="94.0" mnemonicParsing="false" text="Analyse" />
+      <StackPane fx:id="browsePane" layoutX="14.0" layoutY="95.0" prefHeight="133.0" prefWidth="367.0">
+         <children>
+            <TreeView fx:id="browse" prefHeight="140.0" prefWidth="361.0" />
+         </children>
+      </StackPane>
+      <Label layoutX="323.0" layoutY="39.0" prefHeight="34.0" prefWidth="264.0" text="Visualization Tool">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
