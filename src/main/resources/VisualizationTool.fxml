@@ -12,13 +12,13 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="924.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.harmony_analyser.application.VisualizationToolController">
    <children>
-      <ChoiceBox fx:id="plugin1" layoutX="465.0" layoutY="94.0" prefHeight="15.0" prefWidth="148.0" />
-      <ChoiceBox fx:id="plugin2" layoutX="465.0" layoutY="144.0" prefHeight="15.0" prefWidth="148.0" />
-      <ChoiceBox fx:id="plugin3" layoutX="465.0" layoutY="195.0" prefHeight="15.0" prefWidth="148.0" />
+      <ChoiceBox fx:id="plugin1" layoutX="465.0" layoutY="94.0" prefHeight="26.0" prefWidth="298.0" />
+      <ChoiceBox fx:id="plugin2" layoutX="465.0" layoutY="128.0" prefHeight="26.0" prefWidth="298.0" />
+      <ChoiceBox fx:id="plugin3" layoutX="465.0" layoutY="162.0" prefHeight="26.0" prefWidth="298.0" />
       <Label layoutX="394.0" layoutY="99.0" text="Plugin 1" />
-      <Label layoutX="394.0" layoutY="149.0" text="Plugin 2" />
-      <Label layoutX="394.0" layoutY="200.0" text="Plugin 3" />
-      <Button fx:id="analyse" layoutX="631.0" layoutY="94.0" mnemonicParsing="false" text="Analyse" />
+      <Label layoutX="394.0" layoutY="133.0" text="Plugin 2" />
+      <Label layoutX="394.0" layoutY="167.0" text="Plugin 3" />
+      <Button fx:id="analyse1" layoutX="778.0" layoutY="94.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" text="Analyse" />
       <StackPane fx:id="browsePane" layoutX="14.0" layoutY="95.0" prefHeight="133.0" prefWidth="367.0">
          <children>
             <TreeView fx:id="browse" prefHeight="140.0" prefWidth="361.0" />
@@ -29,5 +29,8 @@
             <Font size="27.0" />
          </font>
       </Label>
+      <Button fx:id="analyse2" layoutX="778.0" layoutY="128.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" text="Analyse" />
+      <Button fx:id="analyse3" layoutX="778.0" layoutY="162.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" text="Analyse" />
+      <Button fx:id="analyseAll" layoutX="778.0" layoutY="202.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" text="Analyse all" />
    </children>
 </Pane>

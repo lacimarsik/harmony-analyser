@@ -1,5 +1,7 @@
 package org.harmony_analyser.application;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
@@ -7,6 +9,7 @@ import org.harmony_analyser.application.visualizations.DrawPanelFactory;
 import org.harmony_analyser.jharmonyanalyser.services.AnalysisFactory;
 import org.harmony_analyser.jharmonyanalyser.services.AudioAnalyser;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,19 +22,28 @@ public class VisualizationToolController implements Initializable {
 	private StackPane browsePane;
 
 	@FXML
-	private TreeView<?> browse;
+	private TreeView<File> browse;
 
 	@FXML
-	private ChoiceBox<?> plugin1;
+	private ChoiceBox<String> plugin1;
 
 	@FXML
-	private ChoiceBox<?> plugin2;
+	private ChoiceBox<String> plugin2;
 
 	@FXML
-	private ChoiceBox<?> plugin3;
+	private ChoiceBox<String> plugin3;
 
 	@FXML
-	private Button analyse;
+	private Button analyse1;
+
+	@FXML
+	private Button analyse2;
+
+	@FXML
+	private Button analyse3;
+
+	@FXML
+	private Button analyseAll;
 
 	private AudioAnalyser audioAnalyser;
 
@@ -46,5 +58,10 @@ public class VisualizationToolController implements Initializable {
 		// TODO: Check unchecked assignments
 		browse = TreeViewBuilder.buildFileSystemBrowser();
 		browsePane.getChildren().add(browse);
+
+		ObservableList<String> visualizationPlugins = FXCollections.observableArrayList(audioAnalyser.getAllVisualizations());
+		plugin1.setItems(visualizationPlugins);
+		plugin2.setItems(visualizationPlugins);
+		plugin3.setItems(visualizationPlugins);
 	}
 }
