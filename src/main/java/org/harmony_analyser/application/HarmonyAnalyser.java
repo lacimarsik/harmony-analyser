@@ -1,29 +1,26 @@
 package org.harmony_analyser.application;
 
-import javafx.application.Platform;
+import javafx.application.Application;
+import javafx.embed.swing.JFXPanel;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.*;
-import org.harmony_analyser.jharmonyanalyser.services.*;
-import org.harmony_analyser.application.visualizations.*;
-import org.harmony_analyser.jharmonyanalyser.chord_analyser.*;
-import org.harmony_analyser.jharmonyanalyser.chroma_analyser.Chroma;
+import javafx.scene.SubScene;
+import javafx.scene.control.Tab;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
-import javax.sound.midi.*;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.nio.file.*;
-import java.nio.file.attribute.*;
-import java.util.List;
-import javafx.embed.swing.*;
+import java.io.IOException;
 
 /**
  * GUI for HarmonyAnalyser
  */
 
 @SuppressWarnings("ConstantConditions")
-class HarmonyAnalyser extends JFrame {
+public class HarmonyAnalyser extends Application {
+	/*
 	private JTabbedPane tabbedPane;
 	private JButton selectMidiButton;
 	private JTextPane midiSelectionPane;
@@ -153,6 +150,25 @@ class HarmonyAnalyser extends JFrame {
 	private Chord chord1, chord2 = Chord.EMPTY_CHORD;
 	private final MidiHandler midiHandler;
 	private final AudioAnalyser audioAnalyser;
+*/
+
+	@Override
+	public void start(Stage primaryStage) throws Exception{
+		ClassLoader classLoader = getClass().getClassLoader();
+		Parent root = FXMLLoader.load(classLoader.getResource("HarmonyAnalyser.fxml"));
+		primaryStage.setTitle("Harmony Analyser 1.2-beta");
+
+		//System.setProperty( "javafx.userAgentStylesheetUrl", "CASPIAN" );
+
+		primaryStage.setScene(new Scene(root));
+		primaryStage.show();
+	}
+
+	public static void main(String[] args) {
+		launch(args);
+	}
+}
+
 
 	/* Public / Package methods */
 
@@ -160,9 +176,9 @@ class HarmonyAnalyser extends JFrame {
 	 * Launch the application.
 	 */
 
-	public static void main(String[] args) {
-		new HarmonyAnalyser();
-	}
+	//public static void main(String[] args) {
+	//	new HarmonyAnalyser();
+	//}
 
 	/* Private methods */
 
@@ -170,9 +186,9 @@ class HarmonyAnalyser extends JFrame {
 	 * Initialize the application.
 	 */
 
-	private HarmonyAnalyser() {
+	//private HarmonyAnalyser() {
 		/* GUI - Initialization */
-
+/*
 		setContentPane(rootPanel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Harmony Analyser 1.2-beta");
@@ -215,9 +231,9 @@ class HarmonyAnalyser extends JFrame {
 		visualizationTool.setLayout(new GridLayout());
 		visualizationTool.add(visualizationToolJFXPanel);
 		visualizationTool.revalidate();
-
+*/
 		/* Services and Visualizations - Initialization */
-
+/*
 		AnalysisFactory analysisFactory = new AnalysisFactory();
 		DataChartFactory dataChartFactory = new DataChartFactory();
 		DrawPanelFactory drawPanelFactory = new DrawPanelFactory();
@@ -230,9 +246,9 @@ class HarmonyAnalyser extends JFrame {
 			MidiHandler.EMPTY_MIDI_DEVICE,
 			MidiHandler.EMPTY_MIDI_DECODER
 		);
-
+*/
 		/* Chord Transition Tool - Initialization */
-
+/*
 		searchForMidiDevices();
 
 		selectMidiButton.addActionListener(actionEvent -> {
@@ -350,9 +366,9 @@ class HarmonyAnalyser extends JFrame {
 		playButtonOne.addActionListener(actionEvent -> midiHandler.play(chord1));
 
 		playButtonTwo.addActionListener(actionEvent -> midiHandler.play(chord2));
-
+*/
 		/* Audio Analysis Tool - Initialization */
-
+/*
 		consoleTextPane.setText(consoleTextPane.getText() + "\n");
 
 		listPluginsButton.addActionListener(actionEvent -> {
@@ -489,9 +505,9 @@ class HarmonyAnalyser extends JFrame {
 				analyzeFolder(consoleTextPane, inputFolderTextField, "filters:time_series", extension);
 			}
 		});
-
+*/
 		/* Visualization Tool - Initialization */
-
+/*
 		visualizationConsoleTextPane.setText(visualizationConsoleTextPane.getText() + "\n");
 
 		String[] visualizationPlugins = audioAnalyser.getAllVisualizations();
@@ -535,9 +551,9 @@ class HarmonyAnalyser extends JFrame {
 			}
 		});
 	}
-
+*/
 	/* Chord Transition Tool - Handling methods */
-
+/*
 	// Obtain information about all the installed input MIDI devices
 	private void searchForMidiDevices() {
 		String[] inputDevices = midiHandler.getInputDeviceList();
@@ -570,9 +586,9 @@ class HarmonyAnalyser extends JFrame {
 		txtTransition.setCaretPosition(0);
 		txtTransitionComplexity.setText(Integer.toString(Harmanal.getTransitionComplexity(chord1, chord2)));
 	}
-
+*/
 	/* Audio Analysis Tool - Handling methods */
-
+/*
 	private void analyzeFolder(JTextPane consolePane, JTextField inputFolderTextField, String pluginKey, String suffixAndExtension) {
 		try {
 			consolePane.setText(consolePane.getText() + "\n\n> Analyzing input folder using plugin: " + pluginKey);
@@ -614,9 +630,9 @@ class HarmonyAnalyser extends JFrame {
 			ex.printStackTrace();
 		}
 	}
-
+*/
 	/* Visualization Tool - Handling methods */
-
+/*
 	private void performSelectedVisualization(JComboBox comboBox, JPanel parentPanel, String inputFile, JTextPane consoleTextPane) throws AudioAnalyser.LoadFailedException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputNotReady, IOException, Chroma.WrongChromaSize, AudioAnalyser.ParseOutputError {
 		String pluginKey = comboBox.getSelectedItem().toString();
 
@@ -637,9 +653,9 @@ class HarmonyAnalyser extends JFrame {
 		parentPanel.add(drawPanel);
 		parentPanel.revalidate();
 	}
-
+*/
 	/* Helpers */
-
+/*
 	private String listToString(List<String> list) {
 		String result = "";
 		for (int i = 0; i < list.size(); i++) {
@@ -652,3 +668,4 @@ class HarmonyAnalyser extends JFrame {
 		return result;
 	}
 }
+*/

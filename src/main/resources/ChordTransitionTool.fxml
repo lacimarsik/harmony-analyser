@@ -43,19 +43,19 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <TabPane layoutX="25.0" layoutY="446.0" prefHeight="534.0" prefWidth="860.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="23.0" layoutY="430.0" prefHeight="488.0" prefWidth="860.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Chord Mode">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="536.0" prefWidth="860.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="462.0" prefWidth="860.0">
                      <children>
-                        <SplitPane dividerPositions="0.7328767123287672" orientation="VERTICAL" prefHeight="487.0" prefWidth="860.0">
+                        <SplitPane dividerPositions="0.7211981566820277" layoutY="2.0" orientation="VERTICAL" prefHeight="451.0" prefWidth="860.0">
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="261.0" prefWidth="858.0">
                                  <children>
                                     <SplitPane dividerPositions="0.5" prefHeight="354.0" prefWidth="860.0">
                                       <items>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="264.0" prefWidth="413.0">
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="423.0">
                                              <children>
                                                 <Pane prefHeight="332.0" prefWidth="860.0">
                                                    <children>
@@ -173,7 +173,7 @@
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="117.0" prefWidth="858.0">
                                  <children>
-                                    <Pane layoutX="-1.0" prefHeight="123.0" prefWidth="860.0">
+                                    <Pane layoutX="-1.0" layoutY="-1.0" prefHeight="131.0" prefWidth="853.0">
                                        <children>
                                           <Label layoutX="14.0" layoutY="14.0" text="Chord Complexity Distance">
                                              <font>
@@ -185,17 +185,17 @@
                                                 <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
-                                          <TextArea fx:id="ccd" layoutX="366.0" layoutY="52.0" prefHeight="53.0" prefWidth="77.0">
+                                          <TextArea fx:id="ccd" layoutX="364.0" layoutY="43.0" prefHeight="53.0" prefWidth="77.0">
                                              <font>
                                                 <Font name="System Bold" size="18.0" />
                                              </font>
                                           </TextArea>
-                                          <TextArea fx:id="tps" layoutX="590.0" layoutY="54.0" prefHeight="53.0" prefWidth="74.0">
+                                          <TextArea fx:id="tps" layoutX="556.0" layoutY="43.0" prefHeight="53.0" prefWidth="74.0">
                                              <font>
                                                 <Font name="System Bold" size="18.0" />
                                              </font>
                                           </TextArea>
-                                          <ScrollPane layoutX="14.0" layoutY="49.0" prefHeight="72.0" prefWidth="341.0">
+                                          <ScrollPane layoutX="14.0" layoutY="43.0" prefHeight="72.0" prefWidth="341.0">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="149.0" prefWidth="222.0">
                                                    <children>
