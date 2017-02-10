@@ -14,7 +14,7 @@ import java.util.*;
 @SuppressWarnings("SameParameterValue")
 public class AudioAnalyser {
 	private final AnalysisFactory analysisFactory;
-	private final DrawPanelFactory drawPanelFactory;
+	private final DataChartFactory dataChartFactory;
 
 	public static class IncorrectInputException extends Exception {
 		public IncorrectInputException(String message) {
@@ -46,17 +46,24 @@ public class AudioAnalyser {
 		}
 	}
 
-
-	// Dependency injection: AnalysisFactory, DrawPanelFactory
-	public AudioAnalyser(AnalysisFactory analysisFactory, DrawPanelFactory drawPanelFactory) {
+	// Dependency injection: AnalysisFactory, DataChartFactory
+	public AudioAnalyser(AnalysisFactory analysisFactory, DataChartFactory dataChartFactory) {
 		this.analysisFactory = analysisFactory;
-		this.drawPanelFactory = drawPanelFactory;
+		this.dataChartFactory = dataChartFactory;
 	}
 
 	/* Public / Package methods */
 
+	public String[] getAllWrappedVampPlugins() { return analysisFactory.getWrappedVampPlugins(); }
+
+	public String[] getAllChordAnalyserPlugins() { return analysisFactory.getChordAnalyserPlugins(); }
+
+	public String[] getAllChromaAnalyserPlugins() { return analysisFactory.getChromaAnalyserPlugins(); }
+
+	public String[] getAllPostProcessingFilters() { return analysisFactory.getPostProcessingFilters(); }
+
 	public String[] getAllVisualizations() {
-		return drawPanelFactory.getAllVisualizations();
+		return dataChartFactory.getAllVisualizations();
 	}
 
 	public String printPlugins() {
@@ -67,9 +74,9 @@ public class AudioAnalyser {
 			result += availablePluginKey + "\n";
 		}
 
-		result += "\n> Available visualizations (" + drawPanelFactory.getAllVisualizations().length + "):\n";
+		result += "\n> Available visualizations (" + dataChartFactory.getAllVisualizations().length + "):\n";
 
-		for (String availablePluginKey : drawPanelFactory.getAllVisualizations()) {
+		for (String availablePluginKey : dataChartFactory.getAllVisualizations()) {
 			result += availablePluginKey + "\n";
 		}
 
@@ -101,6 +108,14 @@ public class AudioAnalyser {
 		return result;
 	}
 
+	public String getPluginName(String pluginKey) throws LoadFailedException {
+		return analysisFactory.createPlugin(pluginKey).name;
+	}
+
+	public String getPluginDescription(String pluginKey) throws LoadFailedException {
+		return analysisFactory.createPlugin(pluginKey).description;
+	}
+
 	public String printParameters(String pluginKey) throws LoadFailedException {
 		return analysisFactory.createPlugin(pluginKey).printParameters();
 	}
@@ -109,7 +124,7 @@ public class AudioAnalyser {
 		return analysisFactory.createPlugin(analysisKey).analyse(inputFile, force, verbose);
 	}
 
-	public DrawPanel createDrawPanel(String inputFile, String pluginKey) throws LoadFailedException, OutputNotReady, ParseOutputError, IOException {
-		return drawPanelFactory.createDrawPanel(pluginKey, analysisFactory.createPlugin(pluginKey).getDataFromOutput(inputFile));
+	public DataChart createDataChart(String inputFile, String pluginKey) throws LoadFailedException, OutputNotReady, ParseOutputError, IOException {
+		return dataChartFactory.createDataChart(pluginKey, analysisFactory.createPlugin(pluginKey).getDataFromOutput(inputFile));
 	}
 }

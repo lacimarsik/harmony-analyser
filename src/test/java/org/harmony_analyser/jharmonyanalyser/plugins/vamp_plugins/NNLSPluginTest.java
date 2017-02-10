@@ -2,7 +2,6 @@ package org.harmony_analyser.jharmonyanalyser.plugins.vamp_plugins;
 
 import org.harmony_analyser.jharmonyanalyser.services.*;
 import org.harmony_analyser.jharmonyanalyser.chroma_analyser.Chroma;
-import org.harmony_analyser.jharmonyanalyser.plugins.*;
 import org.junit.*;
 import java.io.*;
 import java.util.*;

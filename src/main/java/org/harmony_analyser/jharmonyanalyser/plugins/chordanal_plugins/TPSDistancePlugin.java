@@ -37,6 +37,7 @@ public class TPSDistancePlugin extends LineChartPlugin {
 	public TPSDistancePlugin() {
 		key = "chord_analyser:tps_distance";
 		name = "TPS Distance";
+		description = "Derives TPS distances from the subsequent chords";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chordino-labels");
@@ -122,7 +123,6 @@ public class TPSDistancePlugin extends LineChartPlugin {
 		float chordLabelTimestamp;
 		float chordTimestamp;
 		int keyIndex = 0;
-		float keyTimestamp;
 		String chordLabel;
 		Chord chord;
 		Tone chordRoot;

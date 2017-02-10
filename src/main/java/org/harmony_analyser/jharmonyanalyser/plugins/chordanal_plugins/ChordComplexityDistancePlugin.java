@@ -30,6 +30,7 @@ public class ChordComplexityDistancePlugin extends ChordAnalyserPlugin {
 	public ChordComplexityDistancePlugin() {
 		key = "chord_analyser:chord_complexity_distance";
 		name = "Chord Complexity Distance";
+		description = "Derives chord complexity distances from the subsequent chords";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chromas");

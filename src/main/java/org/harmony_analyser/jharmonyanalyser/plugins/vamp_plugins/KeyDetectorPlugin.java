@@ -39,6 +39,7 @@ public class KeyDetectorPlugin extends SegmentationVampPlugin {
 	public KeyDetectorPlugin() throws PluginLoader.LoadFailedException {
 		key = "qm-vamp-plugins:qm-keydetector";
 		name = "Key Detector";
+		description = "Key Detector QM Vamp Plugin";
 		outputNumber = 2;
 		outputType = OutputType.LABEL_ONLY;
 		blockSize = 16384;

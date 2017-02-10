@@ -2,7 +2,6 @@ package org.harmony_analyser.jharmonyanalyser.plugins.chordanal_plugins;
 
 import org.harmony_analyser.jharmonyanalyser.services.AudioAnalyser;
 import org.harmony_analyser.jharmonyanalyser.chroma_analyser.Chroma;
-import org.harmony_analyser.jharmonyanalyser.plugins.AnalysisPlugin;
 import org.harmony_analyser.jharmonyanalyser.plugins.vamp_plugins.*;
 import org.junit.Before;
 import org.junit.Test;

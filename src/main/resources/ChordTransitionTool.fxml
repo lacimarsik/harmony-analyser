@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<!--suppress JavaFxDefaultTag, XmlUnusedNamespaceDeclaration -->
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="924.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.harmony_analyser.application.ChordTransitionToolController">
+   <children>
+      <ImageView fitHeight="239.0" fitWidth="792.0" layoutX="58.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@keyboard.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="midiListRefresh" layoutX="60.0" layoutY="310.0" mnemonicParsing="false" onAction="#searchForMidiDevices" prefHeight="39.0" prefWidth="393.0" text="MIDI Input Devices">
+         <graphic>
+            <ImageView fitHeight="34.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@refresh.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <ScrollPane layoutX="60.0" layoutY="349.0" prefHeight="70.0" prefWidth="393.0">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="78.0" prefWidth="371.0">
+               <children>
+                  <ListView fx:id="midiList" onMouseClicked="#selectMidiDevice" prefHeight="80.0" prefWidth="373.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+      <TabPane layoutX="23.0" layoutY="430.0" prefHeight="488.0" prefWidth="860.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Chord Mode">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="462.0" prefWidth="860.0">
+                     <children>
+                        <SplitPane dividerPositions="0.7211981566820277" layoutY="2.0" orientation="VERTICAL" prefHeight="451.0" prefWidth="860.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="261.0" prefWidth="858.0">
+                                 <children>
+                                    <SplitPane dividerPositions="0.5" prefHeight="354.0" prefWidth="860.0">
+                                      <items>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="354.0" prefWidth="423.0">
+                                             <children>
+                                                <Pane prefHeight="332.0" prefWidth="860.0">
+                                                   <children>
+                                                      <Button fx:id="play1" layoutX="154.0" layoutY="14.0" mnemonicParsing="false" onAction="#playChord1" prefHeight="22.0" prefWidth="81.0" text="Play">
+                                                         <graphic>
+                                                            <ImageView fitHeight="23.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@play.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label layoutX="15.0" layoutY="61.0" text="Name" />
+                                                      <TextArea fx:id="name1" layoutX="94.0" layoutY="61.0" prefHeight="48.0" prefWidth="288.0" />
+                                                      <Label layoutX="15.0" layoutY="109.0" text="Pitches" />
+                                                      <TextField fx:id="pitchesRelative1" layoutX="94.0" layoutY="104.0" prefHeight="26.0" prefWidth="288.0" style="-fx-border-color: #000;" />
+                                                      <TextField fx:id="pitchesAbsolute1" layoutX="94.0" layoutY="130.0" prefHeight="26.0" prefWidth="288.0" style="-fx-border-color: #000;" />
+                                                      <Label layoutX="15.0" layoutY="156.0" text="Structure" />
+                                                      <ScrollPane layoutX="94.0" layoutY="158.0" prefHeight="48.0" prefWidth="288.0">
+                                                         <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="45.0" prefWidth="267.0">
+                                                               <children>
+                                                                  <TextArea fx:id="structure1" prefHeight="54.0" prefWidth="268.0" />
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </content>
+                                                      </ScrollPane>
+                                                      <Label layoutX="15.0" layoutY="216.0" text="List of Functions / Chord Complexity" />
+                                                      <ScrollPane layoutX="15.0" layoutY="232.0" prefHeight="72.0" prefWidth="306.0">
+                                                        <content>
+                                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="70.0" prefWidth="303.0">
+                                                               <children>
+                                                                  <TextArea fx:id="functions1" layoutY="-2.0" prefHeight="70.0" prefWidth="305.0" />
+                                                               </children>
+                                                            </AnchorPane>
+                                                        </content>
+                                                      </ScrollPane>
+                                                      <TextArea fx:id="complexity1" layoutX="326.0" layoutY="232.0" prefHeight="39.0" prefWidth="57.0">
+                                                         <font>
+                                                            <Font name="System Bold" size="18.0" />
+                                                         </font>
+                                                      </TextArea>
+                                                      <ToggleButton fx:id="record1" layoutX="16.0" layoutY="14.0" mnemonicParsing="false" onAction="#capture1" prefHeight="22.0" prefWidth="139.0" text="Record">
+                                                         <graphic>
+                                                            <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@record.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </ToggleButton>
+                                                   </children>
+                                                </Pane>
+                                             </children>
+                                          </AnchorPane>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                             <children>
+                                                <Pane layoutY="-2.0" prefHeight="333.0" prefWidth="426.0">
+                                                   <children>
+                                                      <Button fx:id="play2" layoutX="154.0" layoutY="15.0" mnemonicParsing="false" onAction="#playChord2" prefHeight="22.0" prefWidth="78.0" text="Play">
+                                                         <graphic>
+                                                            <ImageView fitHeight="23.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@play.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label layoutX="14.0" layoutY="58.0" text="Name" />
+                                                      <TextArea fx:id="name2" layoutX="93.0" layoutY="58.0" prefHeight="48.0" prefWidth="288.0" />
+                                                      <Label layoutX="14.0" layoutY="158.0" text="Structure" />
+                                                      <ScrollPane layoutX="93.0" layoutY="158.0" prefHeight="48.0" prefWidth="288.0">
+                                                         <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="45.0" prefWidth="267.0">
+                                                               <children>
+                                                                  <TextArea fx:id="structure2" prefHeight="47.0" prefWidth="267.0" />
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </content>
+                                                      </ScrollPane>
+                                                      <Label layoutX="14.0" layoutY="111.0" text="Pitches" />
+                                                      <TextField fx:id="pitchesRelative2" layoutX="93.0" layoutY="106.0" prefHeight="26.0" prefWidth="288.0" style="-fx-border-color: #000;" />
+                                                      <TextField fx:id="pitchesAbsolute2" layoutX="93.0" layoutY="132.0" prefHeight="26.0" prefWidth="288.0" style="-fx-border-color: #000;" />
+                                                      <Label layoutX="14.0" layoutY="221.0" text="List of Functions / Chord Complexity" />
+                                                      <ScrollPane layoutX="17.0" layoutY="237.0" prefHeight="72.0" prefWidth="306.0">
+                                                         <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="68.0" prefWidth="282.0">
+                                                               <children>
+                                                                  <TextArea fx:id="functions2" prefHeight="70.0" prefWidth="282.0" />
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </content>
+                                                      </ScrollPane>
+                                                      <TextArea fx:id="complexity2" layoutX="329.0" layoutY="238.0" prefHeight="39.0" prefWidth="57.0">
+                                                         <font>
+                                                            <Font name="System Bold" size="18.0" />
+                                                         </font>
+                                                      </TextArea>
+                                                      <ToggleButton fx:id="record2" layoutX="17.0" layoutY="15.0" mnemonicParsing="false" onAction="#capture2" prefHeight="22.0" prefWidth="139.0" text="Record">
+                                                         <graphic>
+                                                            <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@record.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </ToggleButton>
+                                                   </children>
+                                                </Pane>
+                                             </children>
+                                          </AnchorPane>
+                                      </items>
+                                    </SplitPane>
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="117.0" prefWidth="858.0">
+                                 <children>
+                                    <Pane layoutX="-1.0" layoutY="-1.0" prefHeight="131.0" prefWidth="853.0">
+                                       <children>
+                                          <Label layoutX="14.0" layoutY="14.0" text="Chord Complexity Distance">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="556.0" layoutY="16.0" text="TPS Distance">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <TextArea fx:id="ccd" layoutX="364.0" layoutY="43.0" prefHeight="53.0" prefWidth="77.0">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </TextArea>
+                                          <TextArea fx:id="tps" layoutX="556.0" layoutY="43.0" prefHeight="53.0" prefWidth="74.0">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </TextArea>
+                                          <ScrollPane layoutX="14.0" layoutY="43.0" prefHeight="72.0" prefWidth="341.0">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="149.0" prefWidth="222.0">
+                                                   <children>
+                                                      <TextArea fx:id="ccdList" prefHeight="200.0" prefWidth="326.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Chroma Mode">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="505.0" prefWidth="860.0">
+                           <children>
+                              <Slider fx:id="keyboardSensitivity" layoutX="43.0" layoutY="50.0" value="50.0" />
+                              <Label layoutX="43.0" layoutY="30.0" text="Keyboard sensitivity" />
+                              <TextField fx:id="SensitivityValue" layoutX="86.0" layoutY="76.0" prefHeight="21.0" prefWidth="46.0" text="50" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <ScrollPane layoutX="457.0" layoutY="309.0" prefHeight="110.0" prefWidth="393.0">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="103.0" prefWidth="372.0">
+               <children>
+                  <TextArea fx:id="midiDeviceInfo" prefHeight="105.0" prefWidth="393.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+      <Label layoutX="323.0" layoutY="38.0" prefHeight="34.0" prefWidth="292.0" text="Chord Transition Tool">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

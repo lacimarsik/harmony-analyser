@@ -22,6 +22,7 @@ public abstract class Analysis {
 	protected static String outputFileSuffix;
 	protected String key;
 	protected String name;
+	protected String description;
 	protected Map<String, Float> parameters;
 
 	/* Public / Package methods */

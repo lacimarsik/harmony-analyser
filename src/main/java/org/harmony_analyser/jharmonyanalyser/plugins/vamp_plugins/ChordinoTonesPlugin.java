@@ -51,6 +51,7 @@ public class ChordinoTonesPlugin extends SegmentationVampPlugin {
 	public ChordinoTonesPlugin() throws PluginLoader.LoadFailedException {
 		key = "nnls-chroma:chordino";
 		name = "Chordino";
+		description = "Chordino VAMP Plugin - outputting chord tones";
 		outputNumber = 1;
 		outputType = OutputType.VALUE_AND_LABEL;
 		blockSize = 16384;
