@@ -39,7 +39,7 @@
       <Button fx:id="analyseAll" layoutX="778.0" layoutY="202.0" mnemonicParsing="false" onAction="#analyseAllClicked" prefHeight="26.0" prefWidth="117.0" text="Analyse all" />
       <Pane fx:id="pane1" layoutX="14.0" layoutY="262.0" prefHeight="217.0" prefWidth="879.0">
          <children>
-            <BarChart fx:id="barChart1" layoutX="4.0" layoutY="-1.0" prefHeight="200.0" prefWidth="879.0">
+            <BarChart fx:id="barChart1" layoutX="4.0" layoutY="-1.0" prefHeight="217.0" prefWidth="879.0">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
@@ -67,7 +67,7 @@
       </Pane>
       <Pane fx:id="pane2" layoutX="14.0" layoutY="479.0" prefHeight="217.0" prefWidth="879.0">
          <children>
-            <BarChart fx:id="barChart2" layoutX="4.0" layoutY="-1.0" prefHeight="200.0" prefWidth="879.0">
+            <BarChart fx:id="barChart2" layoutX="4.0" layoutY="-1.0" prefHeight="217.0" prefWidth="879.0">
                <xAxis>
                   <CategoryAxis side="BOTTOM" />
                </xAxis>
@@ -95,7 +95,7 @@
       </Pane>
       <Pane fx:id="pane3" layoutX="14.0" layoutY="696.0" prefHeight="217.0" prefWidth="879.0">
          <children>
-            <BarChart fx:id="barChart3" layoutX="4.0" layoutY="-1.0" prefHeight="200.0" prefWidth="879.0">
+            <BarChart fx:id="barChart3" layoutX="4.0" layoutY="-1.0" prefHeight="217.0" prefWidth="879.0">
                <xAxis>
                   <CategoryAxis side="BOTTOM" />
                </xAxis>

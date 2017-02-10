@@ -8,7 +8,7 @@ class LineDataChart extends DataChart {
 
 		title = visualizationData.getPluginName();
 		xLabel = "Time";
-		yLabel = "Distance";
+		yLabel = "Dist.";
 		series1.setName("Distances");
 		type = "line";
 

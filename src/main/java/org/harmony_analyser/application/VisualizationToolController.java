@@ -157,6 +157,8 @@ public class VisualizationToolController implements Initializable {
 
 				lineChart.setTitle(dataChart.title);
 				lineChart.getXAxis().setLabel(dataChart.xLabel);
+				lineChart.getXAxis().setTickLabelGap(4);
+				lineChart.getXAxis().setAutoRanging(true);
 				lineChart.getYAxis().setLabel(dataChart.yLabel);
 				lineChart.getData().clear();
 				lineChart.getData().addAll(dataChart.series1);
@@ -169,6 +171,8 @@ public class VisualizationToolController implements Initializable {
 				areaChart.setTitle(dataChart.title);
 				areaChart.getXAxis().setLabel(dataChart.xLabel);
 				areaChart.getYAxis().setLabel(dataChart.yLabel);
+				areaChart.getXAxis().setTickLabelGap(4);
+				areaChart.getXAxis().setAutoRanging(true);
 				areaChart.getData().clear();
 				areaChart.getData().addAll(
 					dataChart.series1,
