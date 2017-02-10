@@ -83,7 +83,7 @@ public class VisualizationToolController implements Initializable {
 
 	@FXML
 	void analyse1Clicked(ActionEvent event) throws AudioAnalyser.OutputNotReady, AudioAnalyser.IncorrectInputException, IOException, AudioAnalyser.LoadFailedException, AudioAnalyser.OutputAlreadyExists, AudioAnalyser.ParseOutputError, Chroma.WrongChromaSize {
-		DataChart dataChart = createSelectedVisualization(plugin1, "/mnt/work/school/mff/Ostrava/1_EXPERIMENTS/SecondHandSongsDataset/1_MSD_SHS_Preparation/392783.wav"/*browse.getSelectionModel().getSelectedItem().getValue().toString()*/);
+		DataChart dataChart = createSelectedVisualization(plugin1, browse.getSelectionModel().getSelectedItem().getValue().toString());
 
 		final CategoryAxis xAxis = new CategoryAxis();
 		final NumberAxis yAxis = new NumberAxis();
@@ -95,7 +95,7 @@ public class VisualizationToolController implements Initializable {
 	}
 
 	DataChart createSelectedVisualization(ChoiceBox plugin, String inputFile) throws AudioAnalyser.LoadFailedException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError, IOException, Chroma.WrongChromaSize, AudioAnalyser.OutputAlreadyExists {
-		String pluginKey = "chord_analyser:average_chord_complexity_distance"; //plugin.getSelectionModel().getSelectedItem().toString();
+		String pluginKey = plugin.getSelectionModel().getSelectedItem().toString();
 
 		try {
 			audioAnalyser.runAnalysis(inputFile, pluginKey, false, false);
