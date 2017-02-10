@@ -10,7 +10,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import org.harmony_analyser.application.visualizations.DataChart;
 import org.harmony_analyser.application.visualizations.DataChartFactory;
-import org.harmony_analyser.application.visualizations.DrawPanelFactory;
 import org.harmony_analyser.jharmonyanalyser.chroma_analyser.Chroma;
 import org.harmony_analyser.jharmonyanalyser.services.AnalysisFactory;
 import org.harmony_analyser.jharmonyanalyser.services.AudioAnalyser;
@@ -89,8 +88,7 @@ public class VisualizationToolController implements Initializable {
 		//initialize AudioAnalyser
 		AnalysisFactory analysisFactory = new AnalysisFactory();
 		DataChartFactory dataChartFactory = new DataChartFactory();
-		DrawPanelFactory drawPanelFactory = new DrawPanelFactory();
-		audioAnalyser = new AudioAnalyser(analysisFactory, dataChartFactory, drawPanelFactory);
+		audioAnalyser = new AudioAnalyser(analysisFactory, dataChartFactory);
 
 		// create the tree view
 		// TODO: Check unchecked assignments

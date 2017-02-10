@@ -1,7 +1,6 @@
 package org.harmony_analyser.jharmonyanalyser.services;
 
 import org.harmony_analyser.application.visualizations.DataChartFactory;
-import org.harmony_analyser.application.visualizations.DrawPanelFactory;
 import org.harmony_analyser.jharmonyanalyser.chroma_analyser.Chroma;
 import org.harmony_analyser.jharmonyanalyser.plugins.*;
 
@@ -18,7 +17,6 @@ import static org.junit.Assert.assertEquals;
 
 public class AudioAnalyserTest {
 	private AudioAnalyser audioAnalyser;
-	private DrawPanelFactory drawPanelFactory;
 	private DataChartFactory dataChartFactory;
 	private String wrongInputFile;
 	private File testWavFile, testReportFixture;
@@ -26,7 +24,6 @@ public class AudioAnalyserTest {
 
 	@Before
 	public void setUp() {
-		drawPanelFactory = new DrawPanelFactory();
 		dataChartFactory = new DataChartFactory();
 		wrongInputFile = "wrongfile";
 		ClassLoader classLoader = getClass().getClassLoader();
@@ -37,7 +34,7 @@ public class AudioAnalyserTest {
 	@Test(expected = AudioAnalyser.IncorrectInputException.class)
 	public void shouldThrowExceptionOnWrongFile() throws IOException, AudioAnalyser.LoadFailedException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
 		AnalysisFactory analysisFactory = new AnalysisFactory();
-		audioAnalyser = new AudioAnalyser(analysisFactory, dataChartFactory, drawPanelFactory);
+		audioAnalyser = new AudioAnalyser(analysisFactory, dataChartFactory);
 		audioAnalyser.runAnalysis(wrongInputFile, "chord_analyser:average_chord_complexity_distance", true, false);
 	}
 
@@ -47,10 +44,9 @@ public class AudioAnalyserTest {
 		String[] visualPlugins = { "visual_plugin" };
 		AnalysisFactory analysisFactory = mock(AnalysisFactory.class);
 		when(analysisFactory.getAvailablePlugins()).thenReturn(availablePlugins);
-		DrawPanelFactory drawPanelFactory = mock(DrawPanelFactory.class);
-		when(drawPanelFactory.getAllVisualizations()).thenReturn(visualPlugins);
+		when(dataChartFactory.getAllVisualizations()).thenReturn(visualPlugins);
 
-		audioAnalyser = new AudioAnalyser(analysisFactory, dataChartFactory, drawPanelFactory) {
+		audioAnalyser = new AudioAnalyser(analysisFactory, dataChartFactory) {
 			public String printInstalledVampPlugins() {
 				return "\nINSTALLED_VAMP_PLUGINS_FOLLOW\n";
 			}
@@ -76,7 +72,7 @@ public class AudioAnalyserTest {
 				return analysisPlugin;
 			}
 		};
-		audioAnalyser = new AudioAnalyser(analysisFactory, dataChartFactory, drawPanelFactory);
+		audioAnalyser = new AudioAnalyser(analysisFactory, dataChartFactory);
 
 		assertEquals("Done!", audioAnalyser.runAnalysis(testWavFile.toString(), "chord_analyser:average_chord_complexity_distance", true, false));
 	}

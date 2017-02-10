@@ -15,7 +15,6 @@ import java.util.*;
 public class AudioAnalyser {
 	private final AnalysisFactory analysisFactory;
 	private final DataChartFactory dataChartFactory;
-	private final DrawPanelFactory drawPanelFactory;
 
 	public static class IncorrectInputException extends Exception {
 		public IncorrectInputException(String message) {
@@ -47,11 +46,10 @@ public class AudioAnalyser {
 		}
 	}
 
-	// Dependency injection: AnalysisFactory, DrawPanelFactory
-	public AudioAnalyser(AnalysisFactory analysisFactory, DataChartFactory dataChartFactory, DrawPanelFactory drawPanelFactory) {
+	// Dependency injection: AnalysisFactory, DataChartFactory
+	public AudioAnalyser(AnalysisFactory analysisFactory, DataChartFactory dataChartFactory) {
 		this.analysisFactory = analysisFactory;
 		this.dataChartFactory = dataChartFactory;
-		this.drawPanelFactory = drawPanelFactory;
 	}
 
 	/* Public / Package methods */
@@ -128,9 +126,5 @@ public class AudioAnalyser {
 
 	public DataChart createDataChart(String inputFile, String pluginKey) throws LoadFailedException, OutputNotReady, ParseOutputError, IOException {
 		return dataChartFactory.createDataChart(pluginKey, analysisFactory.createPlugin(pluginKey).getDataFromOutput(inputFile));
-	}
-
-	public DrawPanel createDrawPanel(String inputFile, String pluginKey) throws LoadFailedException, OutputNotReady, ParseOutputError, IOException {
-		return drawPanelFactory.createDrawPanel(pluginKey, analysisFactory.createPlugin(pluginKey).getDataFromOutput(inputFile));
 	}
 }
