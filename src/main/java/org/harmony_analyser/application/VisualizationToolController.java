@@ -172,7 +172,21 @@ public class VisualizationToolController implements Initializable {
 				areaChart.getXAxis().setLabel(dataChart.xLabel);
 				areaChart.getYAxis().setLabel(dataChart.yLabel);
 				areaChart.getData().clear();
-				areaChart.getData().addAll(dataChart.series1);
+				areaChart.getData().addAll(
+					dataChart.series1,
+					dataChart.series2,
+					dataChart.series3,
+					dataChart.series4,
+					dataChart.series5,
+					dataChart.series6,
+					dataChart.series7,
+					dataChart.series8,
+					dataChart.series9,
+					dataChart.series10,
+					dataChart.series11,
+					dataChart.series12,
+					dataChart.series13
+				);
 				break;
 		}
 	}

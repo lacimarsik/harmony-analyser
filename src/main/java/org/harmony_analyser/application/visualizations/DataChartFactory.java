@@ -7,7 +7,6 @@ package org.harmony_analyser.application.visualizations;
 public class DataChartFactory {
 	private final String[] ALL_VISUALIZATIONS = new String[] {
 		"nnls-chroma:chordino-labels",
-		"nnls-chroma:chordino-tones",
 		"qm-vamp-plugins:qm-keydetector",
 		"chord_analyser:average_chord_complexity_distance",
 		"chord_analyser:chord_complexity_distance",
@@ -23,7 +22,6 @@ public class DataChartFactory {
 	public DataChart createDataChart(String pluginKey, VisualizationData visualizationData) {
 		switch (pluginKey) {
 			case "nnls-chroma:chordino-labels":
-			case "nnls-chroma:chordino-tones":
 			case "qm-vamp-plugins:qm-keydetector":
 				return new SegmentationDataChart(visualizationData);
 			case "chord_analyser:average_chord_complexity_distance":

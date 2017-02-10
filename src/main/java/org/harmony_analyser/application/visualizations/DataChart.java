@@ -13,6 +13,16 @@ public abstract class DataChart {
 	public final XYChart.Series series1;
 	public final XYChart.Series series2;
 	public final XYChart.Series series3;
+	public final XYChart.Series series4;
+	public final XYChart.Series series5;
+	public final XYChart.Series series6;
+	public final XYChart.Series series7;
+	public final XYChart.Series series8;
+	public final XYChart.Series series9;
+	public final XYChart.Series series10;
+	public final XYChart.Series series11;
+	public final XYChart.Series series12;
+	public final XYChart.Series series13;
 	public String title;
 	public String xLabel;
 	public String yLabel;
@@ -39,5 +49,15 @@ public abstract class DataChart {
 		this.series1 = new XYChart.Series();
 		this.series2 = new XYChart.Series();
 		this.series3 = new XYChart.Series();
+		this.series4 = new XYChart.Series();
+		this.series5 = new XYChart.Series();
+		this.series6 = new XYChart.Series();
+		this.series7 = new XYChart.Series();
+		this.series8 = new XYChart.Series();
+		this.series9 = new XYChart.Series();
+		this.series10 = new XYChart.Series();
+		this.series11 = new XYChart.Series();
+		this.series12 = new XYChart.Series();
+		this.series13 = new XYChart.Series();
 	}
 }
