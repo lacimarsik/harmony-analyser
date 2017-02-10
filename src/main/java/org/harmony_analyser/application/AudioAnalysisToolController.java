@@ -11,6 +11,7 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ResourceBundle;
 
+import org.harmony_analyser.application.visualizations.DataChartFactory;
 import org.harmony_analyser.application.visualizations.DrawPanelFactory;
 import org.harmony_analyser.jharmonyanalyser.services.*;
 
@@ -97,8 +98,9 @@ public class AudioAnalysisToolController implements Initializable {
 	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
 		//initialize AudioAnalyser
 		AnalysisFactory analysisFactory = new AnalysisFactory();
+		DataChartFactory dataChartFactory = new DataChartFactory();
 		DrawPanelFactory drawPanelFactory = new DrawPanelFactory();
-		audioAnalyser = new AudioAnalyser(analysisFactory, drawPanelFactory);
+		audioAnalyser = new AudioAnalyser(analysisFactory, dataChartFactory, drawPanelFactory);
 
 		// create the tree view
 		// TODO: Check unchecked assignments

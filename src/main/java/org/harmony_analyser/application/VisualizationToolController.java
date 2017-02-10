@@ -60,7 +60,8 @@ public class VisualizationToolController implements Initializable {
 		//initialize AudioAnalyser
 		AnalysisFactory analysisFactory = new AnalysisFactory();
 		DataChartFactory dataChartFactory = new DataChartFactory();
-		audioAnalyser = new AudioAnalyser(analysisFactory, dataChartFactory);
+		DrawPanelFactory drawPanelFactory = new DrawPanelFactory();
+		audioAnalyser = new AudioAnalyser(analysisFactory, dataChartFactory, drawPanelFactory);
 
 		// create the tree view
 		// TODO: Check unchecked assignments

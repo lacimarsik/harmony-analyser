@@ -219,8 +219,9 @@ class HarmonyAnalyser extends JFrame {
 		/* Services and Visualizations - Initialization */
 
 		AnalysisFactory analysisFactory = new AnalysisFactory();
+		DataChartFactory dataChartFactory = new DataChartFactory();
 		DrawPanelFactory drawPanelFactory = new DrawPanelFactory();
-		audioAnalyser = new AudioAnalyser(analysisFactory, drawPanelFactory);
+		audioAnalyser = new AudioAnalyser(analysisFactory, dataChartFactory, drawPanelFactory);
 		midiHandler = new MidiHandler();
 		midiHandler.initialize(
 			MidiHandler.EMPTY_SEQUENCER,
