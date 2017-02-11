@@ -70,14 +70,14 @@ public class AudioAnalyser {
 		String result = "";
 		result += "\n> Available plugins (" + analysisFactory.getAvailablePlugins().length + "):\n";
 
-		for (String availablePluginKey : analysisFactory.getAvailablePlugins()) {
-			result += availablePluginKey + "\n";
+		for (String availableAnalysisKey : analysisFactory.getAvailablePlugins()) {
+			result += availableAnalysisKey + "\n";
 		}
 
 		result += "\n> Available visualizations (" + dataChartFactory.getAllVisualizations().length + "):\n";
 
-		for (String availablePluginKey : dataChartFactory.getAllVisualizations()) {
-			result += availablePluginKey + "\n";
+		for (String availableAnalysisKey : dataChartFactory.getAllVisualizations()) {
+			result += availableAnalysisKey + "\n";
 		}
 
 		result += printInstalledVampPlugins();
@@ -108,23 +108,23 @@ public class AudioAnalyser {
 		return result;
 	}
 
-	public String getPluginName(String pluginKey) throws LoadFailedException {
-		return analysisFactory.createPlugin(pluginKey).name;
+	public String getPluginName(String analysisKey) throws LoadFailedException {
+		return analysisFactory.createPlugin(analysisKey).name;
 	}
 
-	public String getPluginDescription(String pluginKey) throws LoadFailedException {
-		return analysisFactory.createPlugin(pluginKey).description;
+	public String getPluginDescription(String analysisKey) throws LoadFailedException {
+		return analysisFactory.createPlugin(analysisKey).description;
 	}
 
-	public String printParameters(String pluginKey) throws LoadFailedException {
-		return analysisFactory.createPlugin(pluginKey).printParameters();
+	public String printParameters(String analysisKey) throws LoadFailedException {
+		return analysisFactory.createPlugin(analysisKey).printParameters();
 	}
 
 	public String runAnalysis(String inputFile, String analysisKey, boolean force, boolean verbose) throws AudioAnalyser.IncorrectInputException, OutputAlreadyExists, IOException, LoadFailedException, Chroma.WrongChromaSize {
 		return analysisFactory.createPlugin(analysisKey).analyse(inputFile, force, verbose);
 	}
 
-	public DataChart createDataChart(String inputFile, String pluginKey) throws LoadFailedException, OutputNotReady, ParseOutputError, IOException {
-		return dataChartFactory.createDataChart(pluginKey, analysisFactory.createPlugin(pluginKey).getDataFromOutput(inputFile));
+	public DataChart createDataChart(String inputFile, String analysisKey) throws LoadFailedException, OutputNotReady, ParseOutputError, IOException {
+		return dataChartFactory.createDataChart(analysisKey, analysisFactory.createPlugin(analysisKey).getDataFromOutput(inputFile));
 	}
 }

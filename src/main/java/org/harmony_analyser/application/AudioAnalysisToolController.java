@@ -231,13 +231,13 @@ public class AudioAnalysisToolController implements Initializable {
 		}
 	}
 
-	private void analyzeFolder(File inputFolder, String pluginKey, String suffixAndExtension) {
+	private void analyzeFolder(File inputFolder, String analysisKey, String suffixAndExtension) {
 		if (inputFolder.isFile()) {
 			console.setText("\n> Folder needs to be selected for Audio Analysis Tool");
 			return;
 		}
 		try {
-			console.setText("\n> Analyzing input folder using plugin: " + pluginKey);
+			console.setText("\n> Analyzing input folder using plugin: " + analysisKey);
 			Files.walkFileTree(inputFolder.toPath(), new SimpleFileVisitor<Path>() {
 				@Override
 				public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
@@ -250,7 +250,7 @@ public class AudioAnalysisToolController implements Initializable {
 					if (file.toString().endsWith(suffixAndExtension)) {
 						console.setText(console.getText() + "\nProcessing: " + file.toString() + "\n");
 						try {
-							String analysisResult = audioAnalyser.runAnalysis(file.toString(), pluginKey, true, false);
+							String analysisResult = audioAnalyser.runAnalysis(file.toString(), analysisKey, true, false);
 							console.setText(console.getText() + "\n" + analysisResult);
 						} catch (AudioAnalyser.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
 							console.setText(console.getText() + "\nERROR: " + e.getMessage());

@@ -60,10 +60,10 @@ public class AnalysisFactory {
 		return WRAPPED_VAMP_PLUGINS;
 	}
 
-	public Analysis createPlugin(String pluginKey) throws AudioAnalyser.LoadFailedException {
+	public Analysis createPlugin(String analysisKey) throws AudioAnalyser.LoadFailedException {
 		Analysis plugin;
 		try {
-			switch (pluginKey) {
+			switch (analysisKey) {
 				case "nnls-chroma:nnls-chroma":
 					plugin = new NNLSPlugin();
 					break;
@@ -98,7 +98,7 @@ public class AnalysisFactory {
 					plugin = new TimeSeriesFilter();
 					break;
 				default:
-					throw new AudioAnalyser.LoadFailedException("Plugin with key " + pluginKey + " is not available");
+					throw new AudioAnalyser.LoadFailedException("Plugin with key " + analysisKey + " is not available");
 			}
 		} catch (PluginLoader.LoadFailedException e) {
 			throw new AudioAnalyser.LoadFailedException(e.getMessage());

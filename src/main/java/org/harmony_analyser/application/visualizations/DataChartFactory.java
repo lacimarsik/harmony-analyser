@@ -19,8 +19,8 @@ public class DataChartFactory {
 		return ALL_VISUALIZATIONS;
 	}
 
-	public DataChart createDataChart(String pluginKey, VisualizationData visualizationData) {
-		switch (pluginKey) {
+	public DataChart createDataChart(String analysisKey, VisualizationData visualizationData) {
+		switch (analysisKey) {
 			case "nnls-chroma:chordino-labels":
 			case "qm-vamp-plugins:qm-keydetector":
 				return new SegmentationDataChart(visualizationData);

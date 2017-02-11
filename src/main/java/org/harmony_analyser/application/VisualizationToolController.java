@@ -127,14 +127,14 @@ public class VisualizationToolController implements Initializable {
 	}
 
 	DataChart createSelectedVisualization(ChoiceBox plugin, String inputFile) throws AudioAnalyser.LoadFailedException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError, IOException, Chroma.WrongChromaSize, AudioAnalyser.OutputAlreadyExists {
-		String pluginKey = plugin.getSelectionModel().getSelectedItem().toString();
+		String analysisKey = plugin.getSelectionModel().getSelectedItem().toString();
 		try {
-			audioAnalyser.runAnalysis(inputFile, pluginKey, false, false);
+			audioAnalyser.runAnalysis(inputFile, analysisKey, false, false);
 		} catch (AudioAnalyser.OutputAlreadyExists e) {
 			System.out.println("Output already exists. Continuing.");
 		}
 
-		return audioAnalyser.createDataChart(inputFile, pluginKey);
+		return audioAnalyser.createDataChart(inputFile, analysisKey);
 	}
 
 	void showChart(DataChart dataChart, BarChart<String, Number> barChart, LineChart<Number, Number> lineChart, AreaChart<String, Number> areaChart) {

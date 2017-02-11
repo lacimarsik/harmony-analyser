@@ -68,7 +68,7 @@ public class AudioAnalyserTest {
 		when(analysisPlugin.analyse(testWavFile.toString(), true, false)).thenReturn("Done!");
 
 		AnalysisFactory analysisFactory = new AnalysisFactory() {
-			public AnalysisPlugin createPlugin(String pluginKey) {
+			public AnalysisPlugin createPlugin(String analysisKey) {
 				return analysisPlugin;
 			}
 		};
