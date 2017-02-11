@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Class to direct all levels of audio analysis, using available plugins and visualizations
+ * Class to orchestrate all levels of audio analysis, using available plugins and visualizations
  */
 
 @SuppressWarnings("SameParameterValue")
