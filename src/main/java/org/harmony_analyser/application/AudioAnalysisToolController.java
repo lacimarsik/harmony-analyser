@@ -208,17 +208,17 @@ public class AudioAnalysisToolController implements Initializable {
 
 	@FXML
 	void runVampAnalysis(ActionEvent event) {
-		analyzeFolder(browse.getSelectionModel().getSelectedItem().getValue(), vampAvailable.getSelectionModel().getSelectedItem(), ".wav");
+		analyseFolder(browse.getSelectionModel().getSelectedItem().getValue(), vampAvailable.getSelectionModel().getSelectedItem(), ".wav");
 	}
 
 	@FXML
 	void runChordAnalyserAnalysis(ActionEvent event) {
-		analyzeFolder(browse.getSelectionModel().getSelectedItem().getValue(), caAvailable.getSelectionModel().getSelectedItem(), ".wav");
+		analyseFolder(browse.getSelectionModel().getSelectedItem().getValue(), caAvailable.getSelectionModel().getSelectedItem(), ".wav");
 	}
 
 	@FXML
 	void runChromaAnalyserAnalysis(ActionEvent event) {
-		analyzeFolder(browse.getSelectionModel().getSelectedItem().getValue(), chrAvailable.getSelectionModel().getSelectedItem(), ".wav");
+		analyseFolder(browse.getSelectionModel().getSelectedItem().getValue(), chrAvailable.getSelectionModel().getSelectedItem(), ".wav");
 	}
 
 	@FXML
@@ -227,47 +227,11 @@ public class AudioAnalysisToolController implements Initializable {
 		if (extension.equals("")) {
 			console.setText("\n> Extension for filtering not specified. Please enter extension.");
 		} else {
-			analyzeFolder(browse.getSelectionModel().getSelectedItem().getValue(), ppAvailable.getSelectionModel().getSelectedItem(), extension);
+			analyseFolder(browse.getSelectionModel().getSelectedItem().getValue(), ppAvailable.getSelectionModel().getSelectedItem(), extension);
 		}
 	}
 
-	private void analyzeFolder(File inputFolder, String analysisKey, String suffixAndExtension) {
-		if (inputFolder.isFile()) {
-			console.setText("\n> Folder needs to be selected for Audio Analysis Tool");
-			return;
-		}
-		try {
-			console.setText("\n> Analyzing input folder using plugin: " + analysisKey);
-			Files.walkFileTree(inputFolder.toPath(), new SimpleFileVisitor<Path>() {
-				@Override
-				public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
-					console.setText(console.getText() + "\nDir: " + dir.toString());
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-					if (file.toString().endsWith(suffixAndExtension)) {
-						console.setText(console.getText() + "\nProcessing: " + file.toString() + "\n");
-						try {
-							String analysisResult = audioAnalyser.runAnalysis(file.toString(), analysisKey, true, false);
-							console.setText(console.getText() + "\n" + analysisResult);
-						} catch (AudioAnalyser.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
-							console.setText(console.getText() + "\nERROR: " + e.getMessage());
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult visitFileFailed(Path file, IOException e) {
-					return FileVisitResult.CONTINUE;
-				}
-			});
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
+	private void analyseFolder(File inputFolder, String analysisKey, String suffixAndExtension) {
+		console.setText(audioAnalyser.analyseFolder(inputFolder, analysisKey, suffixAndExtension));
 	}
 }

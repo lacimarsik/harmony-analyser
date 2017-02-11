@@ -5,6 +5,11 @@ import org.harmony_analyser.jharmonyanalyser.chroma_analyser.Chroma;
 import org.vamp_plugins.PluginLoader;
 
 import java.io.*;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 
 /**
@@ -15,6 +20,7 @@ import java.util.*;
 public class AudioAnalyser {
 	private final AnalysisFactory analysisFactory;
 	private final DataChartFactory dataChartFactory;
+	public String outputWriteBuffer; // This instance variable holds the progress of the current analysis, convenient to access after the analysis is done
 
 	public static class IncorrectInputException extends Exception {
 		public IncorrectInputException(String message) {
@@ -121,10 +127,61 @@ public class AudioAnalyser {
 	}
 
 	public String runAnalysis(String inputFile, String analysisKey, boolean force, boolean verbose) throws AudioAnalyser.IncorrectInputException, OutputAlreadyExists, IOException, LoadFailedException, Chroma.WrongChromaSize {
-		return analysisFactory.createPlugin(analysisKey).analyse(inputFile, force, verbose);
+		outputWriteBuffer = ""; // clear outputWriteBuffer
+		printAndAddToBuffer(analysisFactory.createPlugin(analysisKey).analyse(inputFile, force, verbose));
+		return outputWriteBuffer;
 	}
 
 	public DataChart createDataChart(String inputFile, String analysisKey) throws LoadFailedException, OutputNotReady, ParseOutputError, IOException {
 		return dataChartFactory.createDataChart(analysisKey, analysisFactory.createPlugin(analysisKey).getDataFromOutput(inputFile));
+	}
+
+	// Analyses folder with given Analysis, writes to System.out as well as writes to outputWriteBuffer
+	public String analyseFolder(File inputFolder, String pluginKey, String suffixAndExtension) {
+		outputWriteBuffer = ""; // clear outputWriteBuffer
+		String outputWrite = "";
+		if (inputFolder.isFile()) {
+			printAndAddToBuffer("\n> Folder needs to be selected for Audio Analysis Tool");
+			return outputWriteBuffer;
+		}
+		try {
+			printAndAddToBuffer("\n> Analyzing input folder using plugin: " + pluginKey);
+			Files.walkFileTree(inputFolder.toPath(), new SimpleFileVisitor<Path>() {
+				@Override
+				public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
+					printAndAddToBuffer("\nDir: " + dir.toString());
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+					if (file.toString().endsWith(suffixAndExtension)) {
+						printAndAddToBuffer("\nProcessing: " + file.toString() + "\n");
+						try {
+							printAndAddToBuffer(runAnalysis(file.toString(), pluginKey, true, false));
+						} catch (AudioAnalyser.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
+							printAndAddToBuffer("\nERROR: " + e.getMessage());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFileFailed(Path file, IOException e) {
+					return FileVisitResult.CONTINUE;
+				}
+			});
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return outputWriteBuffer;
+	}
+
+	// Prints to System.out and adds String to outputWriteBuffer at the same time
+	private void printAndAddToBuffer(String outputWrite) {
+		System.out.println(outputWrite);
+		outputWriteBuffer += outputWrite;
 	}
 }
