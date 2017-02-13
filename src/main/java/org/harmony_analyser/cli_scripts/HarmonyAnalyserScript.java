@@ -4,6 +4,8 @@ import org.apache.commons.cli.*;
 import org.harmony_analyser.application.visualizations.DataChartFactory;
 import org.harmony_analyser.jharmonyanalyser.services.*;
 
+import java.io.File;
+
 /**
  * Script to perform arbitrary harmony-analyser analysis in the current directory
  */
@@ -23,11 +25,17 @@ public class HarmonyAnalyserScript {
 		DataChartFactory dataChartFactory = new DataChartFactory();
 		audioAnalyser = new AudioAnalyser(analysisFactory, dataChartFactory);
 
+		// Parse arguments
 		boolean ready = parseArgumentsAndReady(args);
 		if (!ready) {
 			System.out.println();
 			System.out.println("Harmony Analyser 1.2-beta has ended.");
 		}
+		assert(!analysisKey.isEmpty());
+		assert(!suffixAndExtension.isEmpty());
+
+		// Perform analysis
+		audioAnalyser.analyseFolder(new File(System.getProperty("user.dir")), analysisKey, suffixAndExtension);
 	}
 
 	// Parses arguments andh handles -l (list plugins) and -h (get help) arguments.
