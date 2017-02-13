@@ -43,6 +43,7 @@ public class AudioAnalyserTest {
 		String[] availablePlugins = { "test_plugin" };
 		String[] visualPlugins = { "visual_plugin" };
 		AnalysisFactory analysisFactory = mock(AnalysisFactory.class);
+		DataChartFactory dataChartFactory = mock(DataChartFactory.class);
 		when(analysisFactory.getAvailablePlugins()).thenReturn(availablePlugins);
 		when(dataChartFactory.getAllVisualizations()).thenReturn(visualPlugins);
 
