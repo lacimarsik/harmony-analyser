@@ -74,13 +74,13 @@ public class AudioAnalyser {
 
 	public String printPlugins() {
 		String result = "";
-		result += "\n> Available plugins (" + analysisFactory.getAvailablePlugins().length + "):\n";
+		result += "\n> Available analysis (" + analysisFactory.getAvailablePlugins().length + "):\n";
 
 		for (String availableAnalysisKey : analysisFactory.getAvailablePlugins()) {
 			result += availableAnalysisKey + "\n";
 		}
 
-		result += "\n> Available visualizations (" + dataChartFactory.getAllVisualizations().length + "):\n";
+		result += "\n> Available visualizations (" + dataChartFactory.getAllVisualizations().length + ") - for GUI use only:\n";
 
 		for (String availableAnalysisKey : dataChartFactory.getAllVisualizations()) {
 			result += availableAnalysisKey + "\n";
@@ -93,23 +93,27 @@ public class AudioAnalyser {
 
 	public String printInstalledVampPlugins() {
 		String result = "";
-		String[] plugins = PluginLoader.getInstance().listPlugins();
-		result += "\n> Locally installed VAMP plugins (" + plugins.length + "):\n";
-		for (int i = 0; i < plugins.length; ++i) {
-			result += i + ": " + plugins[i] + "\n";
-		}
+		try {
+			String[] plugins = PluginLoader.getInstance().listPlugins();
+			result += "\n> Locally installed VAMP plugins (" + plugins.length + "):\n";
+			for (int i = 0; i < plugins.length; ++i) {
+				result += i + ": " + plugins[i] + "\n";
+			}
 
-		List<String> wrappedPlugins = new ArrayList<>();
-		for (int i = 0; i < plugins.length; ++i) {
-			for (String wrapped_plugin : analysisFactory.getWrappedVampPlugins()) {
-				if (plugins[i].equals(wrapped_plugin)) {
-					wrappedPlugins.add(i + ": " + plugins[i] + "\n");
+			List<String> wrappedPlugins = new ArrayList<>();
+			for (int i = 0; i < plugins.length; ++i) {
+				for (String wrapped_plugin : analysisFactory.getWrappedVampPlugins()) {
+					if (plugins[i].equals(wrapped_plugin)) {
+						wrappedPlugins.add(i + ": " + plugins[i] + "\n");
+					}
 				}
 			}
-		}
-		result += "\n> Implemented VAMP plugins (" + wrappedPlugins.size() + "):\n";
-		for (String s : wrappedPlugins) {
-			result += s;
+			result += "\n> Implemented VAMP plugins (" + wrappedPlugins.size() + "):\n";
+			for (String s : wrappedPlugins) {
+				result += s;
+			}
+		} catch(java.lang.UnsatisfiedLinkError e) {
+			return "\nWARNING: jVamp not installed on this machine, Vamp plugins are not available.";
 		}
 		return result;
 	}
