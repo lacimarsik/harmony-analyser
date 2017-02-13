@@ -28,7 +28,7 @@ public class AudioAnalyserTest {
 		wrongInputFile = "wrongfile";
 		ClassLoader classLoader = getClass().getClassLoader();
 		testWavFile = new File(classLoader.getResource("test.wav").getPath());
-		testReportFixture = new File(classLoader.getResource("test-printPluginsFixture.txt").getFile());
+		testReportFixture = new File(classLoader.getResource("test-printAnalysisFixture.txt").getPath());
 	}
 
 	@Test(expected = AudioAnalyser.IncorrectInputException.class)

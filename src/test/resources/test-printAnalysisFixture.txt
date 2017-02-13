@@ -1,5 +1,5 @@
 
-> Available plugins (1):
+> Available analysis (1):
 test_plugin
 
 > Available visualizations (1) - for GUI use only:
