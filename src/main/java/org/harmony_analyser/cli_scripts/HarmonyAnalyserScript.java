@@ -79,7 +79,8 @@ public class HarmonyAnalyserScript {
 
 			if (commandLine.hasOption("a")) {
 				System.out.print("Analysis key was set to: ");
-				System.out.println(commandLine.getOptionValue("a"));
+				analysisKey = commandLine.getOptionValue("a");
+				System.out.println(analysisKey);
 			} else {
 				System.out.print("ERROR: Analysis key was not set. Please use -a option to define what analysis to use for current folder.");
 				return false;
@@ -87,7 +88,8 @@ public class HarmonyAnalyserScript {
 
 			if (commandLine.hasOption("s")) {
 				System.out.print("Suffix was set to: ");
-				System.out.println(commandLine.getOptionValue("s"));
+				suffixAndExtension = commandLine.getOptionValue("s");
+				System.out.println(suffixAndExtension);
 			} else {
 				System.out.print("ERROR: Suffix and extension was not set. Please use -s option to define suffix for files to be analysed.");
 				return false;

@@ -132,6 +132,7 @@ public class AudioAnalyser {
 
 	public String runAnalysis(String inputFile, String analysisKey, boolean force, boolean verbose) throws AudioAnalyser.IncorrectInputException, OutputAlreadyExists, IOException, LoadFailedException, Chroma.WrongChromaSize {
 		outputWriteBuffer = ""; // clear outputWriteBuffer
+
 		printAndAddToBuffer(analysisFactory.createPlugin(analysisKey).analyse(inputFile, force, verbose));
 		return outputWriteBuffer;
 	}
@@ -153,7 +154,6 @@ public class AudioAnalyser {
 			Files.walkFileTree(inputFolder.toPath(), new SimpleFileVisitor<Path>() {
 				@Override
 				public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
-					printAndAddToBuffer("\nDir: " + dir.toString());
 					return FileVisitResult.CONTINUE;
 				}
 
