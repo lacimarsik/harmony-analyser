@@ -30,9 +30,12 @@ public class HarmonyAnalyserScript {
 		if (!ready) {
 			System.out.println();
 			System.out.println("Harmony Analyser 1.2-beta has ended.");
+			return;
 		}
 		assert(!analysisKey.isEmpty());
+		assert(analysisKey != null);
 		assert(!suffixAndExtension.isEmpty());
+		assert(suffixAndExtension != null);
 
 		// Perform analysis
 		audioAnalyser.analyseFolder(new File(System.getProperty("user.dir")), analysisKey, suffixAndExtension);
