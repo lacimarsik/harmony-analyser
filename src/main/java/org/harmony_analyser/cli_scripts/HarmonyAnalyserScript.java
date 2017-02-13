@@ -8,6 +8,15 @@ import org.apache.commons.cli.*;
 
 public class HarmonyAnalyserScript {
 	public static void main(String[] args) {
+		System.out.println("--- Starting Harmony Analyser 1.2-beta ---");
+		System.out.println("Author: marsik@ksi.mff.cuni.cz");
+		System.out.println("harmony-analyser.org");
+		System.out.println();
+
+		parseArguments(args);
+	}
+
+	private static void parseArguments(String[] args) {
 		CommandLine commandLine;
 		Option option_a = OptionBuilder.withArgName("analysisKey").hasArg().withDescription("Analysis key option").create("a");
 		Option option_s = OptionBuilder.withArgName("suffixAndExtension").hasArg().withDescription("Suffix option").create("s");
@@ -16,11 +25,6 @@ public class HarmonyAnalyserScript {
 
 		options.addOption(option_a);
 		options.addOption(option_s);
-
-		System.out.println("--- Starting Harmony Analyser 1.2-beta ---");
-		System.out.println("Author: marsik@ksi.mff.cuni.cz");
-		System.out.println("harmony-analyser.org");
-		System.out.println();
 
 		try {
 			commandLine = parser.parse(options, args);
@@ -48,16 +52,9 @@ public class HarmonyAnalyserScript {
 				}
 			}
 			System.out.println();
-
-		}
-		catch (ParseException exception)
-		{
+		} catch (ParseException exception) {
 			System.out.print("Parse error: ");
 			System.out.println(exception.getMessage());
 		}
 	}
-
-	private
-
-	def
 }
