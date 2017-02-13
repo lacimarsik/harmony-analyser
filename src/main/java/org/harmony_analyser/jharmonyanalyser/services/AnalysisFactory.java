@@ -98,7 +98,7 @@ public class AnalysisFactory {
 					plugin = new TimeSeriesFilter();
 					break;
 				default:
-					throw new AudioAnalyser.LoadFailedException("Plugin with key " + analysisKey + " is not available");
+					throw new AudioAnalyser.LoadFailedException("Analysis with key " + analysisKey + " is not available");
 			}
 		} catch (PluginLoader.LoadFailedException e) {
 			throw new AudioAnalyser.LoadFailedException(e.getMessage());

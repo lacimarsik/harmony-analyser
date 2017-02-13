@@ -141,7 +141,7 @@ public class AudioAnalyser {
 	}
 
 	// Analyses folder with given Analysis, writes to System.out as well as writes to outputWriteBuffer
-	public String analyseFolder(File inputFolder, String pluginKey, String suffixAndExtension) {
+	public String analyseFolder(File inputFolder, String analysisKey, String suffixAndExtension) {
 		outputWriteBuffer = ""; // clear outputWriteBuffer
 		String outputWrite = "";
 		if (inputFolder.isFile()) {
@@ -149,7 +149,7 @@ public class AudioAnalyser {
 			return outputWriteBuffer;
 		}
 		try {
-			printAndAddToBuffer("\n> Analyzing input folder using plugin: " + pluginKey);
+			printAndAddToBuffer("\n> Analyzing input folder using analysis: " + analysisKey);
 			Files.walkFileTree(inputFolder.toPath(), new SimpleFileVisitor<Path>() {
 				@Override
 				public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
@@ -162,7 +162,7 @@ public class AudioAnalyser {
 					if (file.toString().endsWith(suffixAndExtension)) {
 						printAndAddToBuffer("\nProcessing: " + file.toString() + "\n");
 						try {
-							printAndAddToBuffer(runAnalysis(file.toString(), pluginKey, true, false));
+							printAndAddToBuffer(runAnalysis(file.toString(), analysisKey, true, false));
 						} catch (AudioAnalyser.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
 							printAndAddToBuffer("\nERROR: " + e.getMessage());
 						} catch (Exception e) {
