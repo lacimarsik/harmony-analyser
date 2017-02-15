@@ -20,7 +20,7 @@ import java.util.List;
 @SuppressWarnings("SameParameterValue")
 
 abstract class ChromaAnalyserPlugin extends LineChartPlugin {
-	protected static float audibleThreshold = (float) 0.98; // used to filter chroma activations that we consider not audible
+	protected static float audibleThreshold = (float) 0.035; // used to filter chroma activations that we consider not audible
 
 	/**
 	 * Analyzes the song: converts chroma information to chroma complexity descriptors
