@@ -34,9 +34,8 @@ public class HarmonyAnalyserScript {
 			return;
 		}
 		assert(!analysisKey.isEmpty());
-		assert(analysisKey != null);
 		assert(!suffixAndExtension.isEmpty());
-		assert(suffixAndExtension != null);
+		assert(audibleThreshold > 0);
 
 		// Perform analysis
 		audioAnalyser.analyseFolder(new File(System.getProperty("user.dir")), analysisKey, suffixAndExtension);
