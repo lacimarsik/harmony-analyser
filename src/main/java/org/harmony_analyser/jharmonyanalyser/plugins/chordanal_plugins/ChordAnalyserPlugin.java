@@ -114,7 +114,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 		int sumOfAllTones = 0;
 		float timestamp;
 		BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
-		BufferedWriter outVerbose = new BufferedWriter(new FileWriter(outputFileVerbose));
+		//BufferedWriter outVerbose = new BufferedWriter(new FileWriter(outputFileVerbose));
 
 		// 3. Iterate over chord progression, deriving chord and transition complexities
 		for (int[] chord : chordProgression) {
@@ -125,7 +125,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 			// get timestamp of this transition
 			timestamp = timestampList.get(chordProgression.indexOf(chord));
 			if (verbose) {
-				outVerbose.write(timestamp + ":\n");
+				//outVerbose.write(timestamp + ":\n");
 			}
 
 			// create chords using Chordanal
@@ -136,7 +136,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 
 			if (chord1.equals(Chord.EMPTY_CHORD) || chord2.equals(Chord.EMPTY_CHORD)) {
 				if (verbose) {
-					outVerbose.write("SKIP (one or both chords were not assigned)\n\n");
+					//outVerbose.write("SKIP (one or both chords were not assigned)\n\n");
 				}
 			} else {
 				// Print chord names to output
@@ -144,15 +144,15 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 				String harmonyName2 = Chordanal.getHarmonyName(chord2);
 
 				if (verbose) {
-					outVerbose.write(previousChordTones + "-> " + currentChordTones + "\n");
-					outVerbose.write(harmonyName1 + "-> " + harmonyName2 + "\n");
+					//outVerbose.write(previousChordTones + "-> " + currentChordTones + "\n");
+					//outVerbose.write(harmonyName1 + "-> " + harmonyName2 + "\n");
 				}
 
 				// Get transition complexity using Harmanal
 				int transitionComplexity = Harmanal.getTransitionComplexity(chord1, chord2);
 				if (transitionComplexity == -1) {
 					if (verbose) {
-						outVerbose.write("transition: NO COMMON ROOTS (maximal complexity: " + maximalComplexity + ")\n");
+						//outVerbose.write("transition: NO COMMON ROOTS (maximal complexity: " + maximalComplexity + ")\n");
 					}
 					transitionComplexity = maximalComplexity;
 				} else {
@@ -164,7 +164,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 						transitionFormatted = transitionsFormatted.get(0);
 					}
 					if (verbose) {
-						outVerbose.write("transition: " + transitionFormatted + "\n");
+						//outVerbose.write("transition: " + transitionFormatted + "\n");
 					}
 				}
 				transitionComplexityList.add(transitionComplexity);
@@ -185,7 +185,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 					maximalChordComplexity = chordComplexity;
 				}
 				if (verbose) {
-					outVerbose.write("transition complexity: " + transitionComplexity + "\n\n");
+					//outVerbose.write("transition complexity: " + transitionComplexity + "\n\n");
 				}
 				out.write(this.getTransitionOutput(timestamp, transitionComplexity));
 			}
@@ -203,7 +203,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 		out.write(analysisResult);
 
 		out.close();
-		outVerbose.close();
+		//outVerbose.close();
 
 		return result;
 	}
