@@ -163,9 +163,11 @@ public class AudioAnalyser {
 					if (file.toString().endsWith(suffixAndExtension)) {
 						printAndAddToBuffer("\nProcessing: " + file.toString() + "\n");
 						try {
-							printAndAddToBuffer(runAnalysis(file.toString(), analysisKey, true, false));
+							printAndAddToBuffer(runAnalysis(file.toString(), analysisKey, false, false));
 						} catch (AudioAnalyser.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
 							printAndAddToBuffer("\nERROR: " + e.getMessage());
+						} catch (AudioAnalyser.OutputAlreadyExists e) {
+							printAndAddToBuffer("\nOutput exists for " + file.toString() + "... skipping");
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
