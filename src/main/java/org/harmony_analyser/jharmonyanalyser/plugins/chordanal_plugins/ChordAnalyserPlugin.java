@@ -94,7 +94,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 			chroma = AudioAnalysisHelper.getChromaFromLine(line);
 
 			// Shift chroma for proper alignment for analysis
-			// XXX: chromas from NNLS Chroma Vamp plugin start from A, chroma for Chordanal are starting from C)
+			// XXX: chromas from NNLS Chroma Vamp plugin start from A, chroma for ChordAnalyser are startingj  from C)
 			chroma = AudioAnalysisHelper.shiftChroma(chroma, 3);
 
 			// Add values into array for averages
