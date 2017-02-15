@@ -13,6 +13,7 @@ import java.io.File;
 public class HarmonyAnalyserScript {
 	private static String analysisKey;
 	private static String suffixAndExtension;
+	private static float audibleThreshold;
 	private static AudioAnalyser audioAnalyser;
 
 	public static void main(String[] args) {
@@ -48,6 +49,7 @@ public class HarmonyAnalyserScript {
 		CommandLine commandLine;
 		Option option_a = OptionBuilder.withArgName("analysisKey").hasArg().withDescription("Analysis key option").create("a");
 		Option option_s = OptionBuilder.withArgName("suffixAndExtension").hasArg().withDescription("Suffix option").create("s");
+		Option option_t = OptionBuilder.withArgName("audibleThreshold").hasArg().withDescription("Audible threshold").create("t");
 		Option option_l = new Option("l", "List analysisKeys option");
 		Option option_h = new Option("h", "Get help");
 		Options options = new Options();
@@ -57,6 +59,7 @@ public class HarmonyAnalyserScript {
 		options.addOption(option_s);
 		options.addOption(option_l);
 		options.addOption(option_h);
+		options.addOption(option_t);
 
 		try {
 			commandLine = parser.parse(options, args);
@@ -92,6 +95,15 @@ public class HarmonyAnalyserScript {
 				System.out.println(suffixAndExtension);
 			} else {
 				System.out.print("ERROR: Suffix and extension was not set. Please use -s option to define suffix for files to be analysed.");
+				return false;
+			}
+
+			if (commandLine.hasOption("t")) {
+				System.out.print("Audible threshold was set to: ");
+				audibleThreshold = Float.parseFloat(commandLine.getOptionValue("t"));
+				System.out.println(audibleThreshold);
+			} else {
+				System.out.print("ERROR: Audible threshold was not set. Please use -t option to define audibleThreshold for chroma features");
 				return false;
 			}
 
