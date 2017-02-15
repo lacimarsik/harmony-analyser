@@ -40,7 +40,7 @@ public class ChordComplexityDistancePlugin extends ChordAnalyserPlugin {
 		outputFileSuffix = "-cc-distance";
 
 		parameters = new HashMap<>();
-		parameters.put("audibleThreshold", (float) 0.07);
+		parameters.put("audibleThreshold", (float) 0.98);
 		parameters.put("maximumNumberOfChordTones", (float) 4.0);
 		parameters.put("maximalComplexity", (float) 7.0);
 

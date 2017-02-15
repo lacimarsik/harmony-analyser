@@ -29,7 +29,7 @@ public class ComplexityDifferencePlugin extends ChromaAnalyserPlugin {
 		outputFileSuffix = "-chroma-complexity-difference";
 
 		parameters = new HashMap<>();
-		parameters.put("audibleThreshold", (float) 0.07);
+		parameters.put("audibleThreshold", (float) 0.98);
 
 		setParameters();
 	}

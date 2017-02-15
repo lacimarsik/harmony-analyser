@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("SameParameterValue")
 
 abstract class ChordAnalyserPlugin extends LineChartPlugin {
-	private static float audibleThreshold = (float) 0.07; // used to filter chroma activations that we consider not audible
+	private static float audibleThreshold = (float) 0.98; // used to filter chroma activations that we consider not audible
 	private static int maximumNumberOfChordTones = 4; // used to limit number of tones we work with in chord
 	private static int maximalComplexity = 7; // used to assign a maximal value for 2 chords that have no common root
 
