@@ -29,11 +29,12 @@ public class ComplexityDifferencePlugin extends ChromaAnalyserPlugin {
 		outputFileSuffix = "-chroma-complexity-difference";
 
 		parameters = new HashMap<>();
+		parameters.put("audibleThreshold", (float) 0.07);
 
 		setParameters();
 	}
 
 	public float getChromaComplexity(Chroma previousChroma, Chroma chroma) throws Chroma.WrongChromaSize {
-		return Chromanal.getChromaComplexityTonal(previousChroma, chroma, false);
+		return Chromanal.getChromaComplexityTonal(previousChroma, chroma, audibleThreshold, false);
 	}
 }

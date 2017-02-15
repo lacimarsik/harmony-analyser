@@ -9,7 +9,6 @@ public class Chromanal {
 	/* Exceptions */
 
 	static final int CHROMA_LENGTH = 12;
-	private final static float audibleThreshold = (float) 0.07;
 	private final static int maximumNumberOfChordTones = 4;
 
 	/* Public / Package methods */
@@ -22,7 +21,7 @@ public class Chromanal {
 		return sum;
 	}
 
-	public static float getChromaComplexityTonal(Chroma chroma1, Chroma chroma2, boolean verbose) throws Chroma.WrongChromaSize {
+	public static float getChromaComplexityTonal(Chroma chroma1, Chroma chroma2, float audibleThreshold, boolean verbose) throws Chroma.WrongChromaSize {
 		if (verbose) AudioAnalysisHelper.logChromaFloatArray(chroma1.values, "Chroma 1");
 		if (verbose) AudioAnalysisHelper.logChromaFloatArray(chroma2.values, "Chroma 2");
 
