@@ -38,7 +38,7 @@ public class HarmonyAnalyserScript {
 		assert(audibleThreshold > 0);
 
 		// Perform analysis
-		audioAnalyser.analyseFolder(new File(System.getProperty("user.dir")), analysisKey, suffixAndExtension);
+		audioAnalyser.analyseFolder(new File(System.getProperty("user.dir")), analysisKey, suffixAndExtension, audibleThreshold);
 	}
 
 	// Parses arguments andh handles -l (list plugins) and -h (get help) arguments.

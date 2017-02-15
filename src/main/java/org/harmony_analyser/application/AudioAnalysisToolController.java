@@ -232,6 +232,6 @@ public class AudioAnalysisToolController implements Initializable {
 	}
 
 	private void analyseFolder(File inputFolder, String analysisKey, String suffixAndExtension) {
-		console.setText(audioAnalyser.analyseFolder(inputFolder, analysisKey, suffixAndExtension));
+		console.setText(audioAnalyser.analyseFolder(inputFolder, analysisKey, suffixAndExtension, 0.07f));
 	}
 }

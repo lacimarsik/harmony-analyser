@@ -142,7 +142,8 @@ public class AudioAnalyser {
 	}
 
 	// Analyses folder with given Analysis, writes to System.out as well as writes to outputWriteBuffer
-	public String analyseFolder(File inputFolder, String analysisKey, String suffixAndExtension) {
+	// Overrides audibleThreshold in analysis (null => leaves default value for plugin)
+	public String analyseFolder(File inputFolder, String analysisKey, String suffixAndExtension, float audibleThreshold) {
 		outputWriteBuffer = ""; // clear outputWriteBuffer
 		String outputWrite = "";
 		if (inputFolder.isFile()) {
