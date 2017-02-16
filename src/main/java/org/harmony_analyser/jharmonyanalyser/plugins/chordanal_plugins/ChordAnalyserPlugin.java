@@ -30,8 +30,8 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 	 *
 	 * @param inputFile [String] name of the WAV audio file
 	 *    These additional files are expected in the folder
-	 *    - chromaFile: name of the file containing chroma information (suffix: -chromas.txt)
-	 *    - segmentationFile: name of the file containing segmentation information (suffix: -segmentation.txt)
+	 *    - chroma file: name of the file containing chroma information (suffix: -chromas.txt)
+	 *    - segmentation file: name of the file containing segmentation information (suffix: -chordino-labels.txt, historically, since we have used Chordino segments)
 	 */
 
 	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
