@@ -50,6 +50,11 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 
 		// 1. Get timestamps from the segmentation file
 		segmentationTimestampList.addAll(segmentationLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
+		// XXX: It can happen in dataset (i.e. MSD), that the segmentation file is blank. In these cases, we take timestamps from chroma files,
+		// treating each chroma as a separate chord segment
+		if (segmentationTimestampList.size() == 0) {
+			segmentationTimestampList.addAll(chromaLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
+		}
 
 		float chromaTimestamp;
 		float[] chroma;
