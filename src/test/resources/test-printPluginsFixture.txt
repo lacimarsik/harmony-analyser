@@ -1,8 +1,0 @@
-
-> Available plugins (1):
-test_plugin
-
-> Available visualizations (1):
-visual_plugin
-
-INSTALLED_VAMP_PLUGINS_FOLLOW

@@ -28,7 +28,7 @@ public class AudioAnalyserTest {
 		wrongInputFile = "wrongfile";
 		ClassLoader classLoader = getClass().getClassLoader();
 		testWavFile = new File(classLoader.getResource("test.wav").getPath());
-		testReportFixture = new File(classLoader.getResource("test-printPluginsFixture.txt").getFile());
+		testReportFixture = new File(classLoader.getResource("test-printAnalysisFixture.txt").getPath());
 	}
 
 	@Test(expected = AudioAnalyser.IncorrectInputException.class)
@@ -43,6 +43,7 @@ public class AudioAnalyserTest {
 		String[] availablePlugins = { "test_plugin" };
 		String[] visualPlugins = { "visual_plugin" };
 		AnalysisFactory analysisFactory = mock(AnalysisFactory.class);
+		DataChartFactory dataChartFactory = mock(DataChartFactory.class);
 		when(analysisFactory.getAvailablePlugins()).thenReturn(availablePlugins);
 		when(dataChartFactory.getAllVisualizations()).thenReturn(visualPlugins);
 
@@ -68,7 +69,7 @@ public class AudioAnalyserTest {
 		when(analysisPlugin.analyse(testWavFile.toString(), true, false)).thenReturn("Done!");
 
 		AnalysisFactory analysisFactory = new AnalysisFactory() {
-			public AnalysisPlugin createPlugin(String pluginKey) {
+			public AnalysisPlugin createPlugin(String analysisKey) {
 				return analysisPlugin;
 			}
 		};

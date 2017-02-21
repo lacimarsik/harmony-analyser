@@ -30,8 +30,8 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 	 *
 	 * @param inputFile [String] name of the WAV audio file
 	 *    These additional files are expected in the folder
-	 *    - chromaFile: name of the file containing chroma information (suffix: -chromas.txt)
-	 *    - segmentationFile: name of the file containing segmentation information (suffix: -segmentation.txt)
+	 *    - chroma file: name of the file containing chroma information (suffix: -chromas.txt)
+	 *    - segmentation file: name of the file containing segmentation information (suffix: -chordino-labels.txt, historically, since we have used Chordino segments)
 	 */
 
 	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
@@ -50,6 +50,11 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 
 		// 1. Get timestamps from the segmentation file
 		segmentationTimestampList.addAll(segmentationLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
+		// XXX: It can happen in dataset (i.e. MSD), that the segmentation file is blank. In these cases, we take timestamps from chroma files,
+		// treating each chroma as a separate chord segment
+		if (segmentationTimestampList.size() == 0) {
+			segmentationTimestampList.addAll(chromaLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
+		}
 
 		float chromaTimestamp;
 		float[] chroma;
@@ -94,7 +99,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 			chroma = AudioAnalysisHelper.getChromaFromLine(line);
 
 			// Shift chroma for proper alignment for analysis
-			// XXX: chromas from NNLS Chroma Vamp plugin start from A, chroma for Chordanal are starting from C)
+			// XXX: chromas from NNLS Chroma Vamp plugin start from A, chroma for ChordAnalyser are startingj  from C)
 			chroma = AudioAnalysisHelper.shiftChroma(chroma, 3);
 
 			// Add values into array for averages
@@ -114,7 +119,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 		int sumOfAllTones = 0;
 		float timestamp;
 		BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
-		BufferedWriter outVerbose = new BufferedWriter(new FileWriter(outputFileVerbose));
+		//BufferedWriter outVerbose = new BufferedWriter(new FileWriter(outputFileVerbose));
 
 		// 3. Iterate over chord progression, deriving chord and transition complexities
 		for (int[] chord : chordProgression) {
@@ -125,7 +130,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 			// get timestamp of this transition
 			timestamp = timestampList.get(chordProgression.indexOf(chord));
 			if (verbose) {
-				outVerbose.write(timestamp + ":\n");
+				//outVerbose.write(timestamp + ":\n");
 			}
 
 			// create chords using Chordanal
@@ -136,7 +141,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 
 			if (chord1.equals(Chord.EMPTY_CHORD) || chord2.equals(Chord.EMPTY_CHORD)) {
 				if (verbose) {
-					outVerbose.write("SKIP (one or both chords were not assigned)\n\n");
+					//outVerbose.write("SKIP (one or both chords were not assigned)\n\n");
 				}
 			} else {
 				// Print chord names to output
@@ -144,15 +149,15 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 				String harmonyName2 = Chordanal.getHarmonyName(chord2);
 
 				if (verbose) {
-					outVerbose.write(previousChordTones + "-> " + currentChordTones + "\n");
-					outVerbose.write(harmonyName1 + "-> " + harmonyName2 + "\n");
+					//outVerbose.write(previousChordTones + "-> " + currentChordTones + "\n");
+					//outVerbose.write(harmonyName1 + "-> " + harmonyName2 + "\n");
 				}
 
 				// Get transition complexity using Harmanal
 				int transitionComplexity = Harmanal.getTransitionComplexity(chord1, chord2);
 				if (transitionComplexity == -1) {
 					if (verbose) {
-						outVerbose.write("transition: NO COMMON ROOTS (maximal complexity: " + maximalComplexity + ")\n");
+						//outVerbose.write("transition: NO COMMON ROOTS (maximal complexity: " + maximalComplexity + ")\n");
 					}
 					transitionComplexity = maximalComplexity;
 				} else {
@@ -164,7 +169,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 						transitionFormatted = transitionsFormatted.get(0);
 					}
 					if (verbose) {
-						outVerbose.write("transition: " + transitionFormatted + "\n");
+						//outVerbose.write("transition: " + transitionFormatted + "\n");
 					}
 				}
 				transitionComplexityList.add(transitionComplexity);
@@ -185,7 +190,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 					maximalChordComplexity = chordComplexity;
 				}
 				if (verbose) {
-					outVerbose.write("transition complexity: " + transitionComplexity + "\n\n");
+					//outVerbose.write("transition complexity: " + transitionComplexity + "\n\n");
 				}
 				out.write(this.getTransitionOutput(timestamp, transitionComplexity));
 			}
@@ -203,7 +208,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 		out.write(analysisResult);
 
 		out.close();
-		outVerbose.close();
+		//outVerbose.close();
 
 		return result;
 	}

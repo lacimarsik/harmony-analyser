@@ -1,0 +1,2 @@
+Manifest-Version: 1.2-beta
+Main-Class: org.harmony_analyser.cli_scripts.HarmonyAnalyserScript

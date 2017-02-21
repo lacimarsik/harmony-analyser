@@ -37,6 +37,6 @@ public class ChromanalTest {
 		// D: 0.5 => 0
 		// E: 1 => 0
 		// Sum of Deltas: 1.8
-		assertEquals(1.8, Chromanal.getChromaComplexityTonal(chroma1, chroma2, true), 0.01);
+		assertEquals(1.8, Chromanal.getChromaComplexityTonal(chroma1, chroma2, 0.07f, true), 0.01);
 	}
 }
