@@ -30,3 +30,7 @@ To install the dependency properly, issue from the project root:
 ## Documentation
 For more details and sample analysis please refer to the documentation located in `documentation` folder.
 For any questions and comments please contact the author on GitHub or [mail](mailto: marsik@ksi.mff.cuni.cz).
+
+## Troubleshooting
+1. You may get: `Exception in thread "main" java.lang.UnsupportedClassVersionError: org/harmony_analyser/application/HarmonyAnalyser : Unsupported major.minor version 52.0`. That means you tried to install a new version of JRE when you already have a previous one. Make sure you set up the default JRE properly. You can check the default Java version used on your UNIX system with: `sudo update-alternatives --config java`.
+2. You may get `jni.h: no such file or directory` while failing to compile jVamp on UNIX. If so, you have to manually add the path to jni.h in the Makefile of jVamp. It should be something on line 18 looking like: `INCLUDES := -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux` and you will have to update it to something like: `INCLUDES := -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux -I/path/to/jni.h`
