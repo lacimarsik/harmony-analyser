@@ -317,8 +317,15 @@ public class Chordanal {
 
 	public static Key createKeyFromName(String name) {
 		String[] keyParts = name.split(" ");
-
-		return new Key(Integer.parseInt(tonesNames.getFirstInKey(keyParts[0])), Integer.parseInt(scaleNameTable.getFirstInKey(keyParts[1])));
+		if (keyParts[0].equals("(unknown)")) {
+			// TODO: temporary fix, treat (unknown) key as C major
+			return new Key(0, 0);
+		}
+		if (keyParts.length == 4) { // case: Eb / D# minor
+			return new Key(Integer.parseInt(tonesNames.getFirstInKey(keyParts[0])), Integer.parseInt(scaleNameTable.getFirstInKey(keyParts[3])));
+		} else {
+			return new Key(Integer.parseInt(tonesNames.getFirstInKey(keyParts[0])), Integer.parseInt(scaleNameTable.getFirstInKey(keyParts[1])));
+		}
 	}
 
 	/* PUBLIC / PACKAGE METHODS */
