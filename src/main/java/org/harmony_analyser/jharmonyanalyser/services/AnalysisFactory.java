@@ -5,6 +5,7 @@ import org.harmony_analyser.jharmonyanalyser.plugins.chordanal_plugins.*;
 import org.harmony_analyser.jharmonyanalyser.plugins.chromanal_plugins.*;
 import org.harmony_analyser.jharmonyanalyser.plugins.vamp_plugins.*;
 import org.harmony_analyser.jharmonyanalyser.filters.TimeSeriesFilter;
+import org.harmony_analyser.jharmonyanalyser.filters.ChordVectorsFilter;
 import org.vamp_plugins.PluginLoader;
 
 import java.util.Arrays;
