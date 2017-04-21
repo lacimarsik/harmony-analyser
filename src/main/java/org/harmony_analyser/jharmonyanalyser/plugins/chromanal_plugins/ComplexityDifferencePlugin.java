@@ -37,4 +37,9 @@ public class ComplexityDifferencePlugin extends ChromaAnalyserPlugin {
 	public float getChromaComplexity(Chroma previousChroma, Chroma chroma) throws Chroma.WrongChromaSize {
 		return Chromanal.getChromaComplexityTonal(previousChroma, chroma, audibleThreshold, false);
 	}
+
+	@Override
+	protected void setParameters() {
+		audibleThreshold = parameters.get("audibleThreshold");
+	}
 }

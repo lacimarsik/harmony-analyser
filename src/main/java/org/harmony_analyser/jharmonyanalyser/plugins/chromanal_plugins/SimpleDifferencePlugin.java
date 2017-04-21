@@ -36,4 +36,9 @@ public class SimpleDifferencePlugin extends ChromaAnalyserPlugin {
 	public float getChromaComplexity(Chroma previousChroma, Chroma chroma) {
 		return Chromanal.getChromaComplexitySimple(previousChroma, chroma);
 	}
+
+	@Override
+	protected void setParameters() {
+		// No parameters present for this plugin
+	}
 }

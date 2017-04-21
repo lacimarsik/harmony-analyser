@@ -74,9 +74,5 @@ abstract class ChromaAnalyserPlugin extends LineChartPlugin {
 
 	protected abstract float getChromaComplexity(Chroma previousChroma, Chroma chroma) throws Chroma.WrongChromaSize;
 
-	protected void setParameters() {
-		audibleThreshold = parameters.get("audibleThreshold");
-	}
-
 	/* Private methods */
 }
