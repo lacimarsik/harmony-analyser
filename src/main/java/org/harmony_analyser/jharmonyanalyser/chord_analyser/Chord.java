@@ -70,6 +70,21 @@ public class Chord {
 		return result;
 	}
 
+	public String getStringVector() {
+		String result = "";
+		for (int i = 0; i < 12; i++) {
+			for (Tone tone : tones) {
+				if (tone.getNumberMapped() == i) {
+					result += '1';
+				} else {
+					result += '0';
+				}
+				result += ' ';
+			}
+		}
+		return result;
+	}
+
 	Chord inversionUp() {
 		ArrayList<Tone> newTones = new ArrayList<>();
 
