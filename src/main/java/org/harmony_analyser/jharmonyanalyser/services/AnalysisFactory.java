@@ -26,7 +26,8 @@ public class AnalysisFactory {
 	};
 
 	private final String[] POST_PROCESSING_FILTERS = new String[] {
-		"filters:time_series"
+		"filters:time_series",
+		"filters:chord_vectors"
 	};
 
 	private final String[] WRAPPED_VAMP_PLUGINS = new String[] {
@@ -96,6 +97,9 @@ public class AnalysisFactory {
 					break;
 				case "filters:time_series":
 					plugin = new TimeSeriesFilter();
+					break;
+				case "filters:chord_vectors":
+					plugin = new ChordVectorsFilter();
 					break;
 				default:
 					throw new AudioAnalyser.LoadFailedException("Analysis with key " + analysisKey + " is not available");

@@ -29,8 +29,8 @@ import java.util.stream.Collectors;
  */
 
 @SuppressWarnings("SameParameterValue")
-public class ChordVectorFilter extends LineChartPlugin {
-	public ChordVectorFilter() {
+public class ChordVectorsFilter extends LineChartPlugin {
+	public ChordVectorsFilter() {
 		key = "filters:chord_vectors";
 		name = "Chord Vectors";
 		description = "Converts Chordino output to a time series of 12-dimensional boolean vectors of chords";
