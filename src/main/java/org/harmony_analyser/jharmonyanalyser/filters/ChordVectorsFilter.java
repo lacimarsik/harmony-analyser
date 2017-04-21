@@ -96,13 +96,9 @@ public class ChordVectorsFilter extends LineChartPlugin {
 		List<String> chordLabelLinesList = Files.readAllLines(new File(inputFiles.get(0)).toPath(), Charset.defaultCharset());
 		List<String> chordLabelList = new ArrayList<>();
 		List<Float> chordLabelTimestampList = new ArrayList<>();
-		List<String> keyLinesList = Files.readAllLines(new File(inputFiles.get(2)).toPath(), Charset.defaultCharset());
-		List<String> keyList = new ArrayList<>();
 		List<Float> keyTimestampList = new ArrayList<>();
 		chordLabelList.addAll(chordLabelLinesList.stream().map(AudioAnalysisHelper::getLabelFromLine).collect(Collectors.toList()));
 		chordLabelTimestampList.addAll(chordLabelLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
-		keyList.addAll(keyLinesList.stream().map(AudioAnalysisHelper::getLabelFromLine).collect(Collectors.toList()));
-		keyTimestampList.addAll(keyLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
 
 		int chordIndex = 0, chordLabelIndex = 0;
 		float chordLabelTimestamp;

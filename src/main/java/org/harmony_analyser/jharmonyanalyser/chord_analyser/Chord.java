@@ -73,14 +73,13 @@ public class Chord {
 	public String getStringVector() {
 		String result = "";
 		for (int i = 0; i < 12; i++) {
+			String boolValue = "0";
 			for (Tone tone : tones) {
 				if (tone.getNumberMapped() == i) {
-					result += '1';
-				} else {
-					result += '0';
+					boolValue = "1";
 				}
-				result += ' ';
 			}
+			result += boolValue + " ";
 		}
 		return result;
 	}
