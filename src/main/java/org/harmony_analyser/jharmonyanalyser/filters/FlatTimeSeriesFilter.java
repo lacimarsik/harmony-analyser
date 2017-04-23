@@ -128,7 +128,7 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 			timestamp = outputTimestampList.get(index);
 			String resultArray = "";
 			for (int i = 0; i < vectorSize; i++) {
-				resultArray += value[i];
+				resultArray += value[i] + " ";
 			}
 			out.write(timestamp + ": " + resultArray + "\n");
 			index++;
