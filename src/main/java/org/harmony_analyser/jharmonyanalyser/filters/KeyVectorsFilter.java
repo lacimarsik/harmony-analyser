@@ -70,7 +70,7 @@ public class KeyVectorsFilter extends LineChartPlugin {
 
 		// Iterate over keys, parse the key and convert it to the key vector
 		for (String label : keyList) {
-			if ((keyIndex >keyTimestampList.size() - 1) || (keyIndex > keyList.size() - 1)) {
+			if ((keyIndex > keyTimestampList.size() - 1) || (keyIndex > keyList.size() - 1)) {
 				break;
 			}
 			if ((keyIndex > keyTimestampList.size() - 1) || (keyIndex > keyList.size() - 1)) {
@@ -89,6 +89,8 @@ public class KeyVectorsFilter extends LineChartPlugin {
 
 			keyIndex++;
 		}
+
+		out.close();
 
 		return result;
 	}
