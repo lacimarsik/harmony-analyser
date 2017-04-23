@@ -1,5 +1,6 @@
 package org.harmony_analyser.jharmonyanalyser.services;
 
+import org.harmony_analyser.jharmonyanalyser.filters.FlatTimeSeriesFilter;
 import org.harmony_analyser.jharmonyanalyser.plugins.EmptyPlugin;
 import org.harmony_analyser.jharmonyanalyser.plugins.chordanal_plugins.*;
 import org.harmony_analyser.jharmonyanalyser.plugins.chromanal_plugins.*;
@@ -29,6 +30,7 @@ public class AnalysisFactory {
 
 	private final String[] POST_PROCESSING_FILTERS = new String[] {
 		"filters:time_series",
+		"filters:flat_time_series",
 		"filters:chord_vectors",
 		"filters:key_vectors"
 	};
@@ -100,6 +102,9 @@ public class AnalysisFactory {
 					break;
 				case "filters:time_series":
 					plugin = new TimeSeriesFilter();
+					break;
+				case "filters:flat_time_series":
+					plugin = new FlatTimeSeriesFilter();
 					break;
 				case "filters:chord_vectors":
 					plugin = new ChordVectorsFilter();
