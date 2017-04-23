@@ -19,7 +19,7 @@ To run the application:
 * For Command-line interface, move the file `harmony-analyser-script-jar-with-dependencies.jar` from `target` folder into the folder with WAV files for analysis. Then invoke `java -jar harmony-analyser-script-jar-with-dependencies -p <plugin name> -s .wav`, or `-h` for help.
 
 ## Development
-In addition to installation pre-requisites, a functional [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) needs to be installed in order to compile the source.
+You are welcome to fork, push your changes to your fork, and pull request at anytime! We will also be happy to add you as collaborator [upon request](mailto:marsik@ksi.mff.cuni.cz). In addition to installation pre-requisites, a functional [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) needs to be installed in order to compile the source.
 Project uses [Maven](https://maven.apache.org/) as the project management tool. Dependencies available in the public Maven repositories are pulled in automatically.
 Project uses one local dependency in form of JAR located in `lib`:
 * [jVamp](https://code.soundsoftware.ac.uk/projects/jvamp): Since the Vamp plugins are typically written in C++, we are using jVamp wrappers to load them in Java (jVamp uses JNI to work with native C++ code)
