@@ -40,6 +40,20 @@ public class Key {
 		return result;
 	}
 
+	public String getStringVector() {
+		String result = "";
+		for (int i = 0; i < 12; i++) {
+			String boolValue = "0";
+			for (Tone tone : getScaleHarmony().tones) {
+				if (tone.getNumberMapped() == i) {
+					boolValue = "1";
+				}
+			}
+			result += boolValue + " ";
+		}
+		return result;
+	}
+
 	Chord getScaleHarmony() {
 		int[] tones = getScale();
 		for (int i = 0; i < tones.length; i++) {

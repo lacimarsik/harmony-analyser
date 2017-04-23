@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Filter to convert chord output: Creates a 12-dimensional vector of boolean from the Vamp Chordino output
+ * Filter to convert chord output: Creates a time series of 12-dimensional boolean vectors (representing chords) from the Vamp Chordino output
  */
 
 /*
- * TimeSeriesFilter
+ * ChordVectorsFilter
  *
- * - requires: Chordino-Tones output
+ * - requires: Chordino (tones and labels) output
  * - creates a time series of 12-dimensional boolean vectors
  */
 
@@ -108,7 +108,7 @@ public class ChordVectorsFilter extends LineChartPlugin {
 		Chord chord;
 		Chord previousChord = Chord.EMPTY_CHORD;
 
-		// 2. Iterate over both chord label and chord array, checking respective keys, and deriving TPS distnaces
+		// 2. Iterate over both chord label and chord array - getting labels from chord label output and printing the vector
 		for (String label : chordLabelList) {
 			if ((chordLabelIndex > chordLabelTimestampList.size() - 1) || (chordLabelIndex > chordLabelList.size() - 1)) {
 				break;
