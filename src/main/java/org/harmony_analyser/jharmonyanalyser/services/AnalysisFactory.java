@@ -6,6 +6,7 @@ import org.harmony_analyser.jharmonyanalyser.plugins.chromanal_plugins.*;
 import org.harmony_analyser.jharmonyanalyser.plugins.vamp_plugins.*;
 import org.harmony_analyser.jharmonyanalyser.filters.TimeSeriesFilter;
 import org.harmony_analyser.jharmonyanalyser.filters.ChordVectorsFilter;
+import org.harmony_analyser.jharmonyanalyser.filters.KeyVectorsFilter;
 import org.vamp_plugins.PluginLoader;
 
 import java.util.Arrays;
@@ -28,7 +29,8 @@ public class AnalysisFactory {
 
 	private final String[] POST_PROCESSING_FILTERS = new String[] {
 		"filters:time_series",
-		"filters:chord_vectors"
+		"filters:chord_vectors",
+		"filters:key_vectors"
 	};
 
 	private final String[] WRAPPED_VAMP_PLUGINS = new String[] {
@@ -101,6 +103,9 @@ public class AnalysisFactory {
 					break;
 				case "filters:chord_vectors":
 					plugin = new ChordVectorsFilter();
+					break;
+				case "filters:key_vectors":
+					plugin = new KeyVectorsFilter();
 					break;
 				default:
 					throw new AudioAnalyser.LoadFailedException("Analysis with key " + analysisKey + " is not available");
