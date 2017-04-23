@@ -91,6 +91,21 @@ public class AudioAnalysisHelper {
 	// gets float from the line, after ':'
 	public static float getFloatFromLine(String line) { return Float.parseFloat(line.substring(line.lastIndexOf(':') + 2)); }
 
+	// gets float array (with given size) from the line, after ':'
+	public static float[] getFloatArrayFromLine(String line, int size) throws AudioAnalyser.IncorrectInputException {
+		float[] result = new float[size];
+		String floatValues = line.substring(line.lastIndexOf(':') + 2);
+		Scanner sc = new Scanner(floatValues);
+		for (int i = 0; i < size; i++) {
+			if (sc.hasNextFloat()) {
+				result[i] = sc.nextFloat();
+			} else {
+				throw new AudioAnalyser.IncorrectInputException("Float array information is invalid.");
+			}
+		}
+		return result;
+	}
+
 	// gets chroma information from the line of String
 	public static float[] getChromaFromLine(String line) throws AudioAnalyser.IncorrectInputException {
 		float[] result = new float[12];
