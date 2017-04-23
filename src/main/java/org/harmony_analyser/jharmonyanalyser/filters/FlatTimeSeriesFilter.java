@@ -2,7 +2,8 @@ package org.harmony_analyser.jharmonyanalyser.filters;
 
 import org.harmony_analyser.application.visualizations.VisualizationData;
 import org.harmony_analyser.jharmonyanalyser.chroma_analyser.Chroma;
-import org.harmony_analyser.jharmonyanalyser.services.*;
+import org.harmony_analyser.jharmonyanalyser.services.AudioAnalyser;
+import org.harmony_analyser.jharmonyanalyser.services.AudioAnalysisHelper;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,12 +12,13 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Filter to convert outputs: create a time series from a timestamp-based text file containting a XY-plot in the way that the plot lines remains the same
+ * Filter to convert outputs: create a time series from timestamp-based text file containing single points or vectors, in the way that the value is copied until the next timestamp
  */
 
 /*
@@ -28,13 +30,14 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("SameParameterValue")
 
-public class TimeSeriesFilter extends AnalysisFilter {
+public class FlatTimeSeriesFilter extends AnalysisFilter {
 	private float samplingRate;
+	private int vectorSize;
 
-	public TimeSeriesFilter() {
-		key = "filters:time_series";
-		name = "Timestamp to time series filter";
-		description = "Takes 'timestamp: value' time series, and transforms it into fixed sample-rate time series preserving the lines";
+	public FlatTimeSeriesFilter() {
+		key = "filters:flat_time_series";
+		name = "Timestamp to flat time series filter";
+		description = "Takes 'timestamp: value/vector' time series, and transforms it into fixed sample rate values by copying";
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add(""); // no suffix, arbitrary input file is allowed
@@ -44,6 +47,7 @@ public class TimeSeriesFilter extends AnalysisFilter {
 
 		parameters = new HashMap<>();
 		parameters.put("samplingRate", (float) 100);
+		parameters.put("vectorSize", (float) 12);
 
 		setParameters();
 	}
@@ -60,38 +64,40 @@ public class TimeSeriesFilter extends AnalysisFilter {
 
 		List<String> inputFileLinesList = Files.readAllLines(new File(inputFile).toPath(), Charset.defaultCharset());
 		List<Float> inputFileTimestampList = new ArrayList<>();
-		List<Float> inputFileValuesList = new ArrayList<>();
+		List<float[]> inputFileValuesList = new ArrayList<>();
 
 		// 1. Get timestamps from the input file
 		inputFileTimestampList.addAll(inputFileLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
 
 		// 2. Get values from the input file
-		inputFileValuesList.addAll(inputFileLinesList.stream().map(AudioAnalysisHelper::getFloatFromLine).collect(Collectors.toList()));
+		for (String value : inputFileLinesList) {
+			float[] floatArray = AudioAnalysisHelper.getFloatArrayFromLine(value, vectorSize);
+			inputFileValuesList.add(floatArray);
+		}
 
 		// 3. Iterate over timestamps and values, creating time series values
 		List<Float> outputTimestampList = new ArrayList<>();
-		List<Float> outputValuesList = new ArrayList<>();
-		float previousTimestamp, previousValue, timestamp;
+		List<float[]> outputValuesList = new ArrayList<>();
+		float[] previousValue;
+		float previousTimestamp, timestamp;
 		previousTimestamp = inputFileTimestampList.get(0);
 		previousValue = inputFileValuesList.get(0);
 		float sampleLength = 1 / samplingRate;
 		int index = 0;
-		for (Float value : inputFileValuesList) {
+		for (float[] floatArray : inputFileValuesList) {
 			if (index == 0) {
 				index++;
 				continue;
 			}
 			timestamp = inputFileTimestampList.get(index);
 
-			// Find out difference between timestamps and values
+			// Find out difference between timestamps
 			float timestampDifference = timestamp - previousTimestamp;
-			float valueDifference = value - previousValue;
 			outVerbose.write("timestampDifference: " + timestampDifference + "\n");
-			outVerbose.write("valueDifference: " + valueDifference + "\n");
 			if (timestampDifference > sampleLength) {
 				// CASE 1: Timestamp difference greater than sample length
 				float newTimestamp = previousTimestamp;
-				float newValue;
+				float[] newValue;
 				outVerbose.write("STARTING WITH timestamp: " + newTimestamp + "\n");
 				int sampleIndex = 0;
 				float ratio = sampleLength / timestampDifference;
@@ -99,14 +105,14 @@ public class TimeSeriesFilter extends AnalysisFilter {
 				while (newTimestamp < timestamp) {
 					newTimestamp += sampleLength;
 					sampleIndex++;
-					newValue = previousValue + (sampleIndex * ratio * valueDifference);
+					newValue = previousValue;
 					outputTimestampList.add(newTimestamp);
 					outputValuesList.add(newValue);
 				}
 
 				// bump previous timestamp-value and continue
 				previousTimestamp = timestamp;
-				previousValue = value;
+				previousValue = floatArray;
 				index++;
 			} else {
 				// CASE 2: Timestamp difference lower than sample length
@@ -118,9 +124,13 @@ public class TimeSeriesFilter extends AnalysisFilter {
 		// 4. Rewrite input file using new timestamps and values
 		index = 0;
 		BufferedWriter out = new BufferedWriter(new FileWriter(inputFile));
-		for (Float value : outputValuesList) {
+		for (float[] value : outputValuesList) {
 			timestamp = outputTimestampList.get(index);
-			out.write(timestamp + ": " + value + "\n");
+			String resultArray = "";
+			for (int i = 0; i < vectorSize; i++) {
+				resultArray += value[i];
+			}
+			out.write(timestamp + ": " + resultArray + "\n");
 			index++;
 		}
 		out.close();
@@ -131,6 +141,7 @@ public class TimeSeriesFilter extends AnalysisFilter {
 
 	protected void setParameters() {
 		samplingRate = parameters.get("samplingRate");
+		vectorSize = Math.round(parameters.get("vectorSize"));
 	}
 
 	public VisualizationData getDataFromOutput(String outputFile) {
