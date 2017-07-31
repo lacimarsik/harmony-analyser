@@ -3,6 +3,7 @@ package org.harmony_analyser.jharmonyanalyser.plugins.vamp_plugins;
 import org.harmony_analyser.jharmonyanalyser.services.AudioAnalyser;
 import org.harmony_analyser.jharmonyanalyser.chroma_analyser.Chroma;
 import org.harmony_analyser.jharmonyanalyser.plugins.*;
+import org.harmony_analyser.jharmonyanalyser.services.AudioConverter;
 import org.vamp_plugins.*;
 
 import java.io.*;
@@ -165,23 +166,27 @@ abstract class VampPlugin extends AnalysisPlugin {
 
 			PrintStream out = new PrintStream(new FileOutputStream(outputFile, false));
 
+			float frameRate = format.getFrameRate();
+			int channels = format.getChannels();
+			int bytesPerFrame = format.getFrameSize();
+
 			if (format.getSampleSizeInBits() != 16 || format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED || format.isBigEndian()) {
+				result += "WARNING: Input is not 16-bit signed little-endian PCM file. Trying a conversion\n";
+				AudioConverter audioConverter = new AudioConverter(frameRate, bytesPerFrame);
+				audioConverter.convertTo16BitSignedLE(inputFile);
+
 				String errorMessage = "ERROR: Only 16-bit signed little-endian PCM files supported\n";
 				result += errorMessage;
 				return result;
 			}
 
-			float rate = format.getFrameRate();
-			int channels = format.getChannels();
-			int bytesPerFrame = format.getFrameSize();
-
 			result += "Wav file: " + f.getName() + "\n";
-			result += "Sample rate: " + rate + "\n";
+			result += "Sample rate: " + frameRate + "\n";
 			result += "Channels: " + channels + "\n";
 			result += "Bytes per frame: " + bytesPerFrame + "\n";
 			result += "Output: " + this.p.getOutputDescriptors()[outputNumber].name + "\n";
 
-			p = loader.loadPlugin(key, rate, adapterFlag);
+			p = loader.loadPlugin(key, frameRate, adapterFlag);
 			setParameters();
 
 			boolean b = p.initialise(channels, blockSize, blockSize);
@@ -217,7 +222,7 @@ abstract class VampPlugin extends AnalysisPlugin {
 					}
 
 					incomplete = (read < buffers[0].length);
-					RealTime timestamp = RealTime.frame2RealTime(block * blockSize, (int)(rate + 0.5));
+					RealTime timestamp = RealTime.frame2RealTime(block * blockSize, (int)(frameRate + 0.5));
 					Map<Integer, List<Feature>> features = p.process(buffers, timestamp);
 					printFeatures(timestamp, outputNumber, features, out);
 				}
@@ -225,7 +230,7 @@ abstract class VampPlugin extends AnalysisPlugin {
 				++block;
 			}
 			Map<Integer, List<Feature>> features = p.getRemainingFeatures();
-			RealTime timestamp = RealTime.frame2RealTime (block * blockSize, (int)(rate + 0.5));
+			RealTime timestamp = RealTime.frame2RealTime (block * blockSize, (int)(frameRate + 0.5));
 			printFeatures(timestamp, outputNumber, features, out);
 
 			stream.close();
