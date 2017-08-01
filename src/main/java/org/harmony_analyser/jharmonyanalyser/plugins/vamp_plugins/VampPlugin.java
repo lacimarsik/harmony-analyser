@@ -172,7 +172,7 @@ abstract class VampPlugin extends AnalysisPlugin {
 
 			if (format.getSampleSizeInBits() != 16 || format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED || format.isBigEndian()) {
 				result += "WARNING: Input is not 16-bit signed little-endian PCM file. Trying a conversion\n";
-				AudioConverter audioConverter = new AudioConverter(frameRate, bytesPerFrame);
+				AudioConverter audioConverter = new AudioConverter();
 				audioConverter.convertTo16BitSignedLE(inputFile);
 
 				String errorMessage = "ERROR: Only 16-bit signed little-endian PCM files supported\n";
