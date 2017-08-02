@@ -9,7 +9,6 @@ import java.io.IOException;
  * Class to convert audio files to achieve unified analysis
  */
 
-@SuppressWarnings("SameParameterValue")
 public class AudioConverter {
 
 	public AudioConverter() { }
@@ -23,14 +22,14 @@ public class AudioConverter {
 			FFprobe ffprobe = new FFprobe("/usr/bin/ffprobe");
 
 			FFmpegBuilder builder = new FFmpegBuilder()
-				.setInput(filename)     // Filename, or a FFmpegProbeResult
-				.overrideOutputFiles(true) // Override the output if it exists
-				.addOutput(filename + "test.wav")   // Filename for the destination
-				.setFormat("wav")        // Format is inferred from filename, or can be set
-				.setAudioChannels(1)         // Mono audio
-				.setAudioSampleRate(48_000)  // at 48KHz
-				.setAudioBitRate(32768)      // at 32 kbit/s
-				.setStrict(FFmpegBuilder.Strict.EXPERIMENTAL) // Allow FFmpeg to use experimental specs
+				.setInput(filename)
+				.overrideOutputFiles(true)
+				.addOutput(filename + "test.wav")
+				.setFormat("wav")
+				.setAudioChannels(1)
+				.setAudioSampleRate(48_000)
+				.setAudioBitRate(32768)
+				.setStrict(FFmpegBuilder.Strict.EXPERIMENTAL)
 				.done();
 
 			FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
