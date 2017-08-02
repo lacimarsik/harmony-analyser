@@ -37,27 +37,14 @@ public class AudioConverter {
 
 /* Code courtesy of coweb.cc.gatech.edu */
 
-/* EVERYTHING INDEXES FROM 0
- * arrays, frames, samples, etc.
- */
-
-public class JavaSound{
-
-	/*
-	 *fields
-	 */
+public class JavaSound {
 	private static final int BUFFER_SIZE = 16384;//no reasoning on the size,
-	//just copied from the demo
 	private static final boolean DEBUG = true;
 	private String errStr;
 	public byte[] buffer;//should probably be private
 	public AudioFileFormat audioFileFormat;//should probably be private
 	private Playback playback; //class variable?  two playing at once?
 
-
-	/*
-	 *accessors
-	 */
 	public byte[] getBuffer()
 	{
 		return buffer;
@@ -68,16 +55,11 @@ public class JavaSound{
 		return audioFileFormat;
 	}
 
-	//for compatibility
 	public byte[] asArray()
 	{
 		return getBuffer();
 	}
 
-
-	/*
-	 *modifiers
-	 */
 	public void setBuffer(byte[] newBuffer)
 	{
 		buffer = newBuffer;
@@ -88,56 +70,31 @@ public class JavaSound{
 		audioFileFormat = newAudioFileFormat;
 	}
 
-
-	/*
-	 *constructors
-	 */
 	public JavaSound()
 	{
 		buffer = new byte[BUFFER_SIZE];
 	}
 
-	public JavaSound(int numSeconds)
-	{
-	/* Make a new wave file at 22.05K sampling, 16 bits,
-	   1 channel, signed, smallEndian */
+	public JavaSound(int numSeconds) {
+		// Make a new wave file at 22.05K sampling, 16 bits, 1 channel, signed, smallEndian
 		AudioFormat audioFormat = new AudioFormat(22050, 16, 1, true, false);
 
-		//we were using the value:  numSeconds * 44100 * 16 * 1
-		//    sec * 2 * samples/sec/channel * bits/sample * channels = 2*bits
-		//but i think it should be 22050 * 1 * numSeconds * 2
-		//    samples/sec/channel * channels * sec * bytes/sample = bytes
+		// We were using the value: numSeconds * 44100 * 16 * 1 sec * 2 * samples/sec/channel * bits/sample * channels = 2*bits
+		// but it should be 22050 * 1 * numSeconds * 2 samples/sec/channel * channels * sec * bytes/sample = bytes
 		int lengthInBytes = 22050 * 1* numSeconds * 2;
 
-		//lengthInFrames = lengthInBytes/frameSizeInBytes
-		// note : frame size is number of bytes required to contain one sample
-		// from each channel: channels * samples/channel * bytes/sample
-		audioFileFormat = new AudioFileFormat(AudioFileFormat.Type.WAVE,
-				audioFormat, lengthInBytes/(2));
-
+		// lengthInFrames = lengthInBytes/frameSizeInBytes
+		// note : frame size is number of bytes required to contain one sample from each channel: channels * samples/channel * bytes/sample
+		audioFileFormat = new AudioFileFormat(AudioFileFormat.Type.WAVE, audioFormat, lengthInBytes/(2));
 		buffer = new byte[lengthInBytes];
 	}
 
-	/*
-	 * if we say that we're always starting from a file, we should guarrantee
-	 * it and this should really be our only constructor.  I went ahead and
-	 * left the others since they were already there, but the functions won't
-	 * all work without the proper information, and we can only get that from
-	 * a file, or by passing more info to yet a different constructor.  i
-	 * assume what happens currently is something like
-	 *    theSound = JavaSound new();
-	 *    theSound.loadFromFile("blah");
-	 */
 	public JavaSound(String fileName)
 	{
 		loadFromFile(fileName);
 	}
 
-	/*
-	 *misc
-	 */
-	public AudioInputStream makeAIS()
-	{
+	public AudioInputStream makeAIS() {
 		AudioFileFormat.Type fileType = audioFileFormat.getType();
 		ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
 		int frameSize = audioFileFormat.getFormat().getFrameSize();
@@ -146,87 +103,66 @@ public class JavaSound{
 				new AudioInputStream(bais, audioFileFormat.getFormat(),
 						buffer.length/frameSize);
 		return audioInputStream;
-	}//makeAIS
+	}
 
 	public void printError(String msg)
 	{
 		printError(msg, null);
 	}
 
-	public void printError(String msg, Exception e)
-	{
-		if((errStr = msg) != null)
+	public void printError(String msg, Exception e) {
+		if ((errStr = msg) != null)
 		{
 			System.err.println(errStr);
-			if(e != null)
-			{
+			if(e != null) {
 				e.printStackTrace();
 			}
 			System.exit(1);
 		}
 	}
 
-	/*
-	 *file input/output
-	 */
-	public void writeToFile(String fileName)
-	{
+	public void writeToFile(String fileName) {
 		AudioInputStream audioInputStream = makeAIS();
 		AudioFileFormat.Type type = audioFileFormat.getType();
 
-		try
-		{
+		try {
 			audioInputStream.reset();
-		}//try reset audioInputStream
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			printError("Unable to reset the Audio stream", e);
-		}//catch
+		}
 
 		File file = new File(fileName);
-		try
-		{
-			if(AudioSystem.write(audioInputStream, type, file) == -1)
-			{
+		try {
+			if(AudioSystem.write(audioInputStream, type, file) == -1) {
 				throw new IOException("Problems writing to file");
 			}
-		}//try writing to file
-		catch(Exception e)
-		{
+		}
+		catch(Exception e) {
 			printError("Problems writing to file" + fileName, e);
-		}//catch
+		}
 
-		try
-		{
+		try {
 			audioInputStream.close();
-		}//try to close the stream
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			printError("Unable to close the Audio stream");
-		}//catch
+		}
 
-	}//writeToFile(String fileName)
+	}
 
 
-	public void loadFromFile(String fileName)
-	{
+	public void loadFromFile(String fileName) {
 		File file = new File(fileName);
-		if(file == null)
-		{
+
+		if(file == null) {
 			printError("that file doesn't exist");
 		}
 		AudioInputStream audioInputStream;
-		try
-		{
+		try {
 			audioInputStream = AudioSystem.getAudioInputStream(file);
-		}
-		catch(Exception e)
-		{
-			printError("Unable to create Audio Stream from file " +
-					fileName + "The file type is probably unsupported." +
-					"Try a WAV, AU, or AIFF file." , e);
+		} catch(Exception e) {
+			printError("Unable to create Audio Stream from file " + fileName + "The file type is probably unsupported." + "Try a WAV, AU, or AIFF file." , e);
 			return;
-		}//catch
+		}
 
 
 		if(audioInputStream.getFrameLength()>Integer.MAX_VALUE)
