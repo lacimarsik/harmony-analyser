@@ -10,33 +10,33 @@ import java.io.IOException;
  */
 
 public class AudioConverter {
+	private String convertedSuffix = "-temp.wav";
 
 	public AudioConverter() { }
 
-	public void convertTo16BitSignedLE(String filename) {
+	public String convertTo16BitSignedLE(String filename) throws IOException {
 		File file = new File(filename);
-		if (!file.exists())
-			return;
-		try {
-			FFmpeg ffmpeg = new FFmpeg("/usr/bin/ffmpeg");
-			FFprobe ffprobe = new FFprobe("/usr/bin/ffprobe");
-
-			FFmpegBuilder builder = new FFmpegBuilder()
-				.setInput(filename)
-				.overrideOutputFiles(true)
-				.addOutput(filename + "test.wav")
-				.setFormat("wav")
-				.setAudioChannels(1)
-				.setAudioSampleRate(48_000)
-				.setAudioBitRate(32768)
-				.setStrict(FFmpegBuilder.Strict.EXPERIMENTAL)
-				.done();
-
-			FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
-			executor.createJob(builder).run();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (!file.exists()) {
+			return "";
 		}
+		FFmpeg ffmpeg = new FFmpeg("/usr/bin/ffmpeg");
+		FFprobe ffprobe = new FFprobe("/usr/bin/ffprobe");
+
+		FFmpegBuilder builder = new FFmpegBuilder()
+			.setInput(filename)
+			.overrideOutputFiles(true)
+			.addOutput(filename + convertedSuffix)
+			.setFormat("wav")
+			.setAudioChannels(1)
+			.setAudioSampleRate(48_000)
+			.setAudioBitRate(32768)
+			.setStrict(FFmpegBuilder.Strict.EXPERIMENTAL)
+			.done();
+
+		FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
+		executor.createJob(builder).run();
+
+		return filename + convertedSuffix;
 	}
 
 	/* Public / Package methods */

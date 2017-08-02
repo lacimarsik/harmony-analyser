@@ -163,22 +163,31 @@ abstract class VampPlugin extends AnalysisPlugin {
 			File f = new File(inputFiles.get(0));
 			AudioInputStream stream = AudioSystem.getAudioInputStream(f);
 			AudioFormat format = stream.getFormat();
-
 			PrintStream out = new PrintStream(new FileOutputStream(outputFile, false));
+			boolean removeTempFile = false;
+
+			if (format.getSampleSizeInBits() != 16 || format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED || format.isBigEndian()) {
+				result += "WARNING: Input is not 16-bit signed little-endian PCM file. Trying a conversion using ffmpeg\n";
+				AudioConverter audioConverter = new AudioConverter();
+				String newInputFile = audioConverter.convertTo16BitSignedLE(inputFile);
+				result += "Created temporary file " + newInputFile + "\n";
+
+				f = new File(newInputFile);
+				stream = AudioSystem.getAudioInputStream(f);
+				format = stream.getFormat();
+
+				if (format.getSampleSizeInBits() != 16 || format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED || format.isBigEndian()) {
+					String errorMessage = "ERROR: Only 16-bit signed little-endian PCM files supported\n";
+					result += errorMessage;
+					return result;
+				} else {
+					removeTempFile = true;
+				}
+			}
 
 			float frameRate = format.getFrameRate();
 			int channels = format.getChannels();
 			int bytesPerFrame = format.getFrameSize();
-
-			if (format.getSampleSizeInBits() != 16 || format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED || format.isBigEndian()) {
-				result += "WARNING: Input is not 16-bit signed little-endian PCM file. Trying a conversion\n";
-				AudioConverter audioConverter = new AudioConverter();
-				audioConverter.convertTo16BitSignedLE(inputFile);
-
-				String errorMessage = "ERROR: Only 16-bit signed little-endian PCM files supported\n";
-				result += errorMessage;
-				return result;
-			}
 
 			result += "Wav file: " + f.getName() + "\n";
 			result += "Sample rate: " + frameRate + "\n";
@@ -236,6 +245,14 @@ abstract class VampPlugin extends AnalysisPlugin {
 			stream.close();
 			out.close();
 			p.dispose();
+
+			if (removeTempFile) {
+				if (f.delete()){
+					result += "Deleted temporary file\n";
+				} else {
+					result += "Deletion of temporary file failed, please clean up the excessive WAV files after processing\n";
+				}
+			}
 		} catch (UnsupportedAudioFileException | IOException | PluginLoader.LoadFailedException e) {
 			result += e.getMessage();
 			e.printStackTrace();
