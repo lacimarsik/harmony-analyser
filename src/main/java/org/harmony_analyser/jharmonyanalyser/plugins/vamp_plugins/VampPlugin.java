@@ -3,6 +3,7 @@ package org.harmony_analyser.jharmonyanalyser.plugins.vamp_plugins;
 import org.harmony_analyser.jharmonyanalyser.services.AudioAnalyser;
 import org.harmony_analyser.jharmonyanalyser.chroma_analyser.Chroma;
 import org.harmony_analyser.jharmonyanalyser.plugins.*;
+import org.harmony_analyser.jharmonyanalyser.services.AudioConverter;
 import org.vamp_plugins.*;
 
 import java.io.*;
@@ -162,26 +163,39 @@ abstract class VampPlugin extends AnalysisPlugin {
 			File f = new File(inputFiles.get(0));
 			AudioInputStream stream = AudioSystem.getAudioInputStream(f);
 			AudioFormat format = stream.getFormat();
-
 			PrintStream out = new PrintStream(new FileOutputStream(outputFile, false));
+			boolean removeTempFile = false;
 
 			if (format.getSampleSizeInBits() != 16 || format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED || format.isBigEndian()) {
-				String errorMessage = "ERROR: Only 16-bit signed little-endian PCM files supported\n";
-				result += errorMessage;
-				return result;
+				result += "WARNING: Input is not 16-bit signed little-endian PCM file. Trying a conversion using ffmpeg\n";
+				AudioConverter audioConverter = new AudioConverter();
+				String newInputFile = audioConverter.convertTo16BitSignedLE(inputFile);
+				result += "Created temporary file " + newInputFile + "\n";
+
+				f = new File(newInputFile);
+				stream = AudioSystem.getAudioInputStream(f);
+				format = stream.getFormat();
+
+				if (format.getSampleSizeInBits() != 16 || format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED || format.isBigEndian()) {
+					String errorMessage = "ERROR: Only 16-bit signed little-endian PCM files supported\n";
+					result += errorMessage;
+					return result;
+				} else {
+					removeTempFile = true;
+				}
 			}
 
-			float rate = format.getFrameRate();
+			float frameRate = format.getFrameRate();
 			int channels = format.getChannels();
 			int bytesPerFrame = format.getFrameSize();
 
 			result += "Wav file: " + f.getName() + "\n";
-			result += "Sample rate: " + rate + "\n";
+			result += "Sample rate: " + frameRate + "\n";
 			result += "Channels: " + channels + "\n";
 			result += "Bytes per frame: " + bytesPerFrame + "\n";
 			result += "Output: " + this.p.getOutputDescriptors()[outputNumber].name + "\n";
 
-			p = loader.loadPlugin(key, rate, adapterFlag);
+			p = loader.loadPlugin(key, frameRate, adapterFlag);
 			setParameters();
 
 			boolean b = p.initialise(channels, blockSize, blockSize);
@@ -217,7 +231,7 @@ abstract class VampPlugin extends AnalysisPlugin {
 					}
 
 					incomplete = (read < buffers[0].length);
-					RealTime timestamp = RealTime.frame2RealTime(block * blockSize, (int)(rate + 0.5));
+					RealTime timestamp = RealTime.frame2RealTime(block * blockSize, (int)(frameRate + 0.5));
 					Map<Integer, List<Feature>> features = p.process(buffers, timestamp);
 					printFeatures(timestamp, outputNumber, features, out);
 				}
@@ -225,12 +239,20 @@ abstract class VampPlugin extends AnalysisPlugin {
 				++block;
 			}
 			Map<Integer, List<Feature>> features = p.getRemainingFeatures();
-			RealTime timestamp = RealTime.frame2RealTime (block * blockSize, (int)(rate + 0.5));
+			RealTime timestamp = RealTime.frame2RealTime (block * blockSize, (int)(frameRate + 0.5));
 			printFeatures(timestamp, outputNumber, features, out);
 
 			stream.close();
 			out.close();
 			p.dispose();
+
+			if (removeTempFile) {
+				if (f.delete()){
+					result += "Deleted temporary file\n";
+				} else {
+					result += "Deletion of temporary file failed, please clean up the excessive WAV files after processing\n";
+				}
+			}
 		} catch (UnsupportedAudioFileException | IOException | PluginLoader.LoadFailedException e) {
 			result += e.getMessage();
 			e.printStackTrace();
