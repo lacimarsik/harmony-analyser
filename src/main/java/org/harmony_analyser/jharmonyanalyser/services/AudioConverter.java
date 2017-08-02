@@ -2,14 +2,11 @@ package org.harmony_analyser.jharmonyanalyser.services;
 
 import net.bramp.ffmpeg.*;
 import net.bramp.ffmpeg.builder.FFmpegBuilder;
-
-import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
-import java.io.*;
 
 /**
- * Class to orchestrate all levels of audio analysis, using available plugins and visualizations
+ * Class to convert audio files to achieve unified analysis
  */
 
 @SuppressWarnings("SameParameterValue")
@@ -17,7 +14,7 @@ public class AudioConverter {
 
 	public AudioConverter() { }
 
-	public void convertTo16BitSignedLE(String filename) throws UnsupportedAudioFileException {
+	public void convertTo16BitSignedLE(String filename) {
 		File file = new File(filename);
 		if (!file.exists())
 			return;
