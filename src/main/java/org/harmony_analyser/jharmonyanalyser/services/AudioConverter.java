@@ -19,8 +19,8 @@ public class AudioConverter {
 		if (!file.exists()) {
 			return "";
 		}
-		FFmpeg ffmpeg = new FFmpeg("/usr/bin/ffmpeg");
-		FFprobe ffprobe = new FFprobe("/usr/bin/ffprobe");
+		FFmpeg ffmpeg = new FFmpeg("ffmpeg");
+		FFprobe ffprobe = new FFprobe("ffprobe");
 
 		FFmpegBuilder builder = new FFmpegBuilder()
 			.setInput(filename)
