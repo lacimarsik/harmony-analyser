@@ -8,6 +8,7 @@ import java.io.File;
 
 /**
  * Script to perform arbitrary harmony-analyser analysis in the current directory
+ * TODO: the audibleThreshold parameter is not being used yet
  */
 
 public class HarmonyAnalyserScript {
