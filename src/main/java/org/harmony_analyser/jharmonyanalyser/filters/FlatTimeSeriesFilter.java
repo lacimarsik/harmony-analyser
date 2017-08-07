@@ -46,7 +46,7 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 		outputFileSuffix = ""; // no suffix, will replace the input file
 
 		parameters = new HashMap<>();
-		parameters.put("samplingRate", (float) 100);
+		parameters.put("samplingRate", (float) 10);
 		parameters.put("vectorSize", (float) 12);
 
 		setParameters();
