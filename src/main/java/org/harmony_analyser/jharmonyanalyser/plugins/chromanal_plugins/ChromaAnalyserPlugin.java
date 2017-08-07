@@ -30,8 +30,8 @@ abstract class ChromaAnalyserPlugin extends LineChartPlugin {
 	 *    - chromaFile: name of the file containing chroma information (suffix: -chromas.txt)
 	 */
 
-	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
-		String result = super.analyse(inputFile, force, verbose);
+	public String analyse(String inputFile, boolean force) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
+		String result = super.analyse(inputFile, force);
 		String outputFile = inputFile + outputFileSuffix + ".txt";
 		List<String> inputFiles = new ArrayList<>();
 		for (String suffix : inputFileSuffixes) {

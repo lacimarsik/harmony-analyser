@@ -32,7 +32,7 @@ public class AnalysisFactoryTest {
 		AverageChordComplexityDistancePlugin transitionComplexityPlugin = mock(AverageChordComplexityDistancePlugin.class);
 		whenNew(AverageChordComplexityDistancePlugin.class).withNoArguments().thenReturn(transitionComplexityPlugin);
 
-		Analysis analysisPlugin = analysisFactory.createPlugin("chord_analyser:average_chord_complexity_distance");
+		Analysis analysisPlugin = analysisFactory.createAnalysis("chord_analyser:average_chord_complexity_distance");
 
 		verifyNew(AverageChordComplexityDistancePlugin.class).withNoArguments();
 	}

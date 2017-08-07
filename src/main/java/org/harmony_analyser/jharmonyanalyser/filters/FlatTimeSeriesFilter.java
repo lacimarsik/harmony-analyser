@@ -56,8 +56,8 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 	 * Filters the result text file, creating a fixed sampling rate time series
 	 */
 
-	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, Chroma.WrongChromaSize, AudioAnalyser.OutputAlreadyExists {
-		String result = super.analyse(inputFile, force, verbose);
+	public String analyse(String inputFile, boolean force) throws IOException, AudioAnalyser.IncorrectInputException, Chroma.WrongChromaSize, AudioAnalyser.OutputAlreadyExists {
+		String result = super.analyse(inputFile, force);
 
 		List<String> inputFileLinesList = Files.readAllLines(new File(inputFile).toPath(), Charset.defaultCharset());
 		List<Float> inputFileTimestampList = new ArrayList<>();

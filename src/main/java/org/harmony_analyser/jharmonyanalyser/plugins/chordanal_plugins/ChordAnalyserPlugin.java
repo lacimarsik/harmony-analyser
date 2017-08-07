@@ -34,10 +34,9 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 	 *    - segmentation file: name of the file containing segmentation information (suffix: -chordino-labels.txt, historically, since we have used Chordino segments)
 	 */
 
-	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
-		String result = super.analyse(inputFile, force, verbose);
+	public String analyse(String inputFile, boolean force) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
+		String result = super.analyse(inputFile, force);
 		String outputFile = inputFile + outputFileSuffix + ".txt";
-		String outputFileVerbose = inputFile + outputFileSuffix + "-verbose" + ".txt";
 		List<String> inputFiles = new ArrayList<>();
 		for (String suffix : inputFileSuffixes) {
 			String inputFileName = inputFile + suffix + inputFileExtension;

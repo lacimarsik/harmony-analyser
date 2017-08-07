@@ -47,8 +47,8 @@ public class ChordVectorsFilter extends LineChartPlugin {
 		setParameters();
 	}
 
-	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
-		String result = super.analyse(inputFile, force, verbose);
+	public String analyse(String inputFile, boolean force) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
+		String result = super.analyse(inputFile, force);
 		String outputFile = inputFile + outputFileSuffix + ".txt";
 		List<String> inputFiles = new ArrayList<>();
 		for (String suffix : inputFileSuffixes) {
