@@ -32,12 +32,6 @@ abstract class ChromaAnalyserPlugin extends LineChartPlugin {
 
 	public String analyse(String inputFile, boolean force) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
 		String result = super.analyse(inputFile, force);
-		String outputFile = inputFile + outputFileSuffix + ".txt";
-		List<String> inputFiles = new ArrayList<>();
-		for (String suffix : inputFileSuffixes) {
-			String inputFileName = inputFile + suffix + inputFileExtension;
-			inputFiles.add(inputFileName);
-		}
 
 		List<String> chromaLinesList = Files.readAllLines(new File(inputFiles.get(0)).toPath(), Charset.defaultCharset());
 
