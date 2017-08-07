@@ -41,9 +41,9 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add(""); // no suffix, arbitrary input file is allowed
-		inputFileExtension = ""; // no extension, arbitrary input file is allowed
+		inputFileExtension = "-flat"; // no extension, arbitrary input file is allowed
 
-		outputFileSuffix = ""; // no suffix, will replace the input file
+		outputFileSuffix = ".txt"; // no suffix, will replace the input file
 
 		parameters = new HashMap<>();
 		parameters.put("samplingRate", (float) 10);
