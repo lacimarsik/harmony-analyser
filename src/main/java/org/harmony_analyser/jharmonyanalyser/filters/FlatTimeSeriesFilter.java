@@ -47,7 +47,6 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 
 		parameters = new HashMap<>();
 		parameters.put("samplingRate", (float) 10);
-		parameters.put("vectorSize", (float) 12);
 
 		setParameters();
 	}
@@ -61,27 +60,27 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 
 		List<String> inputFileLinesList = Files.readAllLines(new File(inputFile).toPath(), Charset.defaultCharset());
 		List<Float> inputFileTimestampList = new ArrayList<>();
-		List<float[]> inputFileValuesList = new ArrayList<>();
+		List<ArrayList<Float>> inputFileValuesList = new ArrayList<>();
 
 		// 1. Get timestamps from the input file
 		inputFileTimestampList.addAll(inputFileLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
 
 		// 2. Get values from the input file
 		for (String value : inputFileLinesList) {
-			float[] floatArray = AudioAnalysisHelper.getFloatArrayFromLine(value, vectorSize);
+			ArrayList<Float> floatArray = AudioAnalysisHelper.getFloatArrayFromLine(value, vectorSize);
 			inputFileValuesList.add(floatArray);
 		}
 
 		// 3. Iterate over timestamps and values, creating time series values
 		List<Float> outputTimestampList = new ArrayList<>();
-		List<float[]> outputValuesList = new ArrayList<>();
-		float[] previousValue;
+		List<ArrayList<Float>> outputValuesList = new ArrayList<>();
+		ArrayList<Float> previousValue;
 		float previousTimestamp, timestamp;
 		previousTimestamp = inputFileTimestampList.get(0);
 		previousValue = inputFileValuesList.get(0);
 		float sampleLength = 1 / samplingRate;
 		int index = 0;
-		for (float[] floatArray : inputFileValuesList) {
+		for (ArrayList<Float> floatArray : inputFileValuesList) {
 			if (index == 0) {
 				index++;
 				continue;
@@ -94,7 +93,7 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 			if (timestampDifference > sampleLength) {
 				// CASE 1: Timestamp difference greater than sample length
 				float newTimestamp = previousTimestamp;
-				float[] newValue;
+				ArrayList<Float> newValue;
 				verboseLog("Starting with timestamp: " + newTimestamp);
 				int sampleIndex = 0;
 				float ratio = sampleLength / timestampDifference;
@@ -121,11 +120,11 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 		// 4. Rewrite input file using new timestamps and values
 		index = 0;
 		BufferedWriter out = new BufferedWriter(new FileWriter(inputFile));
-		for (float[] value : outputValuesList) {
+		for (ArrayList<Float> value : outputValuesList) {
 			timestamp = outputTimestampList.get(index);
 			String resultArray = "";
 			for (int i = 0; i < vectorSize; i++) {
-				resultArray += value[i] + " ";
+				resultArray += value.get(i) + " ";
 			}
 			out.write(timestamp + ": " + resultArray + "\n");
 			index++;
