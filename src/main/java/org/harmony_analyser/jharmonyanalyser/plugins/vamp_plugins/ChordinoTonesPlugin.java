@@ -61,6 +61,7 @@ public class ChordinoTonesPlugin extends SegmentationVampPlugin {
 		inputFileExtension = ""; // Plugin handles raw WAV files
 
 		outputFileSuffix = "-chordino-tones";
+		outputFileExtension = ".txt";
 
 		parameters = new HashMap<>();
 		parameters.put("useNNLS", (float) 1.0);

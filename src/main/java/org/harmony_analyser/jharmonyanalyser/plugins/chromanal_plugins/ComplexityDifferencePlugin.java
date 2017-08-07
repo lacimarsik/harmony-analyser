@@ -27,6 +27,7 @@ public class ComplexityDifferencePlugin extends ChromaAnalyserPlugin {
 		inputFileExtension = ".txt";
 
 		outputFileSuffix = "-chroma-complexity-difference";
+		outputFileExtension = ".txt";
 
 		parameters = new HashMap<>();
 		parameters.put("audibleThreshold", (float) 0.07);

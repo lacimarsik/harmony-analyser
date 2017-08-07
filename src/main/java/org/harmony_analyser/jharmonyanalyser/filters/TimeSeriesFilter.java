@@ -38,9 +38,10 @@ public class TimeSeriesFilter extends AnalysisFilter {
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add(""); // no suffix, arbitrary input file is allowed
-		inputFileExtension = ""; // no extension, arbitrary input file is allowed
+		inputFileExtension = ".txt";
 
-		outputFileSuffix = ""; // no suffix, will replace the input file
+		outputFileSuffix = "-series";
+		outputFileExtension = ".txt";
 
 		parameters = new HashMap<>();
 		parameters.put("samplingRate", (float) 100);
@@ -129,7 +130,7 @@ public class TimeSeriesFilter extends AnalysisFilter {
 		samplingRate = parameters.get("samplingRate");
 	}
 
-	public VisualizationData getDataFromOutput(String outputFile) {
+	public VisualizationData getDataFromOutput(String inputWavFile) {
 		return VisualizationData.EMPTY_VISUALIZATION_DATA; // Return null object
 	}
 }

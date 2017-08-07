@@ -137,8 +137,8 @@ public class AudioAnalyser {
 		return outputWriteBuffer;
 	}
 
-	public DataChart createDataChart(String inputFile, String analysisKey) throws LoadFailedException, OutputNotReady, ParseOutputError, IOException {
-		return dataChartFactory.createDataChart(analysisKey, analysisFactory.createAnalysis(analysisKey).getDataFromOutput(inputFile));
+	public DataChart createDataChart(String inputWavFile, String analysisKey) throws LoadFailedException, OutputNotReady, ParseOutputError, IOException, IncorrectInputException, OutputAlreadyExists {
+		return dataChartFactory.createDataChart(analysisKey, analysisFactory.createAnalysis(analysisKey).getDataFromOutput(inputWavFile));
 	}
 
 	// Analyses folder with given Analysis, writes to System.out as well as writes to outputWriteBuffer

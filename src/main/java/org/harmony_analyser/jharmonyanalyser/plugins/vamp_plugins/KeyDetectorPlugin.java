@@ -49,6 +49,7 @@ public class KeyDetectorPlugin extends SegmentationVampPlugin {
 		inputFileExtension = ""; // Plugin handles raw WAV files
 
 		outputFileSuffix = "-key";
+		outputFileExtension = ".txt";
 
 		parameters = new HashMap<>();
 		parameters.put("tuning", (float) 440.0);

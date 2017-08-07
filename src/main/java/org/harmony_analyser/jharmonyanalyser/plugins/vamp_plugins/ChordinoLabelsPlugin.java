@@ -60,6 +60,7 @@ public class ChordinoLabelsPlugin extends SegmentationVampPlugin {
 		inputFileExtension = ""; // Plugin handles raw WAV files
 
 		outputFileSuffix = "-chordino-labels";
+		outputFileExtension = ".txt";
 
 		parameters = new HashMap<>();
 		parameters.put("useNNLS", (float) 1.0);

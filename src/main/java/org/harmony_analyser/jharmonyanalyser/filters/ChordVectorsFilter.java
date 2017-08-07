@@ -41,6 +41,7 @@ public class ChordVectorsFilter extends LineChartPlugin {
 		inputFileExtension = ".txt";
 
 		outputFileSuffix = "-chord-vectors";
+		outputFileExtension = ".txt";
 
 		parameters = new HashMap<>();
 

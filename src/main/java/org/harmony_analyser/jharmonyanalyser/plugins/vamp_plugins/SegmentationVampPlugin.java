@@ -12,11 +12,11 @@ import java.util.List;
  */
 
 abstract class SegmentationVampPlugin extends VampPlugin {
-	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError {
+	public VisualizationData getDataFromOutput(String inputWavFile) throws IOException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists {
 		VisualizationData data = super.prepareVisualizationData();
 		List<Float> timestamps = new ArrayList<>();
 		List<String> labels = new ArrayList<>();
-		List<String> linesList = readOutputFile(outputFile);
+		List<String> linesList = readOutputFile(inputWavFile);
 
 		/* Plugin-specific parsing of the result */
 		float timestamp;

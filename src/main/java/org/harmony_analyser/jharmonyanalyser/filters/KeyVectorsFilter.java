@@ -40,6 +40,7 @@ public class KeyVectorsFilter extends LineChartPlugin {
 		inputFileExtension = ".txt";
 
 		outputFileSuffix = "-key-vectors";
+		outputFileExtension = ".txt";
 
 		parameters = new HashMap<>();
 

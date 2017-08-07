@@ -41,9 +41,10 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add(""); // no suffix, arbitrary input file is allowed
-		inputFileExtension = "-flat"; // no extension, arbitrary input file is allowed
+		inputFileExtension = ".txt"; //
 
-		outputFileSuffix = ".txt"; // no suffix, will replace the input file
+		outputFileSuffix = "-flat";
+		outputFileExtension = ".txt";
 
 		parameters = new HashMap<>();
 		parameters.put("samplingRate", (float) 10);
@@ -139,7 +140,7 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 		vectorSize = Math.round(parameters.get("vectorSize"));
 	}
 
-	public VisualizationData getDataFromOutput(String outputFile) {
+	public VisualizationData getDataFromOutput(String inputWavFile) {
 		return VisualizationData.EMPTY_VISUALIZATION_DATA; // Return null object
 	}
 }

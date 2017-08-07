@@ -46,6 +46,7 @@ public class TPSDistancePlugin extends LineChartPlugin {
 		inputFileExtension = ".txt";
 
 		outputFileSuffix = "-tps-distance";
+		outputFileExtension = ".txt";
 
 		parameters = new HashMap<>();
 

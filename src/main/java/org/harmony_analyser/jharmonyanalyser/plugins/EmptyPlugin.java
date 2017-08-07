@@ -6,11 +6,11 @@ public class EmptyPlugin extends AnalysisPlugin {
 	protected void setParameters() { /* Do nothing */ }
 
 	@Override
-	public String analyse(String inputFile, boolean force, boolean verbose) {
+	public String analyse(String inputFile, boolean force) {
 		return "";
 	}
 
-	public VisualizationData getDataFromOutput(String outputFile) {
+	public VisualizationData getDataFromOutput(String inputWavFile) {
 		return VisualizationData.EMPTY_VISUALIZATION_DATA; // Return null object
 	}
 }
