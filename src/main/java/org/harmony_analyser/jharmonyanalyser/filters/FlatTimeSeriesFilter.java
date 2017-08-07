@@ -59,9 +59,6 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, Chroma.WrongChromaSize, AudioAnalyser.OutputAlreadyExists {
 		String result = super.analyse(inputFile, force, verbose);
 
-		String outputFileVerbose = inputFile + outputFileSuffix + "-verbose" + ".txt";
-		BufferedWriter outVerbose = new BufferedWriter(new FileWriter(outputFileVerbose));
-
 		List<String> inputFileLinesList = Files.readAllLines(new File(inputFile).toPath(), Charset.defaultCharset());
 		List<Float> inputFileTimestampList = new ArrayList<>();
 		List<float[]> inputFileValuesList = new ArrayList<>();
@@ -93,12 +90,12 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 
 			// Find out difference between timestamps
 			float timestampDifference = timestamp - previousTimestamp;
-			outVerbose.write("timestampDifference: " + timestampDifference + "\n");
+			verboseLog("timestampDifference: " + timestampDifference);
 			if (timestampDifference > sampleLength) {
 				// CASE 1: Timestamp difference greater than sample length
 				float newTimestamp = previousTimestamp;
 				float[] newValue;
-				outVerbose.write("STARTING WITH timestamp: " + newTimestamp + "\n");
+				verboseLog("Starting with timestamp: " + newTimestamp);
 				int sampleIndex = 0;
 				float ratio = sampleLength / timestampDifference;
 				// iteratively create samples from the slope defined by successive points
@@ -134,7 +131,6 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 			index++;
 		}
 		out.close();
-		outVerbose.close();
 
 		return result;
 	}

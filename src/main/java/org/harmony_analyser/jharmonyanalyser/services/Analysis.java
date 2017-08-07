@@ -17,6 +17,8 @@ import java.util.Map;
 @SuppressWarnings("SameParameterValue")
 
 public abstract class Analysis {
+	public boolean verbose = false; // Verbose output on/off
+
 	protected static List<String> inputFileSuffixes;
 	protected String inputFileExtension;
 	protected static String outputFileSuffix;
@@ -76,7 +78,7 @@ public abstract class Analysis {
 
 	protected abstract void setParameters();
 
-	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
+	public String analyse(String inputFile, boolean force) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
 		String result = "";
 		checkInputFiles(inputFile, force);
 		result += "\nBeginning analysis: " + key + "\n";
@@ -87,10 +89,14 @@ public abstract class Analysis {
 			result += inputFileName + "\n";
 		}
 		result += "\nOutput file:\n" + inputFile + outputFileSuffix + ".txt" + "\n";
-		if (verbose) {
-			result += "Verbose Output:\n" + inputFile + outputFileSuffix + "-verbose" + ".txt" + "\n";
-		}
+
 		return result;
+	}
+
+	public void verboseLog(String message) {
+		if (verbose) {
+			System.out.println("(Verbose) " + message);
+		}
 	}
 
 	public abstract VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError;
