@@ -121,7 +121,7 @@ public class AnalysisFactory {
 		return plugin;
 	}
 
-	public Analysis createAnalysis(String analysisKey, boolean verbose) {
+	public Analysis createAnalysis(String analysisKey, boolean verbose) throws AudioAnalyser.LoadFailedException {
 		Analysis plugin = createAnalysis(analysisKey);
 		plugin.verbose = verbose;
 

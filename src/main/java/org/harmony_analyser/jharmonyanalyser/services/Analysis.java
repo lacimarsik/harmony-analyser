@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public abstract class Analysis {
 	public boolean verbose = false; // Verbose output on/off
 	public String inputWavFile = ""; // inputWavFile is set with the analysis and remembered after. It is the name of the song.
 	public String inputTitle = ""; // inputTitle is set with the analysis and remembered after. It is the name of the song without extension.
-	public List<String> inputFiles = null; // inputFiles are set with the analysis and remembered after. They are the dependency files needed around the WAV file.
+	public List<String> inputFiles = new ArrayList<>(); // inputFiles are set with the analysis and remembered after. They are the dependency files needed around the WAV file.
 	public String outputFile = ""; // outputFile is set with the analysis and remembered after.
 
 	protected static List<String> inputFileSuffixes;

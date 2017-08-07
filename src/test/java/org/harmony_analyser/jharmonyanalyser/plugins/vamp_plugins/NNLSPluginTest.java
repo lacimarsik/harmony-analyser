@@ -29,7 +29,7 @@ public class NNLSPluginTest {
 
 	@Test
 	public void shouldExtractChromas() throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
-		nnls.analyse(testWavFile.toString(), true, false);
+		nnls.analyse(testWavFile.toString(), true);
 		BufferedReader reader = new BufferedReader(new FileReader(testWavFile.toString() + "-chromas.txt"));
 		String line = reader.readLine();
 		float timestamp = AudioAnalysisHelper.getTimestampFromLine(line);
