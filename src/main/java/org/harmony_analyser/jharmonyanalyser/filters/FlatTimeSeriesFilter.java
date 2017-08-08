@@ -137,7 +137,6 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 
 	protected void setParameters() {
 		samplingRate = parameters.get("samplingRate");
-		vectorSize = Math.round(parameters.get("vectorSize"));
 	}
 
 	public VisualizationData getDataFromOutput(String inputWavFile) {
