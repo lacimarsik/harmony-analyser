@@ -57,9 +57,10 @@ public class NNLSPlugin extends VampPlugin {
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add(""); // Plugin handles raw WAV files
-		inputFileExtension = ""; // Plugin handles raw WAV files
+		inputFileExtension = ".wav";
 
 		outputFileSuffix = "-chromas";
+		outputFileExtension = ".txt";
 
 		parameters = new HashMap<>();
 		parameters.put("useNNLS", (float) 1);
@@ -73,7 +74,7 @@ public class NNLSPlugin extends VampPlugin {
 		setParameters();
 	}
 
-	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError {
+	public VisualizationData getDataFromOutput(String inputWavFile) throws IOException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError {
 		return VisualizationData.EMPTY_VISUALIZATION_DATA;
 	}
 }

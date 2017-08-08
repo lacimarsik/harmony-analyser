@@ -119,26 +119,26 @@ public class AudioAnalyser {
 	}
 
 	public String getPluginName(String analysisKey) throws LoadFailedException {
-		return analysisFactory.createPlugin(analysisKey).name;
+		return analysisFactory.createAnalysis(analysisKey).name;
 	}
 
 	public String getPluginDescription(String analysisKey) throws LoadFailedException {
-		return analysisFactory.createPlugin(analysisKey).description;
+		return analysisFactory.createAnalysis(analysisKey).description;
 	}
 
 	public String printParameters(String analysisKey) throws LoadFailedException {
-		return analysisFactory.createPlugin(analysisKey).printParameters();
+		return analysisFactory.createAnalysis(analysisKey).printParameters();
 	}
 
 	public String runAnalysis(String inputFile, String analysisKey, boolean force, boolean verbose) throws AudioAnalyser.IncorrectInputException, OutputAlreadyExists, IOException, LoadFailedException, Chroma.WrongChromaSize {
 		outputWriteBuffer = ""; // clear outputWriteBuffer
 
-		printAndAddToBuffer(analysisFactory.createPlugin(analysisKey).analyse(inputFile, force, verbose));
+		printAndAddToBuffer(analysisFactory.createAnalysis(analysisKey, verbose).analyse(inputFile, force));
 		return outputWriteBuffer;
 	}
 
-	public DataChart createDataChart(String inputFile, String analysisKey) throws LoadFailedException, OutputNotReady, ParseOutputError, IOException {
-		return dataChartFactory.createDataChart(analysisKey, analysisFactory.createPlugin(analysisKey).getDataFromOutput(inputFile));
+	public DataChart createDataChart(String inputWavFile, String analysisKey) throws LoadFailedException, OutputNotReady, ParseOutputError, IOException, IncorrectInputException, OutputAlreadyExists {
+		return dataChartFactory.createDataChart(analysisKey, analysisFactory.createAnalysis(analysisKey).getDataFromOutput(inputWavFile));
 	}
 
 	// Analyses folder with given Analysis, writes to System.out as well as writes to outputWriteBuffer
@@ -163,7 +163,7 @@ public class AudioAnalyser {
 					if (file.toString().endsWith(suffixAndExtension)) {
 						printAndAddToBuffer("\nProcessing: " + file.toString() + "\n");
 						try {
-							printAndAddToBuffer(runAnalysis(file.toString(), analysisKey, false, false));
+							runAnalysis(file.toString(), analysisKey, false, false);
 						} catch (AudioAnalyser.IncorrectInputException | AudioAnalyser.LoadFailedException e) {
 							printAndAddToBuffer("\nERROR: " + e.getMessage());
 						} catch (AudioAnalyser.OutputAlreadyExists e) {

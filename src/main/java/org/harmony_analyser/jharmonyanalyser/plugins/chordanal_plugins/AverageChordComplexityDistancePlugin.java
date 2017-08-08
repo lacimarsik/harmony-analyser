@@ -45,6 +45,7 @@ public class AverageChordComplexityDistancePlugin extends ChordAnalyserPlugin {
 		inputFileExtension = ".txt";
 
 		outputFileSuffix = "-average-cc-distance";
+		outputFileExtension = ".txt";
 
 		parameters = new HashMap<>();
 		parameters.put("audibleThreshold", (float) 0.07);
@@ -55,11 +56,11 @@ public class AverageChordComplexityDistancePlugin extends ChordAnalyserPlugin {
 	}
 
 	@Override
-	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError {
+	public VisualizationData getDataFromOutput(String inputWavFile) throws IOException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists {
 		VisualizationData data = super.prepareVisualizationData();
 		List<Float> values = new ArrayList<>();
 		List<String> labels = new ArrayList<>();
-		List<String> linesList = readOutputFile(outputFile);
+		List<String> linesList = readOutputFile(inputWavFile);
 
 		/* Plugin-specific parsing of the result */
 		// get last NUMBER_OUTPUTS lines

@@ -66,7 +66,7 @@ public class AnalysisFactory {
 		return WRAPPED_VAMP_PLUGINS;
 	}
 
-	public Analysis createPlugin(String analysisKey) throws AudioAnalyser.LoadFailedException {
+	public Analysis createAnalysis(String analysisKey) throws AudioAnalyser.LoadFailedException {
 		Analysis plugin;
 		try {
 			switch (analysisKey) {
@@ -118,6 +118,13 @@ public class AnalysisFactory {
 		} catch (PluginLoader.LoadFailedException e) {
 			throw new AudioAnalyser.LoadFailedException(e.getMessage());
 		}
+		return plugin;
+	}
+
+	public Analysis createAnalysis(String analysisKey, boolean verbose) throws AudioAnalyser.LoadFailedException {
+		Analysis plugin = createAnalysis(analysisKey);
+		plugin.verbose = verbose;
+
 		return plugin;
 	}
 }

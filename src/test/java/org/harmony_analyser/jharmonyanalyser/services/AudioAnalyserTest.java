@@ -66,10 +66,10 @@ public class AudioAnalyserTest {
 	@Test
 	public void shouldCallPluginAnalyse() throws IOException, AudioAnalyser.LoadFailedException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
 		AnalysisPlugin analysisPlugin = mock(AnalysisPlugin.class);
-		when(analysisPlugin.analyse(testWavFile.toString(), true, false)).thenReturn("Done!");
+		when(analysisPlugin.analyse(testWavFile.toString(), true)).thenReturn("Done!");
 
 		AnalysisFactory analysisFactory = new AnalysisFactory() {
-			public AnalysisPlugin createPlugin(String analysisKey) {
+			public AnalysisPlugin createAnalysis(String analysisKey) {
 				return analysisPlugin;
 			}
 		};

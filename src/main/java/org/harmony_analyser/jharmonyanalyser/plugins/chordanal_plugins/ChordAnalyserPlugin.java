@@ -34,15 +34,8 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 	 *    - segmentation file: name of the file containing segmentation information (suffix: -chordino-labels.txt, historically, since we have used Chordino segments)
 	 */
 
-	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
-		String result = super.analyse(inputFile, force, verbose);
-		String outputFile = inputFile + outputFileSuffix + ".txt";
-		String outputFileVerbose = inputFile + outputFileSuffix + "-verbose" + ".txt";
-		List<String> inputFiles = new ArrayList<>();
-		for (String suffix : inputFileSuffixes) {
-			String inputFileName = inputFile + suffix + inputFileExtension;
-			inputFiles.add(inputFileName);
-		}
+	public String analyse(String inputFile, boolean force) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
+		String result = super.analyse(inputFile, force);
 
 		List<String> chromaLinesList = Files.readAllLines(new File(inputFiles.get(0)).toPath(), Charset.defaultCharset());
 		List<String> segmentationLinesList = Files.readAllLines(new File(inputFiles.get(1)).toPath(), Charset.defaultCharset());
@@ -119,7 +112,6 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 		int sumOfAllTones = 0;
 		float timestamp;
 		BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
-		//BufferedWriter outVerbose = new BufferedWriter(new FileWriter(outputFileVerbose));
 
 		// 3. Iterate over chord progression, deriving chord and transition complexities
 		for (int[] chord : chordProgression) {
@@ -129,9 +121,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 
 			// get timestamp of this transition
 			timestamp = timestampList.get(chordProgression.indexOf(chord));
-			if (verbose) {
-				//outVerbose.write(timestamp + ":\n");
-			}
+			verboseLog("timestamp: " + timestamp);
 
 			// create chords using Chordanal
 			String currentChordTones = Chordanal.getStringOfTones(chord);
@@ -140,25 +130,19 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 			Chord chord2 = Chordanal.createHarmonyFromRelativeTones(currentChordTones);
 
 			if (chord1.equals(Chord.EMPTY_CHORD) || chord2.equals(Chord.EMPTY_CHORD)) {
-				if (verbose) {
-					//outVerbose.write("SKIP (one or both chords were not assigned)\n\n");
-				}
+				verboseLog("SKIP (one or both chords were not assigned)");
 			} else {
 				// Print chord names to output
 				String harmonyName1 = Chordanal.getHarmonyName(chord1);
 				String harmonyName2 = Chordanal.getHarmonyName(chord2);
 
-				if (verbose) {
-					//outVerbose.write(previousChordTones + "-> " + currentChordTones + "\n");
-					//outVerbose.write(harmonyName1 + "-> " + harmonyName2 + "\n");
-				}
+				verboseLog(previousChordTones + "-> " + currentChordTones);
+				verboseLog(harmonyName1 + "-> " + harmonyName2);
 
 				// Get transition complexity using Harmanal
 				int transitionComplexity = Harmanal.getTransitionComplexity(chord1, chord2);
 				if (transitionComplexity == -1) {
-					if (verbose) {
-						//outVerbose.write("transition: NO COMMON ROOTS (maximal complexity: " + maximalComplexity + ")\n");
-					}
+					verboseLog("transition: NO COMMON ROOTS (maximal complexity: " + maximalComplexity + ")");
 					transitionComplexity = maximalComplexity;
 				} else {
 					List<String> transitionsFormatted = Harmanal.getTransitionsFormatted(chord1, chord2);
@@ -168,9 +152,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 					} else {
 						transitionFormatted = transitionsFormatted.get(0);
 					}
-					if (verbose) {
-						//outVerbose.write("transition: " + transitionFormatted + "\n");
-					}
+					verboseLog("transition: " + transitionFormatted);
 				}
 				transitionComplexityList.add(transitionComplexity);
 
@@ -189,9 +171,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 				if (chordComplexity > maximalChordComplexity) {
 					maximalChordComplexity = chordComplexity;
 				}
-				if (verbose) {
-					//outVerbose.write("transition complexity: " + transitionComplexity + "\n\n");
-				}
+				verboseLog("transition complexity: " + transitionComplexity);
 				out.write(this.getTransitionOutput(timestamp, transitionComplexity));
 			}
 
@@ -206,9 +186,7 @@ abstract class ChordAnalyserPlugin extends LineChartPlugin {
 		String analysisResult = this.getFinalResult(hc, acc, rtd);
 		result += analysisResult;
 		out.write(analysisResult);
-
 		out.close();
-		//outVerbose.close();
 
 		return result;
 	}

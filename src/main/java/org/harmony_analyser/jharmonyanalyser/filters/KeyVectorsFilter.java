@@ -40,20 +40,15 @@ public class KeyVectorsFilter extends LineChartPlugin {
 		inputFileExtension = ".txt";
 
 		outputFileSuffix = "-key-vectors";
+		outputFileExtension = ".txt";
 
 		parameters = new HashMap<>();
 
 		setParameters();
 	}
 
-	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
-		String result = super.analyse(inputFile, force, verbose);
-		String outputFile = inputFile + outputFileSuffix + ".txt";
-		List<String> inputFiles = new ArrayList<>();
-		for (String suffix : inputFileSuffixes) {
-			String inputFileName = inputFile + suffix + inputFileExtension;
-			inputFiles.add(inputFileName);
-		}
+	public String analyse(String inputFile, boolean force) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
+		String result = super.analyse(inputFile, force);
 
 		BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
 

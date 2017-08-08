@@ -38,9 +38,10 @@ public class TimeSeriesFilter extends AnalysisFilter {
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add(""); // no suffix, arbitrary input file is allowed
-		inputFileExtension = ""; // no extension, arbitrary input file is allowed
+		inputFileExtension = ".txt";
 
-		outputFileSuffix = ""; // no suffix, will replace the input file
+		outputFileSuffix = "-series";
+		outputFileExtension = ".txt";
 
 		parameters = new HashMap<>();
 		parameters.put("samplingRate", (float) 100);
@@ -52,11 +53,8 @@ public class TimeSeriesFilter extends AnalysisFilter {
 	 * Filters the result text file, creating a fixed sampling rate time series
 	 */
 
-	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, Chroma.WrongChromaSize, AudioAnalyser.OutputAlreadyExists {
-		String result = super.analyse(inputFile, force, verbose);
-
-		String outputFileVerbose = inputFile + outputFileSuffix + "-verbose" + ".txt";
-		BufferedWriter outVerbose = new BufferedWriter(new FileWriter(outputFileVerbose));
+	public String analyse(String inputFile, boolean force) throws IOException, AudioAnalyser.IncorrectInputException, Chroma.WrongChromaSize, AudioAnalyser.OutputAlreadyExists {
+		String result = super.analyse(inputFile, force);
 
 		List<String> inputFileLinesList = Files.readAllLines(new File(inputFile).toPath(), Charset.defaultCharset());
 		List<Float> inputFileTimestampList = new ArrayList<>();
@@ -86,13 +84,13 @@ public class TimeSeriesFilter extends AnalysisFilter {
 			// Find out difference between timestamps and values
 			float timestampDifference = timestamp - previousTimestamp;
 			float valueDifference = value - previousValue;
-			outVerbose.write("timestampDifference: " + timestampDifference + "\n");
-			outVerbose.write("valueDifference: " + valueDifference + "\n");
+			verboseLog("timestampDifference: " + timestampDifference);
+			verboseLog("valueDifference: " + valueDifference);
 			if (timestampDifference > sampleLength) {
 				// CASE 1: Timestamp difference greater than sample length
 				float newTimestamp = previousTimestamp;
 				float newValue;
-				outVerbose.write("STARTING WITH timestamp: " + newTimestamp + "\n");
+				verboseLog("Starting with timestamp: " + newTimestamp);
 				int sampleIndex = 0;
 				float ratio = sampleLength / timestampDifference;
 				// iteratively create samples from the slope defined by successive points
@@ -124,7 +122,6 @@ public class TimeSeriesFilter extends AnalysisFilter {
 			index++;
 		}
 		out.close();
-		outVerbose.close();
 
 		return result;
 	}
@@ -133,7 +130,7 @@ public class TimeSeriesFilter extends AnalysisFilter {
 		samplingRate = parameters.get("samplingRate");
 	}
 
-	public VisualizationData getDataFromOutput(String outputFile) {
+	public VisualizationData getDataFromOutput(String inputWavFile) {
 		return VisualizationData.EMPTY_VISUALIZATION_DATA; // Return null object
 	}
 }

@@ -2,8 +2,7 @@ package org.harmony_analyser.jharmonyanalyser.services;
 
 import org.harmony_analyser.jharmonyanalyser.chord_analyser.*;
 
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Class to contain all relevant helper functions for audio analysis
@@ -91,14 +90,14 @@ public class AudioAnalysisHelper {
 	// gets float from the line, after ':'
 	public static float getFloatFromLine(String line) { return Float.parseFloat(line.substring(line.lastIndexOf(':') + 2)); }
 
-	// gets float array (with given size) from the line, after ':'
-	public static float[] getFloatArrayFromLine(String line, int size) throws AudioAnalyser.IncorrectInputException {
-		float[] result = new float[size];
+	// gets ArrayList of Float from the line, after ':'
+	public static ArrayList<Float> getFloatArrayFromLine(String line) throws AudioAnalyser.IncorrectInputException {
+		ArrayList<Float> result = new ArrayList<>();
 		String floatValues = line.substring(line.lastIndexOf(':') + 2);
 		Scanner sc = new Scanner(floatValues);
-		for (int i = 0; i < size; i++) {
+		while (sc.hasNextFloat()) {
 			if (sc.hasNextFloat()) {
-				result[i] = sc.nextFloat();
+				result.add(sc.nextFloat());
 			} else {
 				throw new AudioAnalyser.IncorrectInputException("Float array information is invalid.");
 			}

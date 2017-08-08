@@ -27,6 +27,7 @@ public class SimpleDifferencePlugin extends ChromaAnalyserPlugin {
 		inputFileExtension = ".txt";
 
 		outputFileSuffix = "-chroma-simple-difference";
+		outputFileExtension = ".txt";
 
 		parameters = new HashMap<>();
 

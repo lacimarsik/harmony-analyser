@@ -21,6 +21,6 @@ public class AnalysisPluginTest {
 
 	@Test(expected = AudioAnalyser.IncorrectInputException.class)
 	public void shouldThrowForIncorrectInputFiles() throws AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists {
-		chordino.checkInputFiles(inputFile, true);
+		chordino.checkInputFiles(inputFile);
 	}
 }

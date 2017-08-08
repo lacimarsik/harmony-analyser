@@ -14,11 +14,11 @@ import java.util.List;
 @SuppressWarnings("SameParameterValue")
 
 public abstract class LineChartPlugin extends AnalysisPlugin {
-	public VisualizationData getDataFromOutput(String outputFile) throws IOException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError {
+	public VisualizationData getDataFromOutput(String inputWavFile) throws IOException, AudioAnalyser.OutputNotReady, AudioAnalyser.ParseOutputError, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists {
 		VisualizationData data = super.prepareVisualizationData();
 		List<Float> timestamps = new ArrayList<>();
 		List<Float> values = new ArrayList<>();
-		List<String> linesList = readOutputFile(outputFile);
+		List<String> linesList = readOutputFile(inputWavFile);
 
 		float timestamp, value;
 

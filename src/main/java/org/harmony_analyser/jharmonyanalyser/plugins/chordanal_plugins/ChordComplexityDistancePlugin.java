@@ -38,6 +38,7 @@ public class ChordComplexityDistancePlugin extends ChordAnalyserPlugin {
 		inputFileExtension = ".txt";
 
 		outputFileSuffix = "-cc-distance";
+		outputFileExtension = ".txt";
 
 		parameters = new HashMap<>();
 		parameters.put("audibleThreshold", (float) 0.07);

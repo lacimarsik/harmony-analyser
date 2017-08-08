@@ -46,26 +46,19 @@ public class TPSDistancePlugin extends LineChartPlugin {
 		inputFileExtension = ".txt";
 
 		outputFileSuffix = "-tps-distance";
+		outputFileExtension = ".txt";
 
 		parameters = new HashMap<>();
 
 		setParameters();
 	}
 
-	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
-		String result = super.analyse(inputFile, force, verbose);
-		String outputFile = inputFile + outputFileSuffix + ".txt";
-		String outputFileVerbose = inputFile + outputFileSuffix + "-verbose" + ".txt";
-		List<String> inputFiles = new ArrayList<>();
-		for (String suffix : inputFileSuffixes) {
-			String inputFileName = inputFile + suffix + inputFileExtension;
-			inputFiles.add(inputFileName);
-		}
+	public String analyse(String inputFile, boolean force) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
+		String result = super.analyse(inputFile, force);
 
 		BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
-		BufferedWriter outVerbose = new BufferedWriter(new FileWriter(outputFileVerbose));
 
-		if (verbose) outVerbose.write("Preparing chords from Chordino analysis ...\n");
+		verboseLog("Preparing chords from Chordino analysis ...");
 
 		// 0. Pre-process Chordino chord tones output so it contains only 1 timestamp and relative chord tone names
 		// prepares:
@@ -96,9 +89,8 @@ public class TPSDistancePlugin extends LineChartPlugin {
 			lineIndex++;
 		}
 
-		if (verbose) outVerbose.write(chordList.size() + " chords prepared\n\n");
-
-		if (verbose) outVerbose.write("Reading Chord labels and keys  ...\n");
+		verboseLog(chordList.size() + " chords prepared");
+		verboseLog("Reading Chord labels and keys  ...");
 
 		// 1. Get timestamps from the chord labels and keys file
 		// prepares:
@@ -117,7 +109,7 @@ public class TPSDistancePlugin extends LineChartPlugin {
 		keyList.addAll(keyLinesList.stream().map(AudioAnalysisHelper::getLabelFromLine).collect(Collectors.toList()));
 		keyTimestampList.addAll(keyLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
 
-		if (verbose) outVerbose.write(chordLabelList.size() + " chord labels and " + keyList.size() + " keys successfully read\n\n");
+		verboseLog(chordLabelList.size() + " chord labels and " + keyList.size() + " keys successfully read");
 
 		int chordIndex = 0, chordLabelIndex = 0;
 		float chordLabelTimestamp;
@@ -143,13 +135,13 @@ public class TPSDistancePlugin extends LineChartPlugin {
 			chordLabelTimestamp = chordLabelTimestampList.get(chordLabelIndex);
 			chordTimestamp = chordTimestampList.get(chordIndex);
 			if (chordLabelTimestamp != chordTimestamp) {
-				if (verbose) outVerbose.write("SKIP: Timestamp of chord and chord label did not match " + chordLabelTimestamp + " and " +  chordTimestamp + "\n");
+				verboseLog("SKIP: Timestamp of chord and chord label did not match " + chordLabelTimestamp + " and " +  chordTimestamp);
 				chordIndex--; // do not move chordIndex this iteration
 			} else {
 				// if next key timestamp is lower than currently examined chord timestamp
 				if (((keyIndex + 1) < keyTimestampList.size()) && (keyTimestampList.get(keyIndex + 1) <= chordLabelTimestamp)) {
 					// => go to the next key timestamp
-					if (verbose) outVerbose.write("KEY CHANGE: Moving to next key label\n");
+					verboseLog("KEY CHANGE: Moving to next key label");
 					keyIndex++;
 				}
 
@@ -160,11 +152,11 @@ public class TPSDistancePlugin extends LineChartPlugin {
 				key = Chordanal.createKeyFromName(keyList.get(keyIndex));
 
 				if ((chordRoot == Tone.EMPTY_TONE) || (previousChordRoot == Tone.EMPTY_TONE) || (chord == Chord.EMPTY_CHORD) || (previousChord == Chord.EMPTY_CHORD) || (key == Key.EMPTY_KEY) || (previousKey == Key.EMPTY_KEY)) {
-					if (verbose) outVerbose.write("SKIP (one or both chords were not assigned)\n\n");
+					verboseLog("SKIP (one or both chords were not assigned)");
 				} else {
 					// Get TPS Distance of the two chords
 					float tpsDistance = TonalPitchSpace.getTPSDistance(chord, chordRoot, key, previousChord, previousChordRoot, previousKey, verbose);
-					if (verbose) outVerbose.write("chord: " + chordLabel + ", previousChord: " + previousChordLabel + ", distance: " + tpsDistance + "\n\n");
+					verboseLog("chord: " + chordLabel + ", previousChord: " + previousChordLabel + ", distance: " + tpsDistance);
 					out.write(chordLabelTimestamp + ": " + tpsDistance + "\n");
 				}
 				previousChord = chord;
@@ -177,7 +169,6 @@ public class TPSDistancePlugin extends LineChartPlugin {
 		}
 
 		out.close();
-		outVerbose.close();
 
 		return result;
 	}

@@ -150,15 +150,8 @@ abstract class VampPlugin extends AnalysisPlugin {
 	 * @param inputFile [String] name of the WAV audio file
 	 */
 
-	public String analyse(String inputFile, boolean force, boolean verbose) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
-		String result = super.analyse(inputFile, force, verbose);
-		String outputFile = inputFile + outputFileSuffix + ".txt";
-		List<String> inputFiles = new ArrayList<>();
-		for (String suffix : inputFileSuffixes) {
-			String inputFileName = inputFile + suffix + inputFileExtension;
-			inputFiles.add(inputFileName);
-		}
-
+	public String analyse(String inputFile, boolean force) throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
+		String result = super.analyse(inputFile, force);
 		try {
 			File f = new File(inputFiles.get(0));
 			AudioInputStream stream = AudioSystem.getAudioInputStream(f);
