@@ -91,11 +91,11 @@ public class AudioAnalysisHelper {
 	public static float getFloatFromLine(String line) { return Float.parseFloat(line.substring(line.lastIndexOf(':') + 2)); }
 
 	// gets ArrayList of Float from the line, after ':'
-	public static ArrayList<Float> getFloatArrayFromLine(String line, int size) throws AudioAnalyser.IncorrectInputException {
+	public static ArrayList<Float> getFloatArrayFromLine(String line) throws AudioAnalyser.IncorrectInputException {
 		ArrayList<Float> result = new ArrayList<>();
 		String floatValues = line.substring(line.lastIndexOf(':') + 2);
 		Scanner sc = new Scanner(floatValues);
-		for (int i = 0; i < size; i++) {
+		while (sc.hasNextFloat()) {
 			if (sc.hasNextFloat()) {
 				result.add(sc.nextFloat());
 			} else {

@@ -11,10 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -58,7 +55,6 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 
 	public String analyse(String inputFile, boolean force) throws IOException, AudioAnalyser.IncorrectInputException, Chroma.WrongChromaSize, AudioAnalyser.OutputAlreadyExists {
 		String result = super.analyse(inputFile, force);
-
 		List<String> inputFileLinesList = Files.readAllLines(new File(inputFile).toPath(), Charset.defaultCharset());
 		List<Float> inputFileTimestampList = new ArrayList<>();
 		List<ArrayList<Float>> inputFileValuesList = new ArrayList<>();
@@ -68,7 +64,7 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 
 		// 2. Get values from the input file
 		for (String value : inputFileLinesList) {
-			ArrayList<Float> floatArray = AudioAnalysisHelper.getFloatArrayFromLine(value, vectorSize);
+			ArrayList<Float> floatArray = AudioAnalysisHelper.getFloatArrayFromLine(value);
 			inputFileValuesList.add(floatArray);
 		}
 
@@ -94,7 +90,7 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 			if (timestampDifference > sampleLength) {
 				// CASE 1: Timestamp difference greater than sample length
 				float newTimestamp = previousTimestamp;
-				ArrayList<Float> newValue;
+				ArrayList<Float> newValue = new ArrayList<>();
 				verboseLog("Starting with timestamp: " + newTimestamp);
 				int sampleIndex = 0;
 				float ratio = sampleLength / timestampDifference;
@@ -102,7 +98,7 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 				while (newTimestamp < timestamp) {
 					newTimestamp += sampleLength;
 					sampleIndex++;
-					newValue = previousValue;
+					Collections.copy(previousValue, newValue);
 					outputTimestampList.add(newTimestamp);
 					outputValuesList.add(newValue);
 				}
