@@ -71,10 +71,10 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 		// 3. Iterate over timestamps and values, creating time series values
 		List<Float> outputTimestampList = new ArrayList<>();
 		List<ArrayList<Float>> outputValuesList = new ArrayList<>();
-		ArrayList<Float> previousValue;
+		ArrayList<Float> previousValue = new ArrayList<>();
 		float previousTimestamp, timestamp;
 		previousTimestamp = inputFileTimestampList.get(0);
-		previousValue = inputFileValuesList.get(0);
+		previousValue.addAll(inputFileValuesList.get(0));
 		float sampleLength = 1 / samplingRate;
 		int index = 0;
 		for (ArrayList<Float> floatArray : inputFileValuesList) {
@@ -98,7 +98,8 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 				while (newTimestamp < timestamp) {
 					newTimestamp += sampleLength;
 					sampleIndex++;
-					Collections.copy(previousValue, newValue);
+					newValue.clear();
+					newValue.addAll(previousValue);
 					outputTimestampList.add(newTimestamp);
 					outputValuesList.add(newValue);
 				}
@@ -120,8 +121,8 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 		for (ArrayList<Float> value : outputValuesList) {
 			timestamp = outputTimestampList.get(index);
 			String resultArray = "";
-			for (int i = 0; i < vectorSize; i++) {
-				resultArray += value.get(i) + " ";
+			for (int i = 0; i < value.size(); i++) {
+				resultArray += Float.toString(value.get(i)) + " ";
 			}
 			out.write(timestamp + ": " + resultArray + "\n");
 			index++;
