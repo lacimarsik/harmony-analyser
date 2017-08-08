@@ -29,7 +29,7 @@ public class ChordinoPluginTest {
 	@Test
 	public void shouldExtractChords() throws IOException, AudioAnalyser.IncorrectInputException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
 		chordino.analyse(testWavFile.toString(), true);
-		BufferedReader reader = new BufferedReader(new FileReader(testWavFile.toString() + "-chordino-labels.txt"));
+		BufferedReader reader = new BufferedReader(new FileReader(chordino.outputFile));
 		String line = reader.readLine();
 		assertEquals(" 0.371519274: N", line);
 		line = reader.readLine();

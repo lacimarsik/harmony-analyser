@@ -32,8 +32,9 @@ public class HarmonicComplexityPluginTest {
 	public void shouldCreateReport() throws IOException, AudioAnalyser.IncorrectInputException, PluginLoader.LoadFailedException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
 		new NNLSPlugin().analyse(testWavFile.toString(), true);
 		new ChordinoLabelsPlugin().analyse(testWavFile.toString(), true);
-		new AverageChordComplexityDistancePlugin().analyse(testWavFile.toString(), true);
-		BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-average-cc-distance.txt"));
+		AverageChordComplexityDistancePlugin accd = new AverageChordComplexityDistancePlugin();
+		accd.analyse(testWavFile.toString(), true);
+		BufferedReader readerReport = new BufferedReader(new FileReader(accd.outputFile));
 		BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
 		StringBuilder reportString = new StringBuilder();
 		StringBuilder fixtureString = new StringBuilder();

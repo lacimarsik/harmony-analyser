@@ -36,8 +36,9 @@ public class ChordComplexityDistancePluginTest {
 	public void shouldCreateReport() throws IOException, AudioAnalyser.IncorrectInputException, PluginLoader.LoadFailedException, AudioAnalyser.OutputAlreadyExists, Chroma.WrongChromaSize {
 		new NNLSPlugin().analyse(testWavFile.toString(), true);
 		new ChordinoLabelsPlugin().analyse(testWavFile.toString(), true);
-		new ChordComplexityDistancePlugin().analyse(testWavFile.toString(), true);
-		BufferedReader readerReport = new BufferedReader(new FileReader(testWavFile.toString() + "-cc-distance.txt"));
+		ChordComplexityDistancePlugin ccd = new ChordComplexityDistancePlugin();
+		ccd.analyse(testWavFile.toString(), true);
+		BufferedReader readerReport = new BufferedReader(new FileReader(ccd.outputFile));
 		BufferedReader readerFixture = new BufferedReader(new FileReader(testReportFixture));
 		StringBuilder reportString = new StringBuilder();
 		StringBuilder fixtureString = new StringBuilder();

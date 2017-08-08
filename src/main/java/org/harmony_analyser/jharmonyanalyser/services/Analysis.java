@@ -42,7 +42,10 @@ public abstract class Analysis {
 		checkInputFiles(inputTitle);
 	}
 
-	public void setTitle(String inputWavFile) {
+	public void setTitle(String inputWavFile) throws AudioAnalyser.IncorrectInputException {
+		if (inputWavFile.lastIndexOf('.') == -1) {
+			throw new AudioAnalyser.IncorrectInputException("Input file name does not have an extension");
+		}
 		inputTitle = inputWavFile.substring(0, inputWavFile.lastIndexOf('.'));
 	}
 
