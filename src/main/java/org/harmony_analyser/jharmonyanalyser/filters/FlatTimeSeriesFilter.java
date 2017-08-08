@@ -120,7 +120,7 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 
 		// 4. Rewrite input file using new timestamps and values
 		index = 0;
-		BufferedWriter out = new BufferedWriter(new FileWriter(inputFile));
+		BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
 		for (ArrayList<Float> value : outputValuesList) {
 			timestamp = outputTimestampList.get(index);
 			String resultArray = "";
