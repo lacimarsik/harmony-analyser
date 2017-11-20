@@ -37,6 +37,7 @@ public class KeyVectorsFilter extends LineChartPlugin {
 
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-key");
+		inputFileSuffixes.add("-chordino-labels");
 		inputFileExtension = ".txt";
 
 		outputFileSuffix = "-key-vectors";
@@ -55,8 +56,27 @@ public class KeyVectorsFilter extends LineChartPlugin {
 		List<String> keyLinesList = Files.readAllLines(new File(inputFiles.get(0)).toPath(), Charset.defaultCharset());
 		List<String> keyList = new ArrayList<>();
 		List<Float> keyTimestampList = new ArrayList<>();
+		List<String> chordLinesList = Files.readAllLines(new File(inputFiles.get(1)).toPath(), Charset.defaultCharset());
+		List<Float> chordTimestampList = new ArrayList<>();
 		keyTimestampList.addAll(keyLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
 		keyList.addAll(keyLinesList.stream().map(AudioAnalysisHelper::getLabelFromLine).collect(Collectors.toList()));
+		chordTimestampList.addAll(chordLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
+
+		// If there is no present timestamp 0.0, automatically fix: Add 0.0 timestamp with "(unknown)" key
+		if (keyTimestampList.get(0) > 0.000000001) {
+			keyTimestampList.add(0, 0.0f);
+			keyList.add(0, "(unknown)");
+		}
+
+		// Check for the last timestamp - make sure that the the latest timestamp is used
+		// (check chords whether there is a later timestamp than in the key file)
+		// Automatically fix: Add (latest timestamp) to the end of the file, with "(unknown)" key
+		float latestKeyTimestamp = keyTimestampList.get(keyTimestampList.size() - 1);
+		float latestChordTimestamp = chordTimestampList.get(chordTimestampList.size() - 1);
+		if (latestChordTimestamp > latestKeyTimestamp) {
+			keyTimestampList.add(latestChordTimestamp);
+			keyList.add("(unknown)");
+		}
 
 		float keyTimestamp;
 		int keyIndex = 0;
