@@ -77,6 +77,9 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 		previousValue.addAll(inputFileValuesList.get(0));
 		float sampleLength = 1 / samplingRate;
 		int index = 0;
+		// save first timestamp and value
+		outputTimestampList.add(inputFileTimestampList.get(0));
+		outputValuesList.add(inputFileValuesList.get(0));
 		for (ArrayList<Float> floatArray : inputFileValuesList) {
 			if (index == 0) {
 				index++;
