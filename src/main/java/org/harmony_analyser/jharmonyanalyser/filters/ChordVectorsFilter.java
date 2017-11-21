@@ -38,6 +38,7 @@ public class ChordVectorsFilter extends LineChartPlugin {
 		inputFileSuffixes = new ArrayList<>();
 		inputFileSuffixes.add("-chordino-labels");
 		inputFileSuffixes.add("-chordino-tones");
+		inputFileSuffixes.add("-key");
 		inputFileExtension = ".txt";
 
 		outputFileSuffix = "-chord-vectors";
@@ -64,6 +65,9 @@ public class ChordVectorsFilter extends LineChartPlugin {
 		preProcessTonesList.addAll(preProcessLinesList.stream().map(AudioAnalysisHelper::getFloatFromLine).collect(Collectors.toList()));
 		List<Chord> chordList = new ArrayList<>();
 		List<Float> chordTimestampList = new ArrayList<>();
+		List<String> keyLinesList = Files.readAllLines(new File(inputFiles.get(2)).toPath(), Charset.defaultCharset());
+		List<Float> keyTimestampList = new ArrayList<>();
+		keyTimestampList.addAll(keyLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
 
 		int lineIndex = 0;
 		float previousTimestamp = preProcessTimestampList.get(0);
@@ -86,19 +90,38 @@ public class ChordVectorsFilter extends LineChartPlugin {
 		// prepares:
 		// chordLabelList (list of chord labels)
 		// chordLabelTimestampList (timestamps related to chordList)
-		// keyList (list of keys)
-		// keyTimestampList (timestamps related to keyList)
 		List<String> chordLabelLinesList = Files.readAllLines(new File(inputFiles.get(0)).toPath(), Charset.defaultCharset());
 		List<String> chordLabelList = new ArrayList<>();
 		List<Float> chordLabelTimestampList = new ArrayList<>();
-		List<Float> keyTimestampList = new ArrayList<>();
 		chordLabelList.addAll(chordLabelLinesList.stream().map(AudioAnalysisHelper::getLabelFromLine).collect(Collectors.toList()));
 		chordLabelTimestampList.addAll(chordLabelLinesList.stream().map(AudioAnalysisHelper::getTimestampFromLine).collect(Collectors.toList()));
+
+
+		// If there is no present timestamp 0.0, automatically fix: Add 0.0 timestamp with EMPTY_CHORD
+		if (chordTimestampList.get(0) > 0.000000001) {
+			chordTimestampList.add(0, 0.0f);
+			chordList.add(0, Chord.EMPTY_CHORD);
+			chordLabelTimestampList.add(0, 0.0f);
+			chordLabelList.add(0, "N");
+		}
+
+		// Check for the last timestamp - make sure that the the latest timestamp is used
+		// (check keys whether there is a later timestamp than in the chord file)
+		// Automatically fix: Add (latest timestamp) to the end of the file, with "(unknown)" key
+		float latestChordTimestamp = chordTimestampList.get(chordTimestampList.size() - 1);
+		float latestKeyTimestamp = keyTimestampList.get(keyTimestampList.size() - 1);
+		if (latestKeyTimestamp > latestChordTimestamp) {
+			chordTimestampList.add(latestKeyTimestamp);
+			chordList.add(Chord.EMPTY_CHORD);
+			chordLabelTimestampList.add(latestKeyTimestamp);
+			chordLabelList.add("N");
+		}
 
 		int chordIndex = 0, chordLabelIndex = 0;
 		float chordLabelTimestamp;
 		float chordTimestamp;
 		int keyIndex = 0;
+		keyTimestampList = new ArrayList<>();
 		String chordLabel;
 		Chord chord;
 		Chord previousChord = Chord.EMPTY_CHORD;
