@@ -97,7 +97,7 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 				verboseLog("Starting with timestamp: " + newTimestamp);
 				int sampleIndex = 0;
 				float ratio = sampleLength / timestampDifference;
-				// iteratively create samples from the slope defined by successive points
+				// iteratively create samples
 				while (newTimestamp < timestamp) {
 					newTimestamp += sampleLength;
 					sampleIndex++;
