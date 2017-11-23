@@ -71,55 +71,39 @@ public class FlatTimeSeriesFilter extends AnalysisFilter {
 		// 3. Iterate over timestamps and values, creating time series values
 		List<Float> outputTimestampList = new ArrayList<>();
 		List<ArrayList<Float>> outputValuesList = new ArrayList<>();
-		ArrayList<Float> previousValue = new ArrayList<>();
-		float previousTimestamp, timestamp;
-		previousTimestamp = inputFileTimestampList.get(0);
-		previousValue.addAll(inputFileValuesList.get(0));
+		ArrayList<Float> refValue, oldRefValueToWrite, oldRefValue = new ArrayList<>();
+		float refTimestamp;
+		oldRefValue.addAll(inputFileValuesList.get(0));
 		float sampleLength = 1 / samplingRate;
 		int index = 0;
-		// save first timestamp and value
-		outputTimestampList.add(inputFileTimestampList.get(0));
-		outputValuesList.add(inputFileValuesList.get(0));
-		for (ArrayList<Float> floatArray : inputFileValuesList) {
-			if (index == 0) {
-				index++;
-				continue;
-			}
-			timestamp = inputFileTimestampList.get(index);
 
-			// Find out difference between timestamps
-			float timestampDifference = timestamp - previousTimestamp;
-			verboseLog("timestampDifference: " + timestampDifference);
-			if (timestampDifference > sampleLength) {
-				// CASE 1: Timestamp difference greater than sample length
-				float newTimestamp = previousTimestamp;
-				ArrayList<Float> newValue = new ArrayList<>();
-				verboseLog("Starting with timestamp: " + newTimestamp);
-				int sampleIndex = 0;
-				float ratio = sampleLength / timestampDifference;
-				// iteratively create samples
-				while (newTimestamp < timestamp) {
-					newTimestamp += sampleLength;
-					sampleIndex++;
-					newValue.clear();
-					newValue.addAll(previousValue);
-					outputTimestampList.add(newTimestamp);
-					outputValuesList.add(newValue);
-				}
+		float lastTimestamp = inputFileTimestampList.get(inputFileTimestampList.size() - 1);
+		for (float sampleTimestamp = 0.0f; sampleTimestamp <= lastTimestamp; sampleTimestamp += sampleLength) {
+			refTimestamp = inputFileTimestampList.get(index);
+			refValue = inputFileValuesList.get(index);
 
-				// bump previous timestamp-value and continue
-				previousTimestamp = timestamp;
-				previousValue = floatArray;
-				index++;
+			// Find out difference between sampleLength timestamp and reference timestamp
+			if (sampleTimestamp <= refTimestamp) {
+				// CASE 1: sampleLength timestamp is lower or equal to the reference timestamp
+				// write the current timestamp and value
+				outputTimestampList.add(new Float(sampleTimestamp));
+
+				oldRefValueToWrite = new ArrayList<>();
+				oldRefValueToWrite.addAll(oldRefValue);
+				outputValuesList.add(oldRefValueToWrite);
 			} else {
-				// CASE 2: Timestamp difference lower than sample length
-				// Omit the current timestamp-value pair and continue with the next one, leaving previous timestamp-value pair
+				// CASE 2: sampleLength timestamp is greater than the reference timestamp
+				// Do not bump sampleTimestamp, bump the next reference timestamp-value pair, saving the previous value
+				oldRefValue = new ArrayList<>();
+				oldRefValue.addAll(refValue);
 				index++;
+				sampleTimestamp -= sampleLength;
 			}
 		}
 
 		// 4. Rewrite input file using new timestamps and values
 		index = 0;
+		float timestamp;
 		BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
 		for (ArrayList<Float> value : outputValuesList) {
 			timestamp = outputTimestampList.get(index);
