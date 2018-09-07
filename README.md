@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/lacimarsik/harmony-analyser/badge.svg?branch=master)](https://coveralls.io/github/lacimarsik/harmony-analyser?branch=master)
 
 # harmony-analyser
-Cross-platform Java application for analysing harmony progression of WAV or MIDI input. 
+Cross-platform Java application for analysing harmony progression of WAV or MIDI input.
 
 Project website: [harmony-analyser.org](http://www.marsik.sk/laci/mff/github/chord_transition_tool.png)
 
