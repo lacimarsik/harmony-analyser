@@ -4,7 +4,7 @@
 # harmony-analyser
 Cross-platform Java application for analysing harmony progression of WAV or MIDI input.
 
-Project website: [harmony-analyser.org](http://www.marsik.sk/laci/mff/github/chord_transition_tool.png)
+Project website: [harmony-analyser.org](http://harmony-analyser.org)
 
 ![harmony-analyser](http://www.marsik.sk/laci/mff/github/chord_transition_tool.png)
 
