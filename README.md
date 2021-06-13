@@ -21,7 +21,7 @@ Pre-requisites:
 * Download and install [Chordino and NNLS Chroma](http://www.isophonics.net/nnls-chroma) Vamp plugins 1.1 or higher, and [QM Vamp plugins set](https://code.soundsoftware.ac.uk/projects/qm-vamp-plugins/files) 1.7.1 or higher, for getting the most out of the analysis (Linux: compile and place `nnls-chroma.so` and `qm-vamp-plugins.so` to `usr/local/lib/vamp` folder)
 
 To run the application:
-* Download and open `ha-<version>-executable.jar` (where version is the currently available version) located in `target` folder, using your Java Virtual Machine (or invoke `java -jar target/ha-<version>-executable.jar` in command-line)
+* Download and open `ha-executable-<version>.jar` (where version is the currently available version) located in `target` folder, using your Java Virtual Machine (or invoke `java -jar target/ha-executable-<version>.jar` in command-line)
 * For Command-line interface, move the file `ha-script-<version>.jar` from `target` folder into the folder with WAV files for analysis. Then invoke `java -jar harmony-analyser-script-jar-with-dependencies -p <plugin name> -s .wav`, or `-h` for help.
 
 ## Development
