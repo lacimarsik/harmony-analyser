@@ -9,6 +9,10 @@ Project website: [harmony-analyser.org](http://harmony-analyser.org)
 ![harmony-analyser](http://www.marsik.sk/laci/mff/github/chord_transition_tool.png)
 
 ## Installation
+For a simple chord analysis, simply download the latest stable version
+[ha-executable-1.1.jar](https://github.com/lacimarsik/harmony-analyser/blob/master/target/ha-executable-1.1.jar) and run it using `java -jar ha-executable-1.1.jar`.
+If you wish to run the latest beta, or perform a song analysis, a more thourough setup is needed as external libraries need to be present on your system. Please check the pre-requisites below.
+
 Pre-requisites:
 * Running [JRE](https://www.java.com/en/download/) 8 or higher on your machine
 * Download and install [libsndfile](http://www.mega-nerd.com/libsndfile/) 1.0.27 or higher (Linux: Usually supported by package manager)
@@ -17,11 +21,11 @@ Pre-requisites:
 * Download and install [Chordino and NNLS Chroma](http://www.isophonics.net/nnls-chroma) Vamp plugins 1.1 or higher, and [QM Vamp plugins set](https://code.soundsoftware.ac.uk/projects/qm-vamp-plugins/files) 1.7.1 or higher, for getting the most out of the analysis (Linux: compile and place `nnls-chroma.so` and `qm-vamp-plugins.so` to `usr/local/lib/vamp` folder)
 
 To run the application:
-* Download and open `harmony-analyser-<version>-jar-with-dependencies.jar` (where version is the currently available version) located in `target` folder, using your Java Virtual Machine (or invoke `java -jar target/harmony_analyser-<version>-jar-with-dependencies.jar` in command-line)
-* For Command-line interface, move the file `harmony-analyser-script-jar-with-dependencies.jar` from `target` folder into the folder with WAV files for analysis. Then invoke `java -jar harmony-analyser-script-jar-with-dependencies -p <plugin name> -s .wav`, or `-h` for help.
+* Download and open `ha-<version>-executable.jar` (where version is the currently available version) located in `target` folder, using your Java Virtual Machine (or invoke `java -jar target/ha-<version>-executable.jar` in command-line)
+* For Command-line interface, move the file `ha-script-<version>.jar` from `target` folder into the folder with WAV files for analysis. Then invoke `java -jar harmony-analyser-script-jar-with-dependencies -p <plugin name> -s .wav`, or `-h` for help.
 
 ## Development
-You are welcome to fork, push your changes to your fork, and pull request at anytime! We will also be happy to add you as collaborator [upon request](mailto:marsik@ksi.mff.cuni.cz). In addition to installation pre-requisites, a functional [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) needs to be installed in order to compile the source.
+You are welcome to fork, push your changes to your fork, and pull request at anytime! We will also be happy to add you as collaborator [upon request](mailto:laci.marsik@gmail.com). In addition to installation pre-requisites, a functional [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) needs to be installed in order to compile the source.
 Project uses [Maven](https://maven.apache.org/) as the project management tool. Dependencies available in the public Maven repositories are pulled in automatically.
 Project uses one local dependency in form of JAR located in `lib`:
 * [jVamp](https://code.soundsoftware.ac.uk/projects/jvamp): Since the Vamp plugins are typically written in C++, we are using jVamp wrappers to load them in Java (jVamp uses JNI to work with native C++ code)
